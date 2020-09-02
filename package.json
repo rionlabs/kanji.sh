@@ -15,7 +15,11 @@
     "react-scripts": "3.4.3",
     "typescript": "~3.7.2"
   },
+  "devDependencies": {
+    "node-fetch": "^2.6.0"
+  },
   "scripts": {
+    "prestart": "cd generator && node main.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
