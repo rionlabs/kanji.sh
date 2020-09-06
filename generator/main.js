@@ -1,12 +1,15 @@
 const fs = require('fs');
 const path = require('path');
-const https = require('https');
 const fetch = require('node-fetch');
+const puppeteer = require('puppeteer');
 
 const kanjiVgPrefix = "https://raw.githubusercontent.com/KanjiVG/kanjivg/master/kanji/";
 
 const outDir = "build"
 const svgOutputDir = `${outDir}/svg`
+const pdfOutputDir = `${outDir}/pdf`
+
+const templateAbsolutePath = path.relative("/", "template/page.html");
 
 const logStart = (message) => console.log(`[START] ${message}`);
 const logDone = (message) => console.log(`[DONE✓] ${message}`);
@@ -24,6 +27,59 @@ async function processSources(...sourceDirs) {
     }
 }
 
+async function generatePDFs(...sourceDirs) {
+    for (const sourceDir of sourceDirs) {
+        try {
+            let filenames = fs.readdirSync(sourceDir);
+            console.log(`Filenames in source Dir ${sourceDir} are ${filenames}`)
+            for (let sourceFile of filenames) {
+                const inputFilePath = path.join(sourceDir, sourceFile)
+                const outputFilePath = path.join(pdfOutputDir, `${sourceDir}_${sourceFile}.pdf`)
+                await generatePDF(inputFilePath, outputFilePath)
+            }
+        } catch (error) {
+            logError(`Error while reading directory ${sourceDir}: ${error}`);
+        }
+    }
+}
+
+async function generatePDF(inputFilePath, outputFilePath) {
+    logStart(`Reading file ${inputFilePath}...`);
+    try {
+        const content = fs.readFileSync(inputFilePath, {encoding: 'utf-8', flag: 'r'})
+        const data = content.split('\n').filter(Boolean).join("")
+        console.log(`Data for file ${inputFilePath} is ${data}`)
+
+        const timeout = 10 * 60 * 60 * 1000
+        const browser = await puppeteer.launch({
+            waitNetworkIdle: true,
+            timeout: timeout,
+            args: [
+                '--disable-web-security',
+            ],
+        });
+        const page = await browser.newPage();
+        page.setDefaultTimeout(timeout)
+
+        page.on('console', consoleObj => console.log(consoleObj.text()));
+        await page.goto(`file:///${templateAbsolutePath}?data=${data}`, {
+            waitUntil: ['load', 'networkidle0', 'networkidle2', 'domcontentloaded']
+        });
+
+        await page.waitFor(5 * 60 * 1000)
+
+        await page.pdf({
+            path: outputFilePath,
+            displayHeaderFooter: false,
+            printBackground: true,
+            format: 'A4',
+        });
+        await browser.close();
+    } catch (error) {
+        logError(`Error on reading file ${inputFilePath} : ${error}`);
+    }
+}
+
 // Read sources and download SVG if doesnt exists
 async function processSourceDir(sourceDir) {
     logStart(`Reading directory ${sourceDir}...`)
@@ -34,6 +90,7 @@ async function processSourceDir(sourceDir) {
             logStart(`Reading file ${inputFile}...`);
             try {
                 const content = fs.readFileSync(inputFile, {encoding: 'utf-8', flag: 'r'})
+                logDone(`Finished reading ${inputFile}`);
                 for (const kanji of content.split('\n').filter(Boolean)) {
                     await downloadSvg(kanji)
                 }
@@ -54,10 +111,9 @@ async function downloadSvg(kanji) {
         // File already downloaded
         return
     }
-    const svgOutFile = fs.createWriteStream(svgOutFilePath, {flags: "w+"});
-    https.get(readFileUrl, function (response) {
-        response.pipe(svgOutFile);
-    });
+    const response = await fetch(readFileUrl)
+    const content = await response.buffer();
+    await fs.writeFileSync(svgOutFilePath, content)
 }
 
 async function downloadKanjiData() {
@@ -69,9 +125,10 @@ async function downloadKanjiData() {
 }
 
 async function generateData() {
-    await ensureDirectories(outDir, svgOutputDir)
+    await ensureDirectories(outDir, svgOutputDir, pdfOutputDir)
     await downloadKanjiData();
     await processSources("frequency", "jlpt", "grade", "wanikani")
+    await generatePDFs("frequency", "jlpt", "grade", "wanikani")
 }
 
 generateData().then(function () {
@@ -79,4 +136,4 @@ generateData().then(function () {
     process.exit(0)
 }).catch(function () {
     process.exit(1)
-})
+});
