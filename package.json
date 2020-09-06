@@ -16,7 +16,8 @@
     "typescript": "~3.7.2"
   },
   "devDependencies": {
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "puppeteer": "^5.2.1"
   },
   "scripts": {
     "prestart": "cd generator && node main.js",
