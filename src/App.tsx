@@ -1,12 +1,18 @@
 import React from 'react';
 import './App.css';
-import {FileCard} from "./components/FileCard";
+import Header from "./components/Header";
+import FileGroup, {GroupData} from "./components/FileGroup";
+import {data} from "./Metadata";
+
+
 
 function App() {
     return (
         <div className="App">
-            <h2>Kanji Printer</h2>
-            <FileCard title="Title" description="Dummy descriptoin for th e card" kanjiCount={103}/>
+            <Header/>
+            {
+                data.map(groupData => (<FileGroup heading={groupData.heading} files={groupData.files}/>))
+            }
         </div>
     );
 }
