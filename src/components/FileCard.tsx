@@ -6,12 +6,7 @@ import CardActions from "@material-ui/core/CardActions";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-
-export type FileData = {
-    title: String
-    description: String
-    kanjiCount: number
-}
+import {FileData} from "../Metadata";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,9 +42,6 @@ export default function FileCard(fileData: FileData) {
             <CardContent>
                 <Typography gutterBottom variant="body1">
                     {fileData.description}
-                </Typography>
-                <Typography gutterBottom variant="body1">
-                    Kanji Count: {fileData.kanjiCount}
                 </Typography>
             </CardContent>
             <CardActions>

@@ -3,12 +3,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {Container} from "@material-ui/core";
-import FileCard, {FileData} from "./FileCard";
-
-export type GroupData = {
-    heading: String,
-    files: Array<FileData>
-}
+import {GroupData} from "../Metadata";
+import FileCard from "./FileCard";
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -44,7 +40,7 @@ export default function FileGroup(groupData: GroupData) {
                             <FileCard
                                 title={fileData.title}
                                 description={fileData.description}
-                                kanjiCount={fileData.kanjiCount}/>
+                                filePath={fileData.filePath}/>
                         </Grid>
                     ))
                 }

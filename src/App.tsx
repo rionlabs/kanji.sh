@@ -1,10 +1,8 @@
 import React from 'react';
 import './App.css';
 import Header from "./components/Header";
-import FileGroup, {GroupData} from "./components/FileGroup";
+import FileGroup from "./components/FileGroup";
 import {data} from "./Metadata";
-
-
 
 function App() {
     return (
