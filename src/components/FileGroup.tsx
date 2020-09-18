@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.text.secondary,
     },
     header: {
-        marginTop: theme.spacing(4),
-        marginBottom: theme.spacing(2)
+        marginTop: theme.spacing(8),
+        marginBottom: theme.spacing(4)
     }
 }));
 
@@ -23,7 +23,7 @@ export default function FileGroup(groupData: GroupData) {
     const classes = useStyles();
     return (
         <Container className={classes.root}>
-            <Typography gutterBottom className={classes.header} variant="h4">
+            <Typography gutterBottom className={classes.header} variant="h3">
                 {groupData.heading}
             </Typography>
 

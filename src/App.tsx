@@ -3,15 +3,26 @@ import './App.css';
 import Header from "./components/Header";
 import FileGroup from "./components/FileGroup";
 import {data} from "./Metadata";
+import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 
 function App() {
-    return (
-        <div className="App">
-            <Header/>
-            {
-                data.map(groupData => (<FileGroup heading={groupData.heading} files={groupData.files}/>))
+    const appTheme = createMuiTheme({
+        typography: {
+            allVariants: {
+                fontFamily: "Montserrat, sans-serif"
             }
-        </div>
+        }
+    });
+
+    return (
+        <MuiThemeProvider theme={appTheme}>
+            <div className="App">
+                <Header/>
+                {
+                    data.map(groupData => (<FileGroup heading={groupData.heading} files={groupData.files}/>))
+                }
+            </div>
+        </MuiThemeProvider>
     );
 }
 

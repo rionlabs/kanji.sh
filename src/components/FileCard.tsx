@@ -21,7 +21,7 @@ const styles = (theme: Theme): StyleRules =>
         },
         title: {
             textAlign: "center",
-            fontWeight: "bold",
+            fontWeight: 400,
             lineHeight: `${theme.spacing(22)}px`,
             color: theme.palette.common.white,
             userSelect: "none",
@@ -54,7 +54,7 @@ class FileCard extends React.Component<Props, State> {
         return <Card className={classes.root} onMouseOver={this._elevate} onMouseOut={this._lower}
                      elevation={elevation}>
             <CardMedia className={classes.media}>
-                <Typography className={classes.title} gutterBottom variant="h2" component="h2">
+                <Typography className={classes.title} gutterBottom variant="h2" component="h5">
                     {fileData.title}
                 </Typography>
             </CardMedia>
