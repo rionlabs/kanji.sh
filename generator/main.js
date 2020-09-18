@@ -4,6 +4,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 const puppeteer = require('puppeteer');
 const {default: PQueue} = require('p-queue');
+const PDFMerger = require('pdf-merger-js');
 
 const kanjiVgPrefix = "https://raw.githubusercontent.com/KanjiVG/kanjivg/master/kanji/";
 const cssForSvg = '<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/css" href="../../css/svg-writing.css" ?>'
@@ -51,6 +52,11 @@ async function generatePDF(inputFilePath, outputDirectoryPath, sourceGroup) {
     const tempDirPath = path.join(outputDirectoryPath, sourceGroup);
     ensureDirectories(outputDirectoryPath, tempDirPath);
 
+    const outputPdfFilePath = path.join(outputDirectoryPath, `${sourceGroup}.pdf`);
+    if (fs.existsSync(outputPdfFilePath)) {
+        return;
+    }
+
     try {
         logStart(`Reading file ${inputFilePath}...`);
         const content = fs.readFileSync(inputFilePath, {encoding: 'utf-8', flag: 'r'})
@@ -67,6 +73,7 @@ async function generatePDF(inputFilePath, outputDirectoryPath, sourceGroup) {
 
         // To avoid timeout, if the number of pages are too much, 5 pages per core
         const browserPageQueue = new PQueue({concurrency: os.cpus().length * 5, autoStart: true});
+        const generatedPDFPaths = [];
 
         let times = 0
         for (let index = 0; index < data.length; index += 5) {
@@ -80,24 +87,35 @@ async function generatePDF(inputFilePath, outputDirectoryPath, sourceGroup) {
                     waitUntil: ['load', 'networkidle0', 'networkidle2', 'domcontentloaded']
                 });
 
+                const pdfName = path.join(tempDirPath, `${index}.pdf`)
                 await page.pdf({
-                    path: path.join(tempDirPath, `${index}.pdf`),
+                    path: pdfName,
                     displayHeaderFooter: false,
                     printBackground: false,
                     format: 'A4',
                 });
 
+                generatedPDFPaths.push(pdfName);
+
                 await page.close()
                 console.log(`${inputFilePath}: Index ${index} finished ${kanjiArray}`)
             }
 
-            browserPageQueue.add(async () => processing(times++, data.slice(index, index + 5))).then((any) => {
+            browserPageQueue.add(async () => processing(times++, data.slice(index, index + 5))).then(() => {
                 console.log(`${inputFilePath}: Index Added to queue`)
             })
         }
 
         await browserPageQueue.onIdle()
         await browser.close();
+
+        // Merge the generated PDFs
+        const merger = new PDFMerger();
+        for (let generatedPDFPath of generatedPDFPaths.sort()) {
+            merger.add(generatedPDFPath);
+        }
+        await merger.save(outputPdfFilePath);
+
     } catch (error) {
         logError(`Error on reading file ${inputFilePath} : ${error}`);
     }

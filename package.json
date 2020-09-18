@@ -18,8 +18,9 @@
     "typescript": "~3.7.2"
   },
   "devDependencies": {
-    "p-queue": "^6.6.1",
     "node-fetch": "^2.6.0",
+    "p-queue": "^6.6.1",
+    "pdf-merger-js": "^3.0.5",
     "puppeteer": "^5.2.1"
   },
   "scripts": {
