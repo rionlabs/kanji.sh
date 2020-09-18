@@ -2,9 +2,11 @@ import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import {GitHub, MenuRounded} from "@material-ui/icons";
+import {Button} from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+import common from "@material-ui/core/colors/common";
+import Hidden from "@material-ui/core/Hidden";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -13,39 +15,54 @@ const useStyles = makeStyles((theme) => ({
     menuButton: {
         marginRight: theme.spacing(2),
     },
+    appBar: {
+        background: theme.palette.background.paper
+    },
     toolbar: {
-        minHeight: 128,
         alignItems: 'flex-start',
-        paddingTop: theme.spacing(1),
+        paddingTop: theme.spacing(2),
         paddingBottom: theme.spacing(2),
     },
     title: {
         flexGrow: 1,
-        alignSelf: 'flex-end',
+        alignSelf: 'center',
     },
+    donateButton: {
+        alignSelf: "center",
+        color: common.white,
+        textTransform: "none",
+        borderRadius: 25,
+        backgroundColor: common.black,
+        '&:hover': {
+            backgroundColor: common.black,
+        },
+    }
 }));
 
 export default function Header() {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar className={classes.toolbar}>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="open drawer">
-                        <MenuRounded/>
-                    </IconButton>
-                    <Typography className={classes.title} variant="h5" noWrap>
-                        Kanji Printer
-                    </Typography>
-                    <IconButton aria-label="open github" color="inherit">
-                        <GitHub/>
-                    </IconButton>
-                </Toolbar>
+            <AppBar className={classes.appBar} position="fixed" color={"transparent"} elevation={1}>
+                <Container>
+                    <Toolbar className={classes.toolbar}>
+                        <Typography className={classes.title} variant="h3" noWrap>
+                            Kanji Printer
+                        </Typography>
+                        <Hidden xsDown>
+                            <Button
+                                size={"large"}
+                                variant={"contained"}
+                                className={classes.donateButton}
+                                aria-label="donate">
+                                Buy me a Coffee
+                            </Button>
+                        </Hidden>
+
+                    </Toolbar>
+                </Container>
             </AppBar>
+            <Toolbar className={classes.toolbar}/>
         </div>
     );
 }
