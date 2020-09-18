@@ -7,14 +7,12 @@
     <style>
         @page {
             size: A4 portrait;
-            margin: 11mm 0 10mm 0;
         }
 
         html {
-            height: 297mm;
+            height: 280mm;
             width: 210mm;
-            padding-top: 11mm;
-            padding-bottom: 10mm;
+            padding-top: 16mm;
             font-family: 'Open Sans', sans-serif;
             margin-left: auto;
             margin-right: auto;
@@ -48,14 +46,14 @@
             background: white;
             border-spacing: 0;
             page-break-inside: avoid;
-            border: #777777 solid 0.2pt;
+            border: #777777 solid 0.1pt;
         }
 
         tr, th, td {
             margin: 0;
             padding: 0;
             border-spacing: 0;
-            border: #777777 solid 0.2pt;
+            border: #777777 solid 0.1pt;
             text-align: center;
             align-content: center;
             page-break-inside: avoid;
@@ -143,7 +141,7 @@
         <th class="big-square" rowspan="2" colspan="2">
             <object type="image/svg+xml" data={{svgUrl}}/>
         </th>
-        {{#times 10 svgUrl}}
+        {{#times 10 svgUrlForWriting}}
             <td class="small-square"><object type="image/svg+xml" data={{this}}/></td>
         {{/times}}
     </tr>
@@ -169,6 +167,7 @@
 
                 displayData[kanji] = {
                     svgUrl: `../build/svg/${kanji}.svg`,
+                    svgUrlForWriting: `../build/svg/${kanji}.w.svg`,
                     meaning: kanjiData['wk_meanings'] || kanjiData['meanings'],
                     onyomi: kanjiData['wk_readings_on'] || kanjiData['readings_on'],
                     kunyomi: kanjiData['wk_readings_kun'] || kanjiData['readings_kun']
