@@ -24,6 +24,7 @@
     "puppeteer": "^5.2.1"
   },
   "scripts": {
+    "prestart": "cp -r generator/build/pdf/* public/pdf",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

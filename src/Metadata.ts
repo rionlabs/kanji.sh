@@ -9,7 +9,7 @@ export type FileData = {
     filePath: string
 }
 
-const pdfFileDirectory = "../generator/build/pdf"
+const pdfFileDirectory = `${process.env.PUBLIC_URL}/pdfs`
 
 const gradesData: GroupData = {
     heading: "Japan School Grades",

@@ -45,7 +45,7 @@ export default function FileCard(fileData: FileData) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button className={classes.downloadButton}>Download PDF</Button>
+                <Button href={process.env.PUBLIC_URL + fileData.filePath} target="_blank" download>Download PDF</Button>
             </CardActions>
         </Card>)
 }
