@@ -16,7 +16,6 @@ const styles = (theme: Theme): StyleRules =>
             flexGrow: 1,
         },
         media: {
-            backgroundColor: theme.palette.grey.A700,
             height: theme.spacing(22),
         },
         title: {
@@ -53,7 +52,7 @@ class FileCard extends React.Component<Props, State> {
 
         return <Card className={classes.root} onMouseOver={this._elevate} onMouseOut={this._lower}
                      elevation={elevation}>
-            <CardMedia className={classes.media}>
+            <CardMedia className={classes.media} style={{backgroundColor: fileData.metaColor}}>
                 <Typography className={classes.title} gutterBottom variant="h2" component="h5">
                     {fileData.title}
                 </Typography>
