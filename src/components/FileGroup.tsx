@@ -37,10 +37,7 @@ export default function FileGroup(groupData: GroupData) {
                     groupData.files.map(fileData => (
                         <Grid item xs={12} sm={4} md={3} xl={2}
                               alignItems={"center"}>
-                            <FileCard
-                                title={fileData.title}
-                                description={fileData.description}
-                                filePath={fileData.filePath}/>
+                            <FileCard fileData={fileData}/>
                         </Grid>
                     ))
                 }
