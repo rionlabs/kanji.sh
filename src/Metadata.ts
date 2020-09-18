@@ -9,7 +9,7 @@ export type FileData = {
     filePath: string
 }
 
-const pdfFileDirectory = `${process.env.PUBLIC_URL}/pdfs`
+const pdfFileDirectory = `${process.env.PUBLIC_URL}/pdf`
 
 const gradesData: GroupData = {
     heading: "Japan School Grades",
