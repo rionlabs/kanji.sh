@@ -25,7 +25,7 @@
   },
   "scripts": {
     "prestart": "cp -r generator/build/pdf/* public/pdf",
-    "start": "react-scripts start",
+    "start": "react-scripts start --host 0.0.0.0",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

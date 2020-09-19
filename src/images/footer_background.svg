@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1918.938" height="1182.938" viewBox="0 0 1918.938 1182.938">
+    <defs>
+        <style>
+            .a{fill:url(#a);}.b{fill:rgba(111,74,235,0.22);}.c{fill:rgba(64,226,157,0.19);}.d{fill:rgba(68,147,240,0.31);}.e{fill:rgba(171,88,242,0.22);}.f{fill:rgba(177,239,60,0.24);}.g{fill:rgba(47,167,242,0.27);}.h{fill:rgba(189,87,234,0.21);}.i{fill:rgba(242,42,42,0.12);}.j{fill:rgba(65,255,240,0.22);}.k{fill:rgba(63,247,155,0.22);}
+        </style>
+        <radialGradient id="a" cx="0.469" cy="1" r="1.353"
+                        gradientTransform="matrix(0.999, 0.041, -0.038, 0.923, 0.036, 0.052)"
+                        gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#1d00ff" stop-opacity="0.149"/>
+            <stop offset="1" stop-color="#91c7f5" stop-opacity="0.051"/>
+        </radialGradient>
+    </defs>
+    <g transform="translate(0 -16)">
+        <path class="a"
+              d="M-120,252.82S-67.859,68.625,25.422,128.2s171.961,83.07,260.32,29.289,157.5-48.18,231.336,30.563,155.047,98.516,230.414,33.2S862.273,15.2,958.961,65.6s94.046,46.875,231.38,143.016,143.063,64.568,235.5-20.563,88.746-60.984,215.7-59.852,157.4,59.852,157.4,59.852v986.883H-120Z"
+              transform="translate(120 24)"/>
+        <ellipse class="b" cx="26" cy="26.5" rx="26" ry="26.5" transform="translate(137 35)"/>
+        <circle class="c" cx="60.5" cy="60.5" r="60.5" transform="translate(814 28)"/>
+        <circle class="d" cx="23.5" cy="23.5" r="23.5" transform="translate(703 96)"/>
+        <circle class="e" cx="13.5" cy="13.5" r="13.5" transform="translate(1818 35)"/>
+        <circle class="f" cx="35.5" cy="35.5" r="35.5" transform="translate(1193 49)"/>
+        <circle class="g" cx="13.5" cy="13.5" r="13.5" transform="translate(328 143)"/>
+        <circle class="h" cx="36.5" cy="36.5" r="36.5" transform="translate(1436 85)"/>
+        <circle class="i" cx="36.5" cy="36.5" r="36.5" transform="translate(1622 52)"/>
+        <circle class="j" cx="23" cy="23" r="23" transform="translate(1351 16)"/>
+        <circle class="k" cx="12.5" cy="12.5" r="12.5" transform="translate(448 24)"/>
+    </g>
+</svg>

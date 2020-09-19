@@ -5,6 +5,7 @@ import FileGroup from "./components/FileGroup";
 import {data} from "./Metadata";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import Jumbotron from "./components/Jumbotron";
+import Acknowledgement from "./components/Acknowledgement";
 
 function App() {
     const appTheme = createMuiTheme({
@@ -23,6 +24,7 @@ function App() {
                 {
                     data.map(groupData => (<FileGroup heading={groupData.heading} files={groupData.files}/>))
                 }
+                <Acknowledgement/>
             </div>
         </MuiThemeProvider>
     );
