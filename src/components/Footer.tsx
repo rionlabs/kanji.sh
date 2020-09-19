@@ -56,17 +56,23 @@ export default function Footer() {
                         </Typography>
                         <IconButton
                             className={classes.socialButton}
+                            href={"https://github.com/aruke"}
+                            target={"_blank"}
                             aria-label="open github">
                             <GitHub/>
                         </IconButton>
                         <IconButton
                             className={classes.socialButton}
+                            href={"https://twitter.com/aruke_"}
+                            target={"_blank"}
                             aria-label="follow me on twitter">
                             <Twitter/>
                         </IconButton>
                         <IconButton
                             className={classes.socialButton}
-                            aria-label="my japanese notes">
+                            href={"https://aruke.dev"}
+                            target={"_blank"}
+                            aria-label="open my blog/website">
                             <PublicRounded/>
                         </IconButton>
                     </Toolbar>
