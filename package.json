@@ -18,6 +18,7 @@
     "typescript": "~3.7.2"
   },
   "devDependencies": {
+    "firebase-tools": "^8.10.0",
     "node-fetch": "^2.6.0",
     "p-queue": "^6.6.1",
     "pdf-merger-js": "^3.0.5",
@@ -28,7 +29,8 @@
     "start": "react-scripts start --host 0.0.0.0",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npx firebase deploy --only hosting"
   },
   "eslintConfig": {
     "extends": "react-app"
