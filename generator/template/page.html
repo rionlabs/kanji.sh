@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <title>Kanji Printer</title>
     <style>
         @page {
@@ -13,7 +14,7 @@
             height: 280mm;
             width: 210mm;
             padding-top: 16mm;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             margin-left: auto;
             margin-right: auto;
         }
@@ -46,14 +47,14 @@
             background: white;
             border-spacing: 0;
             page-break-inside: avoid;
-            border: #777777 solid 0.1pt;
+            border: #777777 solid 0.05pt;
         }
 
         tr, th, td {
             margin: 0;
             padding: 0;
             border-spacing: 0;
-            border: #777777 solid 0.1pt;
+            border: #777777 solid 0.05pt;
             text-align: center;
             align-content: center;
             page-break-inside: avoid;
@@ -165,12 +166,16 @@
                 const kanji = kanjiString.charAt(i)
                 const kanjiData = allData[kanji]
 
+                const extractData = function (dataObject, key) {
+                    return (dataObject[`wk_${key}`] || dataObject[key] || ['']).map(string => string.replace(/[\^!]/, '')).join(', ')
+                }
+
                 displayData[kanji] = {
                     svgUrl: `../build/svg/${kanji}.svg`,
                     svgUrlForWriting: `../build/svg/${kanji}.w.svg`,
-                    meaning: kanjiData['wk_meanings'] || kanjiData['meanings'],
-                    onyomi: kanjiData['wk_readings_on'] || kanjiData['readings_on'],
-                    kunyomi: kanjiData['wk_readings_kun'] || kanjiData['readings_kun']
+                    meaning: extractData(kanjiData, 'meanings'),
+                    onyomi: extractData(kanjiData, 'readings_on'),
+                    kunyomi: extractData(kanjiData, 'readings_kun')
                 }
 
                 $('body').append(template(displayData[kanji]))
