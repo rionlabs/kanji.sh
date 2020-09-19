@@ -5,9 +5,6 @@ on:
   push:
     branches: [ main ]
 
-env:
-  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-
 jobs:
   generator:
     runs-on: ubuntu-latest
@@ -86,4 +83,6 @@ jobs:
         run: yarn build
 
       - name: Deploy to Firebase Hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: npm run deploy
