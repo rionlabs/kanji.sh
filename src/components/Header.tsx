@@ -54,7 +54,9 @@ export default function Header() {
                                 size={"large"}
                                 variant={"contained"}
                                 className={classes.donateButton}
-                                aria-label="donate">
+                                href="https://www.buymeacoffee.com/aruke"
+                                target="_blank"
+                                aria-label="buy me a coffee">
                                 Buy me a Coffee
                             </Button>
                         </Hidden>
