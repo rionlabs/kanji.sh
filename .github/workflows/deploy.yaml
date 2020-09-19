@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install Yarn depedencies
-        if: steps.cache-restore.outputs.cache-hit != 'true'
+        # if: steps.cache-restore.outputs.cache-hit != 'true' This gives error code 127
         run: yarn install
 
       - name: Generte PDF files
@@ -70,7 +70,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install Yarn depedencies
-        if: steps.cache-restore.outputs.cache-hit != 'true'
+        # if: steps.cache-restore.outputs.cache-hit != 'true' This gives error code 127
         run: yarn install
 
       - name: Download PDFs to public directory
