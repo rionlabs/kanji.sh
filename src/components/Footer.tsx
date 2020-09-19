@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
     socialButton: {
         alignSelf: "center",
+        textAlign: "center",
         color: common.white,
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
@@ -52,7 +53,7 @@ export default function Footer() {
         <div className={classes.root}>
             <AppBar className={classes.appBar} position="static" color={"transparent"} elevation={0}>
                 <Container>
-                    <Grid container spacing={2} alignItems={"center"}>
+                    <Grid container spacing={2} alignItems={"center"} justify={"center"}>
                         <Grid item sm={12} md={6} className={classes.footerRow}>
                             <Typography className={classes.copyright} variant="subtitle2" noWrap>
                                 Crafted by <a className={classes.link} href="https://aruke.dev">aruke</a> with lots of
