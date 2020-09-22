@@ -67,7 +67,7 @@ export default function Jumbotron() {
 
                     </Grid>
                     {/* Jumbo Image */}
-                    <Grid item xs={12} md={6} alignItems={"center"} alignContent={"center"}>
+                    <Grid item xs={12} md={6}>
                         <Box className={classes.jumboImageContainer} alignItems={"center"}>
                             <JumboImage className={classes.jumboImage}/>
                         </Box>
