@@ -57,7 +57,7 @@ export default function Header() {
                                 href="https://www.buymeacoffee.com/aruke"
                                 target="_blank"
                                 aria-label="buy me a coffee">
-                                🍣 Buy me a Sushi
+                                <span role={"img"} aria-label={"Sushi Emoji"}>🍣</span> Buy me a Sushi
                             </Button>
                         </Hidden>
 
