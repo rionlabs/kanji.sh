@@ -24,5 +24,6 @@ When submitting design suggestions, make sure to add some images to let others k
 
 Finally, if you are a developer and know the [development stack](https://github.com/aruke/kanji-printer#-built-with), go ahead and follow the steps to run Kanji Printer locally.
 
-You can create PRs, and submit them for review. Make sure you follow the PR template correctly.
+You can create PRs, and submit them for review. Commits should be concise and having meaningful changes. You can use [Gitmojis](https://gitmoji.carloscuesta.me) to show the type of commit.  
+Make sure you follow the PR template correctly.
 If you want to work on a massive change, please make an issue first, so that other people can participate and give suggestions on how to proceed. 
