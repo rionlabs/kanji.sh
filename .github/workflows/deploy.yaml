@@ -84,5 +84,6 @@ jobs:
 
       - name: Deploy to Firebase Hosting
         env:
+          ANALYTICS_JS: ${{ secrets.ANALYTICS_JS }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: npm run deploy
