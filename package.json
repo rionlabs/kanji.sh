@@ -30,7 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "node analytics.js && npx firebase deploy --only hosting"
+    "deploy": "npx firebase deploy --only hosting"
   },
   "eslintConfig": {
     "extends": "react-app"

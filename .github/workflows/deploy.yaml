@@ -79,11 +79,13 @@ jobs:
           name: PDF_Data
           path: public/pdf
 
+      - name: Setup analytics
+        run: node analytics.js
+        env:
+          ANALYTICS_JS: ${{ secrets.ANALYTICS_JS }}
+
       - name: Build app
         run: yarn build
-
-      - name: Pass Analytics environment to NodeJs
-        run: echo ANALYTICS_JS=${{ secrets.ANALYTICS_JS }} > .env
 
       - name: Deploy to Firebase Hosting
         env:
