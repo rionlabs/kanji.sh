@@ -31,9 +31,9 @@ const JLPTData: GroupData = {
     files: []
 };
 
-const jlptColors = ['#39c370', '#c6a737', '#e89843', '#ca3f4e']
+const jlptColors = ['#39c370', '#c6a737', '#e89843', '#ca3f4e', '#ab1c2b']
 let colorCounter = 0
-for (let i = 5; i >= 2; i--) {
+for (let i = 5; i >= 1; i--) {
     JLPTData.files.push({
         title: `N${i}`,
         description: `JLPT Level N${i} Kanji`,
