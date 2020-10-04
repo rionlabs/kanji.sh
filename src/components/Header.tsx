@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
         alignSelf: 'center',
+        fontFamily: 'Quicksand, sans-serif'
     },
     donateButton: {
         alignSelf: "center",
