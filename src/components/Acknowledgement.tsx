@@ -81,12 +81,12 @@ export default function Acknowledgement() {
                             Development
                         </Typography>
                         <Typography gutterBottom variant="body1" className={classes.textBody}>
-                            Kanji Printer is open source! Check out the <a
-                            href="https://github.com/aruke/kanji-printer">GitHub page</a> to see the source code, build
-                            it yourself, file an <a href="https://github.com/aruke/kanji-printer/issues">issue</a>, and
+                            Kanji.sh is open source! Check out the <a
+                            href="https://github.com/aruke/kanji.sh">GitHub page</a> to see the source code, build
+                            it yourself, file an <a href="https://github.com/aruke/kanji.sh/issues">issue</a>, and
                             make it better!
                             Show your love by sharing this website and starring the <a
-                            href="https://github.com/aruke/kanji-printer">GitHub repository</a>!
+                            href="https://github.com/aruke/kanji.sh">GitHub repository</a>!
                         </Typography>
                     </Grid>
                 </Grid>

@@ -1,4 +1,4 @@
-# 👯‍♀️👯‍♂️ Contributing to Kanji Printer
+# 👯‍♀️👯‍♂️ Contributing to kanji.sh
 
 First of all, thanks for contributing!! 🎉
 
@@ -22,7 +22,7 @@ When submitting design suggestions, make sure to add some images to let others k
 
 ## 💻 Create Pull Requests
 
-Finally, if you are a developer and know the [development stack](https://github.com/aruke/kanji-printer#-built-with), go ahead and follow the steps to run Kanji Printer locally.
+Finally, if you are a developer and know the [development stack](https://github.com/aruke/kanji.sh#-built-with), go ahead and follow the steps to run kanji.sh locally.
 
 You can create PRs, and submit them for review. Commits should be concise and having meaningful changes. You can use [Gitmojis](https://gitmoji.carloscuesta.me) to show the type of commit.  
 Make sure you follow the PR template correctly.

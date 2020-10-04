@@ -1,6 +1,6 @@
 {
-  "short_name": "Kanji Printer",
-  "name": "Kanji Printer",
+  "short_name": "kanji.sh",
+  "name": "kanji.sh",
   "icons": [
     {
       "src": "favicon.ico",

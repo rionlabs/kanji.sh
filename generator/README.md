@@ -1,4 +1,4 @@
-# Kanji Printer: Generator
+# Kanji.sh: Generator
 
 This is the source code that generates PDF files.
 The directory structure is as follows:

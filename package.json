@@ -1,5 +1,5 @@
 {
-  "name": "kanji-printer",
+  "name": "kanji.sh",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

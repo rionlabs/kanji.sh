@@ -1,4 +1,4 @@
-# Kanji Printer
+# Kanji.sh
 
 <div align="center">
     <img width="128" height="128" src="https://kanji-printer.web.app/logo192.png" alt="Kanji Printer Logo">

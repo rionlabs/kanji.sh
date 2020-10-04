@@ -47,7 +47,7 @@ export default function Header() {
                 <Container>
                     <Toolbar className={classes.toolbar}>
                         <Typography className={classes.title} variant="h3" noWrap>
-                            Kanji Printer
+                            kanji.sh
                         </Typography>
                         <Hidden xsDown>
                             <Button
