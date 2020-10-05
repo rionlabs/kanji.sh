@@ -57,13 +57,13 @@ export default function HomeHeader() {
                             kanji.sh
                         </Typography>
 
-                        <Link className={classes.navButton} variant="h6" underline="none" noWrap>
+                        <Link className={classes.navButton} href={"/read"} variant="h6" underline="none" noWrap>
                             read
                         </Link>
-                        <Link className={classes.navButton} variant="h6" underline="none" noWrap>
+                        <Link className={classes.navButton} href={"/write"} variant="h6" underline="none" noWrap>
                             write
                         </Link>
-                        <Link className={classes.navButton} variant="h6" underline="none" noWrap>
+                        <Link className={classes.navButton} href={"/about"} variant="h6" underline="none" noWrap>
                             about
                         </Link>
                     </Toolbar>
