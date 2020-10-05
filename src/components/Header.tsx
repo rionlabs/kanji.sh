@@ -18,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'flex-start',
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(8),
+        [theme.breakpoints.down('xs')]: {
+            flexDirection: 'column',
+            paddingBottom: theme.spacing(14),
+            alignItems: 'center'
+        },
     },
     title: {
         flexGrow: 1,
@@ -51,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
         marginEnd: theme.spacing(1),
         padding: theme.spacing(2),
         color: "white"
+    },
+    navigation: {
+        [theme.breakpoints.down('xs')]: {
+            backgroundColor: 'red',
+        }
     }
 }));
 
@@ -61,26 +71,28 @@ export default function Header() {
             <AppBar className={classes.appBar} position="fixed" color={"transparent"} elevation={0}>
                 <Container>
                     <Toolbar className={classes.toolbar}>
-                        <Typography className={classes.title} variant="h3" noWrap>
+                        <Typography className={classes.title} variant="h3">
                             kanji.sh
                         </Typography>
 
-                        <Link className={classes.navButton} href={"/read"} variant="h6" underline="none" noWrap>
-                            read
-                        </Link>
-                        <Link className={classes.navButton} href={"/write"} variant="h6" underline="none" noWrap>
-                            write
-                        </Link>
-                        <Link className={classes.navButton} href={"/about"} variant="h6" underline="none" noWrap>
-                            about
-                        </Link>
-                        <IconButton
-                            className={classes.donateButton}
-                            href="https://www.buymeacoffee.com/aruke"
-                            target="_blank"
-                            aria-label="buy me a sushi">
-                            <span role={"img"} aria-label={"Sushi Emoji"}>🍣</span>
-                        </IconButton>
+                        <div>
+                            <Link className={classes.navButton} href={"/read"} variant="h6" underline="none" noWrap>
+                                read
+                            </Link>
+                            <Link className={classes.navButton} href={"/write"} variant="h6" underline="none" noWrap>
+                                write
+                            </Link>
+                            <Link className={classes.navButton} href={"/about"} variant="h6" underline="none" noWrap>
+                                about
+                            </Link>
+                            <IconButton
+                                className={classes.donateButton}
+                                href="https://www.buymeacoffee.com/aruke"
+                                target="_blank"
+                                aria-label="buy me a sushi">
+                                <span role={"img"} aria-label={"Sushi Emoji"}>🍣</span>
+                            </IconButton>
+                        </div>
                     </Toolbar>
                 </Container>
             </AppBar>
