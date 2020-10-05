@@ -1,4 +1,4 @@
-import HomeHeader from "../components/HomeHeader";
+import Header from "../components/Header";
 import React from "react";
 import {Container} from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -18,7 +18,7 @@ export default function PolicyPage() {
     const classes = useStyles();
     return (
         <div>
-            <HomeHeader/>
+            <Header/>
             <Container className={classes.spacedContainer}>
                 <Typography variant={"h3"} gutterBottom>Privacy Policy</Typography>
                 <Typography variant={"body1"} gutterBottom>

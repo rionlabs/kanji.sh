@@ -1,4 +1,4 @@
-import HomeHeader from "../components/HomeHeader";
+import Header from "../components/Header";
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {Container, Typography} from "@material-ui/core";
@@ -17,7 +17,7 @@ export default function TermsPage() {
     const classes = useStyles();
     return (
         <div>
-            <HomeHeader/>
+            <Header/>
             <Container className={classes.spacedContainer}>
                 <Typography variant={"h3"} gutterBottom>Terms &amp; Conditions</Typography>
                 <Typography variant={"body1"} gutterBottom>

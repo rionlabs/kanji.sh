@@ -2,7 +2,7 @@ import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import HomeHeader from "../components/HomeHeader";
+import Header from "../components/Header";
 
 import Box from "@material-ui/core/Box";
 import {ReactComponent as WelcomeImage} from '../images/undraw_working_late.svg';
@@ -51,7 +51,7 @@ export default function HomePage() {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <HomeHeader/>
+            <Header/>
             <Hidden mdUp>
                 <div className={classes.spacer}>
                 </div>
