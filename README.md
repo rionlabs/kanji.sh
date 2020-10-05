@@ -1,7 +1,7 @@
 # Kanji.sh
 
 <div align="center">
-    <img width="128" height="128" src="https://kanji-printer.web.app/logo192.png" alt="Kanji Printer Logo">
+    <img width="128" height="128" src="https://kanji.sh/logo192.png" alt="kanji.sh logo">
     <br/>
     <br/>
     <b> Kanji Worksheet Generator </b>
@@ -9,10 +9,10 @@
 </div>
 <br/>
 <div align="center">
-<img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/aruke/kanji-printer/Deploy?label=deploy&logo=github"> 
-<img alt="Website" src="https://img.shields.io/website?label=firebase&logo=firebase&up_color=green&up_message=web.app&url=https%3A%2F%2Fkanji-printer.web.app"> 
+<img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/aruke/kanji.sh/Deploy?label=deploy&logo=github"> 
+<img alt="Website" src="https://img.shields.io/website?label=firebase&logo=firebase&up_color=green&up_message=web.app&url=https%3A%2F%2Fkanji.sh"> 
 <img alt="Codacy grade" src="https://img.shields.io/codacy/grade/5b4867029b8b4bd1bf6b7c638d5bacee?logo=codacy"> 
-<img alt="GitHub" src="https://img.shields.io/github/license/aruke/kanji-printer"> 
+<img alt="GitHub" src="https://img.shields.io/github/license/aruke/kanji.sh"> 
 </div>
 
 ## 🇯🇵 What is it?
@@ -22,7 +22,7 @@ This code generates printable handwriting practice worksheets for **Japanese Kan
 ## 🖥 Website screenshot
 
 <div align="center">
-    <img src="https://kanji-printer.web.app/assets/desktop-screenshot.png" alt="Kanji Printer Desktop Screenshot">
+    <img src="https://kanji.sh/assets/desktop-screenshot.png" alt="Kanji.sh Desktop Screenshot">
 </div>
 
 ## 🛠 Built With
