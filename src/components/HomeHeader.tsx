@@ -5,6 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import {Link} from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,6 +44,13 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             fontWeight: 500
         }
+    },
+    donateButton: {
+        alignSelf: "center",
+        marginStart: theme.spacing(2),
+        marginEnd: theme.spacing(1),
+        padding: theme.spacing(2),
+        color: "white"
     }
 }));
 
@@ -66,6 +74,13 @@ export default function HomeHeader() {
                         <Link className={classes.navButton} href={"/about"} variant="h6" underline="none" noWrap>
                             about
                         </Link>
+                        <IconButton
+                            className={classes.donateButton}
+                            href="https://www.buymeacoffee.com/aruke"
+                            target="_blank"
+                            aria-label="buy me a sushi">
+                            <span role={"img"} aria-label={"Sushi Emoji"}>🍣</span>
+                        </IconButton>
                     </Toolbar>
                 </Container>
             </AppBar>
