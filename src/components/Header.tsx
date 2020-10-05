@@ -12,9 +12,6 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1
     },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
     appBar: {
         background: theme.palette.background.paper
     },
@@ -26,7 +23,12 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
         alignSelf: 'center',
-        fontFamily: 'Quicksand, sans-serif'
+        userSelect: 'none',
+        color: theme.palette.primary.dark,
+        fontFamily: 'Quicksand, sans-serif',
+        [theme.breakpoints.down('xs')]: {
+            textAlign: 'center',
+        },
     },
     donateButton: {
         alignSelf: "center",
@@ -46,7 +48,7 @@ export default function Header() {
         <div className={classes.root}>
             <AppBar className={classes.appBar} position="fixed" color={"transparent"} elevation={1}>
                 <Container>
-                    <Toolbar className={classes.toolbar}>
+                    <Toolbar disableGutters className={classes.toolbar}>
                         <Typography className={classes.title} variant="h3" noWrap>
                             kanji.sh
                         </Typography>
