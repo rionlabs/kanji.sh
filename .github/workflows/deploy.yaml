@@ -3,7 +3,7 @@
 name: Deploy
 on:
   push:
-    branches: [ main, migrate-to-kanji-sh ]
+    branches: [ main ]
 
 jobs:
   generator:
