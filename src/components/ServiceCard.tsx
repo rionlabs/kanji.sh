@@ -75,21 +75,22 @@ class ServiceCard extends React.Component<Props> {
             <div className={classes.root}>
                 <Grid
                     container
-                    direction={(imageDirection == Direction.start) ? 'row-reverse' : 'row'}
+                    direction={(imageDirection === Direction.start) ? 'row-reverse' : 'row'}
                     alignItems={"center"}
                     style={{minHeight: 'inherit'}}>
                     {/* Image */}
                     <Grid className={classes.imageBox} item xs={5}>
                         <Container>
-
-                            <Box style={{textAlign: (imageDirection == Direction.start) ? 'left' : 'right'}}>
-                                <object style={{width: "80%"}} type="image/svg+xml" data={imageUrl}/>
+                            <Box style={{textAlign: (imageDirection === Direction.start) ? 'left' : 'right'}}>
+                                <object style={{width: "80%"}} type="image/svg+xml" data={imageUrl}>
+                                    Study Kanji!
+                                </object>
                             </Box>
                         </Container>
                     </Grid>
 
                     {/* Text */}
-                    <Grid className={(imageDirection == Direction.start) ? classes.textBoxStart : classes.textBoxEnd}
+                    <Grid className={(imageDirection === Direction.start) ? classes.textBoxStart : classes.textBoxEnd}
                           item xs={7} alignContent={"flex-start"}
                           style={{minHeight: 'inherit'}}>
                         <Container style={{minHeight: 'inherit'}}>
