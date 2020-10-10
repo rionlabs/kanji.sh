@@ -2,7 +2,7 @@ import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Jumbotron from "../components/Jumbotron";
 import Header from "../components/Header";
-import NewFileGroup from "../components/NewFileGroup";
+import NewFileGroup from "../components/CollectionCard";
 import {Container, Grid} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({

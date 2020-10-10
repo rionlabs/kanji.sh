@@ -5,15 +5,12 @@ import Container from "@material-ui/core/Container";
 import {ReactComponent as JumboImage} from '../images/undraw_exams.svg';
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import jumbotron_background_start from '../images/jumbotron_background_start.svg';
-import jumbotron_background_end from '../images/jumbotron_background_end.svg';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(2),
-        background: `url(${jumbotron_background_start}) no-repeat, url(${jumbotron_background_end}) no-repeat`,
         backgroundBlendMode: 'lighten',
         backgroundOrigin: 'padding-box',
         backgroundSize: 'contain',

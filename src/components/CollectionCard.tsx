@@ -46,7 +46,7 @@ interface State {
     readonly elevation: number;
 }
 
-class NewFileGroup extends React.Component<Props, State> {
+class CollectionCard extends React.Component<Props, State> {
     readonly state: State = {
         elevation: NORMAL_ELEVATION
     };
@@ -95,5 +95,5 @@ class NewFileGroup extends React.Component<Props, State> {
 }
 
 // @ts-ignore
-export default withRouter(withStyles(styles)(NewFileGroup));
+export default withRouter(withStyles(styles)(CollectionCard));
 
