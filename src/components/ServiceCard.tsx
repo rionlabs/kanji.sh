@@ -10,14 +10,11 @@ const styles = (theme: Theme): StyleRules =>
     createStyles({
         root: {
             flexGrow: 1,
-            minHeight: theme.spacing(64),
+            minHeight: theme.spacing(48),
         },
-
-        startBgImage: {
-            background: "linear-gradient(0deg, rgba(42,77,144,1) 0%, rgba(26,33,129,1) 100%)",
-            clipPath: "polygon(0 0, 40% 0, 50% 100%, 0 100%)"
+        imageBox: {
+            padding:  theme.spacing(8),
         },
-        imageBox: {},
         textBoxEnd: {
             minHeight: 'inherit',
             background: "linear-gradient(0deg, rgba(55,60,129,1) 0%, rgba(62,42,144,1) 100%)",
@@ -32,14 +29,6 @@ const styles = (theme: Theme): StyleRules =>
             clipPath: "polygon(0 0, 80% 0, 100% 100%, 0 100%)",
             paddingEnd: "15%",
             paddingTop: "10%"
-        },
-        media: {
-            height: theme.spacing(32),
-            padding: theme.spacing(2),
-            display: 'flex',
-            flexDirection: 'column',
-            alignContent: 'center',
-            justifyContent: 'center'
         },
         title: {
             fontWeight: 400,
@@ -66,11 +55,7 @@ export enum Direction {
 class ServiceCard extends React.Component<Props> {
 
     public render() {
-        // const {classes/*, fileData*/} = this.props;
         const {classes, title, subtitle, imageUrl, imageDirection} = this.props;
-
-        /* {(imageDirection == Direction.start) ? classes.rootStartImage : classes.rootEndImage} */
-
         return (
             <div className={classes.root}>
                 <Grid
@@ -79,7 +64,7 @@ class ServiceCard extends React.Component<Props> {
                     alignItems={"center"}
                     style={{minHeight: 'inherit'}}>
                     {/* Image */}
-                    <Grid className={classes.imageBox} item xs={5}>
+                    <Grid className={classes.imageBox} item xs={12} sm={6}>
                         <Container>
                             <Box style={{textAlign: (imageDirection === Direction.start) ? 'left' : 'right'}}>
                                 <object style={{width: "80%"}} type="image/svg+xml" data={imageUrl}>
@@ -91,7 +76,7 @@ class ServiceCard extends React.Component<Props> {
 
                     {/* Text */}
                     <Grid className={(imageDirection === Direction.start) ? classes.textBoxStart : classes.textBoxEnd}
-                          item xs={7} alignContent={"flex-start"}
+                          item xs={12} sm={6} alignContent={"flex-start"}
                           style={{minHeight: 'inherit'}}>
                         <Container style={{minHeight: 'inherit'}}>
                             <Typography className={classes.title} gutterBottom variant="h2" component="h5">
