@@ -71,3 +71,9 @@ const frequencyData: GroupData = {
 };
 
 export const data: Array<GroupData> = [JLPTData, gradesData, wanikaniData, frequencyData];
+
+export const mappedData: Map<string, GroupData> = new Map<string, GroupData>();
+mappedData.set("jlpt", JLPTData);
+mappedData.set("grade", gradesData);
+mappedData.set("wanikani", wanikaniData);
+mappedData.set("frequency", frequencyData);
