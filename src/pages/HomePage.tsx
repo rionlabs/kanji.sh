@@ -2,8 +2,6 @@ import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Header from "../components/Header";
-
 import Box from "@material-ui/core/Box";
 import {ReactComponent as WelcomeImage} from '../images/undraw_working_late.svg';
 import undraw_book_lover from '../images/undraw_book_lover.svg';
@@ -11,6 +9,7 @@ import undraw_studying from '../images/undraw_studying.svg';
 import Typography from "@material-ui/core/Typography";
 import {Hidden} from "@material-ui/core";
 import ServiceCard, {Direction} from "../components/ServiceCard";
+import Page from "./base/Page";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,8 +49,7 @@ const useStyles = makeStyles((theme) => ({
 export default function HomePage() {
     const classes = useStyles();
     return (
-        <div className={classes.root}>
-            <Header/>
+        <Page>
             <Hidden mdUp>
                 <div className={classes.spacer}>
                 </div>
@@ -107,7 +105,6 @@ export default function HomePage() {
                                  imageUrl={undraw_studying} imageDirection={Direction.start}/>
                 </Grid>
             </Grid>
-
-        </div>
+        </Page>
     );
 }

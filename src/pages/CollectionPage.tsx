@@ -1,12 +1,11 @@
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Header from "../components/Header";
 import Grid from "@material-ui/core/Grid";
 import FileCard from "../components/FileCard";
 import Typography from "@material-ui/core/Typography";
 import {RouteComponentProps} from "react-router";
 import {GroupData, mappedData} from "../Metadata";
-import {Container} from "@material-ui/core";
+import Page from "./base/Page";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,28 +31,25 @@ export default function CollectionPage(pageParams: RouteComponentProps<PageParam
     console.log("Collection Key " + collectionKey);
 
     return (
-        <div className={classes.root}>
-            <Header/>
-            <Container>
-                <Typography gutterBottom className={classes.header} variant="h3">
-                    {groupData.heading}
-                </Typography>
-                <Grid container
-                      direction={"row"}
-                      spacing={4}
-                      alignItems={"center"}
-                      alignContent={"flex-start"}
-                      justify={"flex-start"}>
-                    {
-                        groupData.files.map(fileData => (
-                            <Grid item xs={12} sm={4} md={3} xl={2}
-                                  alignItems={"center"}>
-                                <FileCard fileData={fileData}/>
-                            </Grid>
-                        ))
-                    }
-                </Grid>
-            </Container>
-        </div>
+        <Page>
+            <Typography gutterBottom className={classes.header} variant="h3">
+                {groupData.heading}
+            </Typography>
+            <Grid container
+                  direction={"row"}
+                  spacing={4}
+                  alignItems={"center"}
+                  alignContent={"flex-start"}
+                  justify={"flex-start"}>
+                {
+                    groupData.files.map(fileData => (
+                        <Grid item xs={12} sm={4} md={3} xl={2}
+                              alignItems={"center"}>
+                            <FileCard fileData={fileData}/>
+                        </Grid>
+                    ))
+                }
+            </Grid>
+        </Page>
     );
 }
