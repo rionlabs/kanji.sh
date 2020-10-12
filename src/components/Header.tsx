@@ -4,8 +4,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import {Link} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,12 +15,12 @@ const useStyles = makeStyles((theme) => ({
     },
     appBar: {},
     toolbar: {
-        alignItems: 'flex-start',
+        alignItems: 'center',
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(8),
         [theme.breakpoints.down('xs')]: {
             flexDirection: 'column',
-            paddingBottom: theme.spacing(14),
+            paddingBottom: theme.spacing(8),
             alignItems: 'center'
         },
     },
@@ -35,20 +35,42 @@ const useStyles = makeStyles((theme) => ({
             textAlign: 'center',
         },
     },
-    navButton: {
-        alignSelf: "center",
+    titleLink: {
+        display: 'contents',
         textTransform: "none",
-        margin: theme.spacing(1),
-        padding: theme.spacing(1),
         userSelect: 'none',
         msUserSelect: 'none',
         textDecoration: 'none',
-        fontWeight: 400,
+    },
+    spacer: {
+        flex: 1,
+        padding: theme.spacing(1)
+    },
+    navButton: {
+        display: 'contents',
+        alignSelf: "center",
+        userSelect: 'none',
+        msUserSelect: 'none',
+        fontWeight: 'inherit',
         fontFamily: 'Quicksand, sans-serif',
         color: theme.palette.common.white,
-        '&:hover': {
-            fontWeight: 500
+        '&:after': {
+            width: '100%',
+            height: '6px',
+            borderRadius: '6px',
+            background: '#000'
         }
+    },
+    navLink: {
+        textTransform: "none",
+        textDecoration: 'none',
+        margin: theme.spacing(1),
+        padding: theme.spacing(1),
+        fontWeight: 500,
+    },
+    activeNavButton: {
+        color: theme.palette.common.black,
+        fontWeight: 600,
     },
     donateButton: {
         alignSelf: "center",
@@ -68,23 +90,40 @@ export default function Header() {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <AppBar className={classes.appBar} position="fixed" color={"transparent"} elevation={0}>
+            <AppBar className={classes.appBar} position="static" color={"transparent"} elevation={0}>
                 <Container>
-                    <Toolbar className={classes.toolbar}>
-                        <Typography className={classes.title} variant="h3">
-                            kanji.sh
-                        </Typography>
+                    <Toolbar className={classes.toolbar} disableGutters>
+                        <div>
+                            <NavLink to={"/"} className={classes.navLink}>
+                                <Typography className={classes.title} variant="h3">
+                                    kanji.sh
+                                </Typography>
+                            </NavLink>
+                        </div>
+
+                        <div className={classes.spacer}/>
 
                         <div>
-                            <Link className={classes.navButton} href={"/read"} variant="h6" underline="none" noWrap>
-                                read
-                            </Link>
-                            <Link className={classes.navButton} href={"/write"} variant="h6" underline="none" noWrap>
-                                write
-                            </Link>
-                            <Link className={classes.navButton} href={"/about"} variant="h6" underline="none" noWrap>
-                                about
-                            </Link>
+                            <NavLink to={"/read"} className={classes.navLink} activeClassName={classes.activeNavButton}>
+                                <Typography variant="h6" className={classes.navButton} noWrap>
+                                    read
+                                </Typography>
+                            </NavLink>
+
+                            <NavLink to={"/write"} className={classes.navLink}
+                                     activeClassName={classes.activeNavButton}>
+                                <Typography variant="h6" className={classes.navButton} noWrap>
+                                    write
+                                </Typography>
+                            </NavLink>
+
+                            <NavLink to={"/about"} className={classes.navLink}
+                                     activeClassName={classes.activeNavButton}>
+                                <Typography variant="h6" className={classes.navButton} noWrap>
+                                    about
+                                </Typography>
+                            </NavLink>
+
                             <IconButton
                                 className={classes.donateButton}
                                 href="https://www.buymeacoffee.com/aruke"
@@ -96,7 +135,6 @@ export default function Header() {
                     </Toolbar>
                 </Container>
             </AppBar>
-            <Toolbar className={classes.toolbar}/>
         </div>
     );
 }
