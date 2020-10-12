@@ -27,8 +27,8 @@ function App() {
                     <Route exact path={"/write"} component={WritePage}/>
                     <Route exact path={"/write/collection/:collectionKey"} component={CollectionPage}/>
                     <Route exact path={"/about"} component={AboutPage}/>
-                    <Route exact path={"/privacy-policy"} component={PolicyPage}/>
-                    <Route exact path={"/terms"} component={TermsPage}/>
+                    <Route exact path={"/about/privacy-policy"} component={PolicyPage}/>
+                    <Route exact path={"/about/terms"} component={TermsPage}/>
                 </Switch>
             </div>
         </MuiThemeProvider>
