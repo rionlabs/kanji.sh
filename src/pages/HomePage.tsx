@@ -93,7 +93,7 @@ export default function HomePage() {
             <div className={classes.bigSpacer}>
             </div>
 
-            <Grid container direction={"column"} justify={"center"} spacing={0}>
+            <Grid container direction={"column"} justify={"center"} spacing={10}>
                 <Grid item xs={12}>
                     <ServiceCard title={"read"}
                                  subtitle={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sem lorem, dignissim eget rhoncus eu, posuere et felis. Nunc facilisis aliquet laoreet. Etiam ac elit arcu"}
