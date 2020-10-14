@@ -7,11 +7,13 @@ import withStyles from "@material-ui/core/styles/withStyles";
 const styles = (theme: Theme): StyleRules =>
     createStyles({
         root: {
-            flexGrow: 1
+            flexGrow: 1,
+            minHeight: '100%',
+            position: 'relative'
         },
         spacedContainer: {
-            marginTop: theme.spacing(8),
-            marginBottom: theme.spacing(10)
+            paddingTop: theme.spacing(8),
+            paddingBottom: theme.spacing(18)
         }
     });
 

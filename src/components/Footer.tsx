@@ -8,7 +8,10 @@ import Hidden from "@material-ui/core/Hidden";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0
     },
     appBar: {
         paddingTop: theme.spacing(3),
