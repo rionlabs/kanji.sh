@@ -16,6 +16,7 @@ const styles = (theme: Theme): StyleRules =>
             flexGrow: 1,
             cursor: 'pointer',
             maxWidth: '320px',
+            height: '100%',
             marginStart: 'auto',
             marginEnd: 'auto'
         },
@@ -40,7 +41,8 @@ interface Props extends WithStyles<typeof styles>, RouterProps {
     collectionKey: string,
     title: string,
     description: string,
-    metaColor: string
+    metaColor: string,
+    backgroundImageUrl: string | undefined
 }
 
 interface State {
@@ -53,13 +55,13 @@ class CollectionCard extends React.Component<Props, State> {
     };
 
     public render() {
-        const {classes, title, description, metaColor} = this.props;
+        const {classes, title, description, metaColor, backgroundImageUrl} = this.props;
         const {elevation} = this.state;
 
         return <Card className={classes.root} onMouseOver={this._elevate} onMouseOut={this._lower}
                      elevation={elevation} onClick={this._onClick}>
 
-            <CardMedia className={classes.media} style={{backgroundColor: metaColor}}>
+            <CardMedia className={classes.media} style={{backgroundColor: metaColor}} image={backgroundImageUrl}>
 
             </CardMedia>
 
@@ -97,4 +99,3 @@ class CollectionCard extends React.Component<Props, State> {
 
 // @ts-ignore
 export default withRouter(withStyles(styles)(CollectionCard));
-
