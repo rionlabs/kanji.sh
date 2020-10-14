@@ -15,16 +15,17 @@ const styles = (theme: Theme): StyleRules =>
         root: {
             flexGrow: 1,
             cursor: 'pointer',
-            maxWidth: '320px'
+            maxWidth: '320px',
+            marginStart: 'auto',
+            marginEnd: 'auto'
         },
         media: {
             height: theme.spacing(22),
-            clipPath: "polygon(0 0, 101% 0%, 101% 90%, 0% 101%)"
+            clipPath: "polygon(0 0, 100% 0%, 100% 90%, 0% 100%)"
         },
         title: {
             textAlign: "center",
             fontWeight: 400,
-
             userSelect: "none",
             msUserSelect: "none",
         },
@@ -63,7 +64,7 @@ class CollectionCard extends React.Component<Props, State> {
             </CardMedia>
 
             <CardContent>
-                <Typography className={classes.title} gutterBottom variant="h4" component="h4">
+                <Typography className={classes.title} gutterBottom variant="h5" component="h5" noWrap>
                     {title}
                 </Typography>
                 <Typography gutterBottom variant="subtitle1" align="center">
