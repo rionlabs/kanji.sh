@@ -3,11 +3,20 @@ import Jumbotron from "../components/Jumbotron";
 import CollectionCard from "../components/CollectionCard";
 import {Grid} from "@material-ui/core";
 import Page from "./base/Page";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
+const useStyles = makeStyles((theme) => ({
+    bigSpacer: {
+        height: theme.spacing(8)
+    }
+}));
 
 export default function WritePage() {
+    const classes = useStyles();
     return (
         <Page>
             <Jumbotron/>
+            <div className={classes.bigSpacer}/>
             <Grid container spacing={4} justify={"center"} alignItems={"stretch"}>
                 <Grid item xs={12} sm={6} md={3}>
                     <CollectionCard
@@ -42,6 +51,7 @@ export default function WritePage() {
                         backgroundImageUrl={"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Great_Wave_off_Kanagawa2.jpg/640px-Great_Wave_off_Kanagawa2.jpg"}/>
                 </Grid>
             </Grid>
+            <div className={classes.bigSpacer}/>
         </Page>
     );
 }

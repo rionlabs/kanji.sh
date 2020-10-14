@@ -3,8 +3,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import {Grid} from "@material-ui/core";
-import {Link} from "react-router-dom";
-import Hidden from "@material-ui/core/Hidden";
+import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,26 +49,20 @@ export default function Footer() {
     return (
         <div className={classes.root}>
             <AppBar className={classes.appBar} position="static" color={"primary"} elevation={0} component={"div"}>
-                <Grid container alignItems={"center"} justify={"center"}>
+                <Grid container alignItems={"center"} justify={"center"} spacing={1}>
                     <Grid item sm={12} md={6} className={classes.footerRow}>
                         <Typography className={classes.copyright} variant="body1" noWrap>
-                            Crafted by <a className={classes.link} href="https://aruke.dev">aruke</a> with lots of Sushi
+                            Crafted by <Link underline={"none"} className={classes.link}
+                                             href="https://aruke.dev">aruke</Link> with lots of Sushi
                         </Typography>
                     </Grid>
-                    <Hidden mdUp>
-                        <Grid item className={classes.spacer}/>
-                    </Hidden>
                     <Grid item sm={12} md={6} className={classes.footerRow}>
-                        <Typography component={"a"} variant={"body1"}>
-                            <Link className={classes.navLink} to={"/about/privacy-policy"}>
-                                Privacy Policy
-                            </Link>
-                        </Typography>
-                        <Typography component={"a"} variant={"body1"}>
-                            <Link className={classes.navLink} to={"/about/terms"}>
-                                Terms Of Use
-                            </Link>
-                        </Typography>
+                        <Link variant={"body1"} className={classes.navLink} href={"/about/privacy-policy"}>
+                            Privacy Policy
+                        </Link>
+                        <Link variant={"body1"} className={classes.navLink} href={"/about/terms"}>
+                            Terms Of Use
+                        </Link>
                     </Grid>
                 </Grid>
             </AppBar>

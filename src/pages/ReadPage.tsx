@@ -3,18 +3,20 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {ReactComponent as WIPImage} from "../images/undraw_programming.svg";
+import undraw_programming from "../images/undraw_programming.svg";
 import Grid from "@material-ui/core/Grid";
 import Page from "./base/Page";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1
     },
     imageContainer: {
         textAlign: 'center',
-        maxWidth: '100%',
-        maxHeight: '300px'
+        alignSelf: 'center'
+    },
+    image: {
+        width: '100%',
     },
     centerText: {
         textAlign: 'center'
@@ -22,14 +24,11 @@ const useStyles = makeStyles(() => ({
     textField: {
         width: '100%'
     },
-    image: {
-        width: '80%',
-        height: 'auto',
-        maxWidth: '100%',
-        maxHeight: '300px'
-    },
     buttonContainer: {
         textAlign: 'center'
+    },
+    bigSpacer: {
+        height: theme.spacing(8)
     }
 }));
 
@@ -37,13 +36,14 @@ export default function ReadPage() {
     const classes = useStyles();
     return (
         <Page>
-
             <Grid container direction={"column"} alignItems={"stretch"} spacing={5} justify={"center"}>
                 <Grid item xs={12} className={classes.centerText}>
                     <Typography variant={"h3"}>Ooops!</Typography>
                 </Grid>
-                <Grid item xs={12} className={classes.imageContainer}>
-                    <WIPImage className={classes.image}/>
+                <Grid item className={classes.imageContainer} xs={12} sm={8} md={6} alignContent={"center"}>
+                    <object className={classes.image} type="image/svg+xml" data={undraw_programming}>
+                        Work in Progress
+                    </object>
                 </Grid>
                 <Grid item xs={12} className={classes.centerText}>
                     <Typography variant={"subtitle1"}>I haven't started adding reading sessions yet.</Typography>
@@ -64,6 +64,7 @@ export default function ReadPage() {
                     </Grid>
                 </Grid>
             </Grid>
+            <div className={classes.bigSpacer}/>
         </Page>
     );
 }

@@ -90,8 +90,7 @@ export default function HomePage() {
                 </Grid>
             </Container>
 
-            <div className={classes.bigSpacer}>
-            </div>
+            <div className={classes.bigSpacer}/>
 
             <Grid container direction={"column"} justify={"center"} spacing={10}>
                 <Grid item xs={12}>
@@ -105,6 +104,7 @@ export default function HomePage() {
                                  imageUrl={undraw_studying} imageDirection={Direction.start}/>
                 </Grid>
             </Grid>
+            <div className={classes.bigSpacer}/>
         </Page>
     );
 }

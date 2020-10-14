@@ -19,7 +19,7 @@ const styles = (theme: Theme): StyleRules =>
             minHeight: 'inherit',
             background: "linear-gradient(0deg, rgba(55,60,129,1) 0%, rgba(62,42,144,1) 100%)",
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 20% 100%)",
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('xs')]: {
                 clipPath: "polygon(0 20%, 100% 0, 100% 100%, 0% 100%)"
             }
         },
@@ -87,7 +87,7 @@ class ServiceCard extends React.Component<Props> {
                         alignItems={"stretch"}
                         style={{minHeight: 'inherit'}}>
                         {/* Image */}
-                        <Grid className={classes.imageBox} item xs={12} sm={6}>
+                        <Grid className={classes.imageBox} item xs={12} sm={5}>
                             <Box style={{
                                 textAlign: (imageDirection === Direction.start) ? 'center' : 'center',
                                 height: '100%'
@@ -102,7 +102,7 @@ class ServiceCard extends React.Component<Props> {
                         <Grid
                             className={(imageDirection === Direction.start) ? classes.textBoxStart : classes.textBoxEnd}
                             item
-                            xs={12} sm={6} alignContent={"flex-start"}
+                            xs={12} sm={7} alignContent={"flex-start"}
                             style={{minHeight: 'inherit'}}>
 
                             <Grid container

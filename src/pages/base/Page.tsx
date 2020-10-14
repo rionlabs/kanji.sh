@@ -12,7 +12,7 @@ const styles = (theme: Theme): StyleRules =>
             position: 'relative'
         },
         spacedContainer: {
-            paddingTop: theme.spacing(8),
+            paddingTop: theme.spacing(4),
             paddingBottom: theme.spacing(18)
         }
     });

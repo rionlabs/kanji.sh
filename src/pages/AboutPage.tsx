@@ -15,6 +15,11 @@ const KButton = styled(Button)`
     margin-bottom: 16px;
 `;
 
+const TextLogo = styled('span')`
+  font-family: 'Quicksand';
+  font-weight: 500;
+`;
+
 export default function AboutPage() {
     return (
         <Page>
@@ -23,7 +28,8 @@ export default function AboutPage() {
             </Typography>
 
             <Typography variant={"body1"} gutterBottom>
-                kanji.sh aims to become a free & more comfortable way to study kanji reading and writing. Right now,
+                <TextLogo>kanji.sh</TextLogo> aims to become a free & more comfortable way to study kanji reading and
+                writing. Right now,
                 there are hundreds of free resources available online but filled with distracting advertisements. I
                 personally feel that distracting, not letting you focus on the reading. So, I'm making this website for
                 myself and others who want to study kanji distraction-free.
@@ -41,11 +47,13 @@ export default function AboutPage() {
                 How can you help?
             </Typography>
             <Typography variant={"body1"} gutterBottom>
-                Being free & open source, kanji.sh needs all the help it can get. You can support kanji.sh in many ways.
+                Being free & open source, <TextLogo>kanji.sh</TextLogo> needs all the help it can get. You can
+                support <TextLogo>kanji.sh</TextLogo> in many ways.
             </Typography>
             <Typography gutterBottom variant="body1">
-                The simplest one is sharing kanji.sh with all people you know are learning Japanese, spread the word,
-                and let them know kanji.sh here.
+                The simplest one is sharing <TextLogo>kanji.sh</TextLogo> with all people you know are learning
+                Japanese, spread the word,
+                and let them know <TextLogo>kanji.sh</TextLogo> here.
             </Typography>
 
             <KButton href={"#"} startIcon={<ShareRounded/>}>
@@ -58,7 +66,8 @@ export default function AboutPage() {
             </Typography>
             <Typography gutterBottom variant="body1">
                 You can submit your precious suggestions for the designs or more features. If nothing, you can drop me a
-                mail telling me how I am doing with kanji.sh. Few words of encouragement never hurt!
+                mail telling me how I am doing with <TextLogo>kanji.sh</TextLogo>. Few words of encouragement never
+                hurt!
             </Typography>
 
             <KButton href={"mailto:mail@aruke.dev"} startIcon={<EmailRounded/>}>
@@ -69,7 +78,8 @@ export default function AboutPage() {
                 Contribute to the development
             </Typography>
             <Typography gutterBottom variant="body1">
-                If you are a software developer, good news for you. Kanji.sh is open source! Check out the <Link
+                If you are a software developer, good news for you. <TextLogo>kanji.sh</TextLogo> is open source! Check
+                out the <Link
                 href="https://github.com/aruke/kanji.sh">GitHub page</Link> to see the source code, build
                 it yourself, file an <Link href="https://github.com/aruke/kanji.sh/issues">issue</Link>, and
                 make it better!
@@ -85,15 +95,18 @@ export default function AboutPage() {
                 Buy me Sushi
             </Typography>
             <Typography gutterBottom variant="body1">
-                I work on kanji.sh in my free time, and it took me a considerable amount of time to build up to this
-                point. You can fuel kanji.sh by buying me some Sushi. It also covers costs for servers, domain, and
-                keeps me motivated to put more time to improve kanji.sh.
+                I work on <TextLogo>kanji.sh</TextLogo> in my free time, and it took me a considerable amount of time to
+                build up to this
+                point. You can fuel <TextLogo>kanji.sh</TextLogo> by buying me some Sushi. It also covers costs for
+                servers, domain, and
+                keeps me motivated to put more time to improve <TextLogo>kanji.sh</TextLogo>.
             </Typography>
 
             <KButton href={"https://www.buymeacoffee.com/aruke"} startIcon={<AttachMoneyRounded/>}>
                 Buy Now
             </KButton>
 
+            <br/>
             <br/>
 
             <Typography variant={"h4"} gutterBottom>
