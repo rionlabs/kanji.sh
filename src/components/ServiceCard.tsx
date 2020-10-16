@@ -11,6 +11,12 @@ const styles = (theme: Theme): StyleRules =>
         root: {
             flexGrow: 1,
             minHeight: theme.spacing(50),
+            marginTop: theme.spacing(4),
+            marginBottom: theme.spacing(4),
+        },
+        rootCard: {
+            minHeight: 'inherit',
+            borderRadius: theme.spacing(4)
         },
         imageBox: {
             padding: theme.spacing(3),
@@ -80,7 +86,7 @@ class ServiceCard extends React.Component<Props> {
         const {classes, title, subtitle, imageUrl, imageDirection} = this.props;
         return (
             <div className={classes.root}>
-                <Card style={{minHeight: 'inherit'}} elevation={6}>
+                <Card className={classes.rootCard} elevation={6}>
                     <Grid
                         container
                         direction={(imageDirection === Direction.start) ? 'row-reverse' : 'row'}

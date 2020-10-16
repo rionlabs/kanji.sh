@@ -38,6 +38,12 @@ const useStyles = makeStyles((theme) => ({
     primaryContainer: {
         minHeight: theme.spacing(48),
     },
+    serviceContainer: {
+        [theme.breakpoints.down('xs')]: {
+            width: "100%",
+            margin: "0",
+        }
+    },
     textSecondary: {},
     spacer: {
         height: theme.spacing(4)
@@ -93,7 +99,7 @@ export default function HomePage() {
 
             <div className={classes.bigSpacer}/>
 
-            <Grid container direction={"column"} justify={"center"} spacing={10}>
+            <Grid container direction={"column"} justify={"center"}>
                 <Grid item xs={12}>
                     <ServiceCard title={"read"}
                                  subtitle={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sem lorem, dignissim eget rhoncus eu, posuere et felis. Nunc facilisis aliquet laoreet. Etiam ac elit arcu"}

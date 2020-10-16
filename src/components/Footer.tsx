@@ -4,6 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import {Grid} from "@material-ui/core";
 import Link from "@material-ui/core/Link";
+import Hidden from "@material-ui/core/Hidden";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,13 +50,16 @@ export default function Footer() {
     return (
         <div className={classes.root}>
             <AppBar className={classes.appBar} position="static" color={"primary"} elevation={0} component={"div"}>
-                <Grid container alignItems={"center"} justify={"center"} spacing={1}>
+                <Grid container alignItems={"center"} justify={"center"}>
                     <Grid item sm={12} md={6} className={classes.footerRow}>
                         <Typography className={classes.copyright} variant="body1" noWrap>
                             Crafted by <Link underline={"none"} className={classes.link}
                                              href="https://aruke.dev">aruke</Link> with lots of Sushi
                         </Typography>
                     </Grid>
+                    <Hidden mdUp>
+                        <Grid item xs={12} md={"auto"} className={classes.spacer}/>
+                    </Hidden>
                     <Grid item sm={12} md={6} className={classes.footerRow}>
                         <Link variant={"body1"} className={classes.navLink} href={"/about/privacy-policy"}>
                             Privacy Policy
