@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Link from "@material-ui/core/Link";
 import Button from "@material-ui/core/Button";
 import {AttachMoneyRounded, EmailRounded, GitHub, ShareRounded} from "@material-ui/icons";
+import Config from "../app/Config";
 
 const KButton = styled(Button)`
   border-radius: 100px;
@@ -70,7 +71,7 @@ export default function AboutPage() {
                 hurt!
             </Typography>
 
-            <KButton href={"mailto:mail@aruke.dev"} startIcon={<EmailRounded/>}>
+            <KButton href={`mailto:${Config.contactEmail}`} startIcon={<EmailRounded/>}>
                 Send
             </KButton>
 
@@ -80,14 +81,14 @@ export default function AboutPage() {
             <Typography gutterBottom variant="body1">
                 If you are a software developer, good news for you. <TextLogo>kanji.sh</TextLogo> is open source! Check
                 out the <Link
-                href="https://github.com/aruke/kanji.sh">GitHub page</Link> to see the source code, build
-                it yourself, file an <Link href="https://github.com/aruke/kanji.sh/issues">issue</Link>, and
+                href={Config.githubUrl}>GitHub page</Link> to see the source code, build
+                it yourself, file an <Link href={`${Config.githubUrl}/issues`}>issue</Link>, and
                 make it better!
                 Show your love by sharing this website and starring the <Link
-                href="https://github.com/aruke/kanji.sh">GitHub repository</Link>!
+                href={Config.githubUrl}>GitHub repository</Link>!
             </Typography>
 
-            <KButton href={"https://github.com/aruke/kanji.sh"} startIcon={<GitHub/>}>
+            <KButton href={Config.githubUrl} startIcon={<GitHub/>}>
                 GitHub Repository
             </KButton>
 
@@ -102,7 +103,7 @@ export default function AboutPage() {
                 keeps me motivated to put more time to improve <TextLogo>kanji.sh</TextLogo>.
             </Typography>
 
-            <KButton href={"https://www.buymeacoffee.com/aruke"} startIcon={<AttachMoneyRounded/>}>
+            <KButton href={Config.bmcUrl} startIcon={<AttachMoneyRounded/>}>
                 Buy Now
             </KButton>
 

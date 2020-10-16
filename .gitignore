@@ -18,9 +18,12 @@ public/pdf/
 # misc
 .DS_Store
 .firebase
+
+# Environment files
 .env.local
 .env.development.local
 .env.test.local
+.env.production
 .env.production.local
 
 npm-debug.log*

@@ -1,16 +1,16 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Page from "./base/Page";
+import Config from "../app/Config";
 
 export default function PolicyPage() {
     return (
         <Page>
             <Typography variant={"h3"} gutterBottom>Privacy Policy</Typography>
             <Typography variant={"body1"} gutterBottom>
-                Rajanikant Deshmukh built the kanji.sh web app as
-                a Free app. This SERVICE is provided by
-                Rajanikant Deshmukh at no cost and is intended for use as
-                is.
+                {Config.maintainer} built the kanji.sh web app as
+                a Free app. This SERVICE is provided by {Config.maintainer}
+                at no cost and is intended for use as is.
             </Typography>
             <Typography variant={"body1"} gutterBottom>
                 This page is used to inform visitors regarding my
@@ -141,7 +141,8 @@ export default function PolicyPage() {
             <Typography variant={"h5"} gutterBottom>Contact Us</Typography>
             <Typography variant={"body1"} gutterBottom>
                 If you have any questions or suggestions about my
-                Privacy Policy, do not hesitate to contact me at <a href="mailto:mail@aruke.dev">mail@aruke.dev</a>.
+                Privacy Policy, do not hesitate to contact me at <a
+                href={`mailto:${Config.supportEmail}`}>{Config.supportEmail}</a>.
             </Typography>
         </Page>
     );

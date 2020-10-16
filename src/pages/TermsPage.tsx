@@ -1,6 +1,7 @@
 import React from "react";
 import {Typography} from "@material-ui/core";
 import Page from "./base/Page";
+import Config from "../app/Config";
 
 export default function TermsPage() {
     return (
@@ -12,10 +13,10 @@ export default function TermsPage() {
                 that you read them carefully before using the app. The app itself, and all the trade marks,
                 copyright,
                 database rights and other intellectual property rights related
-                to it, still belong to Rajanikant Deshmukh.
+                to it, still belong to {Config.maintainer}.
             </Typography>
             <Typography variant={"body1"} gutterBottom>
-                Rajanikant Deshmukh is committed to ensuring that the app is
+                {Config.maintainer} is committed to ensuring that the app is
                 as useful and efficient as possible. For that reason, we
                 reserve the right to make changes to the app or to charge for
                 its services, at any time and for any reason. We will never
@@ -34,11 +35,11 @@ export default function TermsPage() {
             </ul>
         </Typography>
             <Typography variant={"body1"} gutterBottom>
-                You should be aware that there are certain things that
-                Rajanikant Deshmukh will not take responsibility for. Certain
+                You should be aware that there are certain things that {Config.maintainer} will
+                not take responsibility for. Certain
                 functions of the app will require the app to have an active
                 internet connection. The connection can be Wi-Fi, or provided
-                by your mobile network provider, but Rajanikant Deshmukh
+                by your mobile network provider, but {Config.maintainer}
                 cannot take responsibility for the app not working at full
                 functionality if you don’t have access to Wi-Fi, and you don’t
                 have any of your data allowance left.
@@ -58,19 +59,19 @@ export default function TermsPage() {
                 received permission from the bill payer for using the app.
             </Typography>
             <Typography variant={"body1"} gutterBottom>
-                Along the same lines, Rajanikant Deshmukh cannot always take
+                Along the same lines, {Config.maintainer} cannot always take
                 responsibility for the way you use the app i.e. You need to
                 make sure that your device stays charged – if it runs out of
-                battery and you can’t turn it on to avail the Service,
-                Rajanikant Deshmukh cannot accept responsibility.
+                battery and you can’t turn it on to avail the Service, {Config.maintainer}
+                cannot accept responsibility.
             </Typography>
             <Typography variant={"body1"} gutterBottom>
-                With respect to Rajanikant Deshmukh’s responsibility for your
+                With respect to {Config.maintainer}’s responsibility for your
                 use of the app, when you’re using the app, it’s important to
                 bear in mind that although we endeavour to ensure that it is
                 updated and correct at all times, we do rely on third parties
                 to provide information to us so that we can make it available
-                to you. Rajanikant Deshmukh accepts no liability for any
+                to you. {Config.maintainer} accepts no liability for any
                 loss, direct or indirect, you experience as a result of
                 relying wholly on this functionality of the app.
             </Typography>
@@ -80,7 +81,7 @@ export default function TermsPage() {
                 both systems(and for any additional systems we
                 decide to extend the availability of the app to) may change,
                 and you’ll need to download the updates if you want to keep
-                using the app. Rajanikant Deshmukh does not promise that it
+                using the app. {Config.maintainer} does not promise that it
                 will always update the app so that it is relevant to you
                 and/or works with the browser version that you have
                 installed on your device. However, you promise to always
@@ -109,7 +110,7 @@ export default function TermsPage() {
             <Typography variant={"body1"} gutterBottom>
                 If you have any questions or suggestions about my
                 Terms and Conditions, do not hesitate to contact me
-                at <a href="mailto:mail@aruke.dev">mail@aruke.dev</a>.
+                at <a href={`mailto:${Config.supportEmail}`}>{Config.supportEmail}</a>.
             </Typography>
         </Page>
     );
