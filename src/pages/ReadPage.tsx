@@ -3,9 +3,10 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import undraw_programming from "../images/undraw_programming.svg";
+import construction_in_process from '../images/anim/construction_in_process.json';
 import Grid from "@material-ui/core/Grid";
 import Page from "./base/Page";
+import {AnimatedImage} from "../components/AnimatedImage";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,9 +42,7 @@ export default function ReadPage() {
                     <Typography variant={"h3"}>Ooops!</Typography>
                 </Grid>
                 <Grid item className={classes.imageContainer} xs={12} sm={8} md={6} alignContent={"center"}>
-                    <object className={classes.image} type="image/svg+xml" data={undraw_programming}>
-                        Work in Progress
-                    </object>
+                    <AnimatedImage animationData={construction_in_process} className={classes.image}/>
                 </Grid>
                 <Grid item xs={12} className={classes.centerText}>
                     <Typography variant={"subtitle1"}>I haven't started adding reading sessions yet.</Typography>

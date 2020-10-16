@@ -3,13 +3,14 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import {ReactComponent as WelcomeImage} from '../images/undraw_working_late.svg';
 import undraw_book_lover from '../images/undraw_book_lover.svg';
 import undraw_studying from '../images/undraw_studying.svg';
+import reading_book from '../images/anim/reading_book.json';
 import Typography from "@material-ui/core/Typography";
 import {Hidden} from "@material-ui/core";
 import ServiceCard, {Direction} from "../components/ServiceCard";
 import Page from "./base/Page";
+import {AnimatedImage} from "../components/AnimatedImage";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -84,7 +85,7 @@ export default function HomePage() {
                     {/* WRITE */}
                     <Grid item xs={12} md={6} style={{alignSelf: 'center'}}>
                         <Box className={classes.jumboImageContainer} alignItems={"center"}>
-                            <WelcomeImage className={classes.jumboImage}/>
+                            <AnimatedImage animationData={reading_book} className={classes.jumboImage}/>
                         </Box>
                     </Grid>
                 </Grid>
