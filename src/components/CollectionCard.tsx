@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {RouterProps, withRouter} from "react-router";
 
-const NORMAL_ELEVATION = 2;
+const NORMAL_ELEVATION = 4;
 const HOVER_ELEVATION = 10;
 
 const styles = (theme: Theme): StyleRules =>
