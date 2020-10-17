@@ -4,11 +4,12 @@ import Page from "./base/Page";
 import styled from 'styled-components';
 import Link from "@material-ui/core/Link";
 import Button from "@material-ui/core/Button";
-import {AttachMoneyRounded, EmailRounded, GitHub, ShareRounded} from "@material-ui/icons";
+import {AttachMoneyRounded, EmailRounded, GitHub} from "@material-ui/icons";
 import Config from "../app/Config";
+import ShareSheet from "../components/ShareSheet";
 
-const KButton = styled(Button)`
-  border-radius: 100px;
+export const KButton = styled(Button)`
+    border-radius: 100px;
     text-transform: none;
     padding: 8px 32px;
     background-color: #3f51b50f;
@@ -57,10 +58,7 @@ export default function AboutPage() {
                 and let them know <TextLogo>kanji.sh</TextLogo> here.
             </Typography>
 
-            <KButton href={"#"} startIcon={<ShareRounded/>}>
-                Share
-            </KButton>
-            {/* TODO: Add multiple social Buttons */}
+            <ShareSheet/>
 
             <Typography gutterBottom variant="h5">
                 Feedback & Suggestions
