@@ -14,9 +14,14 @@ const styles = (theme: Theme): StyleRules =>
     createStyles({
         root: {
             flexGrow: 1,
+            maxWidth: '320px',
+            height: '100%',
+            marginStart: 'auto',
+            marginEnd: 'auto'
         },
         media: {
             height: theme.spacing(22),
+            clipPath: "polygon(0 0, 100% 0%, 100% 90%, 0% 100%)"
         },
         title: {
             textAlign: "center",
