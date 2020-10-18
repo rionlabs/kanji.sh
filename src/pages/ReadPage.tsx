@@ -2,7 +2,6 @@ import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import construction_in_process from '../images/anim/construction_in_process.json';
 import Grid from "@material-ui/core/Grid";
 import Page from "./base/Page";
@@ -28,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
     buttonContainer: {
         textAlign: 'center'
     },
+    roundButton: {
+        borderRadius: theme.spacing(16),
+        textTransform: 'none'
+    },
     bigSpacer: {
         height: theme.spacing(8)
     }
@@ -49,18 +52,10 @@ export default function ReadPage() {
                     <Typography variant={"subtitle1"}>If you would like it, signup for the updates. No spams, I
                         promise!</Typography>
                 </Grid>
-                <Grid item xs={12}>
-                    <Grid container direction={"row"} alignItems={"center"} justify={"center"} spacing={2}>
-                        <Grid item xs={12} sm={8} md={6} alignContent={"stretch"}>
-                            <form noValidate autoComplete="off">
-                                <TextField className={classes.textField} id="outlined-basic" label="Email"
-                                           variant="outlined"/>
-                            </form>
-                        </Grid>
-                        <Grid item xs={12} sm={4} md={4} className={classes.buttonContainer}>
-                            <Button variant={"contained"} size={"large"} color={"primary"}>Let me know!</Button>
-                        </Grid>
-                    </Grid>
+                <Grid item xs={12} className={classes.buttonContainer}>
+                    <Button className={classes.roundButton} target={"_blank"}
+                            href={"https://forms.gle/SYgRsPGE1Zhq2GKe8"}
+                            variant={"contained"} size={"large"} color={"primary"}>Subscribe for Updates!</Button>
                 </Grid>
             </Grid>
             <div className={classes.bigSpacer}/>
