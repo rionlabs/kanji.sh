@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import footer_background from '../images/footer_background.svg';
 import Footer from "./Footer";
+import {Link} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,10 +56,11 @@ export default function Acknowledgement() {
                             KanjiVG
                         </Typography>
                         <Typography gutterBottom variant="body1" className={classes.textBody}>
-                            Kanji stroke diagrams are based on data from <a
-                            href={"http://kanjivg.tagaini.net/"}>KanjiVG</a>, which is copyright © 2009-2012 Ulrich Apel
-                            and released under the <a href={"https://creativecommons.org/licenses/by-sa/3.0/"}>Creative
-                            Commons Attribution-Share Alike 3.0</a> license.
+                            Kanji stroke diagrams are based on data from <Link
+                            href={"http://kanjivg.tagaini.net/"}>KanjiVG</Link>, which is copyright © 2009-2012 Ulrich
+                            Apel
+                            and released under the <Link href={"https://creativecommons.org/licenses/by-sa/3.0/"}>Creative
+                            Commons Attribution-Share Alike 3.0</Link> license.
                         </Typography>
                     </Grid>
 
@@ -67,13 +69,14 @@ export default function Acknowledgement() {
                             Sources
                         </Typography>
                         <Typography gutterBottom variant="body1" className={classes.textBody}>
-                            JLPT kanji data comes from Peter van der Woude's <a
-                            href={"https://jlptstudy.net"}>JLPTStudy</a> study site.
-                            Grades & frequency kanji data is taken from <a
-                            href={"https://en.wikipedia.org/wiki/Kyōiku_kanji"}>Wikipedia</a> page.
-                            Wanikani level data comes from <a href={"https://docs.api.wanikani.com/"}>Wanikani API</a>.
-                            Meanings & Readings data is copied from David Gouveia's <a
-                            href={"https://github.com/davidluzgouveia/kanji-data"}>GitHub</a> project.
+                            JLPT kanji data comes from Peter van der Woude's <Link
+                            href={"https://jlptstudy.net"}>JLPTStudy</Link> study site.
+                            Grades & frequency kanji data is taken from <Link
+                            href={"https://en.wikipedia.org/wiki/Kyōiku_kanji"}>Wikipedia</Link> page.
+                            Wanikani level data comes from <Link href={"https://docs.api.wanikani.com/"}>Wanikani
+                            API</Link>.
+                            Meanings & Readings data is copied from David Gouveia's <Link
+                            href={"https://github.com/davidluzgouveia/kanji-data"}>GitHub</Link> project.
                         </Typography>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -81,12 +84,12 @@ export default function Acknowledgement() {
                             Development
                         </Typography>
                         <Typography gutterBottom variant="body1" className={classes.textBody}>
-                            Kanji.sh is open source! Check out the <a
-                            href="https://github.com/aruke/kanji.sh">GitHub page</a> to see the source code, build
-                            it yourself, file an <a href="https://github.com/aruke/kanji.sh/issues">issue</a>, and
+                            Kanji.sh is open source! Check out the <Link
+                            href="https://github.com/aruke/kanji.sh">GitHub page</Link> to see the source code, build
+                            it yourself, file an <Link href="https://github.com/aruke/kanji.sh/issues">issue</Link>, and
                             make it better!
-                            Show your love by sharing this website and starring the <a
-                            href="https://github.com/aruke/kanji.sh">GitHub repository</a>!
+                            Show your love by sharing this website and starring the <Link
+                            href="https://github.com/aruke/kanji.sh">GitHub repository</Link>!
                         </Typography>
                     </Grid>
                 </Grid>

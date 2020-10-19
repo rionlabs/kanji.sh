@@ -2,6 +2,7 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Page from "./base/Page";
 import Config from "../app/Config";
+import {Link} from "@material-ui/core";
 
 export default function PolicyPage() {
     return (
@@ -46,8 +47,8 @@ export default function PolicyPage() {
                 Link to privacy policy of third party service providers used
                 by the app
                 <ul>
-                    <li><a href="https://firebase.google.com/policies/analytics" target="_blank"
-                           rel="noopener noreferrer">Google Analytics for Firebase</a></li>
+                    <li><Link href="https://firebase.google.com/policies/analytics" target="_blank"
+                              rel="noopener noreferrer">Google Analytics for Firebase</Link></li>
                 </ul>
             </Typography>
             <Typography variant={"h5"} gutterBottom>Log Data</Typography>
@@ -141,8 +142,8 @@ export default function PolicyPage() {
             <Typography variant={"h5"} gutterBottom>Contact Us</Typography>
             <Typography variant={"body1"} gutterBottom>
                 If you have any questions or suggestions about my
-                Privacy Policy, do not hesitate to contact me at <a
-                href={`mailto:${Config.supportEmail}`}>{Config.supportEmail}</a>.
+                Privacy Policy, do not hesitate to contact me at <Link
+                href={`mailto:${Config.supportEmail}`}>{Config.supportEmail}</Link>.
             </Typography>
         </Page>
     );

@@ -2,6 +2,7 @@ import React from "react";
 import {Typography} from "@material-ui/core";
 import Page from "./base/Page";
 import Config from "../app/Config";
+import Link from "@material-ui/core/Link";
 
 export default function TermsPage() {
     return (
@@ -30,8 +31,8 @@ export default function TermsPage() {
             Link to Terms and Conditions of third party service
             providers used by the app
             <ul>
-                <li><a href="https://firebase.google.com/terms/analytics" target="_blank"
-                       rel="noopener noreferrer">Google Analytics for Firebase</a></li>
+                <li><Link href="https://firebase.google.com/terms/analytics" target="_blank"
+                          rel="noopener noreferrer">Google Analytics for Firebase</Link></li>
             </ul>
         </Typography>
             <Typography variant={"body1"} gutterBottom>
@@ -110,7 +111,7 @@ export default function TermsPage() {
             <Typography variant={"body1"} gutterBottom>
                 If you have any questions or suggestions about my
                 Terms and Conditions, do not hesitate to contact me
-                at <a href={`mailto:${Config.supportEmail}`}>{Config.supportEmail}</a>.
+                at <Link href={`mailto:${Config.supportEmail}`}>{Config.supportEmail}</Link>.
             </Typography>
         </Page>
     );
