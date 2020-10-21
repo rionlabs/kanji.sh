@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import IconButton from "@material-ui/core/IconButton";
 import {NavLink} from "react-router-dom";
+import FirebaseContext from "../firebase/Context";
+import Firebase from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -92,47 +94,58 @@ export default function Header() {
         <div className={classes.root}>
             <AppBar className={classes.appBar} position="static" color={"transparent"} elevation={0}>
                 <Container>
-                    <Toolbar className={classes.toolbar} disableGutters>
-                        <div>
-                            <NavLink to={"/"} className={classes.navLink}>
-                                <Typography className={classes.title} variant="h3">
-                                    kanji.sh
-                                </Typography>
-                            </NavLink>
-                        </div>
+                    <FirebaseContext.Consumer>
+                        {(firebase: Firebase) =>
+                            <Toolbar className={classes.toolbar} disableGutters>
+                                <div>
+                                    <NavLink to={"/"} className={classes.navLink}
+                                             onClick={() => firebase.analytics.logEvent("navigation", {path: 'home'})}>
+                                        <Typography className={classes.title} variant="h3">
+                                            kanji.sh
+                                        </Typography>
+                                    </NavLink>
+                                </div>
 
-                        <div className={classes.spacer}/>
+                                <div className={classes.spacer}/>
 
-                        <div>
-                            <NavLink to={"/read"} className={classes.navLink} activeClassName={classes.activeNavButton}>
-                                <Typography variant="h6" className={classes.navButton} noWrap>
-                                    read
-                                </Typography>
-                            </NavLink>
+                                <div>
+                                    <NavLink to={"/read"} className={classes.navLink}
+                                             activeClassName={classes.activeNavButton}
+                                             onClick={() => firebase.analytics.logEvent("navigation", {path: 'read'})}>
+                                        <Typography variant="h6" className={classes.navButton} noWrap>
+                                            read
+                                        </Typography>
+                                    </NavLink>
 
-                            <NavLink to={"/write"} className={classes.navLink}
-                                     activeClassName={classes.activeNavButton}>
-                                <Typography variant="h6" className={classes.navButton} noWrap>
-                                    write
-                                </Typography>
-                            </NavLink>
+                                    <NavLink to={"/write"} className={classes.navLink}
+                                             activeClassName={classes.activeNavButton}
+                                             onClick={() => firebase.analytics.logEvent("navigation", {path: 'write'})}>
+                                        <Typography variant="h6" className={classes.navButton} noWrap>
+                                            write
+                                        </Typography>
+                                    </NavLink>
 
-                            <NavLink to={"/about"} className={classes.navLink}
-                                     activeClassName={classes.activeNavButton}>
-                                <Typography variant="h6" className={classes.navButton} noWrap>
-                                    about
-                                </Typography>
-                            </NavLink>
+                                    <NavLink to={"/about"} className={classes.navLink}
+                                             activeClassName={classes.activeNavButton}
+                                             onClick={() => firebase.analytics.logEvent("navigation", {path: 'about'})}>
+                                        <Typography variant="h6" className={classes.navButton} noWrap>
+                                            about
+                                        </Typography>
+                                    </NavLink>
 
-                            <IconButton
-                                className={classes.donateButton}
-                                href="https://www.buymeacoffee.com/aruke"
-                                target="_blank"
-                                aria-label="buy me a sushi">
-                                <span role={"img"} aria-label={"Sushi Emoji"}>🍣</span>
-                            </IconButton>
-                        </div>
-                    </Toolbar>
+
+                                    <IconButton
+                                        className={classes.donateButton}
+                                        href="https://www.buymeacoffee.com/aruke"
+                                        target="_blank"
+                                        onClick={() => firebase.analytics.logEvent('bmc_click')}
+                                        aria-label="buy me a sushi">
+                                        <span role={"img"} aria-label={"Sushi Emoji"}>🍣</span>
+                                    </IconButton>
+                                </div>
+                            </Toolbar>
+                        }
+                    </FirebaseContext.Consumer>
                 </Container>
             </AppBar>
         </div>

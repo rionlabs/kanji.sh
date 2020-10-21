@@ -6,6 +6,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import {FileData} from "../Metadata";
 import withStyles from "@material-ui/core/styles/withStyles";
+import FirebaseContext from "../firebase/Context";
+import Firebase from "../firebase";
 
 const NORMAL_ELEVATION = 2;
 const HOVER_ELEVATION = 10;
@@ -68,15 +70,20 @@ class FileCard extends React.Component<Props, State> {
                     {fileData.description}
                 </Typography>
 
-                <Button className={classes.downloadButton}
-                        variant="contained"
-                        color="primary"
-                        disableElevation
-                        href={process.env.PUBLIC_URL + fileData.filePath}
-                        target="_blank"
-                        download>
-                    Download PDF
-                </Button>
+                <FirebaseContext.Consumer>
+                    {(firebase: Firebase) =>
+                        <Button className={classes.downloadButton}
+                                variant="contained"
+                                color="primary"
+                                disableElevation
+                                href={process.env.PUBLIC_URL + fileData.filePath}
+                                target="_blank"
+                                onClick={() => firebase.analytics.logEvent('file_download', {file: fileData.title})}
+                                download>
+                            Download PDF
+                        </Button>
+                    }
+                </FirebaseContext.Consumer>
             </CardContent>
         </Card>
     }
