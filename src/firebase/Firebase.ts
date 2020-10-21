@@ -1,4 +1,5 @@
-import app from "firebase";
+import app from 'firebase/app';
+import 'firebase/app';
 import firebase from "firebase";
 
 const firebaseConfig = {
@@ -10,12 +11,15 @@ const firebaseConfig = {
 }
 
 class Firebase {
-    analytics: firebase.analytics.Analytics;
+    analytics: firebase.analytics.Analytics | null;
 
     constructor() {
-        app.initializeApp(firebaseConfig);
-        this.analytics = app.analytics();
-        app.analytics().setAnalyticsCollectionEnabled(process.env.NODE_ENV === "production");
+        if (process.env.NODE_ENV === "production") {
+            app.initializeApp(firebaseConfig);
+            this.analytics = app.analytics();
+        } else {
+            this.analytics = null;
+        }
     }
 }
 

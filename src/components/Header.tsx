@@ -99,7 +99,7 @@ export default function Header() {
                             <Toolbar className={classes.toolbar} disableGutters>
                                 <div>
                                     <NavLink to={"/"} className={classes.navLink}
-                                             onClick={() => firebase.analytics.logEvent("navigation", {path: 'home'})}>
+                                             onClick={() => firebase.analytics?.logEvent("navigation", {path: 'home'})}>
                                         <Typography className={classes.title} variant="h3">
                                             kanji.sh
                                         </Typography>
@@ -111,7 +111,7 @@ export default function Header() {
                                 <div>
                                     <NavLink to={"/read"} className={classes.navLink}
                                              activeClassName={classes.activeNavButton}
-                                             onClick={() => firebase.analytics.logEvent("navigation", {path: 'read'})}>
+                                             onClick={() => firebase.analytics?.logEvent("navigation", {path: 'read'})}>
                                         <Typography variant="h6" className={classes.navButton} noWrap>
                                             read
                                         </Typography>
@@ -119,7 +119,7 @@ export default function Header() {
 
                                     <NavLink to={"/write"} className={classes.navLink}
                                              activeClassName={classes.activeNavButton}
-                                             onClick={() => firebase.analytics.logEvent("navigation", {path: 'write'})}>
+                                             onClick={() => firebase.analytics?.logEvent("navigation", {path: 'write'})}>
                                         <Typography variant="h6" className={classes.navButton} noWrap>
                                             write
                                         </Typography>
@@ -127,7 +127,7 @@ export default function Header() {
 
                                     <NavLink to={"/about"} className={classes.navLink}
                                              activeClassName={classes.activeNavButton}
-                                             onClick={() => firebase.analytics.logEvent("navigation", {path: 'about'})}>
+                                             onClick={() => firebase.analytics?.logEvent("navigation", {path: 'about'})}>
                                         <Typography variant="h6" className={classes.navButton} noWrap>
                                             about
                                         </Typography>
@@ -138,7 +138,7 @@ export default function Header() {
                                         className={classes.donateButton}
                                         href="https://www.buymeacoffee.com/aruke"
                                         target="_blank"
-                                        onClick={() => firebase.analytics.logEvent('bmc_click')}
+                                        onClick={() => firebase.analytics?.logEvent('bmc_click')}
                                         aria-label="buy me a sushi">
                                         <span role={"img"} aria-label={"Sushi Emoji"}>🍣</span>
                                     </IconButton>

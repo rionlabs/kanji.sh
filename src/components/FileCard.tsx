@@ -78,7 +78,7 @@ class FileCard extends React.Component<Props, State> {
                                 disableElevation
                                 href={process.env.PUBLIC_URL + fileData.filePath}
                                 target="_blank"
-                                onClick={() => firebase.analytics.logEvent('file_download', {file: fileData.title})}
+                                onClick={() => firebase.analytics?.logEvent('file_download', {file: fileData.title})}
                                 download>
                             Download PDF
                         </Button>
