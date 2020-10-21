@@ -9,6 +9,10 @@ class ScrollView extends PureComponent<any> {
         if (this.props.location !== prevProps.location) window.scrollTo(0, 0);
     }
 
+    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<{}>, snapshot?: any) {
+        // no op
+    }
+
     render = () => this.props.children;
 }
 
