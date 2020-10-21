@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundPosition: 'left top, right top'
     },
     jumboImageContainer: {
-        textAlign: 'center'
+        textAlign: 'center',
+        alignSelf: 'center'
     },
     jumboImage: {
         width: '70%',
@@ -50,6 +51,12 @@ const useStyles = makeStyles((theme) => ({
     },
     bigSpacer: {
         height: theme.spacing(8)
+    },
+    kanjiTooltip: {
+        backgroundColor: theme.palette.common.white,
+        color: theme.palette.primary.dark,
+        boxShadow: theme.shadows[1],
+        fontSize: '1em'
     }
 }));
 
@@ -78,11 +85,10 @@ export default function HomePage() {
                                     </Typography>
                                 </Grid>
                                 <Grid item>
-                                    <Typography gutterBottom variant="subtitle1" className={classes.textSecondary}>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam mattis placerat
-                                        ipsum id cursus. Donec lacinia eros vel euismod tempus. Mauris mollis tempus
-                                        sapien
-                                        et maximus.
+                                    <Typography gutterBottom component={"p"} variant="h6"
+                                                className={classes.textSecondary}>
+                                        It already has every kanji worksheet for writing, and soon it will have plenty
+                                        to practice reading.
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -102,12 +108,12 @@ export default function HomePage() {
             <Grid container direction={"column"} justify={"center"}>
                 <Grid item xs={12}>
                     <ServiceCard title={"read"}
-                                 subtitle={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sem lorem, dignissim eget rhoncus eu, posuere et felis. Nunc facilisis aliquet laoreet. Etiam ac elit arcu"}
+                                 subtitle="What's the point of remembering kanji if you can't read them in a sentence, eh? Soon you will get practice sessions here for the kanjis you know so that you will be able to read 飛躍的に through anything."
                                  imageUrl={undraw_book_lover} imageDirection={Direction.end}/>
                 </Grid>
                 <Grid item xs={12}>
                     <ServiceCard title={"write"}
-                                 subtitle={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sem lorem, dignissim eget rhoncus eu, posuere et felis. Nunc facilisis aliquet laoreet. Etiam ac elit arcu"}
+                                 subtitle={"Although it seems old school, writing is still one of the best ways to improve language skills. Dive in the stroke orders, and make sense of complex kanjis."}
                                  imageUrl={undraw_studying} imageDirection={Direction.start}/>
                 </Grid>
             </Grid>
