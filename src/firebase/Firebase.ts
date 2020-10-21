@@ -15,7 +15,7 @@ class Firebase {
     constructor() {
         app.initializeApp(firebaseConfig);
         this.analytics = app.analytics();
-        app.analytics().setAnalyticsCollectionEnabled(process.env.NODE_ENV == "production");
+        app.analytics().setAnalyticsCollectionEnabled(process.env.NODE_ENV === "production");
     }
 }
 
