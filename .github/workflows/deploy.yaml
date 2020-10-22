@@ -79,10 +79,10 @@ jobs:
           name: PDF_Data
           path: public/pdf
 
-      - name: Setup analytics
-        run: node analytics.js
+      - name: Setup production environment
+        run: echo $ENV_PRODUCTION > .env.production
         env:
-          ANALYTICS_JS: ${{ secrets.ANALYTICS_JS }}
+          ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
 
       - name: Build app
         run: yarn build

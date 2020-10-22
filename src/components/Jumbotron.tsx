@@ -2,18 +2,16 @@ import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import {ReactComponent as JumboImage} from '../images/undraw_exams.svg';
+import writing from '../images/anim/writing.json';
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import jumbotron_background_start from '../images/jumbotron_background_start.svg';
-import jumbotron_background_end from '../images/jumbotron_background_end.svg';
+import {AnimatedImage} from "./AnimatedImage";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(2),
-        background: `url(${jumbotron_background_start}) no-repeat, url(${jumbotron_background_end}) no-repeat`,
         backgroundBlendMode: 'lighten',
         backgroundOrigin: 'padding-box',
         backgroundSize: 'contain',
@@ -49,7 +47,7 @@ export default function Jumbotron() {
                               justify="center">
                             <Grid item>
                                 <Typography gutterBottom variant="h4" className={classes.textPrimary}>
-                                    Because Writing Matters.
+                                    Writing Matters.
                                 </Typography>
                             </Grid>
                             <Grid item>
@@ -69,7 +67,7 @@ export default function Jumbotron() {
                     {/* Jumbo Image */}
                     <Grid item xs={12} md={6}>
                         <Box className={classes.jumboImageContainer} alignItems={"center"}>
-                            <JumboImage className={classes.jumboImage}/>
+                            <AnimatedImage animationData={writing} className={classes.jumboImage}/>
                         </Box>
                     </Grid>
                 </Grid>
