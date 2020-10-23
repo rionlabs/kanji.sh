@@ -10,7 +10,7 @@ const firebaseConfig = {
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 }
 
-const enableFirebase = process.env.ENABLE_FIREBASE === 'true';
+const enableFirebase = process.env.REACT_APP_ENABLE_FIREBASE === 'true';
 
 class Firebase {
     analytics: firebase.analytics.Analytics | null;
