@@ -1,6 +1,6 @@
-import app from 'firebase/app';
-import 'firebase/app';
-import firebase from "firebase";
+import * as firebase from 'firebase/app';
+import 'firebase/analytics';
+import 'firebase/performance';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -18,10 +18,9 @@ class Firebase {
 
     constructor() {
         if (enableFirebase) {
-            app.initializeApp(firebaseConfig);
-            this.analytics = app.analytics();
-            this.performance = app.performance();
-
+            firebase.initializeApp(firebaseConfig);
+            this.analytics = firebase.analytics();
+            this.performance = firebase.performance();
         } else {
             this.analytics = null;
             this.performance = null;
