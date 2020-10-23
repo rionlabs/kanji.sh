@@ -80,7 +80,7 @@ jobs:
           path: public/pdf
 
       - name: Setup production environment variables
-        run: echo $ENV_PRODUCTION >> $GITHUB_ENV
+        run: echo $ENV_PRODUCTION | base64 --d > .env.production
         env:
           ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
 
