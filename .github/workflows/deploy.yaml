@@ -79,8 +79,8 @@ jobs:
           name: PDF_Data
           path: public/pdf
 
-      - name: Setup production environment
-        run: echo $ENV_PRODUCTION > .env.production
+      - name: Setup production environment variables
+        run: echo $ENV_PRODUCTION >> $GITHUB_ENV
         env:
           ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
 
