@@ -1,11 +1,10 @@
-import React from "react";
+import React from 'react';
+import PageLayout from "../../src/PageLayout";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import construction_in_process from '../images/anim/construction_in_process.json';
 import Grid from "@material-ui/core/Grid";
-import Page from "./base/Page";
-import {AnimatedImage} from "../components/AnimatedImage";
+import {ConstructionAnimation} from "../../src/component/AnimatedImage";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,13 +38,13 @@ const useStyles = makeStyles((theme) => ({
 export default function ReadPage() {
     const classes = useStyles();
     return (
-        <Page>
+        <PageLayout>
             <Grid container direction={"column"} alignItems={"stretch"} spacing={5} justify={"center"}>
                 <Grid item xs={12} className={classes.centerText}>
                     <Typography variant={"h3"}>Ooops!</Typography>
                 </Grid>
                 <Grid item className={classes.imageContainer} xs={12} sm={8} md={6} alignContent={"center"}>
-                    <AnimatedImage animationData={construction_in_process} className={classes.image}/>
+                    <ConstructionAnimation className={classes.image}/>
                 </Grid>
                 <Grid item xs={12} className={classes.centerText}>
                     <Typography variant={"subtitle1"}>I haven't started adding reading sessions yet.</Typography>
@@ -59,6 +58,6 @@ export default function ReadPage() {
                 </Grid>
             </Grid>
             <div className={classes.bigSpacer}/>
-        </Page>
+        </PageLayout>
     );
 }

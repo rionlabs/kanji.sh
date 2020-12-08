@@ -1,16 +1,13 @@
-import React from "react";
+import React from 'react';
+import PageLayout from "../src/PageLayout";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import undraw_book_lover from '../images/undraw_book_lover.svg';
-import undraw_studying from '../images/undraw_studying.svg';
-import reading_book from '../images/anim/reading_book.json';
 import Typography from "@material-ui/core/Typography";
 import {Hidden} from "@material-ui/core";
-import ServiceCard, {Direction} from "../components/ServiceCard";
-import Page from "./base/Page";
-import {AnimatedImage} from "../components/AnimatedImage";
+import ServiceCard, {Direction} from "../src/component/ServiceCard";
+import {ReadingBookAnimation} from "../src/component/AnimatedImage";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 export default function HomePage() {
     const classes = useStyles();
     return (
-        <Page>
+        <PageLayout>
             <Hidden mdUp>
                 <div className={classes.spacer}>
                 </div>
@@ -97,7 +94,7 @@ export default function HomePage() {
                     {/* WRITE */}
                     <Grid item xs={12} md={6} style={{alignSelf: 'center'}}>
                         <Box className={classes.jumboImageContainer} alignItems={"center"}>
-                            <AnimatedImage animationData={reading_book} className={classes.jumboImage}/>
+                            <ReadingBookAnimation className={classes.jumboImage}/>
                         </Box>
                     </Grid>
                 </Grid>
@@ -109,15 +106,15 @@ export default function HomePage() {
                 <Grid item xs={12}>
                     <ServiceCard title={"read"}
                                  subtitle="What's the point of remembering kanji if you can't read them in a sentence, eh? Soon you will get practice sessions here for the kanjis you know so that you will be able to read 飛躍的に through anything."
-                                 imageUrl={undraw_book_lover} imageDirection={Direction.end}/>
+                                 imageUrl={"/assets/svg/undraw_book_lover.svg"} imageDirection={Direction.end}/>
                 </Grid>
                 <Grid item xs={12}>
                     <ServiceCard title={"write"}
                                  subtitle={"Although it seems old school, writing is still one of the best ways to improve language skills. Dive in the stroke orders, and make sense of complex kanjis."}
-                                 imageUrl={undraw_studying} imageDirection={Direction.start}/>
+                                 imageUrl={"/assets/svg/undraw_studying.svg"} imageDirection={Direction.start}/>
                 </Grid>
             </Grid>
             <div className={classes.bigSpacer}/>
-        </Page>
+        </PageLayout>
     );
 }

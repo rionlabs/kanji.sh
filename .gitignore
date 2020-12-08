@@ -9,8 +9,12 @@
 # testing
 /coverage
 
+# NextJs Cache
+/.next
+
 # production
 /build
+
 # Don't add genrated PDFs to version control
 generator/build
 public/pdf/

@@ -98,9 +98,7 @@ class ServiceCard extends React.Component<Props> {
                                 textAlign: (imageDirection === Direction.start) ? 'center' : 'center',
                                 height: '100%'
                             }}>
-                                <object style={{width: "80%", height: '100%'}} type="image/svg+xml" data={imageUrl}>
-                                    Study Kanji!
-                                </object>
+                                <img style={{width: "80%", height: '100%'}} src={imageUrl} alt={"Study Kanji!"}/>
                             </Box>
                         </Grid>
 

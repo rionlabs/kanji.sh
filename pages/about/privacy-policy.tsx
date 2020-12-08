@@ -1,12 +1,12 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import Page from "./base/Page";
-import Config from "../app/Config";
 import {Link} from "@material-ui/core";
+import PageLayout from "../../src/PageLayout";
+import Config from "../../src/config/Config";
 
 export default function PolicyPage() {
     return (
-        <Page>
+        <PageLayout>
             <Typography variant={"h3"} gutterBottom>Privacy Policy</Typography>
             <Typography variant={"body1"} gutterBottom>
                 {Config.maintainer} built the kanji.sh web app as
@@ -145,6 +145,6 @@ export default function PolicyPage() {
                 Privacy Policy, do not hesitate to contact me at <Link
                 href={`mailto:${Config.supportEmail}`}>{Config.supportEmail}</Link>.
             </Typography>
-        </Page>
+        </PageLayout>
     );
 }

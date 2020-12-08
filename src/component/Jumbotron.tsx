@@ -2,10 +2,9 @@ import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import writing from '../images/anim/writing.json';
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import {AnimatedImage} from "./AnimatedImage";
+import {WritingAnimation} from "./AnimatedImage";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -67,7 +66,7 @@ export default function Jumbotron() {
                     {/* Jumbo Image */}
                     <Grid item xs={12} md={6}>
                         <Box className={classes.jumboImageContainer} alignItems={"center"}>
-                            <AnimatedImage animationData={writing} className={classes.jumboImage}/>
+                            <WritingAnimation className={classes.jumboImage}/>
                         </Box>
                     </Grid>
                 </Grid>

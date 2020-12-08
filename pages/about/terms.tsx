@@ -1,12 +1,12 @@
 import React from "react";
-import {Typography} from "@material-ui/core";
-import Page from "./base/Page";
-import Config from "../app/Config";
-import Link from "@material-ui/core/Link";
+import Typography from "@material-ui/core/Typography";
+import {Link} from "@material-ui/core";
+import PageLayout from "../../src/PageLayout";
+import Config from "../../src/config/Config";
 
 export default function TermsPage() {
     return (
-        <Page>
+        <PageLayout>
             <Typography variant={"h3"} gutterBottom>Terms &amp; Conditions</Typography>
             <Typography variant={"body1"} gutterBottom>
                 By using the web app (referred as 'app' from here), these terms will
@@ -113,6 +113,6 @@ export default function TermsPage() {
                 Terms and Conditions, do not hesitate to contact me
                 at <Link href={`mailto:${Config.supportEmail}`}>{Config.supportEmail}</Link>.
             </Typography>
-        </Page>
+        </PageLayout>
     );
 }

@@ -5,7 +5,8 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {RouterProps, withRouter} from "react-router";
+import {withRouter} from "next/router";
+import {WithRouterProps} from "next/dist/client/with-router";
 
 const NORMAL_ELEVATION = 4;
 const HOVER_ELEVATION = 10;
@@ -37,7 +38,7 @@ const styles = (theme: Theme): StyleRules =>
         }
     });
 
-interface Props extends WithStyles<typeof styles>, RouterProps {
+interface Props extends WithStyles<typeof styles>, WithRouterProps {
     collectionKey: string,
     title: string,
     description: string,
@@ -89,13 +90,12 @@ class CollectionCard extends React.Component<Props, State> {
         }));
     };
 
-    private _onClick = () => {
+    private _onClick = async () => {
         this.setState(() => ({
             elevation: NORMAL_ELEVATION
         }));
-        this.props.history.push(`write/collection/${this.props.collectionKey}`)
+        await this.props.router.push(`write/collection/${this.props.collectionKey}`)
     };
 }
 
-// @ts-ignore
 export default withRouter(withStyles(styles)(CollectionCard));

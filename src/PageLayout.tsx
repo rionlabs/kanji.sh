@@ -1,8 +1,9 @@
 import React, {FunctionComponent} from 'react';
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import {Container, createStyles, StyleRules, Theme, WithStyles} from "@material-ui/core";
-import withStyles from "@material-ui/core/styles/withStyles";
+import {createStyles, Theme, withStyles, WithStyles} from '@material-ui/core/styles';
+import Header from "./component/Header";
+import Footer from "./component/Footer";
+import Container from "@material-ui/core/Container";
+import {StyleRules} from "@material-ui/styles";
 
 const styles = (theme: Theme): StyleRules =>
     createStyles({
@@ -21,7 +22,7 @@ interface Props extends WithStyles<typeof styles> {
 
 }
 
-export const Page: FunctionComponent<Props> = (props) => {
+export const PageLayout: FunctionComponent<Props> = (props) => {
     const {classes, children} = props;
     return (
         <div className={classes.root}>
@@ -36,4 +37,4 @@ export const Page: FunctionComponent<Props> = (props) => {
     );
 }
 
-export default withStyles(styles)(Page);
+export default withStyles(styles)(PageLayout);

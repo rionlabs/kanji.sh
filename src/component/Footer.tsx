@@ -2,8 +2,8 @@ import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
-import {Grid} from "@material-ui/core";
-import Link from "@material-ui/core/Link";
+import {Grid, Link as MuiLink} from "@material-ui/core";
+import Link from "next/link";
 import Hidden from "@material-ui/core/Hidden";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,19 +53,23 @@ export default function Footer() {
                 <Grid container alignItems={"center"} justify={"center"}>
                     <Grid item sm={12} md={6} className={classes.footerRow}>
                         <Typography className={classes.copyright} variant="body1" noWrap>
-                            Crafted by <Link underline={"none"} className={classes.link}
-                                             href="https://aruke.dev">aruke</Link> with lots of Sushi
+                            Crafted by <MuiLink underline={"none"} className={classes.link}
+                                                href="https://aruke.dev">aruke</MuiLink> with lots of Sushi
                         </Typography>
                     </Grid>
                     <Hidden mdUp>
                         <Grid item xs={12} md={"auto"} className={classes.spacer}/>
                     </Hidden>
                     <Grid item sm={12} md={6} className={classes.footerRow}>
-                        <Link variant={"body1"} className={classes.navLink} href={"/about/privacy-policy"}>
-                            Privacy Policy
+                        <Link href={"/about/privacy-policy"}>
+                            <MuiLink variant={"body1"} className={classes.navLink}>
+                                Privacy Policy
+                            </MuiLink>
                         </Link>
-                        <Link variant={"body1"} className={classes.navLink} href={"/about/terms"}>
-                            Terms Of Use
+                        <Link href={"/about/terms"}>
+                            <MuiLink variant={"body1"} className={classes.navLink}>
+                                Terms Of Use
+                            </MuiLink>
                         </Link>
                     </Grid>
                 </Grid>

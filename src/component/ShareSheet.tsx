@@ -1,6 +1,6 @@
 import {Facebook, Reddit, Twitter} from "@material-ui/icons";
 import React from "react";
-import {KButton} from "../pages/AboutPage";
+import {KButton} from "../../pages/about";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({

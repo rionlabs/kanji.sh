@@ -1,11 +1,11 @@
+import {GetStaticPaths, GetStaticProps} from "next";
+import PageLayout from "../../../src/PageLayout";
+import {GroupData, mappedData} from "../../../src/Metadata";
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
-import FileCard from "../components/FileCard";
+import FileCard from "../../../src/component/FileCard";
 import Typography from "@material-ui/core/Typography";
-import {RouteComponentProps} from "react-router";
-import {GroupData, mappedData} from "../Metadata";
-import Page from "./base/Page";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,16 +21,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-type PageParam = { collectionKey: string };
-
-export default function CollectionPage(pageParams: RouteComponentProps<PageParam>) {
+export default function CollectionPage(pathParams: { collectionId: string }) {
     const classes = useStyles();
-    const {collectionKey} = pageParams.match.params
-    const groupData: GroupData = mappedData.get(collectionKey)!!;
-    console.log("Collection Key " + collectionKey);
-
+    const groupData: GroupData = mappedData.get(pathParams.collectionId)!!;
     return (
-        <Page>
+        <PageLayout>
             <Typography gutterBottom className={classes.header} variant="h3">
                 {groupData.heading}
             </Typography>
@@ -49,6 +44,26 @@ export default function CollectionPage(pageParams: RouteComponentProps<PageParam
                     ))
                 }
             </Grid>
-        </Page>
-    );
+        </PageLayout>
+    )
+}
+
+export const getStaticProps: GetStaticProps = async ({params}) => {
+    const collectionId = params!!.collection as string
+    return {
+        props: {
+            collectionId
+        }
+    }
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    const paths = [];
+    for (let key of mappedData.keys()) {
+        paths.push({params: {collection: key}})
+    }
+    return {
+        paths,
+        fallback: false
+    }
 }

@@ -1,30 +1,30 @@
-import React from "react";
-import {Typography} from "@material-ui/core";
-import Page from "./base/Page";
+import React from 'react';
+import PageLayout from "../../src/PageLayout";
+import {Button} from "@material-ui/core";
 import styled from 'styled-components';
+import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import Button from "@material-ui/core/Button";
+import Config from "../../src/config/Config";
+import ShareSheet from "../../src/component/ShareSheet";
 import {AttachMoneyRounded, EmailRounded, GitHub} from "@material-ui/icons";
-import Config from "../app/Config";
-import ShareSheet from "../components/ShareSheet";
 
 export const KButton = styled(Button)`
-    border-radius: 100px;
-    text-transform: none;
-    padding: 8px 32px;
-    background-color: #3f51b50f;
-    margin-top: 8px;
-    margin-bottom: 16px;
+  border-radius: 100px;
+  text-transform: none;
+  padding: 8px 32px;
+  background-color: #3f51b50f;
+  margin-top: 8px;
+  margin-bottom: 16px;
 `;
 
 const TextLogo = styled('span')`
-  font-family: 'Quicksand';
+  font-family: 'Quicksand', fantasy;
   font-weight: 500;
 `;
 
-export default function AboutPage() {
+export default function ReadPage() {
     return (
-        <Page>
+        <PageLayout>
             <Typography variant={"h3"} gutterBottom>
                 About
             </Typography>
@@ -133,6 +133,6 @@ export default function AboutPage() {
                 Meanings & Readings data is copied from David Gouveia's <Link
                 href={"https://github.com/davidluzgouveia/kanji-data"}>GitHub</Link> project.
             </Typography>
-        </Page>
+        </PageLayout>
     );
 }
