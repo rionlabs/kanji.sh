@@ -17,10 +17,16 @@ class Firebase {
     performance: firebase.performance.Performance | null;
 
     constructor() {
-        if (enableFirebase) {
+        if (enableFirebase && typeof window !== 'undefined' && !firebase.apps.length) {
+            // Check that `window` is in scope for the analytics module!
             firebase.initializeApp(firebaseConfig);
-            this.analytics = firebase.analytics();
-            this.performance = firebase.performance();
+            if ('measurementId' in firebaseConfig) {
+                this.analytics = firebase.analytics();
+                this.performance = firebase.performance();
+            } else {
+                this.analytics = null;
+                this.performance = null;
+            }
         } else {
             this.analytics = null;
             this.performance = null;
