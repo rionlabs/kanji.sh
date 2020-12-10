@@ -1,11 +1,11 @@
 // Common configuration
 const Config = {
-    githubUrl: process.env.REACT_APP_GITHUB_URL,
-    supportEmail: process.env.REACT_APP_SUPPORT_EMAIL,
-    contactEmail: process.env.REACT_APP_CONTACT_EMAIL,
-    bmcUrl: process.env.REACT_APP_BMC_URL,
-    authorWebsiteUrl: process.env.REACT_APP_AUTHOR_WEBSITE_URL,
-    maintainer: process.env.REACT_APP_MAINTAINER
+    githubUrl: process.env.GITHUB_URL,
+    supportEmail: process.env.SUPPORT_EMAIL,
+    contactEmail: process.env.CONTACT_EMAIL,
+    bmcUrl: process.env.BMC_URL,
+    authorWebsiteUrl: process.env.AUTHOR_WEBSITE_URL,
+    maintainer: process.env.MAINTAINER
 }
 
 export default Config;
