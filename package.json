@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prestart": "cp -r generator/build/pdf/* public/pdf",
     "dev": "next",
+    "prebuild": "cd generator && node main.js",
     "build": "next build",
+    "prestart": "cp -r generator/build/pdf/* public/pdf",
     "start": "next start",
     "deploy": "npx firebase deploy --only hosting",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
