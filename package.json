@@ -22,17 +22,20 @@
     "firebase": "^7.24.0"
   },
   "devDependencies": {
-    "firebase-tools": "^8.10.0",
-    "node-fetch": "^2.6.0",
-    "p-queue": "^6.6.1",
-    "pdf-merger-js": "^3.0.5",
-    "puppeteer": "^5.2.1",
+    "@fullhuman/postcss-purgecss": "^3.0.0",
     "@types/next": "latest",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "@types/styled-components": "^5.1.4",
     "@types/react-lottie": "^1.2.5",
+    "@types/styled-components": "^5.1.4",
+    "firebase-tools": "^8.10.0",
+    "node-fetch": "^2.6.0",
+    "p-queue": "^6.6.1",
+    "pdf-merger-js": "^3.0.5",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^6.7.0",
+    "puppeteer": "^5.2.1",
     "typescript": "latest"
   },
   "eslintConfig": {
