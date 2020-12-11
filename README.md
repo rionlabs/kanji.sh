@@ -10,7 +10,7 @@
 <br/>
 <div align="center">
 <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/aruke/kanji.sh/Deploy?label=deploy&logo=github"> 
-<img alt="Website" src="https://img.shields.io/website?label=firebase&logo=firebase&up_color=green&up_message=web.app&url=https%3A%2F%2Fkanji.sh"> 
+<img alt="Website" src="https://img.shields.io/website?label=vercel&logo=vercel&up_color=black&up_message=kanji.sh&url=https%3A%2F%2Fkanji.sh"> 
 <img alt="Codacy grade" src="https://img.shields.io/codacy/grade/5b4867029b8b4bd1bf6b7c638d5bacee?logo=codacy"> 
 <img alt="GitHub" src="https://img.shields.io/github/license/aruke/kanji.sh"> 
 </div>
@@ -27,17 +27,20 @@ This code generates printable handwriting practice worksheets for **Japanese Kan
 
 ## 🛠 Built With
 
--   [Node JS](https://nodejs.org/en/)
--   [React JS](https://reactjs.org/)
+-   [NodeJS](https://nodejs.org/en/)
+-   [ReactJS](https://reactjs.org/)
+-   [NextJS](https://nextjs.org/)
 -   [Material UI](https://material-ui.com/)
--   Hosted on [Firebase](https://firebase.google.com/docs/hosting)
+-   Hosted on [Vercel](https://vercel.com)
 
 ### 💻 Build Locally
 
 1.  Clone the project.
-2.  `cd` into `generator` directory, and run `node main.js`.
-3.  Wait for it to run. It may take upto 15 minutes based on the computer's processing power.
-4.  `cd` to project root & run `npm run start` to run the web app.
+2.  `cd` into the cloned direcotry, and install dependencies with `npm install`
+3.  Run script `npm start dev`.
+4.  The app will be up and running.
+
+> Note: You cannot download the PDFs while running locally.
 
 ## 💬 Contributing
 

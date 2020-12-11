@@ -174,11 +174,36 @@ async function downloadKanjiData() {
     logDone("Kanji data downloaded")
 }
 
+async function cleanup(...sourceDirs) {
+    logStart("Cleaning up unnecessary/temporary files")
+
+    // Temporary PDF pages
+    for (let sourceDir of sourceDirs) {
+        console.log(sourceDir)
+        let filenames = await fs.readdirSync(path.join(pdfOutputDir, sourceDir));
+        console.log("Got file names + " + filenames)
+        for (let filename of filenames) {
+            const filePath = path.join(pdfOutputDir, sourceDir, filename)
+            let lsStat = await fs.lstatSync(filePath)
+            if (lsStat.isDirectory()) {
+                await fs.rmdirSync(filePath, {recursive: true})
+            }
+        }
+    }
+    // Kanji Data
+    await fs.unlinkSync(`${outDir}/all-data.json`)
+    // SVGs
+    await fs.rmdirSync(svgOutputDir, { recursive: true })
+
+    logDone("Cleanup finished")
+}
+
 async function generateData() {
     await ensureDirectories(outDir, svgOutputDir, pdfOutputDir)
     await downloadKanjiData();
     await processSources("frequency", "jlpt", "grade", "wanikani")
     await generatePDFs("frequency", "jlpt", "grade", "wanikani")
+    await cleanup("frequency", "jlpt", "grade", "wanikani")
 }
 
 console.time('GenerateData');
@@ -186,6 +211,7 @@ generateData().then(function () {
     console.log(`Data Generation finished`);
     console.timeEnd('GenerateData')
     process.exit(0)
-}).catch(function () {
+}).catch(function (error) {
+    console.error('Error occurred ' + error)
     process.exit(1)
 });
