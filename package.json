@@ -4,11 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "prebuild": "cd generator && node main.js",
     "build": "next build",
-    "prestart": "cp -r generator/build/pdf/* public/pdf",
     "start": "next start",
-    "deploy": "npx firebase deploy --only hosting",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   },
   "dependencies": {
