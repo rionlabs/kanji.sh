@@ -1,0 +1,46 @@
+# Generates and Uploads PDFs to Firebase Storage bucket.
+
+name: Upload PDFs
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'generator/**'
+      - '.github/workflows/**'
+
+jobs:
+  generator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13.0
+
+      - name: Get npm cache directory path
+        id: npm-cache
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache/Restore
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.npm-cache.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install NPM depedencies
+        run: npm install
+
+      - name: Generte PDF files
+        working-directory: generator
+        run: node main.js
+
+      - name: Upload PDFs to Firebase Storage bucket
+        uses: google-github-actions/upload-cloud-storage@main
+        with:
+          credentials: ${{ secrets.STORAGE_SERVICE_ACCOUNT }}
+          path: generator/build/pdf
+          destination: ${{ secrets.STORAGE_BUCKET }}
