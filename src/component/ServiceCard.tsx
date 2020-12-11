@@ -105,8 +105,7 @@ class ServiceCard extends React.Component<Props> {
                         {/* Text */}
                         <Grid
                             className={(imageDirection === Direction.start) ? classes.textBoxStart : classes.textBoxEnd}
-                            item
-                            xs={12} sm={7} alignContent={"flex-start"}
+                            item xs={12} sm={7}
                             style={{minHeight: 'inherit'}}>
 
                             <Grid container

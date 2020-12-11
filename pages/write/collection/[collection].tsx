@@ -37,8 +37,7 @@ export default function CollectionPage(pathParams: { collectionId: string }) {
                   justify={"flex-start"}>
                 {
                     groupData.files.map(fileData => (
-                        <Grid item xs={12} sm={4} md={3} xl={2}
-                              alignItems={"center"}>
+                        <Grid key={fileData.filePath} item xs={12} sm={4} md={3} xl={2}>
                             <FileCard fileData={fileData}/>
                         </Grid>
                     ))

@@ -69,7 +69,7 @@ export default function HomePage() {
                 <Grid container direction={"row"} justify={"center"} alignItems={"stretch"} spacing={4}
                       style={{minHeight: 'inherit'}}>
                     {/* READ */}
-                    <Grid item xs={12} md={6} justify={"center"} style={{alignSelf: 'center'}}>
+                    <Grid item xs={12} md={6} style={{alignSelf: 'center'}}>
                         <Container>
                             <Grid container className={classes.textContainer}
                                   direction="column"

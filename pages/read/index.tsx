@@ -43,7 +43,7 @@ export default function ReadPage() {
                 <Grid item xs={12} className={classes.centerText}>
                     <Typography variant={"h3"}>Ooops!</Typography>
                 </Grid>
-                <Grid item className={classes.imageContainer} xs={12} sm={8} md={6} alignContent={"center"}>
+                <Grid item className={classes.imageContainer} xs={12} sm={8} md={6}>
                     <ConstructionAnimation className={classes.image}/>
                 </Grid>
                 <Grid item xs={12} className={classes.centerText}>
