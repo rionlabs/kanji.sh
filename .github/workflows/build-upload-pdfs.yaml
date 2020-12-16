@@ -46,5 +46,5 @@ jobs:
         uses: google-github-actions/upload-cloud-storage@main
         with:
           credentials: ${{ secrets.STORAGE_SERVICE_ACCOUNT }}
-          path: generator/build/pdf/${{ steps.extract_branch.outputs.branch }}
-          destination: ${{ secrets.STORAGE_BUCKET }}
+          path: generator/build/pdf
+          destination: ${{ secrets.STORAGE_BUCKET }}/${{ steps.extract_branch.outputs.branch }}
