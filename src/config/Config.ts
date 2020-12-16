@@ -13,7 +13,7 @@ const Config = {
         appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
         measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
     },
-    pdfStoragePath: `pdf/${process.env.NEXT_PUBLIC_BRANCH_NAME || 'main'}`
+    pdfStoragePath: `${process.env.NEXT_PUBLIC_BRANCH_NAME || 'main'}/pdf`
 }
 
 export default Config;
