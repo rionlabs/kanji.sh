@@ -1,3 +1,5 @@
+import Config from "./config/Config";
+
 export type GroupData = {
     heading: String,
     files: Array<FileData>
@@ -10,7 +12,7 @@ export type FileData = {
     filePath: string
 }
 
-const pdfFileDirectory = "pdf"
+const pdfFileDirectory = Config.pdfStoragePath
 
 const gradesData: GroupData = {
     heading: "Japan School Grades",

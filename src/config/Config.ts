@@ -12,7 +12,8 @@ const Config = {
         storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
         appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
         measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-    }
+    },
+    pdfStoragePath: `pdf/${process.env.VERCEL_GIT_COMMIT_REF || 'main'}`
 }
 
 export default Config;
