@@ -188,7 +188,25 @@
             }
         });
     </script>
+    <script>
+        $(document).ready(async function () {
+            const title = getParam('title')
+            const page = getParam('page')
+            $('#title').text(title)
+            $('#page_number').text(`Page ${page}`)
+        });
+    </script>
 </head>
 <body>
+<header style="position: absolute; left: 0; top: 0.5cm; text-align: center; width: 100%;">
+    <p>
+        <span id="title" style="text-transform: capitalize;"></span>
+        <span>&nbsp;</span>
+        <span id="page_number" style="color: #777777"></span>
+    </p>
+</header>
+<footer style="position: absolute; left: 0; bottom: 1cm; text-align: center; width: 100%;">
+    Created with <a style="text-decoration: none;color: #777777" href="https://kanji.sh">kanji.sh</a>
+</footer>
 </body>
 </html>

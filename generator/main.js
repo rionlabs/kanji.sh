@@ -83,7 +83,7 @@ async function generatePDF(inputFilePath, outputDirectoryPath, sourceGroup) {
                 page.setDefaultTimeout(timeout)
 
                 page.on('console', consoleObj => console.log(consoleObj.text()));
-                await page.goto(`file:///${templateAbsolutePath}?data=${kanjiArray.join("")}`, {
+                await page.goto(`file:///${templateAbsolutePath}?data=${kanjiArray.join("")}&page=${index + 1}&title=${getTitle(sourceGroup)}`, {
                     waitUntil: ['load', 'networkidle0', 'networkidle2', 'domcontentloaded']
                 });
 
@@ -193,9 +193,21 @@ async function cleanup(...sourceDirs) {
     // Kanji Data
     await fs.unlinkSync(`${outDir}/all-data.json`)
     // SVGs
-    await fs.rmdirSync(svgOutputDir, { recursive: true })
+    await fs.rmdirSync(svgOutputDir, {recursive: true})
 
     logDone("Cleanup finished")
+}
+
+function getTitle(sourceGroup) {
+    if (sourceGroup.charAt(0) === "g") {
+        return `Grade ${sourceGroup.charAt(1)}`
+    } else if (sourceGroup.charAt(0) === "n") {
+        return `JLPT N${sourceGroup.charAt(1)}`
+    } else if (!isNaN(sourceGroup)) {
+        return `Wanikani Level ${sourceGroup}`
+    } else {
+        return "Frequency"
+    }
 }
 
 async function generateData() {
