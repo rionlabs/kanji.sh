@@ -91,7 +91,7 @@ async function generatePDF(inputFilePath, outputDirectoryPath, sourceGroup) {
                 await page.pdf({
                     path: pdfName,
                     displayHeaderFooter: false,
-                    printBackground: false,
+                    printBackground: true,
                     format: 'A4',
                 });
 
