@@ -36,7 +36,6 @@ async function generatePDFs(...sourceDirs) {
             ensureDirectories(destinationDir)
 
             let filenames = fs.readdirSync(sourceDir);
-            console.log(`Filenames in source Dir ${sourceDir} are ${filenames}`)
             for (let sourceFile of filenames) {
                 const inputFilePath = path.join(sourceDir, sourceFile)
                 const outputDirectoryPath = path.join(pdfOutputDir, sourceDir)
@@ -78,7 +77,6 @@ async function generatePDF(inputFilePath, outputDirectoryPath, sourceGroup) {
         let times = 0
         for (let index = 0; index < data.length; index += 5) {
             const processing = async function (index, kanjiArray) {
-                console.log(`${inputFilePath}: Index ${index} start`)
                 const page = await browser.newPage();
                 page.setDefaultTimeout(timeout)
 
@@ -98,11 +96,10 @@ async function generatePDF(inputFilePath, outputDirectoryPath, sourceGroup) {
                 generatedPDFPaths.push(pdfName);
 
                 await page.close()
-                console.log(`${inputFilePath}: Index ${index} finished ${kanjiArray}`)
             }
 
             browserPageQueue.add(async () => processing(times++, data.slice(index, index + 5))).then(() => {
-                console.log(`${inputFilePath}: Index Added to queue`)
+                // NoOp
             })
         }
 
@@ -179,9 +176,7 @@ async function cleanup(...sourceDirs) {
 
     // Temporary PDF pages
     for (let sourceDir of sourceDirs) {
-        console.log(sourceDir)
         let filenames = await fs.readdirSync(path.join(pdfOutputDir, sourceDir));
-        console.log("Got file names + " + filenames)
         for (let filename of filenames) {
             const filePath = path.join(pdfOutputDir, sourceDir, filename)
             let lsStat = await fs.lstatSync(filePath)
