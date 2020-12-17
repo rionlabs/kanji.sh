@@ -111,7 +111,7 @@ async function generatePDF(inputFilePath, outputDirectoryPath, sourceGroup) {
 
         // Merge the generated PDFs
         const merger = new PDFMerger();
-        for (let generatedPDFPath of generatedPDFPaths.sort((a, b) => a - b)) {
+        for (let generatedPDFPath of sortByPage(generatedPDFPaths)) {
             merger.add(generatedPDFPath);
         }
         await merger.save(outputPdfFilePath);
@@ -208,6 +208,11 @@ function getTitle(sourceGroup) {
     } else {
         return "Frequency"
     }
+}
+
+function sortByPage(array) {
+    let getNumber = (path) => path.split("/").slice(-1)[0].split(".")[0]
+    return array.sort((pathA, pathB) => getNumber(pathA) - getNumber(pathB))
 }
 
 async function generateData() {
