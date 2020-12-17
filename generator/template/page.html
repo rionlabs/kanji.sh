@@ -80,11 +80,17 @@
             max-height: 15mm;
             max-width: 15mm;
             margin: auto;
+            background-size: 15mm 15mm;
+            background-position-x: 7.5mm;
+            background-position-y: 7.5mm;
+            background-origin: padding-box;
+            background-image: linear-gradient(to right, #E5E5E5 1px, transparent 1px),
+            linear-gradient(to bottom, #E5E5E5 1px, transparent 1px);
         }
 
         .small-square > object {
-            height: 10mm;
-            width: 10mm;
+            height: 13mm;
+            width: 13mm;
         }
 
         #kvg {
@@ -182,7 +188,25 @@
             }
         });
     </script>
+    <script>
+        $(document).ready(async function () {
+            const title = getParam('title')
+            const page = getParam('page')
+            $('#title').text(title)
+            $('#page_number').text(`Page ${page}`)
+        });
+    </script>
 </head>
 <body>
+<header style="position: absolute; left: 0; top: 0.5cm; text-align: center; width: 100%;">
+    <p>
+        <span id="title" style="text-transform: capitalize;"></span>
+        <span>&nbsp;</span>
+        <span id="page_number" style="color: #777777"></span>
+    </p>
+</header>
+<footer style="position: absolute; left: 0; bottom: 1cm; text-align: center; width: 100%;">
+    Created with <a style="text-decoration: none;color: #777777" href="https://kanji.sh">kanji.sh</a>
+</footer>
 </body>
 </html>
