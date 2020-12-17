@@ -111,7 +111,7 @@ async function generatePDF(inputFilePath, outputDirectoryPath, sourceGroup) {
 
         // Merge the generated PDFs
         const merger = new PDFMerger();
-        for (let generatedPDFPath of generatedPDFPaths.sort()) {
+        for (let generatedPDFPath of generatedPDFPaths.sort((a, b) => a - b)) {
             merger.add(generatedPDFPath);
         }
         await merger.save(outputPdfFilePath);
