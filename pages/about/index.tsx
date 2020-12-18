@@ -1,21 +1,12 @@
 import React from 'react';
 import PageLayout from "../../src/PageLayout";
-import {Button} from "@material-ui/core";
 import styled from 'styled-components';
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import Config from "../../src/config/Config";
-import ShareSheet from "../../src/component/ShareSheet";
+import ShareSheet from "../../src/component/molecules/ShareSheet";
 import {AttachMoneyRounded, EmailRounded, GitHub} from "@material-ui/icons";
-
-export const KButton = styled(Button)`
-  border-radius: 100px;
-  text-transform: none;
-  padding: 8px 32px;
-  background-color: #3f51b50f;
-  margin-top: 8px;
-  margin-bottom: 16px;
-`;
+import LinkButton from "../../src/component/atoms/LinkButton";
 
 const TextLogo = styled('span')`
   font-family: 'Quicksand', fantasy;
@@ -69,9 +60,9 @@ export default function ReadPage() {
                 hurt!
             </Typography>
 
-            <KButton href={`mailto:${Config.contactEmail}`} startIcon={<EmailRounded/>}>
+            <LinkButton link={`mailto:${Config.contactEmail}`} startIcon={<EmailRounded/>}>
                 Send
-            </KButton>
+            </LinkButton>
 
             <Typography gutterBottom variant="h5">
                 Contribute to the development
@@ -86,9 +77,9 @@ export default function ReadPage() {
                 href={Config.githubUrl}>GitHub repository</Link>!
             </Typography>
 
-            <KButton href={Config.githubUrl} startIcon={<GitHub/>}>
+            <LinkButton link={Config.githubUrl} startIcon={<GitHub/>}>
                 GitHub Repository
-            </KButton>
+            </LinkButton>
 
             <Typography gutterBottom variant="h5">
                 Buy me Sushi
@@ -101,9 +92,9 @@ export default function ReadPage() {
                 keeps me motivated to put more time to improve <TextLogo>kanji.sh</TextLogo>.
             </Typography>
 
-            <KButton href={Config.bmcUrl} startIcon={<AttachMoneyRounded/>}>
+            <LinkButton link={Config.bmcUrl} startIcon={<AttachMoneyRounded/>}>
                 Buy Now
-            </KButton>
+            </LinkButton>
 
             <br/>
             <br/>
