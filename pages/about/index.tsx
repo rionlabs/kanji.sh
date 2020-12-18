@@ -1,17 +1,12 @@
 import React from 'react';
 import PageLayout from "../../src/PageLayout";
-import styled from 'styled-components';
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import Config from "../../src/config/Config";
 import ShareSheet from "../../src/component/molecules/ShareSheet";
 import {AttachMoneyRounded, EmailRounded, GitHub} from "@material-ui/icons";
 import LinkButton from "../../src/component/atoms/LinkButton";
-
-const TextLogo = styled('span')`
-  font-family: 'Quicksand', fantasy;
-  font-weight: 500;
-`;
+import TextLogo from "../../src/component/atoms/TextLogo";
 
 export default function ReadPage() {
     return (
@@ -21,7 +16,7 @@ export default function ReadPage() {
             </Typography>
 
             <Typography variant={"body1"} gutterBottom>
-                <TextLogo>kanji.sh</TextLogo> aims to become a free & more comfortable way to study kanji reading and
+                <TextLogo/> aims to become a free & more comfortable way to study kanji reading and
                 writing. Right now,
                 there are hundreds of free resources available online but filled with distracting advertisements. I
                 personally feel that distracting, not letting you focus on the reading. So, I'm making this website for
@@ -40,13 +35,13 @@ export default function ReadPage() {
                 How can you help?
             </Typography>
             <Typography variant={"body1"} gutterBottom>
-                Being free & open source, <TextLogo>kanji.sh</TextLogo> needs all the help it can get. You can
-                support <TextLogo>kanji.sh</TextLogo> in many ways.
+                Being free & open source, <TextLogo/> needs all the help it can get. You can
+                support <TextLogo/> in many ways.
             </Typography>
             <Typography gutterBottom variant="body1">
-                The simplest one is sharing <TextLogo>kanji.sh</TextLogo> with all people you know are learning
+                The simplest one is sharing <TextLogo/> with all people you know are learning
                 Japanese, spread the word,
-                and let them know <TextLogo>kanji.sh</TextLogo> here.
+                and let them know <TextLogo/> here.
             </Typography>
 
             <ShareSheet/>
@@ -56,7 +51,7 @@ export default function ReadPage() {
             </Typography>
             <Typography gutterBottom variant="body1">
                 You can submit your precious suggestions for the designs or more features. If nothing, you can drop me a
-                mail telling me how I am doing with <TextLogo>kanji.sh</TextLogo>. Few words of encouragement never
+                mail telling me how I am doing with <TextLogo/>. Few words of encouragement never
                 hurt!
             </Typography>
 
@@ -68,7 +63,7 @@ export default function ReadPage() {
                 Contribute to the development
             </Typography>
             <Typography gutterBottom variant="body1">
-                If you are a software developer, good news for you. <TextLogo>kanji.sh</TextLogo> is open source! Check
+                If you are a software developer, good news for you. <TextLogo/> is open source! Check
                 out the <Link
                 href={Config.githubUrl}>GitHub page</Link> to see the source code, build
                 it yourself, file an <Link href={`${Config.githubUrl}/issues`}>issue</Link>, and
@@ -85,11 +80,11 @@ export default function ReadPage() {
                 Buy me Sushi
             </Typography>
             <Typography gutterBottom variant="body1">
-                I work on <TextLogo>kanji.sh</TextLogo> in my free time, and it took me a considerable amount of time to
+                I work on <TextLogo/> in my free time, and it took me a considerable amount of time to
                 build up to this
-                point. You can fuel <TextLogo>kanji.sh</TextLogo> by buying me some Sushi. It also covers costs for
+                point. You can fuel <TextLogo/> by buying me some Sushi. It also covers costs for
                 servers, domain, and
-                keeps me motivated to put more time to improve <TextLogo>kanji.sh</TextLogo>.
+                keeps me motivated to put more time to improve <TextLogo/>.
             </Typography>
 
             <LinkButton link={Config.bmcUrl} startIcon={<AttachMoneyRounded/>}>
