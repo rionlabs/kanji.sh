@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Link from 'next/link';
 import {logEvent} from "../firebase";
 import Spacer from "./atoms/Spacer";
+import {HeaderNav} from "./molecules/HeaderNav";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,31 +45,12 @@ const useStyles = makeStyles((theme) => ({
         msUserSelect: 'none',
         textDecoration: 'none',
     },
-    navButton: {
-        display: 'contents',
-        alignSelf: "center",
-        userSelect: 'none',
-        msUserSelect: 'none',
-        fontWeight: 'inherit',
-        fontFamily: 'Quicksand, sans-serif',
-        color: theme.palette.common.white,
-        '&:after': {
-            width: '100%',
-            height: '6px',
-            borderRadius: '6px',
-            background: '#000'
-        }
-    },
     navLink: {
         textTransform: "none",
         textDecoration: 'none',
         margin: theme.spacing(1),
         padding: theme.spacing(1),
         fontWeight: 500,
-    },
-    activeNavButton: {
-        color: theme.palette.common.black,
-        fontWeight: 600,
     },
     donateButton: {
         alignSelf: "center",
@@ -91,7 +73,7 @@ export default function Header() {
         <div className={classes.root}>
             <AppBar className={classes.appBar} position="static" color={"transparent"} elevation={0}>
                 <Container>
-                    <Toolbar className={classes.toolbar} disableGutters>
+                    <Toolbar className={classes.toolbar}>
                         <div>
                             <Link href={"/"}>
                                 <a className={classes.navLink}
@@ -106,35 +88,15 @@ export default function Header() {
                         <Spacer/>
 
                         <div>
-                            <Link href={"/read"}>
-                                <a className={classes.navLink}
-                                    /*activeClassName={classes.activeNavButton}*/
-                                   onClick={() => logEvent("navigation", {path: 'read'})}>
-                                    <Typography variant="h6" className={classes.navButton} noWrap>
-                                        read
-                                    </Typography>
-                                </a>
-                            </Link>
-
-                            <Link href={"/write"}>
-                                <a className={classes.navLink}
-                                    /*activeClassName={classes.activeNavButton}*/
-                                   onClick={() => logEvent("navigation", {path: 'write'})}>
-                                    <Typography variant="h6" className={classes.navButton} noWrap>
-                                        write
-                                    </Typography>
-                                </a>
-                            </Link>
-
-                            <Link href={"/about"}>
-                                <a className={classes.navLink}
-                                    /*activeClassName={classes.activeNavButton}*/
-                                   onClick={() => logEvent("navigation", {path: 'about'})}>
-                                    <Typography variant="h6" className={classes.navButton} noWrap>
-                                        about
-                                    </Typography>
-                                </a>
-                            </Link>
+                            <HeaderNav href={"/read"} eventPath={"read"}>
+                                read
+                            </HeaderNav>
+                            <HeaderNav href={"/write"} eventPath={"write"}>
+                                write
+                            </HeaderNav>
+                            <HeaderNav href={"/about"} eventPath={"about"}>
+                                about
+                            </HeaderNav>
 
                             <IconButton
                                 className={classes.donateButton}
