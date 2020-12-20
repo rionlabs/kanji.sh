@@ -3,7 +3,6 @@ import React from "react";
 import {styled} from "@material-ui/core";
 import LinkButton from "../atoms/LinkButton";
 
-// FixMe Margin
 const SocialButton = styled(LinkButton)(({theme}) => ({
     marginRight: theme.spacing(2)
 }))
