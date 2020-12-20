@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import {WritingAnimation} from "./AnimatedImage";
+import {WritingAnimation} from "./atoms/AnimatedImage";
 
 const useStyles = makeStyles((theme) => ({
     root: {

@@ -7,7 +7,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import {Hidden} from "@material-ui/core";
 import ServiceCard, {Direction} from "../src/component/ServiceCard";
-import {ReadingBookAnimation} from "../src/component/AnimatedImage";
+import {ReadingBookAnimation} from "../src/component/atoms/AnimatedImage";
 
 const useStyles = makeStyles((theme) => ({
     root: {
