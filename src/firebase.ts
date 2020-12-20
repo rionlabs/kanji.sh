@@ -20,11 +20,15 @@ function initFirebase() {
 }
 
 function getDownloadUrl(fileData: FileData): Promise<string> {
-    return firebase.storage().ref(fileData.filePath).getDownloadURL()
+    if (firebase.apps.length)
+        return firebase.storage().ref(fileData.filePath).getDownloadURL()
+    else
+        return Promise.reject(Error("Storage not available"));
 }
 
 function logEvent(eventName: string, eventParams?: { [key: string]: any },) {
-    firebase.analytics().logEvent(eventName, eventParams);
+    if (firebase.apps.length)
+        firebase.analytics().logEvent(eventName, eventParams);
 }
 
 initFirebase()
