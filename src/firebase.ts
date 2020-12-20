@@ -29,6 +29,8 @@ function getDownloadUrl(fileData: FileData): Promise<string> {
 function logEvent(eventName: string, eventParams?: { [key: string]: any },) {
     if (firebase.apps.length)
         firebase.analytics().logEvent(eventName, eventParams);
+    else
+        console.log(`Event: (${eventName}) {${JSON.stringify(eventParams)}`)
 }
 
 initFirebase()
