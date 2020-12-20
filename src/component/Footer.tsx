@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import {Grid, Link as MuiLink} from "@material-ui/core";
 import Link from "next/link";
 import Hidden from "@material-ui/core/Hidden";
+import Spacer from "./atoms/Spacer";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,9 +28,6 @@ const useStyles = makeStyles((theme) => ({
     },
     footerRow: {
         textAlign: 'center'
-    },
-    spacer: {
-        padding: theme.spacing(1),
     },
     link: {
         textDecoration: 'none',
@@ -58,7 +56,7 @@ export default function Footer() {
                         </Typography>
                     </Grid>
                     <Hidden mdUp>
-                        <Grid item xs={12} md={"auto"} className={classes.spacer}/>
+                        <Spacer/>
                     </Hidden>
                     <Grid item sm={12} md={6} className={classes.footerRow}>
                         <Link href={"/about/privacy-policy"}>

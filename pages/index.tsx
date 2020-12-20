@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import {Hidden} from "@material-ui/core";
 import ServiceCard, {Direction} from "../src/component/ServiceCard";
 import {ReadingBookAnimation} from "../src/component/atoms/AnimatedImage";
+import Spacer from "../src/component/atoms/Spacer";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,12 +44,6 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     textSecondary: {},
-    spacer: {
-        height: theme.spacing(4)
-    },
-    bigSpacer: {
-        height: theme.spacing(8)
-    },
     kanjiTooltip: {
         backgroundColor: theme.palette.common.white,
         color: theme.palette.primary.dark,
@@ -62,8 +57,7 @@ export default function HomePage() {
     return (
         <PageLayout>
             <Hidden mdUp>
-                <div className={classes.spacer}>
-                </div>
+                <Spacer space={2}/>
             </Hidden>
             <Container className={classes.primaryContainer}>
                 <Grid container direction={"row"} justify={"center"} alignItems={"stretch"} spacing={4}
@@ -100,7 +94,7 @@ export default function HomePage() {
                 </Grid>
             </Container>
 
-            <div className={classes.bigSpacer}/>
+            <Spacer space={4}/>
 
             <Grid container direction={"column"} justify={"center"}>
                 <Grid item xs={12}>
@@ -114,7 +108,8 @@ export default function HomePage() {
                                  imageUrl={"/assets/svg/undraw_studying.svg"} imageDirection={Direction.start}/>
                 </Grid>
             </Grid>
-            <div className={classes.bigSpacer}/>
+
+            <Spacer space={4}/>
         </PageLayout>
     );
 }

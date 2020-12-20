@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import {ConstructionAnimation} from "../../src/component/atoms/AnimatedImage";
+import Spacer from "../../src/component/atoms/Spacer";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: theme.spacing(16),
         textTransform: 'none'
     },
-    bigSpacer: {
-        height: theme.spacing(8)
-    }
 }));
 
 export default function ReadPage() {
@@ -57,7 +55,7 @@ export default function ReadPage() {
                             variant={"contained"} size={"large"} color={"primary"}>Subscribe for Updates!</Button>
                 </Grid>
             </Grid>
-            <div className={classes.bigSpacer}/>
+            <Spacer space={3}/>
         </PageLayout>
     );
 }

@@ -7,6 +7,7 @@ import Container from "@material-ui/core/Container";
 import IconButton from "@material-ui/core/IconButton";
 import Link from 'next/link';
 import {logEvent} from "../firebase";
+import Spacer from "./atoms/Spacer";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,10 +43,6 @@ const useStyles = makeStyles((theme) => ({
         userSelect: 'none',
         msUserSelect: 'none',
         textDecoration: 'none',
-    },
-    spacer: {
-        flex: 1,
-        padding: theme.spacing(1)
     },
     navButton: {
         display: 'contents',
@@ -106,7 +103,7 @@ export default function Header() {
                             </Link>
                         </div>
 
-                        <div className={classes.spacer}/>
+                        <Spacer/>
 
                         <div>
                             <Link href={"/read"}>

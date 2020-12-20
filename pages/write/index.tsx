@@ -3,20 +3,13 @@ import PageLayout from "../../src/PageLayout";
 import Jumbotron from "../../src/component/Jumbotron";
 import CollectionCard from "../../src/component/CollectionCard";
 import {Grid} from "@material-ui/core";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-
-const useStyles = makeStyles((theme) => ({
-    bigSpacer: {
-        height: theme.spacing(8)
-    }
-}));
+import Spacer from "../../src/component/atoms/Spacer";
 
 export default function WritePage() {
-    const classes = useStyles();
     return (
         <PageLayout>
             <Jumbotron/>
-            <div className={classes.bigSpacer}/>
+            <Spacer space={4}/>
             <Grid container spacing={4} justify={"center"} alignItems={"stretch"}>
                 <Grid item xs={12} sm={6} md={3}>
                     <CollectionCard
@@ -51,7 +44,7 @@ export default function WritePage() {
                         backgroundImageUrl={"/assets/png/frequency.png"}/>
                 </Grid>
             </Grid>
-            <div className={classes.bigSpacer}/>
+            <Spacer space={3}/>
         </PageLayout>
     );
 }
