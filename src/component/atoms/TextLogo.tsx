@@ -5,6 +5,6 @@ const StyledText = styled('span')`
   font-weight: 500;
 `;
 
-export default function () {
+export default function TextLogo() {
     return <StyledText>kanji.sh</StyledText>
 }
