@@ -95,6 +95,7 @@ class CollectionCard extends React.Component<Props, State> {
             elevation: NORMAL_ELEVATION
         }));
         await this.props.router.push(`write/collection/${this.props.collectionKey}`)
+        window.scrollTo(0, 0)
     };
 }
 
