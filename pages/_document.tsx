@@ -2,18 +2,16 @@ import React from 'react';
 import Document, {Head, Html, Main, NextScript} from 'next/document';
 import {ServerStyleSheets} from '@material-ui/core/styles';
 import theme from '../src/theme';
-import GoogleFonts from "next-google-fonts";
-import {ServerStyleSheet} from "styled-components";
+import GoogleFonts from 'next-google-fonts';
+import {ServerStyleSheet} from 'styled-components';
 
 let prefixer: any;
 let cleanCSS: any;
-let purgeCSS: any;
 if (process.env.NODE_ENV === 'production') {
     /* eslint-disable global-require */
     const postcss = require('postcss');
     const autoprefixer = require('autoprefixer');
     const CleanCSS = require('clean-css');
-    purgeCSS = require('purgecss');
     /* eslint-enable global-require */
 
     prefixer = postcss([autoprefixer]);
@@ -31,9 +29,9 @@ export default class MyDocument extends Document {
                 <Head>
                     {/* Meta Headers */}
                     <meta charSet="utf-8"/>
-                    <link rel="icon" href={"/favicon.ico"}/>
-                    <link rel="apple-touch-icon" href={"/logo192.png"}/>
-                    <link rel="manifest" href={"/manifest.json"}/>
+                    <link rel="icon" href={'/favicon.ico'}/>
+                    <link rel="apple-touch-icon" href={'/logo192.png'}/>
+                    <link rel="manifest" href={'/manifest.json'}/>
                     <meta name="theme-color" content={theme.palette.primary.dark}/>
                     {/* Site Verification */}
                     <meta name="google-site-verification" content="zJzDzuLG5I7xmNqDZzTCDwtmTP2243-WD_g6Hg4PDsk"/>
@@ -89,21 +87,10 @@ MyDocument.getInitialProps = async (ctx) => {
         let css = materialSheets.toString();
         // It might be undefined, e.g. after an error.
         if (css && process.env.NODE_ENV === 'production') {
-            console.log("\n ################################ \n")
             const result1 = await prefixer.process(css, {from: undefined});
             css = result1.css;
             const minifiedCSS = cleanCSS.minify(css)
-            console.log(`CleanCSS stats.originalSize: ${minifiedCSS.stats.originalSize}`)
-            console.log(`CleanCSS stats.minifiedSize: ${minifiedCSS.stats.minifiedSize}`)
-            console.log(`CleanCSS stats.efficiency: ${minifiedCSS.stats.efficiency}`)
             css = minifiedCSS.styles;
-            const purgeResult = await new purgeCSS.PurgeCSS().purge({
-                content: [{raw: initialProps.html, extension: 'html'}, '**/*.js', '**/*.html'],
-                css: [{raw: css}]
-            })
-            css = purgeResult.css
-            console.log(`purgedCSS: ${css}`)
-            console.log(purgeResult.rejected)
         }
 
         return {
