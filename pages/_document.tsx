@@ -2,6 +2,7 @@ import React from 'react';
 import Document, {Head, Html, Main, NextScript} from 'next/document';
 import {ServerStyleSheets} from '@material-ui/core/styles';
 import theme from '../src/theme';
+import GoogleFonts from "next-google-fonts";
 
 export default class MyDocument extends Document {
     render() {
@@ -9,20 +10,14 @@ export default class MyDocument extends Document {
         // noinspection HtmlRequiredTitleElement
         return (
             <Html lang="en">
+                <GoogleFonts
+                    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Quicksand:wght@500;700&display=swap"/>
                 <Head>
                     <meta charSet="utf-8"/>
                     <link rel="icon" href={"/favicon.ico"}/>
                     <link rel="apple-touch-icon" href={"/logo192.png"}/>
                     <link rel="manifest" href={"/manifest.json"}/>
                     <meta name="theme-color" content={theme.palette.primary.dark}/>
-                    <link
-                        rel="stylesheet"
-                        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100&display=swap"
-                    />
-                    <link
-                        rel="stylesheet"
-                        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
-                    />
                     {/* Primary Meta Tags */}
                     <meta name="title" content="kanji.sh"/>
                     <meta name="description" content="Collection of printable handwriting kanji worksheets."/>
