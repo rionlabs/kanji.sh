@@ -1,10 +1,10 @@
-import React from "react";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import {WritingAnimation} from "./atoms/AnimatedImage";
+import React from 'react';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import {WritingAnimation} from './atoms/AnimatedImage';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,7 +38,7 @@ export default function Jumbotron() {
     return (
         <div className={classes.root}>
             <Container>
-                <Grid container direction={"row"} justify={"center"} spacing={2}>
+                <Grid container direction={'row'} justify={'center'} spacing={2}>
                     {/* Text Content */}
                     <Grid item xs={12} md={6}>
 
@@ -65,7 +65,7 @@ export default function Jumbotron() {
                     </Grid>
                     {/* Jumbo Image */}
                     <Grid item xs={12} md={6}>
-                        <Box className={classes.jumboImageContainer} alignItems={"center"}>
+                        <Box className={classes.jumboImageContainer} alignItems={'center'}>
                             <WritingAnimation className={classes.jumboImage}/>
                         </Box>
                     </Grid>

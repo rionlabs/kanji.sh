@@ -1,14 +1,14 @@
 import {useRouter} from 'next/router'
-import {logEvent} from "../../firebase";
-import Typography from "@material-ui/core/Typography";
-import Link from "next/link";
-import React from "react";
-import {LinkProps} from "next/dist/client/link";
-import {styled} from "@material-ui/core";
+import {logEvent} from '../../firebase';
+import Typography from '@material-ui/core/Typography';
+import Link from 'next/link';
+import React from 'react';
+import {LinkProps} from 'next/dist/client/link';
+import {styled} from '@material-ui/core';
 
 const StyledH6 = styled(Typography)(({theme}) => ({
     display: 'contents',
-    alignSelf: "center",
+    alignSelf: 'center',
     userSelect: 'none',
     msUserSelect: 'none',
     fontWeight: 500,
@@ -28,7 +28,7 @@ const ActiveStyledH6 = styled(StyledH6)(({theme}) => ({
 }))
 
 const StyledA = styled('a')(({theme}) => ({
-    textTransform: "none",
+    textTransform: 'none',
     textDecoration: 'none',
     margin: theme.spacing(1),
     padding: theme.spacing(1),
@@ -43,7 +43,7 @@ export function HeaderNav({eventPath, children, ...props}: HeaderNavProps) {
     const {asPath} = useRouter();
     const match = asPath.includes(props.href.toString())
     return (<Link {...props}>
-        <StyledA onClick={() => logEvent("navigation", {path: eventPath})}>
+        <StyledA onClick={() => logEvent('navigation', {path: eventPath})}>
             {
                 match ?
                     (<ActiveStyledH6 variant="h6" noWrap>

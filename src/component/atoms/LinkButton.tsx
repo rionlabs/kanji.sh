@@ -1,7 +1,7 @@
-import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
-import React, {PropsWithChildren} from "react";
-import {styled} from "@material-ui/core";
+import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+import React, {PropsWithChildren} from 'react';
+import {styled} from '@material-ui/core';
 
 const ExternalButton = styled(Button)({
     borderRadius: '100px',
@@ -20,7 +20,7 @@ interface LinkButtonProps {
 export default function LinkButton({link, startIcon, children, ...props}: PropsWithChildren<LinkButtonProps>) {
     return (
         <React.Fragment>
-            <Link href={link} underline="none" rel={"noopener"} target={"_blank"} {...props}>
+            <Link href={link} underline="none" rel={'noopener'} target={'_blank'} {...props}>
                 <ExternalButton startIcon={startIcon}>{children}</ExternalButton>
             </Link>
         </React.Fragment>

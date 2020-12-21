@@ -1,20 +1,20 @@
-import React from "react";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
+import React from 'react';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 import Link from 'next/link';
-import {logEvent} from "../firebase";
-import Spacer from "./atoms/Spacer";
-import {HeaderNav} from "./molecules/HeaderNav";
-import DonateButton from "./atoms/DonateButton";
+import {logEvent} from '../firebase';
+import Spacer from './atoms/Spacer';
+import {HeaderNav} from './molecules/HeaderNav';
+import DonateButton from './atoms/DonateButton';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         backgroundColor: theme.palette.primary.dark,
-        clipPath: "polygon(0 0, 100% 0, 100% 75%, 0 100%)"
+        clipPath: 'polygon(0 0, 100% 0, 100% 75%, 0 100%)'
     },
     appBar: {},
     toolbar: {
@@ -40,13 +40,13 @@ const useStyles = makeStyles((theme) => ({
     },
     titleLink: {
         display: 'contents',
-        textTransform: "none",
+        textTransform: 'none',
         userSelect: 'none',
         msUserSelect: 'none',
         textDecoration: 'none',
     },
     navLink: {
-        textTransform: "none",
+        textTransform: 'none',
         textDecoration: 'none',
         margin: theme.spacing(1),
         padding: theme.spacing(1),
@@ -59,13 +59,13 @@ export default function Header() {
 
     return (
         <div className={classes.root}>
-            <AppBar className={classes.appBar} position="static" color={"transparent"} elevation={0}>
+            <AppBar className={classes.appBar} position="static" color={'transparent'} elevation={0}>
                 <Container>
                     <Toolbar className={classes.toolbar}>
                         <div>
-                            <Link href={"/"}>
+                            <Link href={'/'}>
                                 <a className={classes.navLink}
-                                   onClick={() => logEvent("navigation", {path: 'home'})}>
+                                   onClick={() => logEvent('navigation', {path: 'home'})}>
                                     <Typography className={classes.title} variant="h3">
                                         kanji.sh
                                     </Typography>
@@ -76,13 +76,13 @@ export default function Header() {
                         <Spacer/>
 
                         <div>
-                            <HeaderNav href={"/read"} eventPath={"read"}>
+                            <HeaderNav href={'/read'} eventPath={'read'}>
                                 read
                             </HeaderNav>
-                            <HeaderNav href={"/write"} eventPath={"write"}>
+                            <HeaderNav href={'/write'} eventPath={'write'}>
                                 write
                             </HeaderNav>
-                            <HeaderNav href={"/about"} eventPath={"about"}>
+                            <HeaderNav href={'/about'} eventPath={'about'}>
                                 about
                             </HeaderNav>
 

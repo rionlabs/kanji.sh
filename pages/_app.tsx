@@ -3,11 +3,11 @@ import {AppProps} from 'next/app';
 import {ThemeProvider} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme';
-import {useRouter} from "next/router";
-import Config from "../src/config/Config";
+import {useRouter} from 'next/router';
+import Config from '../src/config/Config';
 import SEO from '../next-seo.config';
-import {DefaultSeo} from "next-seo";
-import PageConfig from "../src/config/PageConfig.json";
+import {DefaultSeo} from 'next-seo';
+import PageConfig from '../src/config/PageConfig.json';
 
 export default function MyApp(props: AppProps) {
     const {Component, pageProps} = props;
@@ -31,7 +31,7 @@ export default function MyApp(props: AppProps) {
                 title={title}
                 description={description}
                 additionalMetaTags={[
-                    {name: "viewport", content: "minimum-scale=1, initial-scale=1, width=device-width"}
+                    {name: 'viewport', content: 'minimum-scale=1, initial-scale=1, width=device-width'}
                 ]}
             />
             <ThemeProvider theme={theme}>

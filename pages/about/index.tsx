@@ -1,21 +1,21 @@
 import React from 'react';
-import PageLayout from "../../src/PageLayout";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
-import Config from "../../src/config/Config";
-import ShareSheet from "../../src/component/molecules/ShareSheet";
-import {AttachMoneyRounded, EmailRounded, GitHub} from "@material-ui/icons";
-import LinkButton from "../../src/component/atoms/LinkButton";
-import TextLogo from "../../src/component/atoms/TextLogo";
+import PageLayout from '../../src/PageLayout';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
+import Config from '../../src/config/Config';
+import ShareSheet from '../../src/component/molecules/ShareSheet';
+import {AttachMoneyRounded, EmailRounded, GitHub} from '@material-ui/icons';
+import LinkButton from '../../src/component/atoms/LinkButton';
+import TextLogo from '../../src/component/atoms/TextLogo';
 
 export default function ReadPage() {
     return (
         <PageLayout>
-            <Typography variant={"h3"} gutterBottom>
+            <Typography variant={'h3'} gutterBottom>
                 About
             </Typography>
 
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'body1'} gutterBottom>
                 <TextLogo/> aims to become a free & more comfortable way to study kanji reading and
                 writing. Right now,
                 there are hundreds of free resources available online but filled with distracting advertisements. I
@@ -23,7 +23,7 @@ export default function ReadPage() {
                 myself and others who want to study kanji distraction-free.
                 For now, there are hundreds of worksheets for you to download and practice writing. Why write kanji
                 rather than using an app to dribble? Here are <Link
-                href={"https://blog.remarkable.com/5-reasons-why-hand-writing-notes-while-studying-improves-your-learning-5f43a397155b"}>
+                href={'https://blog.remarkable.com/5-reasons-why-hand-writing-notes-while-studying-improves-your-learning-5f43a397155b'}>
                 5 reasons why handwriting notes while studying improves your learning
             </Link>.
                 The same thing works with kanji too.
@@ -31,10 +31,10 @@ export default function ReadPage() {
 
             <br/>
 
-            <Typography variant={"h4"} gutterBottom>
+            <Typography variant={'h4'} gutterBottom>
                 How can you help?
             </Typography>
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'body1'} gutterBottom>
                 Being free & open source, <TextLogo/> needs all the help it can get. You can
                 support <TextLogo/> in many ways.
             </Typography>
@@ -94,7 +94,7 @@ export default function ReadPage() {
             <br/>
             <br/>
 
-            <Typography variant={"h4"} gutterBottom>
+            <Typography variant={'h4'} gutterBottom>
                 Acknowledgments
             </Typography>
             <Typography gutterBottom variant="h5">
@@ -102,8 +102,8 @@ export default function ReadPage() {
             </Typography>
             <Typography gutterBottom variant="body1">
                 Kanji stroke diagrams are based on data from <Link
-                href={"http://kanjivg.tagaini.net/"}>KanjiVG</Link>, which is copyright © 2009-2012 Ulrich Apel
-                and released under the <Link href={"https://creativecommons.org/licenses/by-sa/3.0/"}>Creative
+                href={'http://kanjivg.tagaini.net/'}>KanjiVG</Link>, which is copyright © 2009-2012 Ulrich Apel
+                and released under the <Link href={'https://creativecommons.org/licenses/by-sa/3.0/'}>Creative
                 Commons Attribution-Share Alike 3.0</Link> license.
             </Typography>
 
@@ -112,12 +112,12 @@ export default function ReadPage() {
             </Typography>
             <Typography gutterBottom variant="body1">
                 JLPT kanji data comes from Peter van der Woude's <Link
-                href={"https://jlptstudy.net"}>JLPTStudy</Link> study site.
+                href={'https://jlptstudy.net'}>JLPTStudy</Link> study site.
                 Grades & frequency kanji data is taken from <Link
-                href={"https://en.wikipedia.org/wiki/Kyōiku_kanji"}>Wikipedia</Link> page.
-                Wanikani level data comes from <Link href={"https://docs.api.wanikani.com/"}>Wanikani API</Link>.
+                href={'https://en.wikipedia.org/wiki/Kyōiku_kanji'}>Wikipedia</Link> page.
+                Wanikani level data comes from <Link href={'https://docs.api.wanikani.com/'}>Wanikani API</Link>.
                 Meanings & Readings data is copied from David Gouveia's <Link
-                href={"https://github.com/davidluzgouveia/kanji-data"}>GitHub</Link> project.
+                href={'https://github.com/davidluzgouveia/kanji-data'}>GitHub</Link> project.
             </Typography>
         </PageLayout>
     );

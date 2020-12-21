@@ -17,7 +17,9 @@
 
 ## 🇯🇵 What is it?
 
-This code generates printable handwriting practice worksheets for **Japanese Kanji** by **JLPT** level, **Grade** Level, **Wanikani** Level, and **Frequency**. You can download it from the website. Then, learn Kanji writing by following the strokes and practice couple of times!
+This code generates printable handwriting practice worksheets for **Japanese Kanji** by **JLPT** level, **Grade**
+Level, **Wanikani** Level, and **Frequency**. You can download it from the website. Then, learn Kanji writing by
+following the strokes and practice couple of times!
 
 ## 🖥 Website screenshot
 
@@ -27,18 +29,18 @@ This code generates printable handwriting practice worksheets for **Japanese Kan
 
 ## 🛠 Built With
 
--   [NodeJS](https://nodejs.org/en/)
--   [ReactJS](https://reactjs.org/)
--   [NextJS](https://nextjs.org/)
--   [Material UI](https://material-ui.com/)
--   Hosted on [Vercel](https://vercel.com)
+- [NodeJS](https://nodejs.org/en/)
+- [ReactJS](https://reactjs.org/)
+- [NextJS](https://nextjs.org/)
+- [Material UI](https://material-ui.com/)
+- Hosted on [Vercel](https://vercel.com)
 
 ### 💻 Build Locally
 
-1.  Clone the project.
-2.  `cd` into the cloned direcotry, and install dependencies with `npm install`
-3.  Run script `npm start dev`.
-4.  The app will be up and running.
+1. Clone the project.
+2. `cd` into the cloned direcotry, and install dependencies with `npm install`
+3. Run script `npm start dev`.
+4. The app will be up and running.
 
 > Note: You cannot download the PDFs while running locally.
 
@@ -48,9 +50,10 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## 💌 Acknowledgments
 
--   Thanks Ulrich Apel for [KanjiVG](https://kanjivg.tagaini.net/) project!
--   Thanks [Wanikani](http://wanikani.com/) for free Kanji data!
--   Thanks [Katerina Limpitsouni](https://twitter.com/ninaLimpi) for the awesome collection of illustrations at [undraw.io](https://undraw.co/)!
+- Thanks Ulrich Apel for [KanjiVG](https://kanjivg.tagaini.net/) project!
+- Thanks [Wanikani](http://wanikani.com/) for free Kanji data!
+- Thanks [Katerina Limpitsouni](https://twitter.com/ninaLimpi) for the awesome collection of illustrations
+  at [undraw.io](https://undraw.co/)!
 
 ## 📜 License
 

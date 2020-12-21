@@ -1,6 +1,6 @@
-import {ButtonProps, styled} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import React from "react";
+import {ButtonProps, styled} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import React from 'react';
 
 const StyledButton = styled(Button)(({theme}) => ({
     borderRadius: theme.spacing(16),
@@ -12,5 +12,5 @@ const StyledButton = styled(Button)(({theme}) => ({
 }))
 
 export default function PrimaryButton(props: ButtonProps) {
-    return <StyledButton variant={"contained"} size={"large"} color={"primary"} {...props}/>
+    return <StyledButton variant={'contained'} size={'large'} color={'primary'} {...props}/>
 }

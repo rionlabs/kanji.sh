@@ -1,6 +1,6 @@
 import React, {HTMLAttributes} from 'react'
 import Lottie from 'react-lottie';
-import construction from "../../images/anim/construction_in_process.json";
+import construction from '../../images/anim/construction_in_process.json';
 import reading from '../../images/anim/reading_book.json';
 import writing from '../../images/anim/writing.json';
 

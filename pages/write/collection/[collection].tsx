@@ -1,11 +1,11 @@
-import {GetStaticPaths, GetStaticProps} from "next";
-import PageLayout from "../../../src/PageLayout";
-import {GroupData, mappedData} from "../../../src/Metadata";
-import React from "react";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import Grid from "@material-ui/core/Grid";
-import FileCard from "../../../src/component/FileCard";
-import Typography from "@material-ui/core/Typography";
+import {GetStaticPaths, GetStaticProps} from 'next';
+import PageLayout from '../../../src/PageLayout';
+import {GroupData, mappedData} from '../../../src/Metadata';
+import React from 'react';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Grid from '@material-ui/core/Grid';
+import FileCard from '../../../src/component/FileCard';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,11 +30,11 @@ export default function CollectionPage(pathParams: { collectionId: string }) {
                 {groupData.heading}
             </Typography>
             <Grid container
-                  direction={"row"}
+                  direction={'row'}
                   spacing={4}
-                  alignItems={"center"}
-                  alignContent={"flex-start"}
-                  justify={"flex-start"}>
+                  alignItems={'center'}
+                  alignContent={'flex-start'}
+                  justify={'flex-start'}>
                 {
                     groupData.files.map(fileData => (
                         <Grid key={fileData.filePath} item xs={12} sm={4} md={3} xl={2}>

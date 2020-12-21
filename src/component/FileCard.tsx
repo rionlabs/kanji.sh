@@ -1,12 +1,12 @@
-import React from "react";
-import {Button, createStyles, StyleRules, Theme, WithStyles} from "@material-ui/core";
+import React from 'react';
+import {Button, createStyles, StyleRules, Theme, WithStyles} from '@material-ui/core';
 import Card from '@material-ui/core/Card';
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
-import {FileData} from "../Metadata";
-import withStyles from "@material-ui/core/styles/withStyles";
-import {getDownloadUrl, logEvent} from "../firebase";
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import {FileData} from '../Metadata';
+import withStyles from '@material-ui/core/styles/withStyles';
+import {getDownloadUrl, logEvent} from '../firebase';
 
 const NORMAL_ELEVATION = 2;
 const HOVER_ELEVATION = 10;
@@ -22,19 +22,19 @@ const styles = (theme: Theme): StyleRules =>
         },
         media: {
             height: theme.spacing(22),
-            clipPath: "polygon(0 0, 100% 0%, 100% 90%, 0% 100%)"
+            clipPath: 'polygon(0 0, 100% 0%, 100% 90%, 0% 100%)'
         },
         title: {
-            textAlign: "center",
+            textAlign: 'center',
             fontWeight: 400,
             lineHeight: `${theme.spacing(22)}px`,
             color: theme.palette.common.white,
-            userSelect: "none",
-            msUserSelect: "none",
+            userSelect: 'none',
+            msUserSelect: 'none',
         },
         downloadButton: {
-            alignSelf: "center",
-            width: "100%",
+            alignSelf: 'center',
+            width: '100%',
             marginTop: theme.spacing(2)
         }
     });

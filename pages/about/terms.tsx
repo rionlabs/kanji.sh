@@ -1,14 +1,14 @@
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import {Link} from "@material-ui/core";
-import PageLayout from "../../src/PageLayout";
-import Config from "../../src/config/Config";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import {Link} from '@material-ui/core';
+import PageLayout from '../../src/PageLayout';
+import Config from '../../src/config/Config';
 
 export default function TermsPage() {
     return (
         <PageLayout>
-            <Typography variant={"h3"} gutterBottom>Terms &amp; Conditions</Typography>
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'h3'} gutterBottom>Terms &amp; Conditions</Typography>
+            <Typography variant={'body1'} gutterBottom>
                 By using the web app (referred as 'app' from here), these terms will
                 automatically apply to you – you should make sure therefore
                 that you read them carefully before using the app. The app itself, and all the trade marks,
@@ -16,7 +16,7 @@ export default function TermsPage() {
                 database rights and other intellectual property rights related
                 to it, still belong to {Config.maintainer}.
             </Typography>
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'body1'} gutterBottom>
                 {Config.maintainer} is committed to ensuring that the app is
                 as useful and efficient as possible. For that reason, we
                 reserve the right to make changes to the app or to charge for
@@ -24,10 +24,10 @@ export default function TermsPage() {
                 charge you for the app or its services without making it very
                 clear to you exactly what you’re paying for.
             </Typography>
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'body1'} gutterBottom>
                 The app does use third party services that declare their own
                 Terms and Conditions.
-            </Typography> <Typography variant={"body1"} gutterBottom>
+            </Typography> <Typography variant={'body1'} gutterBottom>
             Link to Terms and Conditions of third party service
             providers used by the app
             <ul>
@@ -35,7 +35,7 @@ export default function TermsPage() {
                           rel="noopener noreferrer">Google Analytics for Firebase</Link></li>
             </ul>
         </Typography>
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'body1'} gutterBottom>
                 You should be aware that there are certain things that {Config.maintainer} will
                 not take responsibility for. Certain
                 functions of the app will require the app to have an active
@@ -45,7 +45,7 @@ export default function TermsPage() {
                 functionality if you don’t have access to Wi-Fi, and you don’t
                 have any of your data allowance left.
             </Typography>
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'body1'} gutterBottom>
                 If you’re using the app outside of an area with Wi-Fi, you
                 should remember that your terms of the agreement with your
                 mobile network provider will still apply. As a result, you may
@@ -59,14 +59,14 @@ export default function TermsPage() {
                 using the app, please be aware that we assume that you have
                 received permission from the bill payer for using the app.
             </Typography>
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'body1'} gutterBottom>
                 Along the same lines, {Config.maintainer} cannot always take
                 responsibility for the way you use the app i.e. You need to
                 make sure that your device stays charged – if it runs out of
                 battery and you can’t turn it on to avail the Service, {Config.maintainer}
                 cannot accept responsibility.
             </Typography>
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'body1'} gutterBottom>
                 With respect to {Config.maintainer}’s responsibility for your
                 use of the app, when you’re using the app, it’s important to
                 bear in mind that although we endeavour to ensure that it is
@@ -76,7 +76,7 @@ export default function TermsPage() {
                 loss, direct or indirect, you experience as a result of
                 relying wholly on this functionality of the app.
             </Typography>
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'body1'} gutterBottom>
                 At some point, we may wish to update the app. The app is
                 currently available on web platform – the requirements for
                 both systems(and for any additional systems we
@@ -94,21 +94,21 @@ export default function TermsPage() {
                 (b) you must stop using the app, and (if needed) delete it
                 from your device.
             </Typography>
-            <Typography variant={"h5"} gutterBottom>
+            <Typography variant={'h5'} gutterBottom>
                 Changes to This Terms and Conditions
             </Typography>
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'body1'} gutterBottom>
                 I may update our Terms and Conditions
                 from time to time. Thus, you are advised to review this page
                 periodically for any changes. I will
                 notify you of any changes by posting the new Terms and
                 Conditions on this page.
             </Typography>
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'body1'} gutterBottom>
                 These terms and conditions are effective as of 2020-10-01.
             </Typography>
-            <Typography variant={"h5"} gutterBottom>Contact Us</Typography>
-            <Typography variant={"body1"} gutterBottom>
+            <Typography variant={'h5'} gutterBottom>Contact Us</Typography>
+            <Typography variant={'body1'} gutterBottom>
                 If you have any questions or suggestions about my
                 Terms and Conditions, do not hesitate to contact me
                 at <Link href={`mailto:${Config.supportEmail}`}>{Config.supportEmail}</Link>.

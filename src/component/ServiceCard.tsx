@@ -1,10 +1,10 @@
-import React from "react";
-import {createStyles, StyleRules, Theme, WithStyles} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
+import React from 'react';
+import {createStyles, StyleRules, Theme, WithStyles} from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
 
 const styles = (theme: Theme): StyleRules =>
     createStyles({
@@ -23,46 +23,46 @@ const styles = (theme: Theme): StyleRules =>
         },
         textBoxEnd: {
             minHeight: 'inherit',
-            background: "linear-gradient(0deg, rgba(55,60,129,1) 0%, rgba(62,42,144,1) 100%)",
-            clipPath: "polygon(0 0, 100% 0, 100% 100%, 20% 100%)",
+            background: 'linear-gradient(0deg, rgba(55,60,129,1) 0%, rgba(62,42,144,1) 100%)',
+            clipPath: 'polygon(0 0, 100% 0, 100% 100%, 20% 100%)',
             [theme.breakpoints.down('xs')]: {
-                clipPath: "polygon(0 20%, 100% 0, 100% 100%, 0% 100%)"
+                clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0% 100%)'
             }
         },
         textBoxStart: {
             minHeight: 'inherit',
-            background: "linear-gradient(0deg, rgba(42,77,144,1) 0%, rgba(26,33,129,1) 100%)",
-            clipPath: "polygon(0 0, 80% 0, 100% 100%, 0 100%)",
+            background: 'linear-gradient(0deg, rgba(42,77,144,1) 0%, rgba(26,33,129,1) 100%)',
+            clipPath: 'polygon(0 0, 80% 0, 100% 100%, 0 100%)',
             [theme.breakpoints.down('xs')]: {
-                clipPath: "polygon(0 20%, 100% 0, 100% 100%, 0% 100%)"
+                clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0% 100%)'
             }
         },
         textContainerStart: {
-            height: "100%",
-            paddingEnd: "20%",
-            paddingStart: "10%",
+            height: '100%',
+            paddingEnd: '20%',
+            paddingStart: '10%',
             textAlign: 'start',
             [theme.breakpoints.down('xs')]: {
                 textAlign: 'end',
-                paddingEnd: "10%",
-                paddingStart: "10%",
+                paddingEnd: '10%',
+                paddingStart: '10%',
             }
         },
         textContainerEnd: {
-            height: "100%",
-            paddingEnd: "10%",
-            paddingStart: "20%",
+            height: '100%',
+            paddingEnd: '10%',
+            paddingStart: '20%',
             textAlign: 'end',
             [theme.breakpoints.down('xs')]: {
-                paddingEnd: "10%",
-                paddingStart: "10%",
+                paddingEnd: '10%',
+                paddingStart: '10%',
             }
         },
         title: {
             fontWeight: 400,
             color: theme.palette.common.white,
-            userSelect: "none",
-            msUserSelect: "none",
+            userSelect: 'none',
+            msUserSelect: 'none',
         },
         subtitle: {
             color: theme.palette.common.white
@@ -90,7 +90,7 @@ class ServiceCard extends React.Component<Props> {
                     <Grid
                         container
                         direction={(imageDirection === Direction.start) ? 'row-reverse' : 'row'}
-                        alignItems={"stretch"}
+                        alignItems={'stretch'}
                         style={{minHeight: 'inherit'}}>
                         {/* Image */}
                         <Grid className={classes.imageBox} item xs={12} sm={5}>
@@ -98,7 +98,7 @@ class ServiceCard extends React.Component<Props> {
                                 textAlign: (imageDirection === Direction.start) ? 'center' : 'center',
                                 height: '100%'
                             }}>
-                                <img style={{width: "80%", height: '100%'}} src={imageUrl} alt={"Study Kanji!"}/>
+                                <img style={{width: '80%', height: '100%'}} src={imageUrl} alt={'Study Kanji!'}/>
                             </Box>
                         </Grid>
 
@@ -110,9 +110,9 @@ class ServiceCard extends React.Component<Props> {
 
                             <Grid container
                                   className={(imageDirection === Direction.start) ? classes.textContainerStart : classes.textContainerEnd}
-                                  direction={"row"}
-                                  alignContent={"center"}
-                                  alignItems={"center"}>
+                                  direction={'row'}
+                                  alignContent={'center'}
+                                  alignItems={'center'}>
                                 <Grid item>
                                     <Typography className={classes.title} gutterBottom variant="h3" component="h5">
                                         {title}

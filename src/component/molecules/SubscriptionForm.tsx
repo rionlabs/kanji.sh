@@ -1,12 +1,12 @@
-import Grid from "@material-ui/core/Grid";
-import InputField from "../atoms/InputField";
-import Container from "@material-ui/core/Container";
-import PrimaryButton from "../atoms/PrimaryButton";
-import CenterGrid from "../atoms/CenterGrid";
+import Grid from '@material-ui/core/Grid';
+import InputField from '../atoms/InputField';
+import Container from '@material-ui/core/Container';
+import PrimaryButton from '../atoms/PrimaryButton';
+import CenterGrid from '../atoms/CenterGrid';
 import {Field, Form, Formik} from 'formik';
-import React from "react";
-import {LinearProgress} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import React from 'react';
+import {LinearProgress} from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 interface Subscription {
     firstName?: string,
@@ -16,7 +16,7 @@ interface Subscription {
 
 export default function SubscriptionForm() {
     return (
-        <Container maxWidth={"xs"}>
+        <Container maxWidth={'xs'}>
             <Formik
                 initialValues={{
                     firstName: '',
@@ -55,15 +55,15 @@ export default function SubscriptionForm() {
                             if (response.status == 200)
                                 return response.json()
                             else
-                                throw Error("API Error")
+                                throw Error('API Error')
                         })
                         .then(() => {
                             resetForm()
-                            setStatus("Thanks for subscribing!")
+                            setStatus('Thanks for subscribing!')
                         })
                         .catch(error => {
                             console.error(error);
-                            setStatus("An error occurred! Please try after some time.")
+                            setStatus('An error occurred! Please try after some time.')
                         })
                         .finally(() => {
                             setSubmitting(false);
