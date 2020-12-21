@@ -51,18 +51,6 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         padding: theme.spacing(1),
         fontWeight: 500,
-    },
-    donateButton: {
-        alignSelf: "center",
-        marginStart: theme.spacing(2),
-        marginEnd: theme.spacing(1),
-        padding: theme.spacing(2),
-        color: "white"
-    },
-    navigation: {
-        [theme.breakpoints.down('xs')]: {
-            backgroundColor: 'red',
-        }
     }
 }));
 

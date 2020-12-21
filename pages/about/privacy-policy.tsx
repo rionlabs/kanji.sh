@@ -46,10 +46,11 @@ export default function PolicyPage() {
             <Typography variant={"body1"} gutterBottom>
                 Link to privacy policy of third party service providers used
                 by the app
-                <ul>
-                    <li><Link href="https://firebase.google.com/policies/analytics" target="_blank"
-                              rel="noopener noreferrer">Google Analytics for Firebase</Link></li>
-                </ul>
+            </Typography>
+            <Typography variant={"body1"} component={"ul"} gutterBottom>
+                <li><Link href="https://firebase.google.com/policies/analytics" target="_blank"
+                          rel="noopener noreferrer">Google Analytics for Firebase</Link></li>
+
             </Typography>
             <Typography variant={"h5"} gutterBottom>Log Data</Typography>
             <Typography variant={"body1"} gutterBottom>
@@ -83,12 +84,12 @@ export default function PolicyPage() {
             <Typography variant={"body1"} gutterBottom>
                 I may employ third-party companies and
                 individuals due to the following reasons:
-                <ul>
-                    <li>To facilitate our Service;</li>
-                    <li>To provide the Service on our behalf;</li>
-                    <li>To perform Service-related services; or</li>
-                    <li>To assist us in analyzing how our Service is used.</li>
-                </ul>
+            </Typography>
+            <Typography variant={"body1"} component={"ul"} gutterBottom>
+                <li>To facilitate our Service;</li>
+                <li>To provide the Service on our behalf;</li>
+                <li>To perform Service-related services; or</li>
+                <li>To assist us in analyzing how our Service is used.</li>
             </Typography>
 
             <Typography variant={"body1"} gutterBottom>

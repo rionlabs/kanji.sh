@@ -1,7 +1,8 @@
-import {IconButton, styled} from "@material-ui/core";
+import {ButtonProps, IconButton, IconButtonProps, styled} from "@material-ui/core";
 import React, {PropsWithChildren} from "react";
 import {logEvent} from "../../firebase";
 import Config from "../../config/Config";
+import Link from "@material-ui/core/Link";
 
 const StyledButton = styled(IconButton)(({theme}) => ({
     alignSelf: "center",
@@ -11,16 +12,15 @@ const StyledButton = styled(IconButton)(({theme}) => ({
     color: "white"
 }))
 
-export default function DonateButton(...props: PropsWithChildren<any>) {
+export default function DonateButton({...props}: IconButtonProps) {
 
     return (
-        <StyledButton
-            href={Config.bmcUrl}
-            target="_blank"
-            rel="noopener"
-            onClick={() => logEvent('bmc_click')}
-            aria-label="buy me a sushi" {...props}>
-            <span role={"img"} aria-label={"Sushi Emoji"}>🍣</span>
-        </StyledButton>
+        <Link href={Config.bmcUrl} target="_blank" rel="noopener" underline="none">
+            <StyledButton
+                onClick={() => logEvent('bmc_click')}
+                aria-label="buy me a sushi" {...props}>
+                <span role={"img"} aria-label={"Sushi Emoji"}>🍣</span>
+            </StyledButton>
+        </Link>
     );
 }

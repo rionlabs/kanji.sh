@@ -35,10 +35,12 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bolder'
     },
     navLink: {
+        display: "inline",
         textTransform: "none",
         margin: theme.spacing(1),
         padding: theme.spacing(1),
         textDecoration: 'none',
+        cursor: 'pointer',
         color: theme.palette.common.white,
     },
 }));
@@ -60,14 +62,14 @@ export default function Footer() {
                     </Hidden>
                     <Grid item xs={12} md={6} className={classes.footerRow}>
                         <Link href={"/about/privacy-policy"}>
-                            <MuiLink variant={"body1"} className={classes.navLink}>
+                            <Typography variant={"body1"} className={classes.navLink}>
                                 Privacy Policy
-                            </MuiLink>
+                            </Typography>
                         </Link>
                         <Link href={"/about/terms"}>
-                            <MuiLink variant={"body1"} className={classes.navLink}>
+                            <Typography variant={"body1"} className={classes.navLink}>
                                 Terms Of Use
-                            </MuiLink>
+                            </Typography>
                         </Link>
                     </Grid>
                 </Grid>
