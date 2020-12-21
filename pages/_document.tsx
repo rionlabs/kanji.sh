@@ -3,6 +3,22 @@ import Document, {Head, Html, Main, NextScript} from 'next/document';
 import {ServerStyleSheets} from '@material-ui/core/styles';
 import theme from '../src/theme';
 import GoogleFonts from "next-google-fonts";
+import {ServerStyleSheet} from "styled-components";
+
+let prefixer: any;
+let cleanCSS: any;
+let purgeCSS: any;
+if (process.env.NODE_ENV === 'production') {
+    /* eslint-disable global-require */
+    const postcss = require('postcss');
+    const autoprefixer = require('autoprefixer');
+    const CleanCSS = require('clean-css');
+    purgeCSS = require('purgecss');
+    /* eslint-enable global-require */
+
+    prefixer = postcss([autoprefixer]);
+    cleanCSS = new CleanCSS({level: 2});
+}
 
 export default class MyDocument extends Document {
     render() {
@@ -57,19 +73,54 @@ MyDocument.getInitialProps = async (ctx) => {
     // 4. page.render
 
     // Render app and page and get the context of the page with collected side effects.
-    const sheets = new ServerStyleSheets();
+    const materialSheets = new ServerStyleSheets();
+    const styledComponentsSheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
-    ctx.renderPage = () =>
-        originalRenderPage({
-            enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-        });
+    try {
+        ctx.renderPage = () =>
+            originalRenderPage({
+                enhanceApp: (App) => (props) =>
+                    styledComponentsSheet.collectStyles(materialSheets.collect(<App {...props} />)),
+            });
 
-    const initialProps = await Document.getInitialProps(ctx);
+        const initialProps = await Document.getInitialProps(ctx);
 
-    return {
-        ...initialProps,
-        // Styles fragment is rendered after the app and page rendering finish.
-        styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
-    };
+        let css = materialSheets.toString();
+        // It might be undefined, e.g. after an error.
+        if (css && process.env.NODE_ENV === 'production') {
+            console.log("\n ################################ \n")
+            const result1 = await prefixer.process(css, {from: undefined});
+            css = result1.css;
+            const minifiedCSS = cleanCSS.minify(css)
+            console.log(`CleanCSS stats.originalSize: ${minifiedCSS.stats.originalSize}`)
+            console.log(`CleanCSS stats.minifiedSize: ${minifiedCSS.stats.minifiedSize}`)
+            console.log(`CleanCSS stats.efficiency: ${minifiedCSS.stats.efficiency}`)
+            css = minifiedCSS.styles;
+            const purgeResult = await new purgeCSS.PurgeCSS().purge({
+                content: [{raw: initialProps.html, extension: 'html'}, '**/*.js', '**/*.html'],
+                css: [{raw: css}]
+            })
+            css = purgeResult.css
+            console.log(`purgedCSS: ${css}`)
+            console.log(purgeResult.rejected)
+        }
+
+        return {
+            ...initialProps,
+            // Styles fragment is rendered after the app and page rendering finish.
+            styles: [
+                ...React.Children.toArray(initialProps.styles),
+                <style
+                    id="jss-server-side"
+                    key="jss-server-side"
+                    // eslint-disable-next-line react/no-danger
+                    dangerouslySetInnerHTML={{__html: css}}
+                />,
+                styledComponentsSheet.getStyleElement(),
+            ],
+        };
+    } finally {
+        styledComponentsSheet.seal();
+    }
 };
