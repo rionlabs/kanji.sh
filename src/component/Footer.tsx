@@ -49,7 +49,7 @@ export default function Footer() {
         <div className={classes.root}>
             <AppBar className={classes.appBar} position="static" color={"primary"} elevation={0} component={"div"}>
                 <Grid container alignItems={"center"} justify={"center"}>
-                    <Grid item sm={12} md={6} className={classes.footerRow}>
+                    <Grid item xs={12} md={6} className={classes.footerRow}>
                         <Typography className={classes.copyright} variant="body1" noWrap>
                             Crafted by <MuiLink underline={"none"} className={classes.link}
                                                 href="https://aruke.dev">aruke</MuiLink> with lots of Sushi
@@ -58,7 +58,7 @@ export default function Footer() {
                     <Hidden mdUp>
                         <Spacer/>
                     </Hidden>
-                    <Grid item sm={12} md={6} className={classes.footerRow}>
+                    <Grid item xs={12} md={6} className={classes.footerRow}>
                         <Link href={"/about/privacy-policy"}>
                             <MuiLink variant={"body1"} className={classes.navLink}>
                                 Privacy Policy
