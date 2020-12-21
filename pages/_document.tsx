@@ -13,28 +13,12 @@ export default class MyDocument extends Document {
                 <GoogleFonts
                     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Quicksand:wght@500;700&display=swap"/>
                 <Head>
+                    {/* Meta Headers */}
                     <meta charSet="utf-8"/>
                     <link rel="icon" href={"/favicon.ico"}/>
                     <link rel="apple-touch-icon" href={"/logo192.png"}/>
                     <link rel="manifest" href={"/manifest.json"}/>
                     <meta name="theme-color" content={theme.palette.primary.dark}/>
-                    {/* Primary Meta Tags */}
-                    <meta name="title" content="kanji.sh"/>
-                    <meta name="description" content="Collection of printable handwriting kanji worksheets."/>
-                    {/* Open Graph / Facebook */}
-                    <meta property="og:type" content="website"/>
-                    <meta property="og:locale" content="en_US"/>
-                    <meta property="og:url" content="https://kanji.sh"/>
-                    <meta property="og:title" content="kanji.sh"/>
-                    <meta property="og:description" content="Free tool to practice reading & writing Japanese kanji."/>
-                    <meta property="og:image" content="%PUBLIC_URL%/poster.png"/>
-                    {/* Twitter */}
-                    <meta property="twitter:card" content="summary_large_image"/>
-                    <meta property="twitter:url" content="https://kanji.sh"/>
-                    <meta property="twitter:title" content="kanji.sh"/>
-                    <meta property="twitter:description"
-                          content="Free tool to practice reading & writing Japanese kanji."/>
-                    <meta property="twitter:image" content="%PUBLIC_URL%/poster.png"/>
                     {/* Site Verification */}
                     <meta name="google-site-verification" content="zJzDzuLG5I7xmNqDZzTCDwtmTP2243-WD_g6Hg4PDsk"/>
                 </Head>
@@ -88,5 +72,4 @@ MyDocument.getInitialProps = async (ctx) => {
         // Styles fragment is rendered after the app and page rendering finish.
         styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
     };
-}
-;
+};
