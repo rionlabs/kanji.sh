@@ -31,7 +31,8 @@ const StyledA = styled('a')(({theme}) => ({
     textTransform: "none",
     textDecoration: 'none',
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    cursor: 'pointer',
 }));
 
 interface HeaderNavProps extends React.PropsWithChildren<LinkProps> {
