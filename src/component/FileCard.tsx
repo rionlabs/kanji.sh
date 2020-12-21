@@ -98,7 +98,7 @@ class FileCard extends React.Component<Props, State> {
     private _downloadFile = (fileData: FileData) => {
         logEvent('file_download', {file: fileData.title})
         getDownloadUrl(fileData)
-            .then(url => window.open(url, '_ blank'))
+            .then(url => window.open(url, '_blank'))
             .catch(error => console.log(error))
     }
 }
