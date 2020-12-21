@@ -1,8 +1,8 @@
 import React, {HTMLAttributes} from 'react'
 import Lottie from 'react-lottie';
-import construction from "../images/anim/construction_in_process.json";
-import reading from '../images/anim/reading_book.json';
-import writing from '../images/anim/writing.json';
+import construction from '../../images/anim/construction_in_process.json';
+import reading from '../../images/anim/reading_book.json';
+import writing from '../../images/anim/writing.json';
 
 type AnimationProps = {
     animationData: any
@@ -18,7 +18,7 @@ const AnimatedImage = (props: AnimationProps & HTMLAttributes<any>) => {
         }
     };
 
-    return <div className={props.className}><Lottie options={defaultOptions}/></div>
+    return <div className={props.className}><Lottie options={defaultOptions} isClickToPauseDisabled={true}/></div>
 };
 
 export const ReadingBookAnimation = (props: { className: string }) =>

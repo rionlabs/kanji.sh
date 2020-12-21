@@ -1,9 +1,9 @@
 import firebase from 'firebase/app';
-import {FileData} from "./Metadata";
+import {FileData} from './Metadata';
 import 'firebase/analytics';
 import 'firebase/performance';
 import 'firebase/storage';
-import Config from "./config/Config";
+import Config from './config/Config';
 
 function initFirebase() {
     const enableFirebase = process.env.NEXT_PUBLIC_ENABLE_FIREBASE === 'true';
@@ -20,11 +20,17 @@ function initFirebase() {
 }
 
 function getDownloadUrl(fileData: FileData): Promise<string> {
-    return firebase.storage().ref(fileData.filePath).getDownloadURL()
+    if (firebase.apps.length)
+        return firebase.storage().ref(fileData.filePath).getDownloadURL()
+    else
+        return Promise.reject(Error('Storage not available'));
 }
 
 function logEvent(eventName: string, eventParams?: { [key: string]: any },) {
-    firebase.analytics().logEvent(eventName, eventParams);
+    if (firebase.apps.length)
+        firebase.analytics().logEvent(eventName, eventParams);
+    else
+        console.log(`Event: (${eventName}) {${JSON.stringify(eventParams)}`)
 }
 
 initFirebase()

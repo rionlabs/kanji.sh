@@ -1,9 +1,9 @@
 import React, {FunctionComponent} from 'react';
 import {createStyles, Theme, withStyles, WithStyles} from '@material-ui/core/styles';
-import Header from "./component/Header";
-import Footer from "./component/Footer";
-import Container from "@material-ui/core/Container";
-import {StyleRules} from "@material-ui/styles";
+import Header from './component/Header';
+import Footer from './component/Footer';
+import Container from '@material-ui/core/Container';
+import {StyleRules} from '@material-ui/styles';
 
 const styles = (theme: Theme): StyleRules =>
     createStyles({

@@ -1,5 +1,6 @@
 // Common configuration
 const Config = {
+    publicUrl: process.env.NEXT_PUBLIC_URL,
     githubUrl: process.env.NEXT_PUBLIC_GITHUB_URL,
     supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL,
     contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL,

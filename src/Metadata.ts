@@ -1,4 +1,4 @@
-import Config from "./config/Config";
+import Config from './config/Config';
 
 export type GroupData = {
     heading: String,
@@ -15,7 +15,7 @@ export type FileData = {
 const pdfFileDirectory = Config.pdfStoragePath
 
 const gradesData: GroupData = {
-    heading: "Japan School Grades",
+    heading: 'Japan School Grades',
     files: []
 };
 const gradeColors = ['#AEEA00', '#00E676', '#0091EA', '#6200EA', '#AA00FF', '#D50000']
@@ -29,7 +29,7 @@ for (let i = 1; i <= 6; i++) {
 }
 
 const JLPTData: GroupData = {
-    heading: "JLPT",
+    heading: 'JLPT',
     files: []
 };
 
@@ -45,7 +45,7 @@ for (let i = 5; i >= 1; i--) {
 }
 
 const wanikaniData: GroupData = {
-    heading: "Wanikani",
+    heading: 'Wanikani',
     files: []
 };
 
@@ -61,7 +61,7 @@ for (let level = 1; level <= 60; level++) {
 }
 
 const frequencyData: GroupData = {
-    heading: "Frequency",
+    heading: 'Frequency',
     files: [
         {
             title: `F`,
@@ -75,7 +75,7 @@ const frequencyData: GroupData = {
 export const data: Array<GroupData> = [JLPTData, gradesData, wanikaniData, frequencyData];
 
 export const mappedData: Map<string, GroupData> = new Map<string, GroupData>();
-mappedData.set("jlpt", JLPTData);
-mappedData.set("grade", gradesData);
-mappedData.set("wanikani", wanikaniData);
-mappedData.set("frequency", frequencyData);
+mappedData.set('jlpt', JLPTData);
+mappedData.set('grade', gradesData);
+mappedData.set('wanikani', wanikaniData);
+mappedData.set('frequency', frequencyData);

@@ -2,6 +2,21 @@ import React from 'react';
 import Document, {Head, Html, Main, NextScript} from 'next/document';
 import {ServerStyleSheets} from '@material-ui/core/styles';
 import theme from '../src/theme';
+import GoogleFonts from 'next-google-fonts';
+import {ServerStyleSheet} from 'styled-components';
+
+let prefixer: any;
+let cleanCSS: any;
+if (process.env.NODE_ENV === 'production') {
+    /* eslint-disable global-require */
+    const postcss = require('postcss');
+    const autoprefixer = require('autoprefixer');
+    const CleanCSS = require('clean-css');
+    /* eslint-enable global-require */
+
+    prefixer = postcss([autoprefixer]);
+    cleanCSS = new CleanCSS({level: 2});
+}
 
 export default class MyDocument extends Document {
     render() {
@@ -9,37 +24,15 @@ export default class MyDocument extends Document {
         // noinspection HtmlRequiredTitleElement
         return (
             <Html lang="en">
+                <GoogleFonts
+                    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Quicksand:wght@500;700&display=swap"/>
                 <Head>
+                    {/* Meta Headers */}
                     <meta charSet="utf-8"/>
-                    <link rel="icon" href={"/favicon.ico"}/>
-                    <link rel="apple-touch-icon" href={"/logo192.png"}/>
-                    <link rel="manifest" href={"/manifest.json"}/>
+                    <link rel="icon" href={'/favicon.ico'}/>
+                    <link rel="apple-touch-icon" href={'/logo192.png'}/>
+                    <link rel="manifest" href={'/manifest.json'}/>
                     <meta name="theme-color" content={theme.palette.primary.dark}/>
-                    <link
-                        rel="stylesheet"
-                        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100&display=swap"
-                    />
-                    <link
-                        rel="stylesheet"
-                        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
-                    />
-                    {/* Primary Meta Tags */}
-                    <meta name="title" content="kanji.sh"/>
-                    <meta name="description" content="Collection of printable handwriting kanji worksheets."/>
-                    {/* Open Graph / Facebook */}
-                    <meta property="og:type" content="website"/>
-                    <meta property="og:locale" content="en_US"/>
-                    <meta property="og:url" content="https://kanji.sh"/>
-                    <meta property="og:title" content="kanji.sh"/>
-                    <meta property="og:description" content="Free tool to practice reading & writing Japanese kanji."/>
-                    <meta property="og:image" content="%PUBLIC_URL%/poster.png"/>
-                    {/* Twitter */}
-                    <meta property="twitter:card" content="summary_large_image"/>
-                    <meta property="twitter:url" content="https://kanji.sh"/>
-                    <meta property="twitter:title" content="kanji.sh"/>
-                    <meta property="twitter:description"
-                          content="Free tool to practice reading & writing Japanese kanji."/>
-                    <meta property="twitter:image" content="%PUBLIC_URL%/poster.png"/>
                     {/* Site Verification */}
                     <meta name="google-site-verification" content="zJzDzuLG5I7xmNqDZzTCDwtmTP2243-WD_g6Hg4PDsk"/>
                 </Head>
@@ -78,20 +71,43 @@ MyDocument.getInitialProps = async (ctx) => {
     // 4. page.render
 
     // Render app and page and get the context of the page with collected side effects.
-    const sheets = new ServerStyleSheets();
+    const materialSheets = new ServerStyleSheets();
+    const styledComponentsSheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
-    ctx.renderPage = () =>
-        originalRenderPage({
-            enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-        });
+    try {
+        ctx.renderPage = () =>
+            originalRenderPage({
+                enhanceApp: (App) => (props) =>
+                    styledComponentsSheet.collectStyles(materialSheets.collect(<App {...props} />)),
+            });
 
-    const initialProps = await Document.getInitialProps(ctx);
+        const initialProps = await Document.getInitialProps(ctx);
 
-    return {
-        ...initialProps,
-        // Styles fragment is rendered after the app and page rendering finish.
-        styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
-    };
-}
-;
+        let css = materialSheets.toString();
+        // It might be undefined, e.g. after an error.
+        if (css && process.env.NODE_ENV === 'production') {
+            const result1 = await prefixer.process(css, {from: undefined});
+            css = result1.css;
+            const minifiedCSS = cleanCSS.minify(css)
+            css = minifiedCSS.styles;
+        }
+
+        return {
+            ...initialProps,
+            // Styles fragment is rendered after the app and page rendering finish.
+            styles: [
+                ...React.Children.toArray(initialProps.styles),
+                <style
+                    id="jss-server-side"
+                    key="jss-server-side"
+                    // eslint-disable-next-line react/no-danger
+                    dangerouslySetInnerHTML={{__html: css}}
+                />,
+                styledComponentsSheet.getStyleElement(),
+            ],
+        };
+    } finally {
+        styledComponentsSheet.seal();
+    }
+};

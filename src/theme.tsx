@@ -3,13 +3,13 @@ import {createMuiTheme} from '@material-ui/core/styles';
 const appTheme = createMuiTheme({
     typography: {
         allVariants: {
-            fontFamily: "Montserrat, sans-serif"
+            fontFamily: 'Montserrat, sans-serif'
         }
     },
     palette: {
         background: {
-            default: "#FCFCFC",
-            paper: "#FFFFFF"
+            default: '#FCFCFC',
+            paper: '#FFFFFF'
         }
     }
 });
