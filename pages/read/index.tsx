@@ -2,10 +2,10 @@ import React from 'react';
 import PageLayout from "../../src/PageLayout";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import {ConstructionAnimation} from "../../src/component/atoms/AnimatedImage";
 import Spacer from "../../src/component/atoms/Spacer";
+import SubscriptionForm from "../../src/component/molecules/SubscriptionForm";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,9 +50,7 @@ export default function ReadPage() {
                         promise!</Typography>
                 </Grid>
                 <Grid item xs={12} className={classes.buttonContainer}>
-                    <Button className={classes.roundButton} target={"_blank"}
-                            href={"https://forms.gle/SYgRsPGE1Zhq2GKe8"}
-                            variant={"contained"} size={"large"} color={"primary"}>Subscribe for Updates!</Button>
+                    <SubscriptionForm/>
                 </Grid>
             </Grid>
             <Spacer space={3}/>

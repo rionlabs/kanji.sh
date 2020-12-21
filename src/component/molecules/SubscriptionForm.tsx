@@ -6,6 +6,7 @@ import CenterGrid from "../atoms/CenterGrid";
 import {Field, Form, Formik} from 'formik';
 import React from "react";
 import {LinearProgress} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 
 interface Subscription {
     firstName?: string,
@@ -22,6 +23,7 @@ export default function SubscriptionForm() {
                     lastName: '',
                     email: ''
                 }}
+                initialStatus={''}
                 validate={values => {
                     const errors: Partial<Subscription> = {};
                     if (!values.firstName) {
@@ -39,15 +41,36 @@ export default function SubscriptionForm() {
                     }
                     return errors;
                 }}
-                onSubmit={(values, {setSubmitting}) => {
-                    setSubmitting(true);
-                    setTimeout(() => {
-                        setSubmitting(false);
-                        console.log(values)
-                    }, 1000);
+                onSubmit={(values, {setSubmitting, resetForm, setStatus}) => {
+                    // Reset status
+                    setStatus('');
+                    const requestOptions = {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(values)
+                    };
+
+                    fetch('/api/subscribe', requestOptions)
+                        .then(response => {
+                            if (response.status == 200)
+                                return response.json()
+                            else
+                                throw Error("API Error")
+                        })
+                        .then(() => {
+                            resetForm()
+                            setStatus("Thanks for subscribing!")
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            setStatus("An error occurred! Please try after some time.")
+                        })
+                        .finally(() => {
+                            setSubmitting(false);
+                        })
                 }}
             >
-                {({submitForm, isSubmitting, isValid}) =>
+                {({isSubmitting, isValid, status}) =>
                     <Form>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
@@ -83,6 +106,9 @@ export default function SubscriptionForm() {
                             </CenterGrid>
                             <CenterGrid item xs={12}>
                                 {isSubmitting && <LinearProgress/>}
+                            </CenterGrid>
+                            <CenterGrid item xs={12}>
+                                <Typography>{status}</Typography>
                             </CenterGrid>
                         </Grid>
                     </Form>
