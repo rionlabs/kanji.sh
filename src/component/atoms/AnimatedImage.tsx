@@ -18,7 +18,7 @@ const AnimatedImage = (props: AnimationProps & HTMLAttributes<any>) => {
         }
     };
 
-    return <div className={props.className}><Lottie options={defaultOptions}/></div>
+    return <div className={props.className}><Lottie options={defaultOptions} isClickToPauseDisabled={true}/></div>
 };
 
 export const ReadingBookAnimation = (props: { className: string }) =>
