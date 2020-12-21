@@ -4,11 +4,11 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import IconButton from "@material-ui/core/IconButton";
 import Link from 'next/link';
 import {logEvent} from "../firebase";
 import Spacer from "./atoms/Spacer";
 import {HeaderNav} from "./molecules/HeaderNav";
+import DonateButton from "./atoms/DonateButton";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -98,14 +98,7 @@ export default function Header() {
                                 about
                             </HeaderNav>
 
-                            <IconButton
-                                className={classes.donateButton}
-                                href="https://www.buymeacoffee.com/aruke"
-                                target="_blank"
-                                onClick={() => logEvent('bmc_click')}
-                                aria-label="buy me a sushi">
-                                <span role={"img"} aria-label={"Sushi Emoji"}>🍣</span>
-                            </IconButton>
+                            <DonateButton/>
                         </div>
                     </Toolbar>
                 </Container>
