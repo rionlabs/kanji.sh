@@ -4,9 +4,12 @@ import {AppProps} from 'next/app';
 import {ThemeProvider} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme';
+import {useRouter} from "next/router";
+import Config from "../src/config/Config";
 
 export default function MyApp(props: AppProps) {
     const {Component, pageProps} = props;
+    const {asPath} = useRouter();
 
     React.useEffect(() => {
         const jssStyles = document.querySelector('#jss-server-side');
@@ -20,6 +23,7 @@ export default function MyApp(props: AppProps) {
             <Head>
                 <title>kanji.sh</title>
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
+                <link rel="canonical" href={`${Config.publicUrl}${asPath}`}/>
             </Head>
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
