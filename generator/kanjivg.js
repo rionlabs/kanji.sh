@@ -46,7 +46,7 @@ async function convertToPng() {
         const inputFile = path.join(svgDir, filename)
         promises.push(
             sharp(inputFile)
-                .resize({height: 512, width: 512})
+                .resize({height: 1024, width: 1024})
                 .png({quality: 100})
                 .toFile(path.join(pngBigDir, `${prefix}.png`))
         );
@@ -59,7 +59,7 @@ async function convertToPng() {
             .map(line => line.replace("fill:#000000", "fill:#BBBBBB"))
         promises.push(
             sharp(Buffer.from(lines.join("\n")))
-                .resize({height: 256, width: 256})
+                .resize({height: 512, width: 512})
                 .png({quality: 100})
                 .toFile(path.join(pngSmallDir, `${prefix}.png`))
         );

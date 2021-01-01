@@ -20,13 +20,17 @@ module.exports = {
                 }
                 continue
             }
-            newLines.push(removeKvgAttrs(lines[i]));
+            newLines.push(increaseSize(removeKvgAttrs(lines[i])));
         }
         // Delete old file
         await fs.unlinkSync(filePath)
         // Write optimized one
-        await fs.writeFileSync(filePath, newLines.join("\n"), { flag: 'w+' })
+        await fs.writeFileSync(filePath, newLines.join("\n"), {flag: 'w+'})
     }
+}
+
+function increaseSize(line) {
+    return line.replace('width="109" height="109"', 'width="512" height="512"')
 }
 
 function removeKvgAttrs(line) {
