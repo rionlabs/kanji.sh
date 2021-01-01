@@ -67,7 +67,7 @@
             min-width: 30mm;
         }
 
-        .big-square > object {
+        .big-square > img {
             height: 25mm;
             width: 25mm;
         }
@@ -81,14 +81,12 @@
             max-width: 15mm;
             margin: auto;
             background-size: 15mm 15mm;
-            background-position-x: 7.5mm;
-            background-position-y: 7.5mm;
-            background-origin: padding-box;
-            background-image: linear-gradient(to right, #E5E5E5 1px, transparent 1px),
-            linear-gradient(to bottom, #E5E5E5 1px, transparent 1px);
+            background-position-x: 0;
+            background-position-y: 0;
+            background-image: url("../graphics/square_99.png");
         }
 
-        .small-square > object {
+        .small-square > img {
             height: 13mm;
             width: 13mm;
         }
@@ -126,45 +124,50 @@
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
+
+        function getKanjiImageFileName(kanji) {
+            return kanji.charCodeAt(0).toString(16).padStart(5, "0") + ".png";
+        }
     </script>
-    <script>
-        Handlebars.registerHelper('times', function (count, url, options) {
-            let accum = '';
-            for (let i = 0; i < count; ++i)
-                accum += options.fn(url);
-            return accum;
-        });
-        const template = Handlebars.compile(`
-<table>
-    <thead>
-    <tr>
-        <td colspan="4" style="width: 60mm;height: 15mm">{{meaning}}</td>
-        <td colspan="4" style="width: 60mm;height: 15mm">{{onyomi}}</td>
-        <td colspan="4" style="width: 60mm;height: 15mm">{{kunyomi}}</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th class="big-square" rowspan="2" colspan="2">
-            <object type="image/svg+xml" data={{svgUrl}}/>
-        </th>
-        {{#times 10 svgUrlForWriting}}
-            <td class="small-square"><object type="image/svg+xml" data={{this}}/></td>
-        {{/times}}
-    </tr>
-    <tr>
-        {{#times 10 svgUrl}}
-            <td class="small-square"></td>
-        {{/times}}
-    </tr>
-    </tbody>
-</table>
-`);
+    <script id="template" type="text/x-handlebars-template">
+        <table>
+            <thead>
+            <tr>
+                <td colspan="4" style="width: 60mm;height: 15mm">{{meaning}}</td>
+                <td colspan="4" style="width: 60mm;height: 15mm">{{onyomi}}</td>
+                <td colspan="4" style="width: 60mm;height: 15mm">{{kunyomi}}</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th class="big-square" rowspan="2" colspan="2">
+                    <img src={{svgUrl}} alt={{kanji}}/>
+                </th>
+                {{#times 10 svgUrlForWriting}}
+                    <td class="small-square"><img src={{this}} alt={{kanji}}/></td>
+                {{/times}}
+            </tr>
+            <tr>
+                {{#times 10 svgUrl}}
+                    <td class="small-square"></td>
+                {{/times}}
+            </tr>
+            </tbody>
+        </table>
     </script>
     <script>
         $(document).ready(async function () {
             // Load the data first
             const allData = await $.getJSON(`../build/all-data.json`);
+
+            Handlebars.registerHelper('times', function (count, url, options) {
+                let accum = '';
+                for (let i = 0; i < count; ++i)
+                    accum += options.fn(url);
+                return accum;
+            });
+            var source = document.getElementById("template").innerHTML;
+            var template = Handlebars.compile(source);
 
             const displayData = {}
             const kanjiString = getParam('data')
@@ -177,8 +180,9 @@
                 }
 
                 displayData[kanji] = {
-                    svgUrl: `../build/svg/${kanji}.svg`,
-                    svgUrlForWriting: `../build/svg/${kanji}.w.svg`,
+                    kanji: kanji,
+                    svgUrl: `../build/png/kanjiBig/${getKanjiImageFileName(kanji)}`,
+                    svgUrlForWriting: `../build/png/kanjiSmall/${getKanjiImageFileName(kanji)}`,
                     meaning: extractData(kanjiData, 'meanings'),
                     onyomi: extractData(kanjiData, 'readings_on'),
                     kunyomi: extractData(kanjiData, 'readings_kun')
