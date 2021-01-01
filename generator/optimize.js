@@ -1,8 +1,8 @@
-const fs = require('fs')
+const fs = require('fs');
 module.exports = {
     rewriteWithSvgOptimizations: async function (filePath) {
-        const content = fs.readFileSync(filePath, {encoding: 'utf-8', flag: 'r'})
-        const lines = content.split('\n').filter(Boolean)
+        const content = fs.readFileSync(filePath, {encoding: 'utf-8', flag: 'r'});
+        const lines = content.split('\n').filter(Boolean);
         const newLines = [];
         for (let i = 0; i < lines.length; i++) {
             // Common optimizations for both kanji styles
@@ -11,26 +11,26 @@ module.exports = {
                 while (!lines[i].endsWith("-->")) {
                     i++;
                 }
-                continue
+                continue;
             }
             if (lines[i].startsWith("<!DOCTYPE")) {
                 // Skip DOCTYPE
                 while (!lines[i].endsWith("]>")) {
                     i++;
                 }
-                continue
+                continue;
             }
             newLines.push(increaseSize(removeKvgAttrs(lines[i])));
         }
         // Delete old file
-        await fs.unlinkSync(filePath)
+        await fs.unlinkSync(filePath);
         // Write optimized one
-        await fs.writeFileSync(filePath, newLines.join("\n"), {flag: 'w+'})
+        await fs.writeFileSync(filePath, newLines.join("\n"), {flag: 'w+'});
     }
-}
+};
 
 function increaseSize(line) {
-    return line.replace('width="109" height="109"', 'width="512" height="512"')
+    return line.replace('width="109" height="109"', 'width="512" height="512"');
 }
 
 function removeKvgAttrs(line) {
@@ -47,10 +47,10 @@ function removeKvgAttrs(line) {
         /kvg:radical=".*"\s/gu,
         /kvg:phon=".*"\s/gu,
         /kvg:type=".*"\s/gu,
-    ]
+    ];
     for (let regEx of regExs) {
         while (line.search(regEx) !== -1)
-            line = line.replace(regEx, "")
+            line = line.replace(regEx, "");
     }
 
     // Worst coding example, caused due to lack of RegEx
@@ -67,12 +67,13 @@ function removeKvgAttrs(line) {
         /kvg:radical=".*">/gu,
         /kvg:phon=".*">/gu,
         /kvg:type=".*">/gu,
-    ]
+    ];
 
     for (let regEx of endRegExs) {
-        while (line.search(regEx) !== -1)
-            line = line.replace(regEx, ">")
+        while (line.search(regEx) !== -1) {
+            line = line.replace(regEx, ">");
+        }
     }
 
-    return line
+    return line;
 }
