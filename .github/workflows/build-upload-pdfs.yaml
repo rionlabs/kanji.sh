@@ -33,6 +33,10 @@ jobs:
       - name: Install NPM depedencies
         run: npm install
 
+      - name: Process KanjiVG
+        working-directory: generator
+        run: node kanjivg.js
+
       - name: Generte PDF files
         working-directory: generator
         run: node main.js
