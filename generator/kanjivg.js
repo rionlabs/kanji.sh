@@ -8,7 +8,11 @@ const sharp = require('sharp');
 const KanjiVGAssetUrl = "https://github.com/KanjiVG/kanjivg/releases/download/r20160426/kanjivg-20160426-main.zip";
 const outDir = "./build";
 const zipOutputDir = path.join(outDir, 'svg');
+
 const svgDir = path.join(outDir, 'svg', 'kanji');
+const svgSmallDir = path.join(outDir, 'svg', 'kanjiSmall');
+
+
 const pngBigDir = path.join(outDir, 'png', 'kanjiBig');
 const pngSmallDir = path.join(outDir, 'png', 'kanjiSmall');
 
@@ -36,6 +40,29 @@ async function runCommonOptimizations() {
         promises.push(optimize.rewriteWithSvgOptimizations(filePath));
     }
     await Promise.all(promises);
+}
+
+async function generateSmallSvgKanji() {
+    let filenames = await fs.readdirSync(svgDir);
+    const promises = [];
+    for (let filename of filenames) {
+        const filePath = path.join(svgDir, filename);
+        console.log(filePath, path.join(svgSmallDir, filename))
+        promises.push(covertToSmallSvg(filePath, path.join(svgSmallDir, filename)));
+    }
+    await Promise.all(promises);
+}
+
+async function covertToSmallSvg(inputPath, outputPath) {
+    const content = fs.readFileSync(inputPath, {encoding: 'utf-8', flag: 'r'});
+    const lines = content.split('\n')
+        .filter(Boolean)
+        .filter(line => !line.includes("<text transform"))
+        .map(line => line.replace("stroke:#000000", "stroke:#BBBBBB"))
+        .map(line => line.replace("fill:#000000", "fill:#BBBBBB"))
+        .join("\n");
+
+    return fs.writeFileSync(outputPath, lines);
 }
 
 async function convertToPng() {
@@ -68,10 +95,11 @@ async function convertToPng() {
 }
 
 async function buildKanjiDiagrams() {
-    await ensureDirectories(outDir, zipOutputDir, svgDir, pngBigDir, pngSmallDir);
-    await downloadAndExtract();
-    await runCommonOptimizations();
-    await convertToPng();
+    await ensureDirectories(outDir, zipOutputDir, svgDir, svgSmallDir, pngBigDir, pngSmallDir);
+    // await downloadAndExtract();
+    // await runCommonOptimizations();
+    await generateSmallSvgKanji();
+    // await convertToPng();
 }
 
 console.time('BuildKanjiDiagrams');

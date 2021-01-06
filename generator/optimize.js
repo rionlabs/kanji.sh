@@ -30,7 +30,7 @@ module.exports = {
 };
 
 function increaseSize(line) {
-    return line.replace('width="109" height="109"', 'width="512" height="512"');
+    return line.replace('width="109" height="109"', 'width="512" height="512"').replace("font-size:6;fill:#808080", "font-size:13px;fill:#808080;font-family:arial;");
 }
 
 function removeKvgAttrs(line) {
