@@ -61,13 +61,13 @@ for (let level = 1; level <= 60; level++) {
 }
 
 const kanjiGardenData: GroupData = {
-    heading: 'Kanji Garden',
+    heading: "Kanji Garden",
     files: []
 };
 
 for (let level = 1; level <= 60; level++) {
     const kanjiFile = Number(level);
-    const firstKanji = (kanjiFile - 1) * 50;
+    const firstKanji = (kanjiFile - 1) * 50;  // 50 = 50 kanji per "level"
     const lastKanji = Math.min(kanjiFile * 50, 2898);
 
     kanjiGardenData.files.push({

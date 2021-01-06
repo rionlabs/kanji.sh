@@ -148,7 +148,7 @@ function getTitle(sourceGroup) {
         const kanjiFile = Number(sourceGroup.slice(3));
         const firstKanji = (kanjiFile - 1) * 50;
         const lastKanji = Math.min(kanjiFile * 50, 2898);
-        return `KanjiGarden Kanji ${firstKanji} - ${lastKanji}`
+        return `KanjiGarden Kanji ${firstKanji} - ${lastKanji}`;
     } else if (!isNaN(sourceGroup)) {
         return `Wanikani Level ${sourceGroup}`;
     } else {
