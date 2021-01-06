@@ -96,10 +96,10 @@ async function convertToPng() {
 
 async function buildKanjiDiagrams() {
     await ensureDirectories(outDir, zipOutputDir, svgDir, svgSmallDir, pngBigDir, pngSmallDir);
-    // await downloadAndExtract();
-    // await runCommonOptimizations();
+    await downloadAndExtract();
+    await runCommonOptimizations();
     await generateSmallSvgKanji();
-    // await convertToPng();
+    await convertToPng();
 }
 
 console.time('BuildKanjiDiagrams');
