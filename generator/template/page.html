@@ -71,24 +71,42 @@
             height: 25mm;
             width: 25mm;
         }
+        .kanji-svg {
+            margin: 0;
+        }
 
+        .kanji-svg-small {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .small-square-top {
+            background-size: 29px 31px !important;
+        }
         .small-square {
-            height: 15mm;
-            width: 15mm;
-            min-height: 15mm;
-            min-width: 15mm;
-            max-height: 15mm;
-            max-width: 15mm;
+            height: 55px;
+            width: 55px;
+            min-width: 55px;
+            min-height: 55px;
+            max-height: 55px;
+            max-width: 55px;
             margin: auto;
-            background-size: 15mm 15mm;
-            background-position-x: 0;
-            background-position-y: 0;
-            background-image: url("../graphics/square_99.png");
+            position: relative;
         }
 
         .small-square > img {
             height: 13mm;
             width: 13mm;
+        }
+
+        .inner-small-square {
+            border: 1px solid #e3e3e3;
+            width: 27px;
+            height: 27px;
+        }
+
+        .flex-row {
+            display: flex;
         }
 
         #kvg {
@@ -141,19 +159,38 @@
             <tbody>
             <tr>
                 <th class="big-square" rowspan="2" colspan="2">
-                    <object type="image/svg+xml" data={{svgUrl}}>
+                    <object type="image/svg+xml" data={{svgUrl}} class="kanji-svg">
                         {{kanji}}
                     </object>
                 </th>
                 {{#times 10 svgUrlForWriting}}
-                    <td class="small-square"><object type="image/svg+xml" data={{this}}>
-                        {{kanji}}
-                    </object></td>
+                    <td class="small-square">
+                        <div class="flex-row">
+                            <div class="inner-small-square"/>
+                            <div class="inner-small-square"/>
+                        </div>
+                        <div class="flex-row">
+                            <div class="inner-small-square"/>
+                            <div class="inner-small-square"/>
+                        </div>
+                        <object type="image/svg+xml" data={{this}} class="kanji-svg kanji-svg-small">
+                            {{kanji}}
+                        </object>
+                    </td>
                 {{/times}}
             </tr>
             <tr>
                 {{#times 10 svgUrl}}
-                    <td class="small-square"></td>
+                    <td class="small-square">
+                        <div class="flex-row">
+                            <div class="inner-small-square"/>
+                            <div class="inner-small-square"/>
+                        </div>
+                        <div class="flex-row">
+                            <div class="inner-small-square"/>
+                            <div class="inner-small-square"/>
+                        </div>
+                    </td>
                 {{/times}}
             </tr>
             </tbody>

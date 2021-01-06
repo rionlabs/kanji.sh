@@ -99,7 +99,6 @@ async function buildKanjiDiagrams() {
     await downloadAndExtract();
     await runCommonOptimizations();
     await generateSmallSvgKanji();
-    await convertToPng();
 }
 
 console.time('BuildKanjiDiagrams');
