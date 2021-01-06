@@ -144,6 +144,11 @@ function getTitle(sourceGroup) {
         return `Grade ${sourceGroup.charAt(1)}`;
     } else if (sourceGroup.charAt(0) === "n") {
         return `JLPT N${sourceGroup.charAt(1)}`;
+    } else if (sourceGroup.startsWith("kg")) {
+        const kanjiFile = Number(sourceGroup.slice(3));
+        const firstKanji = (kanjiFile - 1) * 50;
+        const lastKanji = Math.min(kanjiFile * 50, 2898);
+        return `KanjiGarden Kanji ${firstKanji} - ${lastKanji}`
     } else if (!isNaN(sourceGroup)) {
         return `Wanikani Level ${sourceGroup}`;
     } else {
@@ -159,8 +164,8 @@ function sortByPage(array) {
 async function generateData() {
     await ensureDirectories(outDir, pdfOutputDir);
     await downloadKanjiData();
-    await generatePDFs("frequency");
-    await cleanup("frequency");
+    await generatePDFs("frequency", "kanjigarden");
+    await cleanup("frequency", "kanjigarden");
 }
 
 console.time('GenerateData');

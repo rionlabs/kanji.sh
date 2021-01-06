@@ -176,7 +176,11 @@
                 const kanjiData = allData[kanji]
 
                 const extractData = function (dataObject, key) {
-                    return (dataObject[`wk_${key}`] || dataObject[key] || ['']).map(string => string.replace(/[\^!]/, '')).join(', ')
+                    if(dataObject !== undefined) {
+                        return (dataObject[`wk_${key}`] || dataObject[key] || ['']).map(string => string.replace(/[\^!]/, '')).join(', ')
+                    } else {
+                        return "";
+                    }
                 }
 
                 displayData[kanji] = {

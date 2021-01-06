@@ -29,6 +29,11 @@
     "title": "Download Kanji worksheets for all Wanikani levels",
     "description": ""
   },
+  "/write/collection/kanjigarden": {
+    "priority": 0.7,
+    "title": "Download Kanji worksheets for all Kanji introduced in KanjiGarden",
+    "description": ""
+  },
   "/write/collection/frequency": {
     "priority": 0.7,
     "title": "Download Kanji worksheet ordered by frequency",
