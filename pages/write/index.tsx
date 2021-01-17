@@ -37,6 +37,14 @@ export default function WritePage() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                     <CollectionCard
+                        collectionKey={'kanjigarden'}
+                        title={'KANJI GARDEN'}
+                        description={'Kanji Garden is a free mnemonic-based SRS kanji learning tool that features about 2900 kanji. '}
+                        metaColor={'#e2506d'}
+                        backgroundImageUrl={'/assets/png/kanjigarden.png'}/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <CollectionCard
                         collectionKey={'frequency'}
                         title={'FREQUENCY'}
                         description={'Kanji list ordered by the frequency they are used in the Japanese Language.'}

@@ -60,6 +60,24 @@ for (let level = 1; level <= 60; level++) {
     });
 }
 
+const kanjiGardenData: GroupData = {
+    heading: "Kanji Garden",
+    files: []
+};
+
+for (let level = 1; level <= 60; level++) {
+    const kanjiFile = Number(level);
+    const firstKanji = (kanjiFile - 1) * 50;  // 50 = 50 kanji per "level"
+    const lastKanji = Math.min(kanjiFile * 50, 2898);
+
+    kanjiGardenData.files.push({
+        title: `KG${level}`,
+        description: `KanjiGarden Kanji ${firstKanji} - ${lastKanji}`,
+        metaColor: "#00aaff",
+        filePath: `${pdfFileDirectory}/kanjigarden/kg_${level}.pdf`
+    });
+}
+
 const frequencyData: GroupData = {
     heading: 'Frequency',
     files: [
@@ -72,10 +90,11 @@ const frequencyData: GroupData = {
     ]
 };
 
-export const data: Array<GroupData> = [JLPTData, gradesData, wanikaniData, frequencyData];
+export const data: Array<GroupData> = [JLPTData, gradesData, wanikaniData, frequencyData, kanjiGardenData];
 
 export const mappedData: Map<string, GroupData> = new Map<string, GroupData>();
 mappedData.set('jlpt', JLPTData);
 mappedData.set('grade', gradesData);
 mappedData.set('wanikani', wanikaniData);
 mappedData.set('frequency', frequencyData);
+mappedData.set('kanjigarden', kanjiGardenData);
