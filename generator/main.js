@@ -31,8 +31,14 @@ async function generatePDFs(sourceName, group) {
                 const sourceGroup = `${index + 1}-${index + group}`;
                 logger.start(`Group ${sourceGroup} for ${sourceName}`);
                 const outputFilePath = path.join(pdfOutputDir, sourceName, sourceGroup);
-                await generatePDF(data.slice(index, index + group), outputFilePath, generatePageTitle(sourceName, sourceGroup));
-                logger.done(`Group ${sourceGroup} for ${sourceName}`);
+                if (!dryRun) {
+                    await generatePDF(
+                        data.slice(index, index + group),
+                        outputFilePath,
+                        generatePageTitle(sourceName, sourceGroup)
+                    );
+                }
+                logger.done(`Group ${outputFilePath} written for ${sourceName}`);
             }
         } else {
             // For multiple source files
@@ -43,8 +49,10 @@ async function generatePDFs(sourceName, group) {
 
                 logger.start(`File ${inputFilePath} for ${sourceName}`);
                 const data = readSourceFile(inputFilePath);
-                await generatePDF(data, outputFilePath, generatePageTitle(sourceName, sourceGroup));
-                logger.done(`File ${inputFilePath} for ${sourceName}`);
+                if (!dryRun) {
+                    await generatePDF(data, outputFilePath, generatePageTitle(sourceName, sourceGroup));
+                }
+                logger.done(`File ${outputFilePath} written for ${sourceName}`);
             }
         }
     } catch (error) {
@@ -179,6 +187,9 @@ if (!argv.source) {
     console.error("Source must be specified. See generator/sources directory.")
     process.exit(1);
 }
+
+// If --dryRun flag is passed, the script will not generate any PDFs
+const dryRun = argv.dryRun
 
 const timerLabel = `Generate Data for ${argv.source}`;
 
