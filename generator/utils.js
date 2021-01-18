@@ -46,5 +46,3 @@ module.exports = {
         error: (message) => console.error(`[ERROR] ${message}`)
     }
 };
-
-
