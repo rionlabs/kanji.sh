@@ -5,54 +5,64 @@ const fetch = require('node-fetch');
 const puppeteer = require('puppeteer');
 const {default: PQueue} = require('p-queue');
 const PDFMerger = require('pdf-merger-js');
+const {
+    config,
+    logger,
+    ensureDirectories,
+    readSourceFile,
+    generatePageTitle
+} = require('./utils.js');
 
-const outDir = "build";
-const pdfOutputDir = `${outDir}/pdf`;
+// Ensure PDF output directory
+const pdfOutputDir = path.join(config.outDir, 'pdf');
+ensureDirectories(pdfOutputDir);
 
-const templateAbsolutePath = path.relative("/", "template/page.html");
+async function generatePDFs(sourceName, group) {
+    const sourceDir = path.join(config.srcDir, sourceName);
+    try {
+        let filenames = fs.readdirSync(sourceDir);
 
-const logStart = (message) => console.log(`[START] ${message}`);
-const logDone = (message) => console.log(`[DONE✓] ${message}`);
-const logError = (message) => console.error(`[ERROR] ${message}`);
-
-const ensureDirectories = (...dirNames) => {
-    for (const dirName of dirNames) {
-        fs.existsSync(dirName) || fs.mkdirSync(dirName);
-    }
-};
-
-async function generatePDFs(...sourceDirs) {
-    for (const sourceDir of sourceDirs) {
-        try {
-            let destinationDir = path.join(pdfOutputDir, sourceDir);
-            ensureDirectories(destinationDir);
-
-            let filenames = fs.readdirSync(sourceDir);
+        // For all kanji in single file
+        if (filenames.length === 1) {
+            const inputFilePath = path.join(sourceDir, filenames[0]);
+            logger.start(`Reading file ${inputFilePath}...`);
+            const data = readSourceFile(inputFilePath);
+            for (let index = 0; index < data.length; index += group) {
+                const sourceGroup = `${index + 1}-${index + group}`;
+                logger.start(`Group ${sourceGroup} for ${sourceName}`);
+                const outputFilePath = path.join(pdfOutputDir, sourceName, sourceGroup);
+                await generatePDF(data.slice(index, index + group), outputFilePath, generatePageTitle(sourceName, sourceGroup));
+                logger.done(`Group ${sourceGroup} for ${sourceName}`);
+            }
+        } else {
+            // For multiple source files
             for (let sourceFile of filenames) {
                 const inputFilePath = path.join(sourceDir, sourceFile);
-                const outputDirectoryPath = path.join(pdfOutputDir, sourceDir);
-                await generatePDF(inputFilePath, outputDirectoryPath, sourceFile.split('.')[0]);
+                const sourceGroup = sourceFile.split('.')[0]
+                const outputFilePath = path.join(pdfOutputDir, sourceName, sourceGroup);
+
+                logger.start(`File ${inputFilePath} for ${sourceName}`);
+                const data = readSourceFile(inputFilePath);
+                await generatePDF(data, outputFilePath, generatePageTitle(sourceName, sourceGroup));
+                logger.done(`File ${inputFilePath} for ${sourceName}`);
             }
-        } catch (error) {
-            logError(`Error while reading directory ${sourceDir}: ${error}`);
         }
+    } catch (error) {
+        logger.error(`Error for source ${sourceName}: ${error}`);
     }
 }
 
-async function generatePDF(inputFilePath, outputDirectoryPath, sourceGroup) {
-    const tempDirPath = path.join(outputDirectoryPath, sourceGroup);
-    ensureDirectories(outputDirectoryPath, tempDirPath);
+async function generatePDF(data, outputFilePath, pageTitle) {
+    const tempDirPath = path.join(outputFilePath, 'pages');
+    ensureDirectories(outputFilePath, tempDirPath);
 
-    const outputPdfFilePath = path.join(outputDirectoryPath, `${sourceGroup}.pdf`);
-    if (fs.existsSync(outputPdfFilePath)) {
+    // Do not proceed if file already exists
+    const outputPdfFilePathName = `${outputFilePath}.pdf`;
+    if (fs.existsSync(outputPdfFilePathName)) {
         return;
     }
 
     try {
-        logStart(`Reading file ${inputFilePath}...`);
-        const content = fs.readFileSync(inputFilePath, {encoding: 'utf-8', flag: 'r'});
-        const data = content.split('\n').filter(Boolean);
-
         const timeout = 60 * 1000;
         const browser = await puppeteer.launch({
             waitNetworkIdle: true,
@@ -72,8 +82,8 @@ async function generatePDF(inputFilePath, outputDirectoryPath, sourceGroup) {
                 const page = await browser.newPage();
                 page.setDefaultTimeout(timeout);
 
-                page.on('console', consoleObj => console.log(consoleObj.text()));
-                await page.goto(`file:///${templateAbsolutePath}?data=${kanjiArray.join("")}&page=${index + 1}&title=${getTitle(sourceGroup)}`, {
+                page.on('console', consoleObj => console.log(`[Browser]${consoleObj.text()}`));
+                await page.goto(`file:///${config.templateAbsolutePath}?data=${kanjiArray.join("")}&page=${index + 1}&title=${pageTitle}`, {
                     waitUntil: ['load', 'networkidle0', 'networkidle2', 'domcontentloaded']
                 });
 
@@ -103,57 +113,42 @@ async function generatePDF(inputFilePath, outputDirectoryPath, sourceGroup) {
         for (let generatedPDFPath of sortByPage(generatedPDFPaths)) {
             merger.add(generatedPDFPath);
         }
-        await merger.save(outputPdfFilePath);
+        await merger.save(outputPdfFilePathName);
 
     } catch (error) {
-        logError(`Error on reading file ${inputFilePath} : ${error}`);
+        logger.start(`Error on ${outputFilePath} : ${error}`);
     }
 }
 
 // Download kanji data
 async function downloadKanjiData() {
-    logStart("Downloading Kanji data");
+    logger.start("Downloading Kanji data");
+    const outputDataPath = path.join(config.outDir, 'all-data.json')
+    if (fs.existsSync(outputDataPath)) {
+        logger.done("Kanji data already downloaded");
+        return
+    }
     const response = await fetch("https://raw.githubusercontent.com/davidluzgouveia/kanji-data/master/kanji.json");
     const json = await response.buffer();
-    await fs.writeFileSync(`${outDir}/all-data.json`, json);
-    logDone("Kanji data downloaded");
+    await fs.writeFileSync(outputDataPath, json);
+    logger.done("Kanji data downloaded");
 }
 
-async function cleanup(...sourceDirs) {
-    logStart("Cleaning up unnecessary/temporary files");
+async function cleanup(sourceName) {
+    logger.start("Cleaning up unnecessary/temporary files");
 
     // Temporary PDF pages
-    for (let sourceDir of sourceDirs) {
-        let filenames = await fs.readdirSync(path.join(pdfOutputDir, sourceDir));
-        for (let filename of filenames) {
-            const filePath = path.join(pdfOutputDir, sourceDir, filename);
-            let lsStat = await fs.lstatSync(filePath);
-            if (lsStat.isDirectory()) {
-                await fs.rmdirSync(filePath, {recursive: true});
-            }
+    let filenames = await fs.readdirSync(path.join(pdfOutputDir, sourceName));
+    for (let filename of filenames) {
+        const filePath = path.join(pdfOutputDir, sourceName, filename);
+        let lsStat = await fs.lstatSync(filePath);
+        // Since we only need PDFs, it's okay to delete directories
+        if (lsStat.isDirectory()) {
+            await fs.rmdirSync(filePath, {recursive: true});
         }
     }
-    // Kanji Data
-    await fs.unlinkSync(`${outDir}/all-data.json`);
 
-    logDone("Cleanup finished");
-}
-
-function getTitle(sourceGroup) {
-    if (sourceGroup.charAt(0) === "g") {
-        return `Grade ${sourceGroup.charAt(1)}`;
-    } else if (sourceGroup.charAt(0) === "n") {
-        return `JLPT N${sourceGroup.charAt(1)}`;
-    } else if (sourceGroup.startsWith("kg")) {
-        const kanjiFile = Number(sourceGroup.slice(3));
-        const firstKanji = (kanjiFile - 1) * 50;
-        const lastKanji = Math.min(kanjiFile * 50, 2898);
-        return `KanjiGarden Kanji ${firstKanji} - ${lastKanji}`;
-    } else if (!isNaN(sourceGroup)) {
-        return `Wanikani Level ${sourceGroup}`;
-    } else {
-        return "Frequency";
-    }
+    logger.done("Cleanup finished");
 }
 
 function sortByPage(array) {
@@ -161,17 +156,35 @@ function sortByPage(array) {
     return array.sort((pathA, pathB) => getNumber(pathA) - getNumber(pathB));
 }
 
-async function generateData() {
-    await ensureDirectories(outDir, pdfOutputDir);
+async function generateData(sourceName, group) {
     await downloadKanjiData();
-    await generatePDFs("frequency", "kanjigarden");
-    await cleanup("frequency", "kanjigarden");
+    await generatePDFs(sourceName, group);
+    await cleanup(sourceName);
 }
 
-console.time('GenerateData');
-generateData().then(function () {
-    console.log(`Data Generation finished`);
-    console.timeEnd('GenerateData');
+// Command line argument parsing
+const yargs = require('yargs/yargs')
+const {hideBin} = require('yargs/helpers')
+const argv = yargs(hideBin(process.argv)).argv
+
+let group = 50
+if (argv.source === 'frequency' || argv.source === 'kanjigarden') {
+    // Groups only matter for these two sources
+    if (!isNaN(argv.group)) {
+        group = argv.group
+    }
+}
+
+if (!argv.source) {
+    console.error("Source must be specified. See generator/sources directory.")
+    process.exit(1);
+}
+
+const timerLabel = `Generate Data for ${argv.source}`;
+
+console.time(timerLabel);
+generateData(argv.source, group, argv.dryRun).then(function () {
+    console.timeEnd(timerLabel);
     process.exit(0);
 }).catch(function (error) {
     console.error('Error occurred ' + error);
