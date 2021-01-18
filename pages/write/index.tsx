@@ -39,7 +39,7 @@ export default function WritePage() {
                     <CollectionCard
                         collectionKey={'kanjigarden'}
                         title={'KANJI GARDEN'}
-                        description={'Kanji Garden is a free mnemonic-based SRS kanji learning tool that features about 2900 kanji. '}
+                        description={'Kanji Garden is a free mnemonic-based SRS kanji learning tool that features about 2600 kanji. '}
                         metaColor={'#e2506d'}
                         backgroundImageUrl={'/assets/png/kanjigarden.png'}/>
                 </Grid>

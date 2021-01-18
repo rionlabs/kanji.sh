@@ -8,7 +8,8 @@ on:
       - '.github/workflows/**'
 
 jobs:
-  generator:
+
+  generate-kanji:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -30,6 +31,7 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
       - name: Install NPM depedencies
         run: npm install
 
@@ -37,9 +39,51 @@ jobs:
         working-directory: generator
         run: node kanjivg.js
 
-      - name: Generte PDF files
+      - name: Upload Kanji diagrams for PDF generation
+        uses: actions/upload-artifact@v2
+        with:
+          name: KanjiVG_Data
+          path: generator/build
+
+  generate-pdfs:
+    needs: generate-kanji
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        source: [ frequency, grade, jlpt, kanjigarden, wanikani ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Get npm cache directory path
+        id: npm-cache
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache/Restore
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.npm-cache.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install NPM depedencies
+        run: npm install
+
+      - name: Download KanjiVG data
+        uses: actions/download-artifact@v2
+        with:
+          name: KanjiVG_Data
+          path: generator/build
+
+      - name: Generate PDF files
         working-directory: generator
-        run: node main.js
+        run: node main.js --source=${{ matrix.source }}
 
       - name: Extract branch name
         shell: bash
@@ -50,5 +94,5 @@ jobs:
         uses: google-github-actions/upload-cloud-storage@main
         with:
           credentials: ${{ secrets.STORAGE_SERVICE_ACCOUNT }}
-          path: generator/build/pdf
-          destination: ${{ secrets.STORAGE_BUCKET }}/${{ steps.extract_branch.outputs.branch }}
+          path: generator/build/pdf/${{ matrix.source }}
+          destination: ${{ secrets.STORAGE_BUCKET }}/${{ steps.extract_branch.outputs.branch }}/pdf
