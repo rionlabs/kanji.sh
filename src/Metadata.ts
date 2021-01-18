@@ -60,35 +60,37 @@ for (let level = 1; level <= 60; level++) {
     });
 }
 
+// TODO: Retrieve file metadata from generator rather than calculating here
+
 const kanjiGardenData: GroupData = {
     heading: "Kanji Garden",
     files: []
 };
 
-for (let level = 1; level <= 60; level++) {
-    const kanjiFile = Number(level);
-    const firstKanji = (kanjiFile - 1) * 50;  // 50 = 50 kanji per "level"
-    const lastKanji = Math.min(kanjiFile * 50, 2898);
-
+let fileCounter = 0
+for (let i = 0; i <= 2645; i += 50) {
     kanjiGardenData.files.push({
-        title: `KG${level}`,
-        description: `KanjiGarden Kanji ${firstKanji} - ${lastKanji}`,
-        metaColor: "#00aaff",
-        filePath: `${pdfFileDirectory}/kanjigarden/kg_${level}.pdf`
+        title: `KG${++fileCounter}`,
+        description: `KanjiGarden Kanji ${i + 1}-${Math.min((fileCounter) * 50, 2645)}`,
+        metaColor: "#e2506d",
+        filePath: `${pdfFileDirectory}/kanjigarden/${i + 1}-${i + 50}.pdf`
     });
 }
 
 const frequencyData: GroupData = {
-    heading: 'Frequency',
-    files: [
-        {
-            title: `F`,
-            description: `Kanji from frequency 1 to 1000`,
-            metaColor: '#616161',
-            filePath: `${pdfFileDirectory}/frequency/all.pdf`
-        }
-    ]
+    heading: "Frequency",
+    files: []
 };
+
+fileCounter = 0
+for (let i = 0; i < 1000; i += 50) {
+    frequencyData.files.push({
+        title: `F${++fileCounter}`,
+        description: `Kanji with frequency ${i + 1}-${i + 50}`,
+        metaColor: '#616161',
+        filePath: `${pdfFileDirectory}/frequency/${i + 1}-${i + 50}.pdf`
+    });
+}
 
 export const data: Array<GroupData> = [JLPTData, gradesData, wanikaniData, frequencyData, kanjiGardenData];
 
