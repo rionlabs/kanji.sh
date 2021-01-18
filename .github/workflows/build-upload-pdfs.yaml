@@ -95,4 +95,4 @@ jobs:
         with:
           credentials: ${{ secrets.STORAGE_SERVICE_ACCOUNT }}
           path: generator/build/pdf/${{ matrix.source }}
-          destination: ${{ secrets.STORAGE_BUCKET }}/${{ steps.extract_branch.outputs.branch }}/pdf/${{ matrix.source }}
+          destination: ${{ secrets.STORAGE_BUCKET }}/${{ steps.extract_branch.outputs.branch }}/pdf
