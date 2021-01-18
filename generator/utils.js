@@ -25,7 +25,7 @@ const generatePageTitle = (sourceName, sourceGroup) => {
         case 'frequency': // Grouping
             return `Frequency ${sourceGroup}`;
         case 'grade': // G1, G2, G3, ...
-            return `Grade ${sourceGroup.toUpperCase()}`;
+            return `Grade ${sourceGroup.charAt(1)}`;
         case 'jlpt': // N1, N2, N3, ...
             return `JLPT ${sourceGroup.toUpperCase()}`;
         case 'kanjigarden': // Grouping
