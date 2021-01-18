@@ -29,10 +29,7 @@ const generatePageTitle = (sourceName, sourceGroup) => {
         case 'jlpt': // N1, N2, N3, ...
             return `JLPT ${sourceGroup.toUpperCase()}`;
         case 'kanjigarden': // Grouping
-            const kanjiFile = Number(sourceGroup.slice(3));
-            const firstKanji = (kanjiFile - 1) * 50;
-            const lastKanji = Math.min(kanjiFile * 50, 2898);
-            return `KanjiGarden Kanji ${firstKanji} - ${lastKanji}`;
+            return `KanjiGarden ${sourceGroup}`;
         case 'wanikani': // 1, 2, 3 ...
             return `Wanikani Level ${sourceGroup}`;
     }

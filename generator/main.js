@@ -81,7 +81,7 @@ async function generatePDF(data, outputFilePath, pageTitle) {
         });
 
         // To avoid timeout, if the number of pages are too much, 5 pages per core
-        const browserPageQueue = new PQueue({concurrency: os.cpus().length * 5, autoStart: true});
+        const browserPageQueue = new PQueue({concurrency: os.cpus().length * 100, autoStart: true});
         const generatedPDFPaths = [];
 
         let times = 0;
