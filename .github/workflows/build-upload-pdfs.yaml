@@ -10,7 +10,6 @@ on:
 jobs:
 
   generate-pdfs:
-    needs: generate-kanji
     runs-on: ubuntu-latest
     strategy:
       matrix:
