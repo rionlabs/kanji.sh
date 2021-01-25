@@ -7,8 +7,8 @@ import Container from '@material-ui/core/Container';
 import Link from 'next/link';
 import { logEvent } from '../firebase';
 import Spacer from './atoms/Spacer';
-import { HeaderNav } from './molecules/HeaderNav';
 import DonateButton from './atoms/DonateButton';
+import HeaderNav from './molecules/HeaderNav';
 
 const useStyles = makeStyles((theme) => ({
     root: {
