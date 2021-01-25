@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createStyles, StyleRules, Theme, WithStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -46,67 +46,48 @@ interface Props extends WithStyles<typeof styles>, WithRouterProps {
     backgroundImageUrl: string | undefined;
 }
 
-interface State {
-    readonly elevation: number;
-}
+const CollectionCard: (props: Props) => JSX.Element = (props: Props) => {
+    const { classes, title, description, metaColor, backgroundImageUrl } = props;
+    const [elevation, setElevation] = useState(NORMAL_ELEVATION);
 
-class CollectionCard extends React.Component<Props, State> {
-    readonly state: State = {
-        elevation: NORMAL_ELEVATION
-    };
+    const _elevate: () => void = () => setElevation(HOVER_ELEVATION);
 
-    public render() {
-        const { classes, title, description, metaColor, backgroundImageUrl } = this.props;
-        const { elevation } = this.state;
+    const _lower: () => void = () => setElevation(NORMAL_ELEVATION);
 
-        return (
-            <Card
-                className={classes.root}
-                onMouseOver={this._elevate}
-                onMouseOut={this._lower}
-                elevation={elevation}
-                onClick={this._onClick}>
-                <CardMedia
-                    className={classes.media}
-                    style={{ backgroundColor: metaColor }}
-                    image={backgroundImageUrl}></CardMedia>
-
-                <CardContent>
-                    <Typography
-                        className={classes.title}
-                        gutterBottom
-                        variant="h5"
-                        component="h5"
-                        noWrap>
-                        {title}
-                    </Typography>
-                    <Typography gutterBottom variant="subtitle1" align="center">
-                        {description}
-                    </Typography>
-                </CardContent>
-            </Card>
-        );
-    }
-
-    private _elevate = () => {
-        this.setState(() => ({
-            elevation: HOVER_ELEVATION
-        }));
-    };
-
-    private _lower = () => {
-        this.setState(() => ({
-            elevation: NORMAL_ELEVATION
-        }));
-    };
-
-    private _onClick = async () => {
-        this.setState(() => ({
-            elevation: NORMAL_ELEVATION
-        }));
-        await this.props.router.push(`write/collection/${this.props.collectionKey}`);
+    const _onClick: () => Promise<void> = async () => {
+        setElevation(NORMAL_ELEVATION);
+        await props.router.push(`write/collection/${props.collectionKey}`);
         window.scrollTo(0, 0);
     };
-}
+
+    return (
+        <Card
+            className={classes.root}
+            onMouseOver={_elevate}
+            onMouseOut={_lower}
+            elevation={elevation}
+            onClick={_onClick}>
+            <CardMedia
+                className={classes.media}
+                style={{ backgroundColor: metaColor }}
+                image={backgroundImageUrl}
+            />
+
+            <CardContent>
+                <Typography
+                    className={classes.title}
+                    gutterBottom
+                    variant="h5"
+                    component="h5"
+                    noWrap>
+                    {title}
+                </Typography>
+                <Typography gutterBottom variant="subtitle1" align="center">
+                    {description}
+                </Typography>
+            </CardContent>
+        </Card>
+    );
+};
 
 export default withRouter(withStyles(styles)(CollectionCard));

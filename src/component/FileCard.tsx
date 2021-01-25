@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, createStyles, StyleRules, Theme, WithStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -43,72 +43,52 @@ interface Props extends WithStyles<typeof styles> {
     fileData: FileData;
 }
 
-interface State {
-    readonly elevation: number;
-}
+const FileCard: (props: Props) => JSX.Element = (props: Props) => {
+    const { classes, fileData } = props;
+    const [elevation, setElevation] = useState(NORMAL_ELEVATION);
 
-class FileCard extends React.Component<Props, State> {
-    readonly state: State = {
-        elevation: NORMAL_ELEVATION
-    };
+    const _elevate: () => void = () => setElevation(HOVER_ELEVATION);
 
-    public render() {
-        const { classes, fileData } = this.props;
-        const { elevation } = this.state;
+    const _lower: () => void = () => setElevation(NORMAL_ELEVATION);
 
-        return (
-            <Card
-                className={classes.root}
-                onMouseOver={this._elevate}
-                onMouseOut={this._lower}
-                elevation={elevation}>
-                <CardMedia
-                    className={classes.media}
-                    style={{ backgroundColor: fileData.metaColor }}>
-                    <Typography className={classes.title} gutterBottom variant="h2" component="h5">
-                        {fileData.title}
-                    </Typography>
-                </CardMedia>
-
-                <CardContent>
-                    <Typography gutterBottom variant="subtitle1" align="center">
-                        {fileData.description}
-                    </Typography>
-
-                    <Button
-                        className={classes.downloadButton}
-                        variant="contained"
-                        color="primary"
-                        disableElevation
-                        href=""
-                        target="_blank"
-                        onClick={() => this._downloadFile(fileData)}
-                        download>
-                        Download PDF
-                    </Button>
-                </CardContent>
-            </Card>
-        );
-    }
-
-    private _elevate = () => {
-        this.setState(() => ({
-            elevation: HOVER_ELEVATION
-        }));
-    };
-
-    private _lower = () => {
-        this.setState(() => ({
-            elevation: NORMAL_ELEVATION
-        }));
-    };
-
-    private _downloadFile = (fileData: FileData) => {
+    const _downloadFile: (fileData: FileData) => void = (fileData: FileData) => {
         logEvent('file_download', { file: fileData.title });
         getDownloadUrl(fileData)
             .then((url) => window.open(url, '_blank'))
             .catch((error) => console.log(error));
     };
-}
+
+    return (
+        <Card
+            className={classes.root}
+            onMouseOver={_elevate}
+            onMouseOut={_lower}
+            elevation={elevation}>
+            <CardMedia className={classes.media} style={{ backgroundColor: fileData.metaColor }}>
+                <Typography className={classes.title} gutterBottom variant="h2" component="h5">
+                    {fileData.title}
+                </Typography>
+            </CardMedia>
+
+            <CardContent>
+                <Typography gutterBottom variant="subtitle1" align="center">
+                    {fileData.description}
+                </Typography>
+
+                <Button
+                    className={classes.downloadButton}
+                    variant="contained"
+                    color="primary"
+                    disableElevation
+                    href=""
+                    target="_blank"
+                    onClick={() => _downloadFile(fileData)}
+                    download>
+                    Download PDF
+                </Button>
+            </CardContent>
+        </Card>
+    );
+};
 
 export default withStyles(styles)(FileCard);
