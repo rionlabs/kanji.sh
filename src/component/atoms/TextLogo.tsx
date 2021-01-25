@@ -6,5 +6,5 @@ const StyledText = styled('span')`
 `;
 
 export default function TextLogo() {
-    return <StyledText>kanji.sh</StyledText>
+    return <StyledText>kanji.sh</StyledText>;
 }

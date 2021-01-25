@@ -1,12 +1,12 @@
 import React from 'react';
-import {createStyles, StyleRules, Theme, WithStyles} from '@material-ui/core';
+import { createStyles, StyleRules, Theme, WithStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {withRouter} from 'next/router';
-import {WithRouterProps} from 'next/dist/client/with-router';
+import { withRouter } from 'next/router';
+import { WithRouterProps } from 'next/dist/client/with-router';
 
 const NORMAL_ELEVATION = 4;
 const HOVER_ELEVATION = 10;
@@ -29,7 +29,7 @@ const styles = (theme: Theme): StyleRules =>
             textAlign: 'center',
             fontWeight: 400,
             userSelect: 'none',
-            msUserSelect: 'none',
+            msUserSelect: 'none'
         },
         downloadButton: {
             alignSelf: 'center',
@@ -39,11 +39,11 @@ const styles = (theme: Theme): StyleRules =>
     });
 
 interface Props extends WithStyles<typeof styles>, WithRouterProps {
-    collectionKey: string,
-    title: string,
-    description: string,
-    metaColor: string,
-    backgroundImageUrl: string | undefined
+    collectionKey: string;
+    title: string;
+    description: string;
+    metaColor: string;
+    backgroundImageUrl: string | undefined;
 }
 
 interface State {
@@ -56,26 +56,36 @@ class CollectionCard extends React.Component<Props, State> {
     };
 
     public render() {
-        const {classes, title, description, metaColor, backgroundImageUrl} = this.props;
-        const {elevation} = this.state;
+        const { classes, title, description, metaColor, backgroundImageUrl } = this.props;
+        const { elevation } = this.state;
 
-        return <Card className={classes.root} onMouseOver={this._elevate} onMouseOut={this._lower}
-                     elevation={elevation} onClick={this._onClick}>
+        return (
+            <Card
+                className={classes.root}
+                onMouseOver={this._elevate}
+                onMouseOut={this._lower}
+                elevation={elevation}
+                onClick={this._onClick}>
+                <CardMedia
+                    className={classes.media}
+                    style={{ backgroundColor: metaColor }}
+                    image={backgroundImageUrl}></CardMedia>
 
-            <CardMedia className={classes.media} style={{backgroundColor: metaColor}} image={backgroundImageUrl}>
-
-            </CardMedia>
-
-            <CardContent>
-                <Typography className={classes.title} gutterBottom variant="h5" component="h5" noWrap>
-                    {title}
-                </Typography>
-                <Typography gutterBottom variant="subtitle1" align="center">
-                    {description}
-                </Typography>
-
-            </CardContent>
-        </Card>
+                <CardContent>
+                    <Typography
+                        className={classes.title}
+                        gutterBottom
+                        variant="h5"
+                        component="h5"
+                        noWrap>
+                        {title}
+                    </Typography>
+                    <Typography gutterBottom variant="subtitle1" align="center">
+                        {description}
+                    </Typography>
+                </CardContent>
+            </Card>
+        );
     }
 
     private _elevate = () => {
@@ -94,8 +104,8 @@ class CollectionCard extends React.Component<Props, State> {
         this.setState(() => ({
             elevation: NORMAL_ELEVATION
         }));
-        await this.props.router.push(`write/collection/${this.props.collectionKey}`)
-        window.scrollTo(0, 0)
+        await this.props.router.push(`write/collection/${this.props.collectionKey}`);
+        window.scrollTo(0, 0);
     };
 }
 

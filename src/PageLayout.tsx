@@ -1,9 +1,9 @@
-import React, {FunctionComponent} from 'react';
-import {createStyles, Theme, withStyles, WithStyles} from '@material-ui/core/styles';
+import React, { FunctionComponent } from 'react';
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Header from './component/Header';
 import Footer from './component/Footer';
 import Container from '@material-ui/core/Container';
-import {StyleRules} from '@material-ui/styles';
+import { StyleRules } from '@material-ui/styles';
 
 const styles = (theme: Theme): StyleRules =>
     createStyles({
@@ -18,23 +18,19 @@ const styles = (theme: Theme): StyleRules =>
         }
     });
 
-interface Props extends WithStyles<typeof styles> {
-
-}
+interface Props extends WithStyles<typeof styles> {}
 
 export const PageLayout: FunctionComponent<Props> = (props) => {
-    const {classes, children} = props;
+    const { classes, children } = props;
     return (
         <div className={classes.root}>
-            <Header/>
+            <Header />
             <Container className={classes.spacedContainer}>
-                <div>
-                    {children}
-                </div>
+                <div>{children}</div>
             </Container>
-            <Footer/>
+            <Footer />
         </div>
     );
-}
+};
 
 export default withStyles(styles)(PageLayout);

@@ -8,7 +8,6 @@ on:
       - '.github/workflows/**'
 
 jobs:
-
   generate-kanji:
     runs-on: ubuntu-latest
     steps:
@@ -50,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        source: [ frequency, grade, jlpt, kanjigarden, wanikani ]
+        source: [frequency, grade, jlpt, kanjigarden, wanikani]
     steps:
       - name: Checkout code
         uses: actions/checkout@v1

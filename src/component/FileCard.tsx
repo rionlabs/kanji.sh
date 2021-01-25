@@ -1,12 +1,12 @@
 import React from 'react';
-import {Button, createStyles, StyleRules, Theme, WithStyles} from '@material-ui/core';
+import { Button, createStyles, StyleRules, Theme, WithStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import {FileData} from '../Metadata';
+import { FileData } from '../Metadata';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {getDownloadUrl, logEvent} from '../firebase';
+import { getDownloadUrl, logEvent } from '../firebase';
 
 const NORMAL_ELEVATION = 2;
 const HOVER_ELEVATION = 10;
@@ -30,7 +30,7 @@ const styles = (theme: Theme): StyleRules =>
             lineHeight: `${theme.spacing(22)}px`,
             color: theme.palette.common.white,
             userSelect: 'none',
-            msUserSelect: 'none',
+            msUserSelect: 'none'
         },
         downloadButton: {
             alignSelf: 'center',
@@ -53,23 +53,30 @@ class FileCard extends React.Component<Props, State> {
     };
 
     public render() {
-        const {classes, fileData} = this.props;
-        const {elevation} = this.state;
+        const { classes, fileData } = this.props;
+        const { elevation } = this.state;
 
-        return <Card className={classes.root} onMouseOver={this._elevate} onMouseOut={this._lower}
-                     elevation={elevation}>
-            <CardMedia className={classes.media} style={{backgroundColor: fileData.metaColor}}>
-                <Typography className={classes.title} gutterBottom variant="h2" component="h5">
-                    {fileData.title}
-                </Typography>
-            </CardMedia>
+        return (
+            <Card
+                className={classes.root}
+                onMouseOver={this._elevate}
+                onMouseOut={this._lower}
+                elevation={elevation}>
+                <CardMedia
+                    className={classes.media}
+                    style={{ backgroundColor: fileData.metaColor }}>
+                    <Typography className={classes.title} gutterBottom variant="h2" component="h5">
+                        {fileData.title}
+                    </Typography>
+                </CardMedia>
 
-            <CardContent>
-                <Typography gutterBottom variant="subtitle1" align="center">
-                    {fileData.description}
-                </Typography>
+                <CardContent>
+                    <Typography gutterBottom variant="subtitle1" align="center">
+                        {fileData.description}
+                    </Typography>
 
-                <Button className={classes.downloadButton}
+                    <Button
+                        className={classes.downloadButton}
                         variant="contained"
                         color="primary"
                         disableElevation
@@ -77,10 +84,11 @@ class FileCard extends React.Component<Props, State> {
                         target="_blank"
                         onClick={() => this._downloadFile(fileData)}
                         download>
-                    Download PDF
-                </Button>
-            </CardContent>
-        </Card>
+                        Download PDF
+                    </Button>
+                </CardContent>
+            </Card>
+        );
     }
 
     private _elevate = () => {
@@ -96,11 +104,11 @@ class FileCard extends React.Component<Props, State> {
     };
 
     private _downloadFile = (fileData: FileData) => {
-        logEvent('file_download', {file: fileData.title})
+        logEvent('file_download', { file: fileData.title });
         getDownloadUrl(fileData)
-            .then(url => window.open(url, '_blank'))
-            .catch(error => console.log(error))
-    }
+            .then((url) => window.open(url, '_blank'))
+            .catch((error) => console.log(error));
+    };
 }
 
 export default withStyles(styles)(FileCard);

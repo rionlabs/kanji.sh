@@ -1,220 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
-    <title>Kanji.sh</title>
-    <style>
-        @page {
-            size: A4 portrait;
-        }
-
-        html {
-            height: 280mm;
-            width: 210mm;
-            padding-top: 16mm;
-            font-family: 'Montserrat', sans-serif;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        body {
-            background: white;
-            margin: 0 auto;
-        }
-
-        object {
-            width: 100%;
-            height: 100%;
-            margin: auto;
-        }
-
-        p {
-            line-height: 1.1em;
-            overflow-wrap: break-word;
-            word-break: break-all;
-        }
-
-        table {
-            height: 40mm;
-            width: 150mm;
-            min-height: 40mm;
-            min-width: 150mm;
-            max-height: 40mm;
-            max-width: 150mm;
-            margin: 3mm auto;
-            background: white;
-            border-spacing: 0;
-            page-break-inside: avoid;
-            border: #777777 solid 0.05pt;
-        }
-
-        tr, th, td {
-            margin: 0;
-            padding: 0;
-            border-spacing: 0;
-            border: #777777 solid 0.05pt;
-            text-align: center;
-            align-content: center;
-            page-break-inside: avoid;
-        }
-
-        .big-square {
-            height: 30mm;
-            width: 30mm;
-            min-height: 30mm;
-            min-width: 30mm;
-        }
-
-        .big-square > img {
-            height: 25mm;
-            width: 25mm;
-        }
-
-        .small-square {
-            height: 15mm;
-            width: 15mm;
-            min-height: 15mm;
-            min-width: 15mm;
-            max-height: 15mm;
-            max-width: 15mm;
-            margin: auto;
-            background-size: 15mm 15mm;
-            background-position-x: 0;
-            background-position-y: 0;
-            background-image: url("../graphics/square_99.png");
-        }
-
-        .small-square > img {
-            height: 13mm;
-            width: 13mm;
-        }
-
-        #kvg {
-            stroke: #BBBBBB;
-        }
-
-        .small-square > object > svg {
-            stroke: #BBBBBB;
-        }
-
-        .small-square > object > svg > g {
-            stroke: #BBBBBB;
-        }
-
-        .small-square > object > svg > text {
-            font-size: 0;
-        }
-
-        .small-square > object > svg:last-child {
-            font-size: 0;
-        }
-    </style>
-
-    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script>
-        function getParam(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[\[\]]/g, '\\$&');
-            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
-
-        function getKanjiImageFileName(kanji) {
-            return kanji.charCodeAt(0).toString(16).padStart(5, "0") + ".png";
-        }
-    </script>
-    <script id="template" type="text/x-handlebars-template">
-        <table>
-            <thead>
-            <tr>
-                <td colspan="4" style="width: 60mm;height: 15mm">{{meaning}}</td>
-                <td colspan="4" style="width: 60mm;height: 15mm">{{onyomi}}</td>
-                <td colspan="4" style="width: 60mm;height: 15mm">{{kunyomi}}</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th class="big-square" rowspan="2" colspan="2">
-                    <img src={{svgUrl}} alt={{kanji}}/>
-                </th>
-                {{#times 10 svgUrlForWriting}}
-                    <td class="small-square"><img src={{this}} alt={{kanji}}/></td>
-                {{/times}}
-            </tr>
-            <tr>
-                {{#times 10 svgUrl}}
-                    <td class="small-square"></td>
-                {{/times}}
-            </tr>
-            </tbody>
-        </table>
-    </script>
-    <script>
-        $(document).ready(async function () {
-            // Load the data first
-            const allData = await $.getJSON(`../build/all-data.json`);
-
-            Handlebars.registerHelper('times', function (count, url, options) {
-                let accum = '';
-                for (let i = 0; i < count; ++i)
-                    accum += options.fn(url);
-                return accum;
-            });
-            var source = document.getElementById("template").innerHTML;
-            var template = Handlebars.compile(source);
-
-            const displayData = {}
-            const kanjiString = getParam('data')
-            for (let i = 0; i < kanjiString.length; i++) {
-                const kanji = kanjiString.charAt(i)
-                const kanjiData = allData[kanji]
-
-                const extractData = function (dataObject, key) {
-                    if(dataObject !== undefined) {
-                        return (dataObject[`wk_${key}`] || dataObject[key] || ['']).map(string => string.replace(/[\^!]/, '')).join(', ')
-                    } else {
-                        return "";
-                    }
-                }
-
-                displayData[kanji] = {
-                    kanji: kanji,
-                    svgUrl: `../build/png/kanjiBig/${getKanjiImageFileName(kanji)}`,
-                    svgUrlForWriting: `../build/png/kanjiSmall/${getKanjiImageFileName(kanji)}`,
-                    meaning: extractData(kanjiData, 'meanings'),
-                    onyomi: extractData(kanjiData, 'readings_on'),
-                    kunyomi: extractData(kanjiData, 'readings_kun')
-                }
-
-                $('body').append(template(displayData[kanji]))
+    <head>
+        <meta charset="UTF-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap"
+            rel="stylesheet"
+        />
+        <title>Kanji.sh</title>
+        <style>
+            @page {
+                size: A4 portrait;
             }
-        });
-    </script>
-    <script>
-        $(document).ready(async function () {
-            const title = getParam('title')
-            const page = getParam('page')
-            $('#title').text(title)
-            $('#page_number').text(`Page ${page}`)
-        });
-    </script>
-</head>
-<body>
-<header style="position: absolute; left: 0; top: 0.5cm; text-align: center; width: 100%;">
-    <p>
-        <span id="title" style="text-transform: capitalize;"></span>
-        <span>&nbsp;</span>
-        <span id="page_number" style="color: #777777"></span>
-    </p>
-</header>
-<footer style="position: absolute; left: 0; bottom: 1cm; text-align: center; width: 100%;">
-    Created with <a href="https://kanji.sh" style="text-decoration: none;color: #777777">kanji.sh</a>
-</footer>
-</body>
+
+            html {
+                height: 280mm;
+                width: 210mm;
+                padding-top: 16mm;
+                font-family: 'Montserrat', sans-serif;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            body {
+                background: white;
+                margin: 0 auto;
+            }
+
+            object {
+                width: 100%;
+                height: 100%;
+                margin: auto;
+            }
+
+            p {
+                line-height: 1.1em;
+                overflow-wrap: break-word;
+                word-break: break-all;
+            }
+
+            table {
+                height: 40mm;
+                width: 150mm;
+                min-height: 40mm;
+                min-width: 150mm;
+                max-height: 40mm;
+                max-width: 150mm;
+                margin: 3mm auto;
+                background: white;
+                border-spacing: 0;
+                page-break-inside: avoid;
+                border: #777777 solid 0.05pt;
+            }
+
+            tr,
+            th,
+            td {
+                margin: 0;
+                padding: 0;
+                border-spacing: 0;
+                border: #777777 solid 0.05pt;
+                text-align: center;
+                align-content: center;
+                page-break-inside: avoid;
+            }
+
+            .big-square {
+                height: 30mm;
+                width: 30mm;
+                min-height: 30mm;
+                min-width: 30mm;
+            }
+
+            .big-square > img {
+                height: 25mm;
+                width: 25mm;
+            }
+
+            .small-square {
+                height: 15mm;
+                width: 15mm;
+                min-height: 15mm;
+                min-width: 15mm;
+                max-height: 15mm;
+                max-width: 15mm;
+                margin: auto;
+                background-size: 15mm 15mm;
+                background-position-x: 0;
+                background-position-y: 0;
+                background-image: url('../graphics/square_99.png');
+            }
+
+            .small-square > img {
+                height: 13mm;
+                width: 13mm;
+            }
+
+            #kvg {
+                stroke: #bbbbbb;
+            }
+
+            .small-square > object > svg {
+                stroke: #bbbbbb;
+            }
+
+            .small-square > object > svg > g {
+                stroke: #bbbbbb;
+            }
+
+            .small-square > object > svg > text {
+                font-size: 0;
+            }
+
+            .small-square > object > svg:last-child {
+                font-size: 0;
+            }
+        </style>
+
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script>
+            function getParam(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, '\\$&');
+                const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            }
+
+            function getKanjiImageFileName(kanji) {
+                return kanji.charCodeAt(0).toString(16).padStart(5, '0') + '.png';
+            }
+        </script>
+        <script id="template" type="text/x-handlebars-template">
+            <table>
+                <thead>
+                    <tr>
+                        <td colspan='4' style='width: 60mm;height: 15mm'>
+                            {{meaning}}
+                        </td>
+                        <td colspan='4' style='width: 60mm;height: 15mm'>
+                            {{onyomi}}
+                        </td>
+                        <td colspan='4' style='width: 60mm;height: 15mm'>
+                            {{kunyomi}}
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class='big-square' rowspan='2' colspan='2'>
+                            <img src={{svgUrl}} alt={{kanji}} />
+                        </th>
+                        {{#times 10 svgUrlForWriting}}
+                            <td class='small-square'>
+                                <img src={{this}} alt={{kanji}} />
+                            </td>
+                        {{/times}}
+                    </tr>
+                    <tr>
+                        {{#times 10 svgUrl}}
+                            <td class='small-square'></td>
+                        {{/times}}
+                    </tr>
+                </tbody>
+            </table>
+        </script>
+        <script>
+            $(document).ready(async function () {
+                // Load the data first
+                const allData = await $.getJSON(`../build/all-data.json`);
+
+                Handlebars.registerHelper('times', function (count, url, options) {
+                    let accum = '';
+                    for (let i = 0; i < count; ++i) accum += options.fn(url);
+                    return accum;
+                });
+                var source = document.getElementById('template').innerHTML;
+                var template = Handlebars.compile(source);
+
+                const displayData = {};
+                const kanjiString = getParam('data');
+                for (let i = 0; i < kanjiString.length; i++) {
+                    const kanji = kanjiString.charAt(i);
+                    const kanjiData = allData[kanji];
+
+                    const extractData = function (dataObject, key) {
+                        if (dataObject !== undefined) {
+                            return (dataObject[`wk_${key}`] || dataObject[key] || [''])
+                                .map((string) => string.replace(/[\^!]/, ''))
+                                .join(', ');
+                        } else {
+                            return '';
+                        }
+                    };
+
+                    displayData[kanji] = {
+                        kanji: kanji,
+                        svgUrl: `../build/png/kanjiBig/${getKanjiImageFileName(kanji)}`,
+                        svgUrlForWriting: `../build/png/kanjiSmall/${getKanjiImageFileName(kanji)}`,
+                        meaning: extractData(kanjiData, 'meanings'),
+                        onyomi: extractData(kanjiData, 'readings_on'),
+                        kunyomi: extractData(kanjiData, 'readings_kun')
+                    };
+
+                    $('body').append(template(displayData[kanji]));
+                }
+            });
+        </script>
+        <script>
+            $(document).ready(async function () {
+                const title = getParam('title');
+                const page = getParam('page');
+                $('#title').text(title);
+                $('#page_number').text(`Page ${page}`);
+            });
+        </script>
+    </head>
+    <body>
+        <header style="position: absolute; left: 0; top: 0.5cm; text-align: center; width: 100%">
+            <p>
+                <span id="title" style="text-transform: capitalize"></span>
+                <span>&nbsp;</span>
+                <span id="page_number" style="color: #777777"></span>
+            </p>
+        </header>
+        <footer style="position: absolute; left: 0; bottom: 1cm; text-align: center; width: 100%">
+            Created with
+            <a href="https://kanji.sh" style="text-decoration: none; color: #777777">kanji.sh</a>
+        </footer>
+    </body>
 </html>

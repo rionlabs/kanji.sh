@@ -1,12 +1,12 @@
-import React, {HTMLAttributes} from 'react'
+import React, { HTMLAttributes } from 'react';
 import Lottie from 'react-lottie';
 import construction from '../../images/anim/construction_in_process.json';
 import reading from '../../images/anim/reading_book.json';
 import writing from '../../images/anim/writing.json';
 
 type AnimationProps = {
-    animationData: any
-}
+    animationData: any;
+};
 
 const AnimatedImage = (props: AnimationProps & HTMLAttributes<any>) => {
     const defaultOptions = {
@@ -18,14 +18,21 @@ const AnimatedImage = (props: AnimationProps & HTMLAttributes<any>) => {
         }
     };
 
-    return <div className={props.className}><Lottie options={defaultOptions} isClickToPauseDisabled={true}/></div>
+    return (
+        <div className={props.className}>
+            <Lottie options={defaultOptions} isClickToPauseDisabled={true} />
+        </div>
+    );
 };
 
-export const ReadingBookAnimation = (props: { className: string }) =>
-    <AnimatedImage className={props.className} animationData={reading}/>
+export const ReadingBookAnimation = (props: { className: string }) => (
+    <AnimatedImage className={props.className} animationData={reading} />
+);
 
-export const ConstructionAnimation = (props: { className: string }) =>
-    <AnimatedImage className={props.className} animationData={construction}/>
+export const ConstructionAnimation = (props: { className: string }) => (
+    <AnimatedImage className={props.className} animationData={construction} />
+);
 
-export const WritingAnimation = (props: { className: string }) =>
-    <AnimatedImage className={props.className} animationData={writing}/>
+export const WritingAnimation = (props: { className: string }) => (
+    <AnimatedImage className={props.className} animationData={writing} />
+);

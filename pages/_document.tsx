@@ -1,9 +1,9 @@
 import React from 'react';
-import Document, {Head, Html, Main, NextScript} from 'next/document';
-import {ServerStyleSheets} from '@material-ui/core/styles';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import { ServerStyleSheets } from '@material-ui/core/styles';
 import theme from '../src/theme';
 import GoogleFonts from 'next-google-fonts';
-import {ServerStyleSheet} from 'styled-components';
+import { ServerStyleSheet } from 'styled-components';
 
 let prefixer: any;
 let cleanCSS: any;
@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'production') {
     /* eslint-enable global-require */
 
     prefixer = postcss([autoprefixer]);
-    cleanCSS = new CleanCSS({level: 2});
+    cleanCSS = new CleanCSS({ level: 2 });
 }
 
 export default class MyDocument extends Document {
@@ -24,29 +24,32 @@ export default class MyDocument extends Document {
         // noinspection HtmlRequiredTitleElement
         return (
             <Html lang="en">
-                <GoogleFonts
-                    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Quicksand:wght@500;700&display=swap"/>
+                <GoogleFonts href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Quicksand:wght@500;700&display=swap" />
                 <Head>
                     {/* Meta Headers */}
-                    <meta charSet="utf-8"/>
-                    <link rel="icon" href={'/favicon.ico'}/>
-                    <link rel="apple-touch-icon" href={'/logo192.png'}/>
-                    <link rel="manifest" href={'/manifest.json'}/>
-                    <meta name="theme-color" content={theme.palette.primary.dark}/>
+                    <meta charSet="utf-8" />
+                    <link rel="icon" href={'/favicon.ico'} />
+                    <link rel="apple-touch-icon" href={'/logo192.png'} />
+                    <link rel="manifest" href={'/manifest.json'} />
+                    <meta name="theme-color" content={theme.palette.primary.dark} />
                     {/* Site Verification */}
-                    <meta name="google-site-verification" content="zJzDzuLG5I7xmNqDZzTCDwtmTP2243-WD_g6Hg4PDsk"/>
-                    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true"/>
-                    <link rel="stylesheet"
-                          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Quicksand:wght@500;700&display=swap"/>
+                    <meta
+                        name="google-site-verification"
+                        content="zJzDzuLG5I7xmNqDZzTCDwtmTP2243-WD_g6Hg4PDsk"
+                    />
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+                    <link
+                        rel="stylesheet"
+                        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Quicksand:wght@500;700&display=swap"
+                    />
                 </Head>
                 <body>
-                <Main/>
-                <NextScript/>
+                    <Main />
+                    <NextScript />
                 </body>
             </Html>
         );
     }
-
 }
 
 // `getInitialProps` belongs to `_document` (instead of `_app`),
@@ -83,7 +86,7 @@ MyDocument.getInitialProps = async (ctx) => {
         ctx.renderPage = () =>
             originalRenderPage({
                 enhanceApp: (App) => (props) =>
-                    styledComponentsSheet.collectStyles(materialSheets.collect(<App {...props} />)),
+                    styledComponentsSheet.collectStyles(materialSheets.collect(<App {...props} />))
             });
 
         const initialProps = await Document.getInitialProps(ctx);
@@ -91,9 +94,9 @@ MyDocument.getInitialProps = async (ctx) => {
         let css = materialSheets.toString();
         // It might be undefined, e.g. after an error.
         if (css && process.env.NODE_ENV === 'production') {
-            const result1 = await prefixer.process(css, {from: undefined});
+            const result1 = await prefixer.process(css, { from: undefined });
             css = result1.css;
-            const minifiedCSS = cleanCSS.minify(css)
+            const minifiedCSS = cleanCSS.minify(css);
             css = minifiedCSS.styles;
         }
 
@@ -106,10 +109,10 @@ MyDocument.getInitialProps = async (ctx) => {
                     id="jss-server-side"
                     key="jss-server-side"
                     // eslint-disable-next-line react/no-danger
-                    dangerouslySetInnerHTML={{__html: css}}
+                    dangerouslySetInnerHTML={{ __html: css }}
                 />,
-                styledComponentsSheet.getStyleElement(),
-            ],
+                styledComponentsSheet.getStyleElement()
+            ]
         };
     } finally {
         styledComponentsSheet.seal();
