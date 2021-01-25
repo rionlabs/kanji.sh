@@ -24,7 +24,7 @@ function getDownloadUrl(fileData: FileData): Promise<string> {
     else return Promise.reject(Error('Storage not available'));
 }
 
-function logEvent(eventName: string, eventParams?: { [key: string]: any }): void {
+function logEvent(eventName: string, eventParams?: Record<string, unknown>): void {
     if (firebase.apps.length) firebase.analytics().logEvent(eventName, eventParams);
     else console.log(`Event: (${eventName}) {${JSON.stringify(eventParams)}`);
 }

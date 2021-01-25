@@ -9,10 +9,7 @@ interface Subscription {
     email: string;
 }
 
-export default async function handler(
-    request: NextApiRequest,
-    response: NextApiResponse
-): Promise<void> {
+export default async (request: NextApiRequest, response: NextApiResponse): Promise<void> => {
     console.log('[Start] Function Subscribe');
     if (request.method === 'POST') {
         try {
@@ -27,9 +24,9 @@ export default async function handler(
     } else {
         response.status(405).json({ status: 'Method Not allowed' });
     }
-}
+};
 
-async function addContact({ firstName, lastName, email }: Subscription): Promise<void> {
+const addContact = async ({ firstName, lastName, email }: Subscription): Promise<void> => {
     console.log('[Start] Add Contact');
     const apiInstance = new SibApiV3Sdk.ContactsApi();
     const apiKey = apiInstance.authentications['apiKey'];
@@ -48,4 +45,4 @@ async function addContact({ firstName, lastName, email }: Subscription): Promise
             JSON.stringify(response.response)
     );
     console.log('[End] Add Contact');
-}
+};

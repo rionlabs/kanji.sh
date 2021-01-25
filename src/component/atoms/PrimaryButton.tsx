@@ -11,7 +11,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
     textTransform: 'none'
 }));
 
-const PrimaryButton = (props: ButtonProps) => (
+const PrimaryButton: (props: ButtonProps) => JSX.Element = (props: ButtonProps) => (
     <StyledButton variant={'contained'} size={'large'} color={'primary'} {...props} />
 );
 

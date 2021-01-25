@@ -68,6 +68,7 @@ const Header: React.FC = () => {
                     <Toolbar className={classes.toolbar}>
                         <div>
                             <Link href={'/'}>
+                                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
                                 <a
                                     className={classes.navLink}
                                     onClick={() => logEvent('navigation', { path: 'home' })}>

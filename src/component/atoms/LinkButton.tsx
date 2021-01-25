@@ -17,7 +17,12 @@ interface LinkButtonProps {
     startIcon?: React.ReactNode;
 }
 
-const LinkButton = ({
+const LinkButton: ({
+    link,
+    startIcon,
+    children,
+    ...props
+}: React.PropsWithChildren<LinkButtonProps>) => JSX.Element = ({
     link,
     startIcon,
     children,
