@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const SibApiV3Sdk = require('sib-api-v3-typescript');
 
 interface Subscription {
@@ -8,7 +9,10 @@ interface Subscription {
     email: string;
 }
 
-export default async function handler(request: NextApiRequest, response: NextApiResponse) {
+export default async function handler(
+    request: NextApiRequest,
+    response: NextApiResponse
+): Promise<void> {
     console.log('[Start] Function Subscribe');
     if (request.method === 'POST') {
         try {
@@ -17,7 +21,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
             console.log('[End] Read Request');
             await addContact(subscriptionData);
             response.status(200).json({ status: 'Success' });
-        } catch (error: any) {
+        } catch (error: unknown) {
             response.status(500).json({ status: JSON.stringify(error) });
         }
     } else {
@@ -25,13 +29,13 @@ export default async function handler(request: NextApiRequest, response: NextApi
     }
 }
 
-async function addContact({ firstName, lastName, email }: Subscription) {
+async function addContact({ firstName, lastName, email }: Subscription): Promise<void> {
     console.log('[Start] Add Contact');
-    let apiInstance = new SibApiV3Sdk.ContactsApi();
-    let apiKey = apiInstance.authentications['apiKey'];
+    const apiInstance = new SibApiV3Sdk.ContactsApi();
+    const apiKey = apiInstance.authentications['apiKey'];
     apiKey.apiKey = process.env.SIB_API_KEY;
 
-    let newContact = new SibApiV3Sdk.CreateContact();
+    const newContact = new SibApiV3Sdk.CreateContact();
     newContact.email = email;
     newContact.attributes = { FIRSTNAME: firstName, LASTNAME: lastName };
     newContact.listIds = [3];

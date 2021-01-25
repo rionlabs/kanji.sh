@@ -8,7 +8,7 @@ import { AttachMoneyRounded, EmailRounded, GitHub } from '@material-ui/icons';
 import LinkButton from '../../src/component/atoms/LinkButton';
 import TextLogo from '../../src/component/atoms/TextLogo';
 
-export default function ReadPage() {
+const ReadPage: React.FC = () => {
     return (
         <PageLayout>
             <Typography variant={'h3'} gutterBottom>
@@ -19,10 +19,10 @@ export default function ReadPage() {
                 <TextLogo /> aims to become a free & more comfortable way to study kanji reading and
                 writing. Right now, there are hundreds of free resources available online but filled
                 with distracting advertisements. I personally feel that distracting, not letting you
-                focus on the reading. So, I'm making this website for myself and others who want to
-                study kanji distraction-free. For now, there are hundreds of worksheets for you to
-                download and practice writing. Why write kanji rather than using an app to dribble?
-                Here are{' '}
+                focus on the reading. So, I&apos;m making this website for myself and others who
+                want to want to study kanji distraction-free. For now, there are hundreds of
+                worksheets for download and practice writing. Why write kanji rather than using an
+                app to dribble? Here are{' '}
                 <Link
                     href={
                         'https://blog.remarkable.com/5-reasons-why-hand-writing-notes-while-studying-improves-your-learning-5f43a397155b'
@@ -114,15 +114,17 @@ export default function ReadPage() {
                 Sources
             </Typography>
             <Typography gutterBottom variant="body1">
-                JLPT kanji data comes from Peter van der Woude's{' '}
+                JLPT kanji data comes from Peter van der Woude&apos;s{' '}
                 <Link href={'https://jlptstudy.net'}>JLPTStudy</Link> study site. Grades & frequency
                 kanji data is taken from{' '}
                 <Link href={'https://en.wikipedia.org/wiki/Kyōiku_kanji'}>Wikipedia</Link> page.
                 Wanikani level data comes from{' '}
                 <Link href={'https://docs.api.wanikani.com/'}>Wanikani API</Link>. Meanings &
-                Readings data is copied from David Gouveia's{' '}
+                Readings data is copied from David Gouveia&apos;s{' '}
                 <Link href={'https://github.com/davidluzgouveia/kanji-data'}>GitHub</Link> project.
             </Typography>
         </PageLayout>
     );
-}
+};
+
+export default ReadPage;

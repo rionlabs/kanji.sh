@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Jumbotron() {
+const Jumbotron: React.FC = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
@@ -85,4 +85,6 @@ export default function Jumbotron() {
             </Container>
         </div>
     );
-}
+};
+
+export default Jumbotron;

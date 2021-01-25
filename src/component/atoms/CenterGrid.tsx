@@ -1,10 +1,13 @@
 import { GridProps, styled } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import React from 'react';
 
-const StyledGrid = styled(Grid)(({ theme }) => ({
+const StyledGrid = styled(Grid)(() => ({
     textAlign: 'center'
 }));
 
-export default function CenterGrid(props: GridProps) {
-    return <StyledGrid {...props} />;
-}
+const CenterGrid: (props: GridProps) => JSX.Element = (props: GridProps) => (
+    <StyledGrid {...props} />
+);
+
+export default CenterGrid;

@@ -8,6 +8,8 @@ const StyledDiv = styled('div')((props: { theme: Theme } & { space?: Space }) =>
     padding: props.theme.spacing(props.space || 1)
 }));
 
-export default function Spacer(props: { space?: Space }) {
-    return <StyledDiv {...props} />;
-}
+const Spacer: (props: { space?: Space }) => JSX.Element = (props: { space?: Space }) => (
+    <StyledDiv {...props} />
+);
+
+export default Spacer;

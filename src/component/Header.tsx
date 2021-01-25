@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Header() {
+const Header: React.FC = () => {
     const classes = useStyles();
 
     return (
@@ -98,4 +98,6 @@ export default function Header() {
             </AppBar>
         </div>
     );
-}
+};
+
+export default Header;

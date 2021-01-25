@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Header from './component/Header';
 import Footer from './component/Footer';
@@ -18,9 +18,7 @@ const styles = (theme: Theme): StyleRules =>
         }
     });
 
-interface Props extends WithStyles<typeof styles> {}
-
-export const PageLayout: FunctionComponent<Props> = (props) => {
+export const PageLayout: React.FC<WithStyles<typeof styles>> = (props) => {
     const { classes, children } = props;
     return (
         <div className={classes.root}>

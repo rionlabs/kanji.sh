@@ -39,7 +39,7 @@ interface HeaderNavProps extends React.PropsWithChildren<LinkProps> {
     eventPath: string;
 }
 
-export function HeaderNav({ eventPath, children, ...props }: HeaderNavProps) {
+const HeaderNav: React.FC<HeaderNavProps> = ({ eventPath, children, ...props }) => {
     const { asPath } = useRouter();
     const match = asPath.includes(props.href.toString());
     return (
@@ -57,4 +57,6 @@ export function HeaderNav({ eventPath, children, ...props }: HeaderNavProps) {
             </StyledA>
         </Link>
     );
-}
+};
+
+export default HeaderNav;

@@ -11,6 +11,8 @@ const StyledButton = styled(Button)(({ theme }) => ({
     textTransform: 'none'
 }));
 
-export default function PrimaryButton(props: ButtonProps) {
-    return <StyledButton variant={'contained'} size={'large'} color={'primary'} {...props} />;
-}
+const PrimaryButton = (props: ButtonProps) => (
+    <StyledButton variant={'contained'} size={'large'} color={'primary'} {...props} />
+);
+
+export default PrimaryButton;

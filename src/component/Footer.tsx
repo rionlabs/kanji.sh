@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Footer() {
+const Footer: React.FC = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
@@ -87,4 +87,6 @@ export default function Footer() {
             </AppBar>
         </div>
     );
-}
+};
+
+export default Footer;

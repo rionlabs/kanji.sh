@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function HomePage() {
+const HomePage: React.FC = () => {
     const classes = useStyles();
     return (
         <PageLayout>
@@ -133,4 +133,6 @@ export default function HomePage() {
             <Spacer space={4} />
         </PageLayout>
     );
-}
+};
+
+export default HomePage;

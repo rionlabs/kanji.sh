@@ -17,17 +17,17 @@ interface LinkButtonProps {
     startIcon?: React.ReactNode;
 }
 
-export default function LinkButton({
+const LinkButton = ({
     link,
     startIcon,
     children,
     ...props
-}: PropsWithChildren<LinkButtonProps>) {
-    return (
-        <React.Fragment>
-            <Link href={link} underline="none" rel={'noopener'} target={'_blank'} {...props}>
-                <ExternalButton startIcon={startIcon}>{children}</ExternalButton>
-            </Link>
-        </React.Fragment>
-    );
-}
+}: PropsWithChildren<LinkButtonProps>) => (
+    <React.Fragment>
+        <Link href={link} underline="none" rel={'noopener'} target={'_blank'} {...props}>
+            <ExternalButton startIcon={startIcon}>{children}</ExternalButton>
+        </Link>
+    </React.Fragment>
+);
+
+export default LinkButton;

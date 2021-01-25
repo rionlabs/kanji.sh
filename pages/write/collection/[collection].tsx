@@ -7,6 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import FileCard from '../../../src/component/FileCard';
 import Typography from '@material-ui/core/Typography';
 
+type CollectionParam = { collection: string };
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1
@@ -21,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function CollectionPage(pathParams: { collectionId: string }) {
+const CollectionPage: React.FC<{ collectionId: string }> = (pathParams) => {
     const classes = useStyles();
-    const groupData: GroupData = mappedData.get(pathParams.collectionId)!!;
+    const groupData: GroupData = mappedData!.get(pathParams.collectionId)!;
     return (
         <PageLayout>
             <Typography gutterBottom className={classes.header} variant="h3">
@@ -44,10 +46,10 @@ export default function CollectionPage(pathParams: { collectionId: string }) {
             </Grid>
         </PageLayout>
     );
-}
+};
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const collectionId = params!!.collection as string;
+    const collectionId = (params as CollectionParam).collection as string;
     return {
         props: {
             collectionId
@@ -56,12 +58,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const paths = [];
-    for (let key of mappedData.keys()) {
+    const paths = new Array<{ params: CollectionParam }>();
+    mappedData.forEach((groupData, key) => {
         paths.push({ params: { collection: key } });
-    }
+    });
     return {
         paths,
         fallback: false
     };
 };
+
+export default CollectionPage;

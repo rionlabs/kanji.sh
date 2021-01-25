@@ -1,13 +1,13 @@
 import Config from './config/Config';
 
 export type GroupData = {
-    heading: String;
+    heading: string;
     files: Array<FileData>;
 };
 
 export type FileData = {
-    title: String;
-    description: String;
+    title: string;
+    description: string;
     metaColor: string;
     filePath: string;
 };

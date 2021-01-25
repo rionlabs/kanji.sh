@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ReadPage() {
+const ReadPage: React.FC = () => {
     const classes = useStyles();
     return (
         <PageLayout>
@@ -51,7 +51,7 @@ export default function ReadPage() {
                 </Grid>
                 <Grid item xs={12} className={classes.centerText}>
                     <Typography variant={'subtitle1'}>
-                        I haven't started adding reading sessions yet.
+                        I haven&apos;t started adding reading sessions yet.
                     </Typography>
                     <Typography variant={'subtitle1'}>
                         If you would like it, signup for the updates. No spams, I promise!
@@ -64,4 +64,6 @@ export default function ReadPage() {
             <Spacer space={3} />
         </PageLayout>
     );
-}
+};
+
+export default ReadPage;

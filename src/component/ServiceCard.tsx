@@ -81,77 +81,74 @@ export enum Direction {
     end
 }
 
-class ServiceCard extends React.Component<Props> {
-    public render() {
-        const { classes, title, subtitle, imageUrl, imageDirection } = this.props;
-        return (
-            <div className={classes.root}>
-                <Card className={classes.rootCard} elevation={2}>
-                    <Grid
-                        container
-                        direction={imageDirection === Direction.start ? 'row-reverse' : 'row'}
-                        alignItems={'stretch'}
-                        style={{ minHeight: 'inherit' }}>
-                        {/* Image */}
-                        <Grid className={classes.imageBox} item xs={12} sm={5}>
-                            <Box
-                                style={{
-                                    textAlign:
-                                        imageDirection === Direction.start ? 'center' : 'center',
-                                    height: '100%'
-                                }}>
-                                <img
-                                    style={{ width: '80%', height: '100%' }}
-                                    src={imageUrl}
-                                    alt={'Study Kanji!'}
-                                />
-                            </Box>
-                        </Grid>
+const ServiceCard: React.FC<Props> = (props: Props) => {
+    const { classes, title, subtitle, imageUrl, imageDirection } = props;
+    return (
+        <div className={classes.root}>
+            <Card className={classes.rootCard} elevation={2}>
+                <Grid
+                    container
+                    direction={imageDirection === Direction.start ? 'row-reverse' : 'row'}
+                    alignItems={'stretch'}
+                    style={{ minHeight: 'inherit' }}>
+                    {/* Image */}
+                    <Grid className={classes.imageBox} item xs={12} sm={5}>
+                        <Box
+                            style={{
+                                textAlign: imageDirection === Direction.start ? 'center' : 'center',
+                                height: '100%'
+                            }}>
+                            <img
+                                style={{ width: '80%', height: '100%' }}
+                                src={imageUrl}
+                                alt={'Study Kanji!'}
+                            />
+                        </Box>
+                    </Grid>
 
-                        {/* Text */}
+                    {/* Text */}
+                    <Grid
+                        className={
+                            imageDirection === Direction.start
+                                ? classes.textBoxStart
+                                : classes.textBoxEnd
+                        }
+                        item
+                        xs={12}
+                        sm={7}
+                        style={{ minHeight: 'inherit' }}>
                         <Grid
+                            container
                             className={
                                 imageDirection === Direction.start
-                                    ? classes.textBoxStart
-                                    : classes.textBoxEnd
+                                    ? classes.textContainerStart
+                                    : classes.textContainerEnd
                             }
-                            item
-                            xs={12}
-                            sm={7}
-                            style={{ minHeight: 'inherit' }}>
-                            <Grid
-                                container
-                                className={
-                                    imageDirection === Direction.start
-                                        ? classes.textContainerStart
-                                        : classes.textContainerEnd
-                                }
-                                direction={'row'}
-                                alignContent={'center'}
-                                alignItems={'center'}>
-                                <Grid item>
-                                    <Typography
-                                        className={classes.title}
-                                        gutterBottom
-                                        variant="h3"
-                                        component="h5">
-                                        {title}
-                                    </Typography>
-                                    <Typography
-                                        className={classes.subtitle}
-                                        gutterBottom
-                                        component="p"
-                                        variant="h6">
-                                        {subtitle}
-                                    </Typography>
-                                </Grid>
+                            direction={'row'}
+                            alignContent={'center'}
+                            alignItems={'center'}>
+                            <Grid item>
+                                <Typography
+                                    className={classes.title}
+                                    gutterBottom
+                                    variant="h3"
+                                    component="h5">
+                                    {title}
+                                </Typography>
+                                <Typography
+                                    className={classes.subtitle}
+                                    gutterBottom
+                                    component="p"
+                                    variant="h6">
+                                    {subtitle}
+                                </Typography>
                             </Grid>
                         </Grid>
                     </Grid>
-                </Card>
-            </div>
-        );
-    }
-}
+                </Grid>
+            </Card>
+        </div>
+    );
+};
 
 export default withStyles(styles)(ServiceCard);

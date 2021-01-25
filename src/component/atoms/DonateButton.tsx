@@ -12,17 +12,14 @@ const StyledButton = styled(IconButton)(({ theme }) => ({
     color: 'white'
 }));
 
-export default function DonateButton({ ...props }: IconButtonProps) {
-    return (
-        <Link href={Config.bmcUrl} target="_blank" rel="noopener" underline="none">
-            <StyledButton
-                onClick={() => logEvent('bmc_click')}
-                aria-label="buy me a sushi"
-                {...props}>
-                <span role={'img'} aria-label={'Sushi Emoji'}>
-                    🍣
-                </span>
-            </StyledButton>
-        </Link>
-    );
-}
+const DonateButton: React.FC<IconButtonProps> = ({ ...props }) => (
+    <Link href={Config.bmcUrl} target="_blank" rel="noopener" underline="none">
+        <StyledButton onClick={() => logEvent('bmc_click')} aria-label="buy me a sushi" {...props}>
+            <span role={'img'} aria-label={'Sushi Emoji'}>
+                🍣
+            </span>
+        </StyledButton>
+    </Link>
+);
+
+export default DonateButton;

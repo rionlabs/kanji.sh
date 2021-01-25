@@ -7,7 +7,7 @@ const SocialButton = styled(LinkButton)(({ theme }) => ({
     marginRight: theme.spacing(2)
 }));
 
-export default function ShareSheet() {
+const ShareSheet: React.FC = () => {
     /* TODO: Add Copy to Clipboard Button */
     return (
         <div>
@@ -32,4 +32,6 @@ export default function ShareSheet() {
             </SocialButton>
         </div>
     );
-}
+};
+
+export default ShareSheet;

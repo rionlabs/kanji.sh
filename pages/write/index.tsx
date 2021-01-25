@@ -5,7 +5,7 @@ import CollectionCard from '../../src/component/CollectionCard';
 import { Grid } from '@material-ui/core';
 import Spacer from '../../src/component/atoms/Spacer';
 
-export default function WritePage() {
+const WritePage: React.FC = () => {
     return (
         <PageLayout>
             <Jumbotron />
@@ -70,4 +70,6 @@ export default function WritePage() {
             <Spacer space={3} />
         </PageLayout>
     );
-}
+};
+
+export default WritePage;
