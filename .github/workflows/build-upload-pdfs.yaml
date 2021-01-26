@@ -8,44 +8,7 @@ on:
       - '.github/workflows/**'
 
 jobs:
-  generate-kanji:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v1
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14
-
-      - name: Get npm cache directory path
-        id: npm-cache
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache/Restore
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.npm-cache.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install NPM depedencies
-        run: npm install
-
-      - name: Process KanjiVG
-        working-directory: generator
-        run: node kanjivg.js
-
-      - name: Upload Kanji diagrams for PDF generation
-        uses: actions/upload-artifact@v2
-        with:
-          name: KanjiVG_Data
-          path: generator/build
-
   generate-pdfs:
-    needs: generate-kanji
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -74,11 +37,9 @@ jobs:
       - name: Install NPM depedencies
         run: npm install
 
-      - name: Download KanjiVG data
-        uses: actions/download-artifact@v2
-        with:
-          name: KanjiVG_Data
-          path: generator/build
+      - name: Process KanjiVG
+        working-directory: generator
+        run: node kanjivg.js
 
       - name: Generate PDF files
         working-directory: generator

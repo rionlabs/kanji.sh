@@ -91,7 +91,7 @@
                 background-image: url('../graphics/square_99.png');
             }
 
-            .small-square > img {
+            .small-square > object {
                 height: 13mm;
                 width: 13mm;
             }
@@ -131,7 +131,7 @@
             }
 
             function getKanjiImageFileName(kanji) {
-                return kanji.charCodeAt(0).toString(16).padStart(5, '0') + '.png';
+                return kanji.charCodeAt(0).toString(16).padStart(5, '0') + '.svg';
             }
         </script>
         <script id="template" type="text/x-handlebars-template">
@@ -152,11 +152,11 @@
                 <tbody>
                     <tr>
                         <th class='big-square' rowspan='2' colspan='2'>
-                            <img src={{svgUrl}} alt={{kanji}} />
+                            <object type='image/svg+xml' data={{svgUrl}}></object>
                         </th>
                         {{#times 10 svgUrlForWriting}}
                             <td class='small-square'>
-                                <img src={{this}} alt={{kanji}} />
+                                <object type='image/svg+xml' data={{this}}></object>
                             </td>
                         {{/times}}
                     </tr>
@@ -168,6 +168,7 @@
                 </tbody>
             </table>
         </script>
+
         <script>
             $(document).ready(async function () {
                 // Load the data first
@@ -199,8 +200,10 @@
 
                     displayData[kanji] = {
                         kanji: kanji,
-                        svgUrl: `../build/png/kanjiBig/${getKanjiImageFileName(kanji)}`,
-                        svgUrlForWriting: `../build/png/kanjiSmall/${getKanjiImageFileName(kanji)}`,
+                        svgUrl: `../build/svg/kanji/${getKanjiImageFileName(kanji)}`,
+                        svgUrlForWriting: `../build/svg/kanjiTracer/${getKanjiImageFileName(
+                            kanji
+                        )}`,
                         meaning: extractData(kanjiData, 'meanings'),
                         onyomi: extractData(kanjiData, 'readings_on'),
                         kunyomi: extractData(kanjiData, 'readings_kun')
