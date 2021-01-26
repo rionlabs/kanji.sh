@@ -1,34 +1,25 @@
-const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
 const admZip = require('adm-zip');
 const optimize = require('./optimize.js');
-const sharp = require('sharp');
+const { config, logger, ensureDirectories } = require('./utils.js');
 
-const KanjiVGAssetUrl = "https://github.com/KanjiVG/kanjivg/releases/download/r20160426/kanjivg-20160426-main.zip";
-const outDir = "./build";
+const outDir = './build';
 const zipOutputDir = path.join(outDir, 'svg');
 const svgDir = path.join(outDir, 'svg', 'kanji');
-const pngBigDir = path.join(outDir, 'png', 'kanjiBig');
-const pngSmallDir = path.join(outDir, 'png', 'kanjiSmall');
-
-const ensureDirectories = (...dirNames) => {
-    for (const dirName of dirNames) {
-        fs.existsSync(dirName) || fs.mkdirSync(dirName, {recursive: true});
-    }
-};
+const svgStrokeDir = path.join(outDir, 'png', 'kanjiStrokes');
+const svgTracesDir = path.join(outDir, 'svg', 'kanjiTracer');
 
 async function downloadAndExtract() {
-    // TODO Avoid duplications
-    const response = await fetch(KanjiVGAssetUrl);
-    const content = await response.buffer();
-    const zipOutputFile = path.join(outDir, "KanjiVG.zip");
-    await fs.writeFileSync(zipOutputFile, content);
-    const zip = admZip(zipOutputFile);
+    logger.start('Extracting KanjiVg file...');
+    const kanjiVgFile = path.join(config.srcDir, 'kanjivg-20160426-main.zip');
+    const zip = admZip(kanjiVgFile);
     await zip.extractAllTo(zipOutputDir, true);
+    logger.done('KanjiVG extraction');
 }
 
 async function runCommonOptimizations() {
+    logger.start('Common optimizations');
     let filenames = await fs.readdirSync(svgDir);
     const promises = [];
     for (let filename of filenames) {
@@ -36,50 +27,45 @@ async function runCommonOptimizations() {
         promises.push(optimize.rewriteWithSvgOptimizations(filePath));
     }
     await Promise.all(promises);
+    logger.done('Common optimizations');
 }
 
-async function convertToPng() {
+async function convertToTraces() {
+    logger.start('Convert To Traces');
     let filenames = await fs.readdirSync(svgDir);
     const promises = [];
     for (let filename of filenames) {
-        const prefix = filename.split(".")[0];
         const inputFile = path.join(svgDir, filename);
-        promises.push(
-            sharp(inputFile)
-                .resize({height: 1024, width: 1024})
-                .png({quality: 100})
-                .toFile(path.join(pngBigDir, `${prefix}.png`))
-        );
-
-        const content = fs.readFileSync(inputFile, {encoding: 'utf-8', flag: 'r'});
-        const lines = content.split('\n')
+        const outputFile = path.join(svgTracesDir, filename);
+        const content = fs.readFileSync(inputFile, { encoding: 'utf-8', flag: 'r' });
+        const lines = content
+            .split('\n')
             .filter(Boolean)
-            .filter(line => !line.includes("<text transform"))
-            .map(line => line.replace("stroke:#000000", "stroke:#BBBBBB"))
-            .map(line => line.replace("fill:#000000", "fill:#BBBBBB"));
-        promises.push(
-            sharp(Buffer.from(lines.join("\n")))
-                .resize({height: 512, width: 512})
-                .png({quality: 100})
-                .toFile(path.join(pngSmallDir, `${prefix}.png`))
-        );
+            .filter((line) => !line.includes('<text transform'))
+            .map((line) => line.replace('stroke:#000000', 'stroke:#BBBBBB'))
+            .map((line) => line.replace('fill:#000000', 'fill:#BBBBBB'))
+            .join('\n');
+        fs.writeFileSync(outputFile, lines, { encoding: 'utf-8', flag: 'w+' });
     }
     await Promise.all(promises);
+    logger.start('Convert To Traces');
 }
 
 async function buildKanjiDiagrams() {
-    await ensureDirectories(outDir, zipOutputDir, svgDir, pngBigDir, pngSmallDir);
+    await ensureDirectories(outDir, svgDir, zipOutputDir, svgDir, svgStrokeDir, svgTracesDir);
     await downloadAndExtract();
     await runCommonOptimizations();
-    await convertToPng();
+    await convertToTraces();
 }
 
 console.time('BuildKanjiDiagrams');
-buildKanjiDiagrams().then(function () {
-    console.log(`BuildKanjiDiagrams finished`);
-    console.timeEnd('BuildKanjiDiagrams');
-    process.exit(0);
-}).catch(function (error) {
-    console.error('Error occurred ' + error);
-    process.exit(1);
-});
+buildKanjiDiagrams()
+    .then(function () {
+        console.log(`BuildKanjiDiagrams finished`);
+        console.timeEnd('BuildKanjiDiagrams');
+        process.exit(0);
+    })
+    .catch(function (error) {
+        console.error('Error occurred ' + error);
+        process.exit(1);
+    });

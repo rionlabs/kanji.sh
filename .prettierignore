@@ -1,0 +1,4 @@
+.next
+generator/build
+node_modules
+src/images/anim

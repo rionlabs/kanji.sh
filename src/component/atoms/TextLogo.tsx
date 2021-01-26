@@ -5,6 +5,6 @@ const StyledText = styled('span')`
     font-weight: 500;
 `;
 
-export default function TextLogo() {
-    return <StyledText>kanji.sh</StyledText>
-}
+const TextLogo: () => JSX.Element = () => <StyledText>kanji.sh</StyledText>;
+
+export default TextLogo;

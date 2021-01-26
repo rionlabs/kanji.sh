@@ -5,10 +5,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from 'next/link';
-import {logEvent} from '../firebase';
+import { logEvent } from '../firebase';
 import Spacer from './atoms/Spacer';
-import {HeaderNav} from './molecules/HeaderNav';
 import DonateButton from './atoms/DonateButton';
+import HeaderNav from './molecules/HeaderNav';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
             flexDirection: 'column',
             paddingBottom: theme.spacing(8),
             alignItems: 'center'
-        },
+        }
     },
     title: {
         flexGrow: 1,
@@ -35,37 +35,43 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: 'Quicksand, sans-serif',
         fontWeight: 700,
         [theme.breakpoints.down('xs')]: {
-            textAlign: 'center',
-        },
+            textAlign: 'center'
+        }
     },
     titleLink: {
         display: 'contents',
         textTransform: 'none',
         userSelect: 'none',
         msUserSelect: 'none',
-        textDecoration: 'none',
+        textDecoration: 'none'
     },
     navLink: {
         textTransform: 'none',
         textDecoration: 'none',
         margin: theme.spacing(1),
         padding: theme.spacing(1),
-        fontWeight: 500,
+        fontWeight: 500
     }
 }));
 
-export default function Header() {
+const Header: React.FC = () => {
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
-            <AppBar className={classes.appBar} position="static" color={'transparent'} elevation={0}>
+            <AppBar
+                className={classes.appBar}
+                position="static"
+                color={'transparent'}
+                elevation={0}>
                 <Container>
                     <Toolbar className={classes.toolbar}>
                         <div>
                             <Link href={'/'}>
-                                <a className={classes.navLink}
-                                   onClick={() => logEvent('navigation', {path: 'home'})}>
+                                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+                                <a
+                                    className={classes.navLink}
+                                    onClick={() => logEvent('navigation', { path: 'home' })}>
                                     <Typography className={classes.title} variant="h3">
                                         kanji.sh
                                     </Typography>
@@ -73,7 +79,7 @@ export default function Header() {
                             </Link>
                         </div>
 
-                        <Spacer/>
+                        <Spacer />
 
                         <div>
                             <HeaderNav href={'/read'} eventPath={'read'}>
@@ -86,11 +92,13 @@ export default function Header() {
                                 about
                             </HeaderNav>
 
-                            <DonateButton/>
+                            <DonateButton />
                         </div>
                     </Toolbar>
                 </Container>
             </AppBar>
         </div>
     );
-}
+};
+
+export default Header;

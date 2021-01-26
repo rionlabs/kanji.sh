@@ -4,10 +4,10 @@ First of all, thanks for contributing!! 🎉
 
 There are multiple ways you can contribute here.
 
-- **Simplest**: Star GitHub repo and spread the word!
-- [Report issues](#-report-issues)
-- [Give suggestions](#-give-suggestions)
-- [Create Pull Requests](#-create-pull-requests)
+-   **Simplest**: Star GitHub repo and spread the word!
+-   [Report issues](#-report-issues)
+-   [Give suggestions](#-give-suggestions)
+-   [Create Pull Requests](#-create-pull-requests)
 
 Before you start, make sure you have read the [Code of Conduct](CODE_OF_CONDUCT.md).
 
@@ -29,4 +29,4 @@ ahead and follow the steps to run kanji.sh locally.
 You can create PRs, and submit them for review. Commits should be concise and having meaningful changes. You can
 use [Gitmojis](https://gitmoji.carloscuesta.me) to show the type of commit.  
 Make sure you follow the PR template correctly. If you want to work on a massive change, please make an issue first, so
-that other people can participate and give suggestions on how to proceed. 
+that other people can participate and give suggestions on how to proceed.

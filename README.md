@@ -29,11 +29,11 @@ following the strokes and practice couple of times!
 
 ## 🛠 Built With
 
-- [NodeJS](https://nodejs.org/en/)
-- [ReactJS](https://reactjs.org/)
-- [NextJS](https://nextjs.org/)
-- [Material UI](https://material-ui.com/)
-- Hosted on [Vercel](https://vercel.com)
+-   [NodeJS](https://nodejs.org/en/)
+-   [ReactJS](https://reactjs.org/)
+-   [NextJS](https://nextjs.org/)
+-   [Material UI](https://material-ui.com/)
+-   Hosted on [Vercel](https://vercel.com)
 
 ### 💻 Build Locally
 
@@ -50,10 +50,10 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## 💌 Acknowledgments
 
-- Thanks Ulrich Apel for [KanjiVG](https://kanjivg.tagaini.net/) project!
-- Thanks [Wanikani](http://wanikani.com/) for free Kanji data!
-- Thanks [Katerina Limpitsouni](https://twitter.com/ninaLimpi) for the awesome collection of illustrations
-  at [undraw.io](https://undraw.co/)!
+-   Thanks Ulrich Apel for [KanjiVG](https://kanjivg.tagaini.net/) project!
+-   Thanks [Wanikani](http://wanikani.com/) for free Kanji data!
+-   Thanks [Katerina Limpitsouni](https://twitter.com/ninaLimpi) for the awesome collection of illustrations
+    at [undraw.io](https://undraw.co/)!
 
 ## 📜 License
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStyles, StyleRules, Theme, WithStyles} from '@material-ui/core';
+import { createStyles, StyleRules, Theme, WithStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -12,14 +12,14 @@ const styles = (theme: Theme): StyleRules =>
             flexGrow: 1,
             minHeight: theme.spacing(50),
             marginTop: theme.spacing(4),
-            marginBottom: theme.spacing(4),
+            marginBottom: theme.spacing(4)
         },
         rootCard: {
             minHeight: 'inherit',
             borderRadius: theme.spacing(4)
         },
         imageBox: {
-            padding: theme.spacing(3),
+            padding: theme.spacing(3)
         },
         textBoxEnd: {
             minHeight: 'inherit',
@@ -45,7 +45,7 @@ const styles = (theme: Theme): StyleRules =>
             [theme.breakpoints.down('xs')]: {
                 textAlign: 'end',
                 paddingEnd: '10%',
-                paddingStart: '10%',
+                paddingStart: '10%'
             }
         },
         textContainerEnd: {
@@ -55,14 +55,14 @@ const styles = (theme: Theme): StyleRules =>
             textAlign: 'end',
             [theme.breakpoints.down('xs')]: {
                 paddingEnd: '10%',
-                paddingStart: '10%',
+                paddingStart: '10%'
             }
         },
         title: {
             fontWeight: 400,
             color: theme.palette.common.white,
             userSelect: 'none',
-            msUserSelect: 'none',
+            msUserSelect: 'none'
         },
         subtitle: {
             color: theme.palette.common.white
@@ -70,64 +70,85 @@ const styles = (theme: Theme): StyleRules =>
     });
 
 interface Props extends WithStyles<typeof styles> {
-    title: string,
-    subtitle: string,
-    imageUrl: string,
-    imageDirection: Direction
+    title: string;
+    subtitle: string;
+    imageUrl: string;
+    imageDirection: Direction;
 }
 
 export enum Direction {
-    start, end
+    start,
+    end
 }
 
-class ServiceCard extends React.Component<Props> {
-
-    public render() {
-        const {classes, title, subtitle, imageUrl, imageDirection} = this.props;
-        return (
-            <div className={classes.root}>
-                <Card className={classes.rootCard} elevation={2}>
-                    <Grid
-                        container
-                        direction={(imageDirection === Direction.start) ? 'row-reverse' : 'row'}
-                        alignItems={'stretch'}
-                        style={{minHeight: 'inherit'}}>
-                        {/* Image */}
-                        <Grid className={classes.imageBox} item xs={12} sm={5}>
-                            <Box style={{
-                                textAlign: (imageDirection === Direction.start) ? 'center' : 'center',
+const ServiceCard: React.FC<Props> = (props: Props) => {
+    const { classes, title, subtitle, imageUrl, imageDirection } = props;
+    return (
+        <div className={classes.root}>
+            <Card className={classes.rootCard} elevation={2}>
+                <Grid
+                    container
+                    direction={imageDirection === Direction.start ? 'row-reverse' : 'row'}
+                    alignItems={'stretch'}
+                    style={{ minHeight: 'inherit' }}>
+                    {/* Image */}
+                    <Grid className={classes.imageBox} item xs={12} sm={5}>
+                        <Box
+                            style={{
+                                textAlign: imageDirection === Direction.start ? 'center' : 'center',
                                 height: '100%'
                             }}>
-                                <img style={{width: '80%', height: '100%'}} src={imageUrl} alt={'Study Kanji!'}/>
-                            </Box>
-                        </Grid>
+                            <img
+                                style={{ width: '80%', height: '100%' }}
+                                src={imageUrl}
+                                alt={'Study Kanji!'}
+                            />
+                        </Box>
+                    </Grid>
 
-                        {/* Text */}
+                    {/* Text */}
+                    <Grid
+                        className={
+                            imageDirection === Direction.start
+                                ? classes.textBoxStart
+                                : classes.textBoxEnd
+                        }
+                        item
+                        xs={12}
+                        sm={7}
+                        style={{ minHeight: 'inherit' }}>
                         <Grid
-                            className={(imageDirection === Direction.start) ? classes.textBoxStart : classes.textBoxEnd}
-                            item xs={12} sm={7}
-                            style={{minHeight: 'inherit'}}>
-
-                            <Grid container
-                                  className={(imageDirection === Direction.start) ? classes.textContainerStart : classes.textContainerEnd}
-                                  direction={'row'}
-                                  alignContent={'center'}
-                                  alignItems={'center'}>
-                                <Grid item>
-                                    <Typography className={classes.title} gutterBottom variant="h3" component="h5">
-                                        {title}
-                                    </Typography>
-                                    <Typography className={classes.subtitle} gutterBottom component='p' variant="h6">
-                                        {subtitle}
-                                    </Typography>
-                                </Grid>
+                            container
+                            className={
+                                imageDirection === Direction.start
+                                    ? classes.textContainerStart
+                                    : classes.textContainerEnd
+                            }
+                            direction={'row'}
+                            alignContent={'center'}
+                            alignItems={'center'}>
+                            <Grid item>
+                                <Typography
+                                    className={classes.title}
+                                    gutterBottom
+                                    variant="h3"
+                                    component="h5">
+                                    {title}
+                                </Typography>
+                                <Typography
+                                    className={classes.subtitle}
+                                    gutterBottom
+                                    component="p"
+                                    variant="h6">
+                                    {subtitle}
+                                </Typography>
                             </Grid>
                         </Grid>
                     </Grid>
-                </Card>
-            </div>
-        )
-    }
-}
+                </Grid>
+            </Card>
+        </div>
+    );
+};
 
 export default withStyles(styles)(ServiceCard);
