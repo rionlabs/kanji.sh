@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CollectionPage: React.FC<{ collectionId: string }> = (pathParams) => {
     const classes = useStyles();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const groupData: GroupData = mappedData!.get(pathParams.collectionId)!;
     return (
         <PageLayout>

@@ -5,6 +5,7 @@ import reading from '../../images/anim/reading_book.json';
 import writing from '../../images/anim/writing.json';
 
 type AnimationProps = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     animationData?: any;
     className: string;
 };
