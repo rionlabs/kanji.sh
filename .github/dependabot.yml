@@ -1,0 +1,13 @@
+# Dependency Updates
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: ":arrow_up:"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 7
+    target-branch: "dev"
