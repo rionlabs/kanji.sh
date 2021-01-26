@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import React from 'react';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
@@ -5,21 +6,22 @@ import theme from '../src/theme';
 import GoogleFonts from 'next-google-fonts';
 import { ServerStyleSheet } from 'styled-components';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let prefixer: any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let cleanCSS: any;
+
 if (process.env.NODE_ENV === 'production') {
-    /* eslint-disable global-require */
     const postcss = require('postcss');
     const autoprefixer = require('autoprefixer');
     const CleanCSS = require('clean-css');
-    /* eslint-enable global-require */
 
     prefixer = postcss([autoprefixer]);
     cleanCSS = new CleanCSS({ level: 2 });
 }
 
 export default class MyDocument extends Document {
-    render() {
+    render(): JSX.Element {
         // ↓ https://err.sh/next.js/no-document-title
         // noinspection HtmlRequiredTitleElement
         return (
@@ -108,7 +110,6 @@ MyDocument.getInitialProps = async (ctx) => {
                 <style
                     id="jss-server-side"
                     key="jss-server-side"
-                    // eslint-disable-next-line react/no-danger
                     dangerouslySetInnerHTML={{ __html: css }}
                 />,
                 styledComponentsSheet.getStyleElement()

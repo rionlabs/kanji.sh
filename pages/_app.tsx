@@ -7,21 +7,27 @@ import { useRouter } from 'next/router';
 import Config from '../src/config/Config';
 import SEO from '../next-seo.config';
 import { DefaultSeo } from 'next-seo';
-import PageConfig from '../src/config/PageConfig.json';
+import * as pageConfigs from '../src/config/PageConfig.json';
 
-export default function MyApp(props: AppProps) {
+type PageConfig = {
+    priority: number;
+    title: string;
+    description: string;
+};
+
+const KanjiApp: (props: AppProps) => JSX.Element = (props: AppProps) => {
     const { Component, pageProps } = props;
     const { asPath } = useRouter();
 
     React.useEffect(() => {
         const jssStyles = document.querySelector('#jss-server-side');
         if (jssStyles) {
-            jssStyles.parentElement!.removeChild(jssStyles);
+            jssStyles.parentElement?.removeChild(jssStyles);
         }
     }, []);
 
-    // @ts-ignore
-    const { title, description } = PageConfig[asPath];
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const { title, description } = (pageConfigs as Record<string, PageConfig>)[asPath]!;
 
     return (
         <React.Fragment>
@@ -43,4 +49,6 @@ export default function MyApp(props: AppProps) {
             </ThemeProvider>
         </React.Fragment>
     );
-}
+};
+
+export default KanjiApp;
