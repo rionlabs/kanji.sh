@@ -1,21 +1,21 @@
 const fs = require('fs');
 module.exports = {
     rewriteWithSvgOptimizations: async function (filePath) {
-        const content = fs.readFileSync(filePath, {encoding: 'utf-8', flag: 'r'});
+        const content = fs.readFileSync(filePath, { encoding: 'utf-8', flag: 'r' });
         const lines = content.split('\n').filter(Boolean);
         const newLines = [];
         for (let i = 0; i < lines.length; i++) {
             // Common optimizations for both kanji styles
-            if (lines[i].startsWith("<!--")) {
+            if (lines[i].startsWith('<!--')) {
                 // Skip till end of commend is found
-                while (!lines[i].endsWith("-->")) {
+                while (!lines[i].endsWith('-->')) {
                     i++;
                 }
                 continue;
             }
-            if (lines[i].startsWith("<!DOCTYPE")) {
+            if (lines[i].startsWith('<!DOCTYPE')) {
                 // Skip DOCTYPE
-                while (!lines[i].endsWith("]>")) {
+                while (!lines[i].endsWith(']>')) {
                     i++;
                 }
                 continue;
@@ -25,7 +25,7 @@ module.exports = {
         // Delete old file
         await fs.unlinkSync(filePath);
         // Write optimized one
-        await fs.writeFileSync(filePath, newLines.join("\n"), {flag: 'w+'});
+        await fs.writeFileSync(filePath, newLines.join('\n'), { flag: 'w+' });
     }
 };
 
@@ -46,11 +46,10 @@ function removeKvgAttrs(line) {
         /kvg:position=".*"\s/gu,
         /kvg:radical=".*"\s/gu,
         /kvg:phon=".*"\s/gu,
-        /kvg:type=".*"\s/gu,
+        /kvg:type=".*"\s/gu
     ];
     for (let regEx of regExs) {
-        while (line.search(regEx) !== -1)
-            line = line.replace(regEx, "");
+        while (line.search(regEx) !== -1) line = line.replace(regEx, '');
     }
 
     // Worst coding example, caused due to lack of RegEx
@@ -66,12 +65,12 @@ function removeKvgAttrs(line) {
         /kvg:position=".*">/gu,
         /kvg:radical=".*">/gu,
         /kvg:phon=".*">/gu,
-        /kvg:type=".*">/gu,
+        /kvg:type=".*">/gu
     ];
 
     for (let regEx of endRegExs) {
         while (line.search(regEx) !== -1) {
-            line = line.replace(regEx, ">");
+            line = line.replace(regEx, '>');
         }
     }
 

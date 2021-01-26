@@ -2,23 +2,23 @@ const fs = require('fs');
 const path = require('path');
 
 const config = {
-    srcDir: "sources",
-    outDir: "build",
-    templateAbsolutePath: path.relative("/", "template/page.html"),
-}
+    srcDir: 'sources',
+    outDir: 'build',
+    templateAbsolutePath: path.relative('/', 'template/page.html')
+};
 
 const ensureDirectories = (...dirNames) => {
     for (const dirName of dirNames) {
-        fs.existsSync(dirName) || fs.mkdirSync(dirName, {recursive: true});
+        fs.existsSync(dirName) || fs.mkdirSync(dirName, { recursive: true });
     }
 };
 
-ensureDirectories(config.srcDir, config.outDir)
+ensureDirectories(config.srcDir, config.outDir);
 
 const readSourceFile = (inputFilePath) => {
-    const content = fs.readFileSync(inputFilePath, {encoding: 'utf-8', flag: 'r'});
+    const content = fs.readFileSync(inputFilePath, { encoding: 'utf-8', flag: 'r' });
     return content.split('\n').filter(Boolean);
-}
+};
 
 const generatePageTitle = (sourceName, sourceGroup) => {
     switch (sourceName) {
@@ -33,7 +33,7 @@ const generatePageTitle = (sourceName, sourceGroup) => {
         case 'wanikani': // 1, 2, 3 ...
             return `Wanikani Level ${sourceGroup}`;
     }
-}
+};
 
 module.exports = {
     config,

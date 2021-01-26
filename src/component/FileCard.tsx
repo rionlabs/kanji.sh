@@ -1,12 +1,12 @@
-import React from 'react';
-import {Button, createStyles, StyleRules, Theme, WithStyles} from '@material-ui/core';
+import React, { useState } from 'react';
+import { Button, createStyles, StyleRules, Theme, WithStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import {FileData} from '../Metadata';
+import { FileData } from '../Metadata';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {getDownloadUrl, logEvent} from '../firebase';
+import { getDownloadUrl, logEvent } from '../firebase';
 
 const NORMAL_ELEVATION = 2;
 const HOVER_ELEVATION = 10;
@@ -30,7 +30,7 @@ const styles = (theme: Theme): StyleRules =>
             lineHeight: `${theme.spacing(22)}px`,
             color: theme.palette.common.white,
             userSelect: 'none',
-            msUserSelect: 'none',
+            msUserSelect: 'none'
         },
         downloadButton: {
             alignSelf: 'center',
@@ -43,22 +43,28 @@ interface Props extends WithStyles<typeof styles> {
     fileData: FileData;
 }
 
-interface State {
-    readonly elevation: number;
-}
+const FileCard: (props: Props) => JSX.Element = (props: Props) => {
+    const { classes, fileData } = props;
+    const [elevation, setElevation] = useState(NORMAL_ELEVATION);
 
-class FileCard extends React.Component<Props, State> {
-    readonly state: State = {
-        elevation: NORMAL_ELEVATION
+    const _elevate: () => void = () => setElevation(HOVER_ELEVATION);
+
+    const _lower: () => void = () => setElevation(NORMAL_ELEVATION);
+
+    const _downloadFile: (fileData: FileData) => void = (fileData: FileData) => {
+        logEvent('file_download', { file: fileData.title });
+        getDownloadUrl(fileData)
+            .then((url) => window.open(url, '_blank'))
+            .catch((error) => console.log(error));
     };
 
-    public render() {
-        const {classes, fileData} = this.props;
-        const {elevation} = this.state;
-
-        return <Card className={classes.root} onMouseOver={this._elevate} onMouseOut={this._lower}
-                     elevation={elevation}>
-            <CardMedia className={classes.media} style={{backgroundColor: fileData.metaColor}}>
+    return (
+        <Card
+            className={classes.root}
+            onMouseOver={_elevate}
+            onMouseOut={_lower}
+            elevation={elevation}>
+            <CardMedia className={classes.media} style={{ backgroundColor: fileData.metaColor }}>
                 <Typography className={classes.title} gutterBottom variant="h2" component="h5">
                     {fileData.title}
                 </Typography>
@@ -69,38 +75,20 @@ class FileCard extends React.Component<Props, State> {
                     {fileData.description}
                 </Typography>
 
-                <Button className={classes.downloadButton}
-                        variant="contained"
-                        color="primary"
-                        disableElevation
-                        href=""
-                        target="_blank"
-                        onClick={() => this._downloadFile(fileData)}
-                        download>
+                <Button
+                    className={classes.downloadButton}
+                    variant="contained"
+                    color="primary"
+                    disableElevation
+                    href=""
+                    target="_blank"
+                    onClick={() => _downloadFile(fileData)}
+                    download>
                     Download PDF
                 </Button>
             </CardContent>
         </Card>
-    }
-
-    private _elevate = () => {
-        this.setState(() => ({
-            elevation: HOVER_ELEVATION
-        }));
-    };
-
-    private _lower = () => {
-        this.setState(() => ({
-            elevation: NORMAL_ELEVATION
-        }));
-    };
-
-    private _downloadFile = (fileData: FileData) => {
-        logEvent('file_download', {file: fileData.title})
-        getDownloadUrl(fileData)
-            .then(url => window.open(url, '_blank'))
-            .catch(error => console.log(error))
-    }
-}
+    );
+};
 
 export default withStyles(styles)(FileCard);
