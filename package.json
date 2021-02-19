@@ -32,7 +32,7 @@
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^3.0.0",
     "@types/next": "^9.0.0",
-    "@types/node": "^14.14.14",
+    "@types/node": "^14.14.30",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-lottie": "^1.2.5",
