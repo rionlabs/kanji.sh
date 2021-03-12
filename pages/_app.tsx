@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import Config from '../src/config/Config';
 import SEO from '../next-seo.config';
 import { DefaultSeo } from 'next-seo';
-import * as pageConfigs from '../src/config/PageConfig.json';
+import pageConfigs from '../src/config/PageConfig.json';
 
 type PageConfig = {
     priority: number;
