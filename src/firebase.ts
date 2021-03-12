@@ -1,5 +1,4 @@
 import firebase from 'firebase/app';
-import { FileData } from './Metadata';
 import 'firebase/analytics';
 import 'firebase/performance';
 import 'firebase/storage';
@@ -19,11 +18,6 @@ function initFirebase(): void {
     }
 }
 
-function getDownloadUrl(fileData: FileData): Promise<string> {
-    if (firebase.apps.length) return firebase.storage().ref(fileData.filePath).getDownloadURL();
-    else return Promise.reject(Error('Storage not available'));
-}
-
 function logEvent(eventName: string, eventParams?: Record<string, unknown>): void {
     if (firebase.apps.length) firebase.analytics().logEvent(eventName, eventParams);
     else console.log(`Event: (${eventName}) {${JSON.stringify(eventParams)}`);
@@ -31,4 +25,4 @@ function logEvent(eventName: string, eventParams?: Record<string, unknown>): voi
 
 initFirebase();
 
-export { getDownloadUrl, logEvent };
+export { logEvent };

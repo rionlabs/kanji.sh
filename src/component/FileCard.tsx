@@ -6,7 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { FileData } from '../Metadata';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { getDownloadUrl, logEvent } from '../firebase';
+import { logEvent } from '../firebase';
 
 const NORMAL_ELEVATION = 2;
 const HOVER_ELEVATION = 10;
@@ -53,9 +53,6 @@ const FileCard: (props: Props) => JSX.Element = (props: Props) => {
 
     const _downloadFile: (fileData: FileData) => void = (fileData: FileData) => {
         logEvent('file_download', { file: fileData.title });
-        getDownloadUrl(fileData)
-            .then((url) => window.open(url, '_blank'))
-            .catch((error) => console.log(error));
     };
 
     return (
@@ -80,8 +77,8 @@ const FileCard: (props: Props) => JSX.Element = (props: Props) => {
                     variant="contained"
                     color="primary"
                     disableElevation
-                    href=""
-                    target="_blank"
+                    href={`/api/download?path=${fileData.filePath}&name=${fileData.title}`}
+                    target="_self"
                     onClick={() => _downloadFile(fileData)}
                     download>
                     Download PDF
