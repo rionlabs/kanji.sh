@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -96,15 +96,20 @@ const FilePreview: (props: FilePreviewProps) => JSX.Element = (props) => {
     const [numPages, setNumPages] = React.useState(0);
     const [pageNumber, setPageNumber] = React.useState(1);
     const [pageHeight, setPageHeight] = React.useState(0);
+    const [loadDialog, setLoadDialog] = React.useState(false);
 
     const pdfDocument = useRef<HTMLDivElement>(null);
     const pdfPage = useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
+        setLoadDialog(true);
+    }, []);
+
+    useEffect(() => {
         if (pdfDocument.current) {
             setPageHeight(pdfDocument.current.clientHeight);
         }
-    }, [pdfDocument.current, pdfPage.current]);
+    }, [pdfDocument, pdfPage]);
 
     const handleClose: () => void = () => {
         onClose();
@@ -114,9 +119,8 @@ const FilePreview: (props: FilePreviewProps) => JSX.Element = (props) => {
         setNumPages(numPages);
     };
 
-    return (
-        <div>
-            {children}
+    const previewDialog: () => JSX.Element = () => {
+        return (
             <Dialog
                 id={id}
                 classes={{ paper: classes.dialogPaper }}
@@ -177,6 +181,13 @@ const FilePreview: (props: FilePreviewProps) => JSX.Element = (props) => {
                     </Button>
                 </DialogActions>
             </Dialog>
+        );
+    };
+
+    return (
+        <div>
+            {children}
+            <>{loadDialog ? previewDialog() : <div />}</>
         </div>
     );
 };
