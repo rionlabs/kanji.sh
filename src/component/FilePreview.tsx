@@ -30,7 +30,9 @@ const styles = (theme: Theme): StyleRules =>
             height: '100vh'
         },
         dialogContent: {
-            backgroundColor: theme.palette.grey.A100
+            backgroundColor: theme.palette.grey.A100,
+            flex: '1 1',
+            flexDirection: 'column'
         },
         pdfCanvas: {
             width: '100%',
