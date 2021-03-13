@@ -34,13 +34,24 @@ export default async (request: NextApiRequest, response: NextApiResponse): Promi
         response.setHeader('Cache-Control', '"public, max-age=21600, stale-while-revalidate"');
         response.flushHeaders();
 
-        const fileResponse = await axios({
-            method: 'get',
-            url: fileUrl,
-            responseType: 'stream'
-        });
+        console.log('Headers flushed');
 
-        fileResponse.data.pipe(response);
+        try {
+            const fileResponse = await axios({
+                method: 'GET',
+                url: fileUrl,
+                responseType: 'stream'
+            });
+
+            console.log(
+                `FileResponse: status(${fileResponse.status}), statusText(${fileResponse.statusText})`
+            );
+            fileResponse.data.pipe(response);
+        } catch (e) {
+            console.error('[ERR] Could not download file');
+            response.status(500).json({ status: 'Server Error: Cannot load file.' });
+            return;
+        }
     } catch (error: unknown) {
         response.status(500).json({ status: JSON.stringify(error) });
     }
