@@ -65,6 +65,7 @@ const getDownloadURL: (filePath: string) => Promise<string | undefined> = async 
             });
         return signedUrls[0];
     } catch (error) {
+        console.error(error);
         await Promise.reject(error);
     }
 };
