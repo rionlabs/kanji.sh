@@ -7,7 +7,11 @@ import { useRouter } from 'next/router';
 import Config from '../src/config/Config';
 import SEO from '../next-seo.config';
 import { DefaultSeo } from 'next-seo';
-import * as pageConfigs from '../src/config/PageConfig.json';
+import pageConfigs from '../src/config/PageConfig.json';
+import { pdfjs } from 'react-pdf';
+
+// Loads PDF.js worker for previews
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 type PageConfig = {
     priority: number;
@@ -26,8 +30,9 @@ const KanjiApp: (props: AppProps) => JSX.Element = (props: AppProps) => {
         }
     }, []);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const { title, description } = (pageConfigs as Record<string, PageConfig>)[asPath]!;
+    const pageConfig: PageConfig = (pageConfigs as Record<string, PageConfig>)[asPath];
+    const title = pageConfig?.title ?? 'Error';
+    const description = pageConfig?.description ?? 'Error';
 
     return (
         <React.Fragment>

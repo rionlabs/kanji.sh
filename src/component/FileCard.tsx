@@ -6,7 +6,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { FileData } from '../Metadata';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { getDownloadUrl, logEvent } from '../firebase';
+import { logEvent } from '../firebase';
+import { GetAppRounded, VisibilityRounded } from '@material-ui/icons';
+import FilePreview from './FilePreview';
 
 const NORMAL_ELEVATION = 2;
 const HOVER_ELEVATION = 10;
@@ -32,10 +34,15 @@ const styles = (theme: Theme): StyleRules =>
             userSelect: 'none',
             msUserSelect: 'none'
         },
-        downloadButton: {
+        previewButton: {
             alignSelf: 'center',
             width: '100%',
             marginTop: theme.spacing(2)
+        },
+        downloadButton: {
+            alignSelf: 'center',
+            width: '100%',
+            marginTop: theme.spacing(1)
         }
     });
 
@@ -46,6 +53,7 @@ interface Props extends WithStyles<typeof styles> {
 const FileCard: (props: Props) => JSX.Element = (props: Props) => {
     const { classes, fileData } = props;
     const [elevation, setElevation] = useState(NORMAL_ELEVATION);
+    const [open, setOpen] = useState(false);
 
     const _elevate: () => void = () => setElevation(HOVER_ELEVATION);
 
@@ -53,9 +61,11 @@ const FileCard: (props: Props) => JSX.Element = (props: Props) => {
 
     const _downloadFile: (fileData: FileData) => void = (fileData: FileData) => {
         logEvent('file_download', { file: fileData.title });
-        getDownloadUrl(fileData)
-            .then((url) => window.open(url, '_blank'))
-            .catch((error) => console.log(error));
+    };
+
+    const _previewFile: (fileData: FileData) => void = (fileData: FileData) => {
+        logEvent('file_preview', { file: fileData.title });
+        setOpen(true);
     };
 
     return (
@@ -75,16 +85,36 @@ const FileCard: (props: Props) => JSX.Element = (props: Props) => {
                     {fileData.description}
                 </Typography>
 
+                <FilePreview
+                    id={fileData.filePath}
+                    fileData={fileData}
+                    open={open}
+                    onClose={() => setOpen(false)}>
+                    <Button
+                        className={classes.previewButton}
+                        startIcon={<VisibilityRounded />}
+                        variant="contained"
+                        color="primary"
+                        disableElevation
+                        href=""
+                        target="_blank"
+                        onClick={() => _previewFile(fileData)}
+                        download>
+                        Preview
+                    </Button>
+                </FilePreview>
+
                 <Button
                     className={classes.downloadButton}
+                    startIcon={<GetAppRounded />}
                     variant="contained"
                     color="primary"
                     disableElevation
-                    href=""
-                    target="_blank"
+                    href={`/api/download?path=${fileData.filePath}&name=${fileData.title}`}
+                    target="_self"
                     onClick={() => _downloadFile(fileData)}
                     download>
-                    Download PDF
+                    Download
                 </Button>
             </CardContent>
         </Card>
