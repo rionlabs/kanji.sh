@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "prebuild": "echo $ADMIN_SDK_SERVICE_ACCOUNT | base64 --d > kanji-sh-firebase-adminsdk.json",
+    "prebuild": "echo $ADMIN_SDK_SERVICE_ACCOUNT > kanji-sh-firebase-adminsdk.json",
     "build": "next build",
     "postbuild": "next-sitemap --config sitemap.js",
     "start": "next start",
