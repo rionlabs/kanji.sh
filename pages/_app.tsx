@@ -30,8 +30,9 @@ const KanjiApp: (props: AppProps) => JSX.Element = (props: AppProps) => {
         }
     }, []);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const { title, description } = (pageConfigs as Record<string, PageConfig>)[asPath]!;
+    const pageConfig: PageConfig = (pageConfigs as Record<string, PageConfig>)[asPath];
+    const title = pageConfig?.title ?? 'Error';
+    const description = pageConfig?.description ?? 'Error';
 
     return (
         <React.Fragment>
