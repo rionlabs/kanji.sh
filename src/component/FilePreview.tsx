@@ -109,7 +109,7 @@ const FilePreview: (props: FilePreviewProps) => JSX.Element = (props) => {
         if (pdfDocument.current) {
             setPageHeight(pdfDocument.current.clientHeight);
         }
-    }, [pdfDocument, pdfPage]);
+    }, [pdfDocument.current, pdfPage.current]);
 
     const handleClose: () => void = () => {
         onClose();
