@@ -13,6 +13,7 @@ import { Document, Page } from 'react-pdf';
 import Spacer from './atoms/Spacer';
 import { ArrowBackRounded, ArrowForwardRounded } from '@material-ui/icons';
 import { FileData } from '../Metadata';
+import HiddenCss from '@material-ui/core/Hidden/HiddenCss';
 
 const styles = (theme: Theme): StyleRules =>
     createStyles({
@@ -27,7 +28,10 @@ const styles = (theme: Theme): StyleRules =>
             color: theme.palette.grey[500]
         },
         dialogPaper: {
-            height: '100vh'
+            height: '100vh',
+            [theme.breakpoints.down('xs')]: {
+                margin: 0
+            }
         },
         dialogContent: {
             backgroundColor: theme.palette.grey.A100,
@@ -169,9 +173,19 @@ const FilePreview: (props: FilePreviewProps) => JSX.Element = (props) => {
                     </Button>
                     <p />
                     <Spacer />
-                    <p hidden={!numPages}>
-                        Page {pageNumber} of {numPages}
-                    </p>
+                    <div hidden={!numPages}>
+                        <HiddenCss only={'xs'}>
+                            <p>
+                                Page {pageNumber} of {numPages}
+                            </p>
+                        </HiddenCss>
+                        <HiddenCss smUp={true}>
+                            <p>
+                                {pageNumber}/{numPages}
+                            </p>
+                        </HiddenCss>
+                    </div>
+
                     <Spacer />
                     <p />
                     <Button
