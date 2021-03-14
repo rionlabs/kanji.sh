@@ -40,6 +40,3 @@ yarn-error.log*
 # next-sitemap will sutogenerate these files on postbuild
 public/robots.txt
 public/sitemap.xml
-
-# Admin SDK service account file
-/kanji-sh-firebase-adminsdk.json
