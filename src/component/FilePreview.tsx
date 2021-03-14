@@ -115,6 +115,8 @@ const FilePreview: (props: FilePreviewProps) => JSX.Element = (props) => {
         if (pdfDocument.current) {
             setPageHeight(pdfDocument.current.clientHeight);
         }
+        // Ignore this warning, else PDF document size doesn't fit in Dialog
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pdfDocument.current, pdfPage.current]);
 
     const handleClose: () => void = () => {
