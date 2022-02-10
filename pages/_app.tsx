@@ -8,10 +8,13 @@ import Config from '../src/config/Config';
 import SEO from '../next-seo.config';
 import { DefaultSeo } from 'next-seo';
 import pageConfigs from '../src/config/PageConfig.json';
-import { pdfjs } from 'react-pdf';
 
-// Loads PDF.js worker for previews
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+if (typeof window !== 'undefined') {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { pdfjs } = require('react-pdf');
+    // Loads PDF.js worker for previews
+    pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+}
 
 type PageConfig = {
     priority: number;
