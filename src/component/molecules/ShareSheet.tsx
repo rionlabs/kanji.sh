@@ -1,35 +1,30 @@
-import { Facebook, Reddit, Twitter } from '@material-ui/icons';
+import { FaFacebook, FaReddit, FaTwitter } from 'react-icons/fa';
 import React from 'react';
-import { styled } from '@material-ui/core';
 import LinkButton from '../atoms/LinkButton';
-
-const SocialButton = styled(LinkButton)(({ theme }) => ({
-    marginRight: theme.spacing(2)
-}));
 
 const ShareSheet: React.FC = () => {
     /* TODO: Add Copy to Clipboard Button */
     return (
         <div>
-            <SocialButton
-                startIcon={<Twitter />}
+            <LinkButton
+                startIcon={<FaTwitter />}
                 link={
                     'https://twitter.com/intent/tweet/?text=Check%20this%20awesome%20website%20to%20practice%20Japanese%20Kanji.&amp;url=https%3A%2F%2Fkanji.sh'
                 }>
                 Twitter
-            </SocialButton>
-            <SocialButton
-                startIcon={<Facebook />}
+            </LinkButton>
+            <LinkButton
+                startIcon={<FaFacebook />}
                 link={'https://facebook.com/sharer/sharer.php?u=https%3A%2F%2Fkanji.sh'}>
                 Facebook
-            </SocialButton>
-            <SocialButton
-                startIcon={<Reddit />}
+            </LinkButton>
+            <LinkButton
+                startIcon={<FaReddit />}
                 link={
                     'https://reddit.com/submit/?url=https%3A%2F%2Fkanji.sh&amp;resubmit=true&amp;title=Check%20this%20awesome%20website%20to%20practice%20Japanese%20Kanji.'
                 }>
                 Reddit
-            </SocialButton>
+            </LinkButton>
         </div>
     );
 };

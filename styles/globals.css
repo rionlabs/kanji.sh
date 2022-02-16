@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Quicksand:wght@500;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    * {
+        @apply font-normal;
+        @apply font-sans;
+    }
+
+    h1 {
+        @apply font-serif;
+    }
+
+    h2 {
+        @apply font-serif;
+    }
+
+    h3 {
+        @apply font-serif;
+    }
+}
+
+.title {
+    @apply flex-grow self-center select-none text-white font-bold;
+    font-family: 'Quicksand, sans-serif';
+    @apply shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]
+}

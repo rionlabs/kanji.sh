@@ -1,17 +1,5 @@
-import { styled } from '@material-ui/core';
-import 'formik-material-ui';
-import { TextField, TextFieldProps } from 'formik-material-ui';
+import { Field, FieldProps } from 'formik';
 
-const StyledTextField = styled(TextField)(() => ({}));
-
-const InputField: (props: TextFieldProps) => JSX.Element = (props: TextFieldProps) => (
-    <StyledTextField
-        variant={'outlined'}
-        color={'primary'}
-        multiline={false}
-        fullWidth={true}
-        {...props}
-    />
-);
+const InputField: (props: FieldProps) => JSX.Element = (props: FieldProps) => <Field {...props} />;
 
 export default InputField;

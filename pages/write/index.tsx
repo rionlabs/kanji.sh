@@ -2,16 +2,13 @@ import React from 'react';
 import PageLayout from '../../src/PageLayout';
 import Jumbotron from '../../src/component/Jumbotron';
 import CollectionCard from '../../src/component/CollectionCard';
-import { Grid } from '@material-ui/core';
-import Spacer from '../../src/component/atoms/Spacer';
 
 const WritePage: React.FC = () => {
     return (
         <PageLayout>
             <Jumbotron />
-            <Spacer space={4} />
-            <Grid container spacing={4} justify={'center'} alignItems={'stretch'}>
-                <Grid item xs={12} sm={6} md={3}>
+            <div className="container justify-center items-stretch gap-4">
+                <div className="w-full sm:w-1/2 md:w-1/3">
                     <CollectionCard
                         collectionKey="jlpt"
                         title={'JLPT'}
@@ -21,8 +18,8 @@ const WritePage: React.FC = () => {
                         metaColor={'#1A7EC3'}
                         backgroundImageUrl={'/assets/png/jlpt.png'}
                     />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                </div>
+                <div className="w-full sm:w-1/2 md:w-1/3">
                     <CollectionCard
                         collectionKey={'grade'}
                         title={'GRADE'}
@@ -32,8 +29,8 @@ const WritePage: React.FC = () => {
                         metaColor={'#5C9F4F'}
                         backgroundImageUrl={'/assets/png/grade.png'}
                     />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                </div>
+                <div className="w-full sm:w-1/2 md:w-1/3">
                     <CollectionCard
                         collectionKey={'wanikani'}
                         title={'WANIKANI'}
@@ -43,8 +40,8 @@ const WritePage: React.FC = () => {
                         metaColor={'#00AAFF'}
                         backgroundImageUrl={'/assets/png/wanikani.png'}
                     />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                </div>
+                <div className="w-full sm:w-1/2 md:w-1/3">
                     <CollectionCard
                         collectionKey={'kanjigarden'}
                         title={'KANJI GARDEN'}
@@ -54,8 +51,8 @@ const WritePage: React.FC = () => {
                         metaColor={'#e2506d'}
                         backgroundImageUrl={'/assets/png/kanjigarden.png'}
                     />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                </div>
+                <div className="w-full sm:w-1/2 md:w-1/3">
                     <CollectionCard
                         collectionKey={'frequency'}
                         title={'FREQUENCY'}
@@ -65,9 +62,8 @@ const WritePage: React.FC = () => {
                         metaColor={'#0D2542'}
                         backgroundImageUrl={'/assets/png/frequency.png'}
                     />
-                </Grid>
-            </Grid>
-            <Spacer space={3} />
+                </div>
+            </div>
         </PageLayout>
     );
 };

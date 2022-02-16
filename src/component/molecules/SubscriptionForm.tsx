@@ -1,12 +1,7 @@
-import Grid from '@material-ui/core/Grid';
 import InputField from '../atoms/InputField';
-import Container from '@material-ui/core/Container';
 import PrimaryButton from '../atoms/PrimaryButton';
-import CenterGrid from '../atoms/CenterGrid';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
-import { LinearProgress } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
 
 interface Subscription {
     firstName?: string;
@@ -15,7 +10,7 @@ interface Subscription {
 }
 
 const SubscriptionForm: React.FC = () => (
-    <Container maxWidth={'xs'}>
+    <div className="container max-w-screen-sm">
         <Formik
             initialValues={{
                 firstName: '',
@@ -64,44 +59,41 @@ const SubscriptionForm: React.FC = () => (
                         setSubmitting(false);
                     });
             }}>
-            {({ isSubmitting, isValid, status }) => (
+            {({ isSubmitting, status }) => (
                 <Form>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
+                    <div className="container gap-2">
+                        <div className="w-full sm:w-1/2">
                             <Field
                                 component={InputField}
                                 name="firstName"
                                 type="text"
                                 label="First Name"
                             />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
+                        </div>
+                        <div className="w-full sm:w-1/2">
                             <Field
                                 component={InputField}
                                 name="lastName"
                                 type="text"
                                 label="Last Name"
                             />
-                        </Grid>
-                        <Grid item xs={12}>
+                        </div>
+                        <div className="w-full">
                             <Field component={InputField} name="email" type="email" label="Email" />
-                        </Grid>
-                        <CenterGrid item xs={12}>
-                            <PrimaryButton type="submit" disabled={!isValid && !isSubmitting}>
-                                Subscribe for Updates
-                            </PrimaryButton>
-                        </CenterGrid>
-                        <CenterGrid item xs={12}>
-                            {isSubmitting && <LinearProgress />}
-                        </CenterGrid>
-                        <CenterGrid item xs={12}>
-                            <Typography>{status}</Typography>
-                        </CenterGrid>
-                    </Grid>
+                        </div>
+                        <div className="w-full">
+                            {/*disabled={!isValid && !isSubmitting}*/}
+                            <PrimaryButton>Subscribe for Updates</PrimaryButton>
+                        </div>
+                        <div className="w-full">{isSubmitting && <progress />}</div>
+                        <div className="w-full">
+                            <div>{status}</div>
+                        </div>
+                    </div>
                 </Form>
             )}
         </Formik>
-    </Container>
+    </div>
 );
 
 export default SubscriptionForm;

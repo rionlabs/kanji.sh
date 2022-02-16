@@ -1,10 +1,3 @@
-import styled from 'styled-components';
-
-const StyledText = styled('span')`
-    font-family: 'Quicksand', fantasy;
-    font-weight: 500;
-`;
-
-const TextLogo: () => JSX.Element = () => <StyledText>kanji.sh</StyledText>;
+const TextLogo: () => JSX.Element = () => <span className="font-serif font-bold">kanji.sh</span>;
 
 export default TextLogo;

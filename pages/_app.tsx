@@ -1,13 +1,11 @@
 import React from 'react';
 import { AppProps } from 'next/app';
-import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../src/theme';
 import { useRouter } from 'next/router';
 import Config from '../src/config/Config';
 import SEO from '../next-seo.config';
 import { DefaultSeo } from 'next-seo';
 import pageConfigs from '../src/config/PageConfig.json';
+import '../styles/globals.css';
 
 if (typeof window !== 'undefined') {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -25,13 +23,6 @@ type PageConfig = {
 const KanjiApp: (props: AppProps) => JSX.Element = (props: AppProps) => {
     const { Component, pageProps } = props;
     const { asPath } = useRouter();
-
-    React.useEffect(() => {
-        const jssStyles = document.querySelector('#jss-server-side');
-        if (jssStyles) {
-            jssStyles.parentElement?.removeChild(jssStyles);
-        }
-    }, []);
 
     const pageConfig: PageConfig = (pageConfigs as Record<string, PageConfig>)[asPath];
     const title = pageConfig?.title ?? 'Error';
@@ -51,10 +42,7 @@ const KanjiApp: (props: AppProps) => JSX.Element = (props: AppProps) => {
                     }
                 ]}
             />
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <Component {...pageProps} />
-            </ThemeProvider>
+            <Component {...pageProps} />
         </React.Fragment>
     );
 };
