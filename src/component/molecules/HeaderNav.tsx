@@ -15,13 +15,13 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ eventPath, children, ...props }) 
         <Link {...props}>
             <span
                 onClickCapture={() => logEvent('navigation', { path: eventPath })}
-                className="transform-none m-1 p-1 cursor-pointer">
+                className="transform-none m-1 p-1 cursor-pointer text-lg">
                 {match ? (
-                    <h6 className="contents self-center select-none font-serif font-bold text-white">
+                    <h6 className="contents self-center select-none font-serif font-normal text-white">
                         {children}
                     </h6>
                 ) : (
-                    <h6 className="contents self-center select-none font-serif font-bold text-white">
+                    <h6 className="contents self-center select-none font-serif font-normal text-white">
                         {children}
                     </h6>
                 )}

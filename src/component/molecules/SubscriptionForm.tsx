@@ -1,5 +1,4 @@
 import InputField from '../atoms/InputField';
-import PrimaryButton from '../atoms/PrimaryButton';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 
@@ -10,7 +9,7 @@ interface Subscription {
 }
 
 const SubscriptionForm: React.FC = () => (
-    <div className="container max-w-screen-sm">
+    <div className="container max-w-screen-sm sm:max-w-[480px]">
         <Formik
             initialValues={{
                 firstName: '',
@@ -59,31 +58,35 @@ const SubscriptionForm: React.FC = () => (
                         setSubmitting(false);
                     });
             }}>
-            {({ isSubmitting, status }) => (
+            {({ isSubmitting, isValid, status }) => (
                 <Form>
-                    <div className="container gap-2">
-                        <div className="w-full sm:w-1/2">
+                    <div className="flex flex-col items-stretch gap-8">
+                        <div className="w-full">
                             <Field
                                 component={InputField}
                                 name="firstName"
                                 type="text"
                                 label="First Name"
+                                placeholder="Taro"
                             />
                         </div>
-                        <div className="w-full sm:w-1/2">
+                        <div className="w-full">
                             <Field
                                 component={InputField}
-                                name="lastName"
-                                type="text"
-                                label="Last Name"
+                                name="email"
+                                type="email"
+                                label="Email"
+                                placeholder="taro@kanji.sh"
                             />
                         </div>
-                        <div className="w-full">
-                            <Field component={InputField} name="email" type="email" label="Email" />
-                        </div>
-                        <div className="w-full">
-                            {/*disabled={!isValid && !isSubmitting}*/}
-                            <PrimaryButton>Subscribe for Updates</PrimaryButton>
+                        <div className="w-full text-center">
+                            {/*disabled={}*/}
+                            <button
+                                type="submit"
+                                className="button px-6"
+                                disabled={!isValid && !isSubmitting}>
+                                Subscribe for Updates
+                            </button>
                         </div>
                         <div className="w-full">{isSubmitting && <progress />}</div>
                         <div className="w-full">

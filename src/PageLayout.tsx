@@ -7,7 +7,7 @@ export const PageLayout: React.FC = (props) => {
     return (
         <div className="flex-grow min-h-full relative">
             <Header />
-            <div className="pt-4 pb-18">
+            <div className="py-8 sm:py-12 container">
                 <div>{children}</div>
             </div>
             <Footer />

@@ -1,8 +1,9 @@
 import React, { PropsWithChildren } from 'react';
+import { IconType } from 'react-icons';
 
 interface LinkButtonProps {
     link?: string;
-    startIcon?: React.ReactNode;
+    startIcon?: IconType;
 }
 
 const LinkButton: ({
@@ -19,8 +20,10 @@ const LinkButton: ({
     <React.Fragment>
         {/* eslint-disable-next-line react/jsx-no-target-blank */}
         <a href={link} rel={'noopener'} target={'_blank'} {...props}>
-            <button className="rounded-full py-8 px-32 my-8 mx-16">
-                <span>{startIcon}</span>
+            <button className="button inline-flex items-center gap-4 px-12">
+                <span className="opacity-80">
+                    {startIcon && startIcon({ className: 'h-6 w-6' })}
+                </span>
                 {children}
             </button>
         </a>

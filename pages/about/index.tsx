@@ -9,7 +9,7 @@ import TextLogo from '../../src/component/atoms/TextLogo';
 const ReadPage: React.FC = () => {
     return (
         <PageLayout>
-            <h3>About</h3>
+            <h4>About</h4>
 
             <div>
                 <TextLogo /> aims to become a free & more comfortable way to study kanji reading and
@@ -49,9 +49,11 @@ const ReadPage: React.FC = () => {
                 words of encouragement never hurt!
             </div>
 
-            <LinkButton link={`mailto:${Config.contactEmail}`} startIcon={<FaEnvelope />}>
-                Send
-            </LinkButton>
+            <div className="py-8">
+                <LinkButton link={`mailto:${Config.contactEmail}`} startIcon={FaEnvelope}>
+                    Send
+                </LinkButton>
+            </div>
 
             <h5>Contribute to the development</h5>
             <div>
@@ -62,9 +64,11 @@ const ReadPage: React.FC = () => {
                 <a href={Config.githubUrl}>GitHub repository</a>!
             </div>
 
-            <LinkButton link={Config.githubUrl} startIcon={<FaGithub />}>
-                GitHub Repository
-            </LinkButton>
+            <div className="py-8">
+                <LinkButton link={Config.githubUrl} startIcon={FaGithub}>
+                    GitHub
+                </LinkButton>
+            </div>
 
             <h5>Buy me Sushi</h5>
             <div>
@@ -74,9 +78,11 @@ const ReadPage: React.FC = () => {
                 improve <TextLogo />.
             </div>
 
-            <LinkButton link={Config.bmcUrl} startIcon={<FaMoneyBill />}>
-                Buy Now
-            </LinkButton>
+            <div className="py-8">
+                <LinkButton link={Config.bmcUrl} startIcon={FaMoneyBill}>
+                    Buy Now
+                </LinkButton>
+            </div>
 
             <br />
             <br />

@@ -8,7 +8,7 @@ const ReadPage: React.FC = () => {
         <PageLayout>
             <div className="container flex flex-col items-stretch gap-4 justify-center">
                 <div className="text-center">
-                    <h3>Ooops!</h3>
+                    <h4>Ooops!</h4>
                 </div>
                 <div className="">
                     <ConstructionAnimation className="" />

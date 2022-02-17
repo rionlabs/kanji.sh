@@ -21,19 +21,19 @@ const FileCard: (props: Props) => JSX.Element = (props: Props) => {
     };
 
     return (
-        <div className="flex-grow h-full m-auto shadow-none hover:shadow-md">
+        <div className="max-w-[320px] sm:h-full m-auto flex flex-col p-4 gap-4">
             {/* CardMedia */}
-            <div
-                className="h-20 clip-[polygon(0 0, 100% 0%, 100% 90%, 0% 100%)]"
-                style={{ backgroundColor: fileData.metaColor }}>
-                <h2 className="font-bold leading-8 text-white select-none">{fileData.title}</h2>
+            <div className="h-40 rounded-md pressed shadow-inner paper mix-blend-multiply" style={{ backgroundColor: fileData.metaColor }}>
+                <h2 className="text-center font-bold leading-[10rem] text-white select-none">
+                    {fileData.title}
+                </h2>
             </div>
 
             {/* CardContent */}
-            <div>
-                <div>{fileData.description}</div>
+            <div className="flex flex-col gap-4">
+                <div className="text-center">{fileData.description}</div>
 
-                <FilePreview
+                {/*<FilePreview
                     id={fileData.filePath}
                     fileData={fileData}
                     open={open}
@@ -44,10 +44,17 @@ const FileCard: (props: Props) => JSX.Element = (props: Props) => {
                         onClick={() => _previewFile(fileData)}>
                         Preview
                     </button>
-                </FilePreview>
+                </FilePreview>*/}
 
                 <button
-                    className="self-center w-full mt-1"
+                    className="button w-full mt-1"
+                    color="primary"
+                    onClick={() => _downloadFile(fileData)}>
+                    Preview
+                </button>
+
+                <button
+                    className="button w-full mt-1"
                     color="primary"
                     onClick={() => _downloadFile(fileData)}>
                     Download

@@ -69,32 +69,22 @@ export enum Direction {
 const ServiceCard: React.FC<Props> = (props: Props) => {
     const { title, subtitle, imageUrl, imageDirection } = props;
     return (
-        <div className="flex-grow min-h-80 my-4">
-            <div className="min-h-auto rounded shadow">
-                <div className="container items-stretch imageDirection">
-                    {/* Image */}
-                    <div className="imageBox">
-                        <div
-                            style={{
-                                textAlign: imageDirection === Direction.start ? 'center' : 'center',
-                                height: '100%'
-                            }}>
-                            <img
-                                style={{ width: '80%', height: '100%' }}
-                                src={imageUrl}
-                                alt={'Study Kanji!'}
-                            />
-                        </div>
-                    </div>
+        <div className="flex-grow min-h-80 p-8">
+            <div className="container flex flex-col sm:flex-row items-stretch imageDirection">
+                {/* Image */}
+                <div className="flex flex-row items-center align-middle">
+                    <img
+                        style={{ width: '80%', height: '100%', margin: 'auto' }}
+                        src={imageUrl}
+                        alt={'Study Kanji!'}
+                    />
+                </div>
 
-                    {/* Text */}
-                    <div className="imageDirection" style={{ minHeight: 'inherit' }}>
-                        <div className="flex-row content-center items-center">
-                            <div>
-                                <h3 className="font-bold text-white select-none">{title}</h3>
-                                <div className="text-white">{subtitle}</div>
-                            </div>
-                        </div>
+                {/* Text */}
+                <div className="imageDirection" style={{ minHeight: 'inherit' }}>
+                    <div className="py-4 space-y-4">
+                        <h3 className="font-bold select-none lowercase">{title}</h3>
+                        <div className="">{subtitle}</div>
                     </div>
                 </div>
             </div>

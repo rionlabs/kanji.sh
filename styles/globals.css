@@ -1,30 +1,133 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Quicksand:wght@500;700&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Quicksand:wght@400;500;700&display=swap");
+@import 'tailwindcss/screens.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@tailwind screens;
 
 @layer base {
     * {
         @apply font-normal;
         @apply font-sans;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    .paper {
+        /*noinspection CssUnknownTarget*/
+        background-image: url('/assets/jpg/bg.jpg');
+        background-blend-mode: darken;
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .paper-brighten {
+        background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .paper-darken {
+        background-color: rgba(0, 0, 0, 0.12);
+    }
+
+    body {
+        /*noinspection CssUnknownTarget*/
+        @apply paper;
+        color: rgba(0, 0, 0, 0.8);
     }
 
     h1 {
         @apply font-serif;
+        @apply text-6xl;
     }
 
     h2 {
         @apply font-serif;
+        @apply text-5xl;
+        @apply mb-5;
     }
 
     h3 {
         @apply font-serif;
+        @apply text-4xl;
+        @apply mb-4;
+    }
+
+    h4 {
+        @apply font-serif;
+        @apply text-3xl;
+        @apply mb-3;
+    }
+
+    h5 {
+        @apply font-serif;
+        @apply text-2xl;
+        @apply mb-2;
+    }
+
+    h6 {
+        @apply font-serif;
+        @apply text-xl;
+        @apply mb-1;
+    }
+
+    a {
+        @apply font-normal;
+    }
+
+    .elevated {
+        @apply paper paper-brighten;
+        box-shadow:  0.2rem 0.2rem 0.8rem rgba(0, 0, 0, 0.3), -0.4rem -0.4rem 1rem rgba(255, 255, 255, 0.9);
+    }
+
+    .pressed {
+        @apply paper paper-darken;
+        @apply shadow-inner shadow-2xl;
+        background: linear-gradient(145deg, rgba(0, 0, 0, 0.02), rgba(255, 255, 255, 0.4));
+    }
+
+    .popped {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.001));
     }
 }
 
-.title {
-    @apply flex-grow self-center select-none text-white font-bold;
-    font-family: 'Quicksand, sans-serif';
-    @apply shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]
+@layer components {
+    .button {
+        @apply rounded-l-full rounded-r-full py-3;
+        @apply border border-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
+        @apply elevated focus:elevated hover:paper-brighten active:shadow-none active:paper;
+        @apply transition-shadow duration-300;
+        @apply font-medium text-opacity-80 select-none;
+    }
+
+    .field {
+        @apply rounded-l-full rounded-r-full py-3 px-4;
+        @apply border border-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
+        @apply paper-darken focus:shadow-inner focus:pressed;
+        @apply transition-shadow duration-300;
+        @apply font-medium text-opacity-80;
+    }
+}
+
+@layer utilities {
+
+}
+
+.curve {
+    clip-path: ellipse(90% 100% at 41.6% 0%);
+}
+
+@screen sm {
+    .curve {
+        clip-path: ellipse(81% 100% at 57.75% 0%);
+    }
+}
+
+@screen sm {
+    .curve {
+        clip-path: ellipse(87% 100% at 65.17% 0%);
+    }
+}
+
+.toolbar {
+    /* TODO Add curved shadow to toolbar */
+    box-shadow:  0.2rem 0.2rem 0.8rem rgba(0, 0, 0, 1);
 }

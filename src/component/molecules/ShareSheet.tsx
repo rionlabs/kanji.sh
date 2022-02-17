@@ -5,21 +5,21 @@ import LinkButton from '../atoms/LinkButton';
 const ShareSheet: React.FC = () => {
     /* TODO: Add Copy to Clipboard Button */
     return (
-        <div>
+        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-8 my-8">
             <LinkButton
-                startIcon={<FaTwitter />}
+                startIcon={FaTwitter}
                 link={
                     'https://twitter.com/intent/tweet/?text=Check%20this%20awesome%20website%20to%20practice%20Japanese%20Kanji.&amp;url=https%3A%2F%2Fkanji.sh'
                 }>
                 Twitter
             </LinkButton>
             <LinkButton
-                startIcon={<FaFacebook />}
+                startIcon={FaFacebook}
                 link={'https://facebook.com/sharer/sharer.php?u=https%3A%2F%2Fkanji.sh'}>
                 Facebook
             </LinkButton>
             <LinkButton
-                startIcon={<FaReddit />}
+                startIcon={FaReddit}
                 link={
                     'https://reddit.com/submit/?url=https%3A%2F%2Fkanji.sh&amp;resubmit=true&amp;title=Check%20this%20awesome%20website%20to%20practice%20Japanese%20Kanji.'
                 }>

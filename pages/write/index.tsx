@@ -2,67 +2,95 @@ import React from 'react';
 import PageLayout from '../../src/PageLayout';
 import Jumbotron from '../../src/component/Jumbotron';
 import CollectionCard from '../../src/component/CollectionCard';
+import { useRouter } from 'next/router';
+import { WritingAnimation } from '../../src/component/atoms/AnimatedImage';
+
+const METADATA = {
+    jlpt: {
+        title: 'JLPT',
+        description:
+            'The Official Worldwide Japanese-Language Proficiency Test, operated by the Japan Foundation and JEES.',
+        metaColor: '#1A7EC3',
+        backgroundImageUrl: '/assets/png/jlpt.png'
+    },
+    grade: {
+        title: 'GRADE',
+        description:
+            'List of 1,026 kanji for Japanese students in elementary school, from 1st grade to sixth grade.',
+        metaColor: '#5C9F4F',
+        backgroundImageUrl: '/assets/png/grade.png'
+    },
+    wanikani: {
+        title: 'WANIKANI',
+        description:
+            'WaniKani is a Japanese radicals, kanji, and vocabulary learning web app that uses mnemonics and SRS to make kanji learning simple.',
+        metaColor: '#00AAFF',
+        backgroundImageUrl: '/assets/png/wanikani.png'
+    },
+    kanjigarden: {
+        title: 'KANJI GARDEN',
+        description:
+            'Kanji Garden is a free mnemonic-based SRS kanji learning tool that features about 2600 kanji.',
+        metaColor: '#e2506d',
+        backgroundImageUrl: '/assets/png/kanjigarden.png'
+    },
+    frequency: {
+        title: 'FREQUENCY',
+        description: 'Kanji list ordered by the frequency they are used in the Japanese Language.',
+        metaColor: '#0D2542',
+        backgroundImageUrl: '/assets/png/frequency.png'
+    }
+};
 
 const WritePage: React.FC = () => {
+    const router = useRouter();
     return (
         <PageLayout>
-            <Jumbotron />
-            <div className="container justify-center items-stretch gap-4">
-                <div className="w-full sm:w-1/2 md:w-1/3">
-                    <CollectionCard
-                        collectionKey="jlpt"
-                        title={'JLPT'}
-                        description={
-                            'The Official Worldwide Japanese-Language Proficiency Test, operated by the Japan Foundation and JEES.'
-                        }
-                        metaColor={'#1A7EC3'}
-                        backgroundImageUrl={'/assets/png/jlpt.png'}
-                    />
+            <div className="container mx-auto flex flex-col sm:flex-row justify-center gap-2">
+                {/* Text Content */}
+                <div className="w-full sm:w-1/2">
+                    <div className="space-y-4 justify-center">
+                        <h4 className="mb-3">Writing Matters.</h4>
+                        <div>
+                            Yes, you know hundreds of Kanji, and you can read a newspaper or your
+                            favorite manga all the way to the end. But can you write? If you want to
+                            learn Kanji by writing or learn writing Kanji, this is your one-stop
+                            site for all the worksheets.
+                        </div>
+                        <div>
+                            Download printable handwriting practice worksheets for Japanese Kanji by
+                            JLPT level, Grade Level, Wanikani Level, and Frequency. Every sheet is
+                            free, now and forever!
+                        </div>
+                    </div>
                 </div>
-                <div className="w-full sm:w-1/2 md:w-1/3">
-                    <CollectionCard
-                        collectionKey={'grade'}
-                        title={'GRADE'}
-                        description={
-                            'List of 1,026 kanji for Japanese students in elementary school, from 1st grade to sixth grade.'
-                        }
-                        metaColor={'#5C9F4F'}
-                        backgroundImageUrl={'/assets/png/grade.png'}
-                    />
+                {/* Jumbo Image */}
+                <div className="w-full sm:w-1/2 py-4">
+                    <div className="text-center">
+                        <WritingAnimation className="w-5/6 h-auto m-auto" />
+                    </div>
                 </div>
-                <div className="w-full sm:w-1/2 md:w-1/3">
-                    <CollectionCard
-                        collectionKey={'wanikani'}
-                        title={'WANIKANI'}
-                        description={
-                            'WaniKani is a Japanese radicals, kanji, and vocabulary learning web app that uses mnemonics and SRS to make kanji learning simple.'
-                        }
-                        metaColor={'#00AAFF'}
-                        backgroundImageUrl={'/assets/png/wanikani.png'}
-                    />
-                </div>
-                <div className="w-full sm:w-1/2 md:w-1/3">
-                    <CollectionCard
-                        collectionKey={'kanjigarden'}
-                        title={'KANJI GARDEN'}
-                        description={
-                            'Kanji Garden is a free mnemonic-based SRS kanji learning tool that features about 2600 kanji. '
-                        }
-                        metaColor={'#e2506d'}
-                        backgroundImageUrl={'/assets/png/kanjigarden.png'}
-                    />
-                </div>
-                <div className="w-full sm:w-1/2 md:w-1/3">
-                    <CollectionCard
-                        collectionKey={'frequency'}
-                        title={'FREQUENCY'}
-                        description={
-                            'Kanji list ordered by the frequency they are used in the Japanese Language.'
-                        }
-                        metaColor={'#0D2542'}
-                        backgroundImageUrl={'/assets/png/frequency.png'}
-                    />
-                </div>
+            </div>
+            <div className="py-8 flex flex-col sm:flex-row sm:flex-wrap gap-16 justify-center items-stretch">
+                {Object.keys(METADATA).map((key) => {
+                    const object = METADATA[key];
+                    return (
+                        <div className="w-full sm:w-1/2 md:w-1/3" key={key}>
+                            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+                            <div
+                                className="max-w-[320px] mx-auto sm:h-full button rounded-lg"
+                                onClick={async () => {
+                                    console.log(`write/collection/${key}`);
+                                    await router.push(`write/collection/${key}`);
+                                    if (typeof window !== undefined) {
+                                        window.scrollTo(0, 0);
+                                    }
+                                }}>
+                                <CollectionCard collectionKey={key} {...object} />
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </PageLayout>
     );

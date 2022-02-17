@@ -12,9 +12,9 @@ const CollectionPage: React.FC<{ collectionId: string }> = (pathParams) => {
     return (
         <PageLayout>
             <h3 className="p-4">{groupData.heading}</h3>
-            <div className="container flex flex-row gap-4 items-center content-center justify-center">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-8 items-center content-center justify-center py-12">
                 {groupData.files.map((fileData) => (
-                    <div key={fileData.filePath}>
+                    <div className="w-full sm:w-1/2 md:w-1/3" key={fileData.filePath}>
                         <FileCard fileData={fileData} />
                     </div>
                 ))}
