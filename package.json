@@ -2,10 +2,6 @@
   "name": "kanji.sh",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "16.13.1",
-    "npm": "8"
-  },
   "scripts": {
     "dev": "next",
     "build": "next build",
