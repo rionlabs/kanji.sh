@@ -1,8 +1,7 @@
 import React from 'react';
-import { WithRouterProps } from 'next/dist/client/with-router';
 import Image from 'next/image';
 
-interface Props extends WithRouterProps {
+export interface CollectionCardProps {
     collectionKey: string;
     title: string;
     description: string;
@@ -10,7 +9,7 @@ interface Props extends WithRouterProps {
     backgroundImageUrl: string | undefined;
 }
 
-const CollectionCard: (props: Props) => JSX.Element = (props: Props) => {
+const CollectionCard: (props: CollectionCardProps) => JSX.Element = (props) => {
     const { title, description, metaColor, backgroundImageUrl } = props;
     return (
         <div className="flex-grow flex flex-col cursor-pointer max-w-screen-sm h-full mx-auto p-6 gap-6">

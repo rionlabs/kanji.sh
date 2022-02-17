@@ -1,11 +1,10 @@
 import React from 'react';
 import PageLayout from '../../src/PageLayout';
-import Jumbotron from '../../src/component/Jumbotron';
-import CollectionCard from '../../src/component/CollectionCard';
+import CollectionCard, { CollectionCardProps } from '../../src/component/CollectionCard';
 import { useRouter } from 'next/router';
 import { WritingAnimation } from '../../src/component/atoms/AnimatedImage';
 
-const METADATA = {
+const METADATA: Record<string, Omit<CollectionCardProps, 'collectionKey'>> = {
     jlpt: {
         title: 'JLPT',
         description:
