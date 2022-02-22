@@ -3,6 +3,7 @@ import { logEvent } from '../../firebase';
 import Link from 'next/link';
 import React from 'react';
 import { LinkProps } from 'next/dist/client/link';
+import clsx from 'clsx';
 
 interface HeaderNavProps extends React.PropsWithChildren<LinkProps> {
     eventPath: string;
@@ -16,15 +17,14 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ eventPath, children, ...props }) 
             <span
                 onClickCapture={() => logEvent('navigation', { path: eventPath })}
                 className="transform-none m-1 p-1 cursor-pointer text-lg">
-                {match ? (
-                    <h6 className="contents self-center select-none font-serif font-normal text-white">
-                        {children}
-                    </h6>
-                ) : (
-                    <h6 className="contents self-center select-none font-serif font-normal text-white">
-                        {children}
-                    </h6>
-                )}
+                <h6
+                    className={clsx(
+                        'transition-all contents self-center select-none font-serif text-white header-nav',
+                        { 'font-bold': match },
+                        { 'font-normal': !match }
+                    )}>
+                    {children}
+                </h6>
             </span>
         </Link>
     );
