@@ -1,0 +1,6 @@
+# NextJs Cache
+/.next
+
+# next-sitemap will sutogenerate these files on postbuild
+public/robots.txt
+public/sitemap.xml

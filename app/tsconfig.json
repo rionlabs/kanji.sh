@@ -22,7 +22,7 @@
   },
   "include": [
     "src",
-    "pages"
+    "app/pages"
   ],
   "exclude": [
     "node_modules"

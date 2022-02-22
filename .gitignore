@@ -9,15 +9,12 @@
 # testing
 /coverage
 
-# NextJs Cache
-/.next
-
 # production
 /build
 
 # Don't add genrated PDFs to version control
 generator/build
-public/pdf/
+app/public/pdf/
 
 # misc
 .DS_Store
@@ -36,7 +33,3 @@ yarn-debug.log*
 yarn-error.log*
 
 .vercel
-
-# next-sitemap will sutogenerate these files on postbuild
-public/robots.txt
-public/sitemap.xml
