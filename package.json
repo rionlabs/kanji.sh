@@ -1,0 +1,26 @@
+{
+  "name": "kanji.sh",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=8.0.0"
+  },
+  "packageManager": "npm@8.1.2",
+  "workspaces": [
+    "app",
+    "common",
+    "config",
+    "generator"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1",
+    "turbo": "*"
+  }
+}
