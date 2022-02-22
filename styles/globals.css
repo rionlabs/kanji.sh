@@ -115,6 +115,13 @@
     clip-path: ellipse(90% 100% at 41.6% 0%);
 }
 
+.header-nav::after {
+    content: attr(text-content);
+    height: 0;
+    visibility: hidden;
+    font-weight: 700;
+}
+
 @screen sm {
     .curve {
         clip-path: ellipse(81% 100% at 57.75% 0%);

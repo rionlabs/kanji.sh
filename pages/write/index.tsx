@@ -45,7 +45,7 @@ const WritePage: React.FC = () => {
     const router = useRouter();
     return (
         <PageLayout>
-            <div className="container mx-auto flex flex-col sm:flex-row justify-center gap-2">
+            <div className="flex flex-col sm:flex-row justify-center gap-2">
                 {/* Text Content */}
                 <div className="w-full sm:w-1/2">
                     <div className="space-y-4 justify-center">
@@ -74,7 +74,7 @@ const WritePage: React.FC = () => {
                 {Object.keys(METADATA).map((key) => {
                     const object = METADATA[key];
                     return (
-                        <div className="w-full sm:w-1/2 md:w-1/3" key={key}>
+                        <div className="" key={key}>
                             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
                             <div
                                 className="max-w-[320px] mx-auto sm:h-full button rounded-lg"

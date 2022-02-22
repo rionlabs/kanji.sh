@@ -12,10 +12,10 @@ module.exports = {
             center: true,
             padding: {
                 DEFAULT: '2rem',
-                sm: '2.5rem',
-                lg: '4rem',
-                xl: '5rem',
-                '2xl': '6rem'
+                sm: '2rem',
+                lg: '2rem',
+                xl: '2rem',
+                '2xl': '2rem'
             }
         },
         extend: {}
