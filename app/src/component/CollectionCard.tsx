@@ -6,7 +6,7 @@ export interface CollectionCardProps {
     title: string;
     description: string;
     metaColor: string;
-    backgroundImageUrl: string | undefined;
+    backgroundImageUrl: string;
 }
 
 const CollectionCard: (props: CollectionCardProps) => JSX.Element = (props) => {
@@ -17,7 +17,7 @@ const CollectionCard: (props: CollectionCardProps) => JSX.Element = (props) => {
             <div
                 className="relative h-40 w-auto rounded-lg p-4　pressed shadow-inner"
                 style={{ backgroundColor: metaColor }}>
-                <Image className="rounded-lg" layout="fill" src={backgroundImageUrl} />
+                <Image className="rounded-lg" layout="fill" src={backgroundImageUrl} alt={title} />
             </div>
 
             {/* Card Content */}
