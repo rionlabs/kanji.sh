@@ -1,6 +1,5 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Default",
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "composite": false,
     "declaration": true,
@@ -16,5 +15,8 @@
     "skipLibCheck": true,
     "strict": true
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules/**",
+    "dist/**"
+  ]
 }

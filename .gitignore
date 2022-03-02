@@ -10,7 +10,8 @@ node_modules
 /coverage
 
 # production
-/build
+build
+dist
 
 # Don't add genrated PDFs to version control
 generator/build
@@ -19,6 +20,7 @@ app/public/pdf/
 # misc
 .DS_Store
 .firebase
+tsconfig.tsbuildinfo
 
 # Environment files
 .env.local
@@ -33,4 +35,3 @@ yarn-debug.log*
 yarn-error.log*
 
 .vercel
-.turbo

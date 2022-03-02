@@ -1,8 +1,11 @@
 {
   "name": "@ks/common",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
+    "dev": "tsc --watch src/**.ts --preserveWatchOutput",
+    "build": "tsc",
+    "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

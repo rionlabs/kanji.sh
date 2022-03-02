@@ -8,7 +8,7 @@
     "postbuild": "next-sitemap --config sitemap.js",
     "start": "next start",
     "format": "prettier --write ..",
-    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+    "clean": "rimraf .next"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -26,14 +26,13 @@
     "sib-api-v3-typescript": "^2.0.2"
   },
   "devDependencies": {
-    "@ks/config": "*",
+    "@ks/common": "*",
     "@types/node": "^17.0.17",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
     "@types/react-pdf": "^5.0.1",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
-    "adm-zip": "^0.5.1",
     "autoprefixer": "^10.4.2",
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.2.0",
@@ -43,17 +42,9 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "firebase-tools": "^9.8.0",
     "next-sitemap": "^1.3.16",
-    "node-fetch": "^2.6.0",
-    "p-queue": "^6.6.1",
-    "pdf-merger-js": "^3.0.5",
     "postcss": "^8.4.6",
-    "prettier": "^2.2.1",
-    "puppeteer": "^5.2.1",
     "sharp": "^0.27.0",
-    "tailwindcss": "^3.0.22",
-    "typescript": "^4.5.5",
-    "yarg": "^1.0.8",
-    "yargs": "^16.2.0"
+    "tailwindcss": "^3.0.22"
   },
   "eslintConfig": {
     "extends": "react-app"

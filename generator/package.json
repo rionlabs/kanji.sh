@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "run": "echo 'Need to implement'"
+    "build": "ts-node src/runner.ts --source=grade",
+    "clean": "rimraf dist build"
   },
   "dependencies": {
+    "@ks/common": "*",
     "adm-zip": "^0.5.1",
     "build-url-ts": "^6.0.1",
     "node-fetch": "^2.6.0",
@@ -17,6 +19,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
+    "@ks/common": "*",
     "@types/adm-zip": "^0.4.33",
     "@types/node": "^14.14.37",
     "@types/node-fetch": "^2.5.8",
@@ -24,6 +27,7 @@
     "@types/sharp": "^0.27.2",
     "@types/yargs": "^16.0.1",
     "ts-md5": "^1.2.7",
-    "typescript": "^4.2.3"
+    "typescript": "^4.2.3",
+    "ts-node": "^10.5.0"
   }
 }

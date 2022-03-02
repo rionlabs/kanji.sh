@@ -1,1 +1,6 @@
-module.exports = require('@ks/config/eslint-preset');
+/**
+ * FixMe: Get better config.
+ */
+module.exports = {
+    extends: ['eslint:recommended']
+};
