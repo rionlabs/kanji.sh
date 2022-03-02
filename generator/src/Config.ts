@@ -4,7 +4,7 @@ import * as path from 'path';
 const assetsDirPath = path.join(__dirname, '../assets');
 
 // Absolute path to build directory
-const outDirPath = path.join(__dirname, '../build');
+const outDirPath = path.join(__dirname, '../dist');
 
 /**
  * Defines the directory structure, location of source files.

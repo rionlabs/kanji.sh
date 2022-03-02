@@ -12,7 +12,11 @@ import { createWorksheet } from './generator';
 
 type CollectionMetadata = Array<{ key: string; worksheet: Worksheet }>;
 
-async function generatePDFs(collectionType: CollectionType, group: number, dryRun: boolean) {
+const generatePDFs = async (
+    collectionType: CollectionType,
+    group: number,
+    dryRun: boolean
+): Promise<Array<{ key: string; worksheet: Worksheet }>> => {
     const collectionDir = path.join(Config.collectionSrcRoot, collectionType.toString());
     const collectionMetadata: CollectionMetadata = [];
     try {
@@ -71,9 +75,13 @@ async function generatePDFs(collectionType: CollectionType, group: number, dryRu
         logger.error(`Error for source ${collectionType}: ${error}`);
         process.exit(1);
     }
-}
+};
 
-async function generateData(sourceName: CollectionType, group: number, dryRun: boolean) {
+const generateData = async (
+    sourceName: CollectionType,
+    group: number,
+    dryRun: boolean
+): Promise<void> => {
     // FixMe: Implement Storage Client
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const collectionMetadata: CollectionMetadata = await generatePDFs(sourceName, group, dryRun);
@@ -82,7 +90,7 @@ async function generateData(sourceName: CollectionType, group: number, dryRun: b
     //     JSON.stringify(collectionMetadata),
     //     {}
     // );
-}
+};
 
 // Command line argument parsing
 const argv = yargs(hideBin(process.argv)).options({

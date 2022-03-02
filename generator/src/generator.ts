@@ -11,6 +11,12 @@ import { Md5 } from 'ts-md5/dist/md5';
 import { Config } from './Config';
 import buildUrl from 'build-url-ts';
 
+const sortByPage = (array: string[]): string[] => {
+    const getNumber = (path: string): number =>
+        Number.parseInt(path.split('/').slice(-1)[0].split('.')[0]);
+    return array.sort((pathA, pathB) => getNumber(pathA) - getNumber(pathB));
+};
+
 async function generatePDF(
     data: string[],
     worksheetTitle: string,
@@ -53,9 +59,16 @@ async function generatePDF(
                 const page = await browser.newPage();
                 page.setDefaultTimeout(timeout);
 
-                page.on('console', (consoleObj: ConsoleMessage) =>
-                    console.log(`[Browser]${consoleObj.text()}`)
-                );
+                page.on('console', (consoleObj: ConsoleMessage) => {
+                    if (!consoleObj) return;
+                    console.log(`[Browser][${consoleObj.type()}]${consoleObj.text()}`);
+                    const location = consoleObj.location();
+                    if (location) {
+                        console.log(
+                            `[Browser][@]${location.url}:${location.lineNumber}:${location.columnNumber}`
+                        );
+                    }
+                });
 
                 const urlToLoad = buildUrl(`file:///${Config.templatePath}`, {
                     queryParams: {
@@ -110,7 +123,7 @@ async function generatePDF(
 }
 
 // Download kanji data
-async function downloadKanjiData() {
+const downloadKanjiData = async (): Promise<void> => {
     logger.start('Downloading Kanji data');
     const outputDataPath = path.join(Config.outDirPath, 'all-data.json');
     if (fs.existsSync(outputDataPath)) {
@@ -123,13 +136,7 @@ async function downloadKanjiData() {
     const json = await response.buffer();
     await fs.writeFileSync(outputDataPath, json);
     logger.done('Kanji data downloaded');
-}
-
-function sortByPage(array: string[]) {
-    const getNumber = (path: string): number =>
-        Number.parseInt(path.split('/').slice(-1)[0].split('.')[0]);
-    return array.sort((pathA, pathB) => getNumber(pathA) - getNumber(pathB));
-}
+};
 
 /**
  * Generates worksheet and uploads it to the storage. Returns Worksheet object.
@@ -138,12 +145,12 @@ function sortByPage(array: string[]) {
  * @param worksheetConfig   Configuration for the worksheet
  * @param parentDirectory   The directory in which this worksheet will be uploaded.
  */
-export async function createWorksheet(
+export const createWorksheet = async (
     data: string[],
     worksheetTitle: string,
     worksheetConfig: WorksheetConfig = DefaultWorksheetConfig,
     parentDirectory: string[] = []
-): Promise<Worksheet> {
+): Promise<Worksheet> => {
     // Download Kanji Data is necessary
     // TODO: Make data available offline
     await downloadKanjiData();
@@ -166,4 +173,4 @@ export async function createWorksheet(
         kanjis: data,
         pageCount: pageCount
     };
-}
+};

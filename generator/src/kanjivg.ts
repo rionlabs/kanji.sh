@@ -1,13 +1,13 @@
 import path from 'path';
 import * as fs from 'fs';
+import { readdirSync } from 'fs';
 import AdmZip from 'adm-zip';
 import { rewriteWithSvgOptimizations } from './optimize';
 import { Config } from './Config';
-import { readdirSync } from 'fs';
 
-import { logger, ensureDirectories } from './utils';
+import { ensureDirectories, logger } from './utils';
 
-async function extractKanjiVG() {
+const extractKanjiVG = async (): Promise<void> => {
     try {
         if (fs.readdirSync(Config.outKanjiVGDataPath).length !== 0) {
             logger.done('KanjiVG already extracted');
@@ -17,6 +17,7 @@ async function extractKanjiVG() {
     }
 
     logger.start('Extracting KanjiVg file...');
+    // TODO: Automate downloading latest version with GH Actions
     const kanjiVgFile = path.join(Config.assetsDirPath, 'kanjivg-20160426-main.zip');
     const zip = new AdmZip(kanjiVgFile);
     await zip.extractAllTo(Config.outKanjiVGDataPath, true);
@@ -33,11 +34,11 @@ async function extractKanjiVG() {
     fs.rmdirSync(tempDirectory);
 
     logger.done('KanjiVG extraction');
-}
+};
 
-async function runCommonOptimizations() {
+const runCommonOptimizations = async (): Promise<void> => {
     logger.start('Common optimizations');
-    const filenames = await fs.readdirSync(Config.outKanjiVGDataPath);
+    const filenames = fs.readdirSync(Config.outKanjiVGDataPath);
     const promises = [];
     for (const filename of filenames) {
         const inputFilePath = path.join(Config.outKanjiVGDataPath, filename);
@@ -46,11 +47,11 @@ async function runCommonOptimizations() {
     }
     await Promise.all(promises);
     logger.done('Common optimizations');
-}
+};
 
-async function convertToTraces() {
+const convertToTraces = async (): Promise<void> => {
     logger.start('Convert To Traces');
-    const filenames = await fs.readdirSync(Config.outStrokePath);
+    const filenames = fs.readdirSync(Config.outStrokePath);
     for (const filename of filenames) {
         const inputFile = path.join(Config.outStrokePath, filename);
         const outputFile = path.join(Config.outTracerPath, filename);
@@ -65,9 +66,9 @@ async function convertToTraces() {
         fs.writeFileSync(outputFile, lines, { encoding: 'utf-8', flag: 'w+' });
     }
     logger.start('Convert To Traces');
-}
+};
 
-async function buildKanjiDiagrams() {
+const buildKanjiDiagrams = async (): Promise<void> => {
     ensureDirectories(
         Config.outDirPath,
         Config.outKanjiVGDataPath,
@@ -77,7 +78,7 @@ async function buildKanjiDiagrams() {
     await extractKanjiVG();
     await runCommonOptimizations();
     await convertToTraces();
-}
+};
 
 console.time('BuildKanjiDiagrams');
 buildKanjiDiagrams()
@@ -87,6 +88,7 @@ buildKanjiDiagrams()
         process.exit(0);
     })
     .catch(function (error) {
-        console.error('Error occurred ' + error);
+        console.error('Error occurred while running kanji-vg script.');
+        console.error(error);
         process.exit(1);
     });

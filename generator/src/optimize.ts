@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { PathLike } from 'fs';
 
-function removeKvgAttrs(line: string): string {
+const removeKvgAttrs = (line: string): string => {
     const regExs = [
         /kvg:element=".*"\s/gu,
         /kvg:variant=".*"\s/gu,
@@ -43,16 +43,15 @@ function removeKvgAttrs(line: string): string {
     }
 
     return line;
-}
+};
 
-function increaseSize(line: string): string {
-    return line.replace('width="109" height="109"', 'width="512" height="512"');
-}
+const increaseSize = (line: string): string =>
+    line.replace('width="109" height="109"', 'width="512" height="512"');
 
-export async function rewriteWithSvgOptimizations(
+export const rewriteWithSvgOptimizations = async (
     inputFilePath: PathLike,
     outputFilePath: PathLike
-) {
+): Promise<void> => {
     const content = fs.readFileSync(inputFilePath, { encoding: 'utf-8', flag: 'r' });
     const lines = content.split('\n').filter(Boolean);
     const newLines = [];
@@ -76,4 +75,4 @@ export async function rewriteWithSvgOptimizations(
     }
     // Write optimized one
     await fs.writeFileSync(outputFilePath, newLines.join('\n'), { flag: 'w+' });
-}
+};

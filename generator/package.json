@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "ts-node src/runner.ts --source=grade",
-    "clean": "rimraf dist build"
+    "kanjivg": "ts-node src/kanjivg.ts",
+    "generate": "ts-node src/runner.ts",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@ks/common": "*",

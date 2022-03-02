@@ -3,20 +3,20 @@ import { PathLike } from 'fs';
 import { CollectionType } from '@ks/common/src';
 import { Config } from './Config';
 
-export function ensureDirectories(...dirNames: PathLike[]) {
+export const ensureDirectories = (...dirNames: PathLike[]): void => {
     for (const dirName of dirNames) {
         fs.existsSync(dirName) || fs.mkdirSync(dirName, { recursive: true });
     }
-}
+};
 
 ensureDirectories(Config.outDirPath);
 
-export function readSourceFile(inputFilePath: PathLike): string[] {
+export const readSourceFile = (inputFilePath: PathLike): string[] => {
     const content = fs.readFileSync(inputFilePath, { encoding: 'utf-8', flag: 'r' });
     return content.split('\n').filter(Boolean);
-}
+};
 
-export function generatePageTitle(sourceName: CollectionType, sourceGroup: string): string {
+export const generatePageTitle = (sourceName: CollectionType, sourceGroup: string): string => {
     switch (sourceName) {
         case CollectionType.FREQUENCY: // Grouping
             return `Frequency ${sourceGroup}`;
@@ -31,12 +31,12 @@ export function generatePageTitle(sourceName: CollectionType, sourceGroup: strin
         default:
             throw TypeError('Unknown CollectionType');
     }
-}
+};
 
 class Logger {
-    start = (message: string) => console.log(`[START] ${message}`);
-    done = (message: string) => console.log(`[DONE✓] ${message}`);
-    error = (message: string) => console.error(`[ERROR] ${message}`);
+    start: (message: string) => void = (message) => console.log(`[START] ${message}`);
+    done: (message: string) => void = (message) => console.log(`[DONE✓] ${message}`);
+    error: (message: string) => void = (message) => console.error(`[ERROR] ${message}`);
 }
 
 export const logger = new Logger();
