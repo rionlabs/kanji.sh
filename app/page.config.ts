@@ -14,27 +14,27 @@ export const PageConfig: Record<string, { priority: number, title: string, descr
         'title': 'Download Kanji worksheets for Free',
         'description': ''
     },
-    '/write/collection/jlpt': {
+    '/write/jlpt': {
         'priority': 0.7,
         'title': 'Download Kanji worksheets for JLPT level',
         'description': 'Free to download PDF files for Japanese Language Proficiency Test, Level N5, N4, N3, N2, and N1.'
     },
-    '/write/collection/grade': {
+    '/write/grade': {
         'priority': 0.7,
         'title': 'Kanji worksheets by Japanese Elementary School Grades',
         'description': ''
     },
-    '/write/collection/wanikani': {
+    '/write/wanikani': {
         'priority': 0.7,
         'title': 'Download Kanji worksheets for all Wanikani levels',
         'description': ''
     },
-    '/write/collection/kanjigarden': {
+    '/write/kanjigarden': {
         'priority': 0.7,
         'title': 'Download Kanji worksheets for all Kanji introduced in KanjiGarden',
         'description': ''
     },
-    '/write/collection/frequency': {
+    '/write/frequency': {
         'priority': 0.7,
         'title': 'Download Kanji worksheet ordered by frequency',
         'description': ''

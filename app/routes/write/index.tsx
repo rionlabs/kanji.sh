@@ -42,8 +42,8 @@ const WritePage: React.FC = () => {
                             <div
                                 className="max-w-[320px] mx-auto sm:h-full button rounded-lg"
                                 onClick={async () => {
-                                    console.log(`/write/collection/${key}`);
-                                    navigate(`/write/collection/${key}`);
+                                    console.log(`/write/${key}`);
+                                    navigate(`/write/${key}`);
                                     if (typeof window !== undefined) {
                                         window.scrollTo(0, 0);
                                     }
