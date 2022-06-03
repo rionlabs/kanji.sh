@@ -1,9 +1,9 @@
-import path from 'path';
+import * as path from 'path';
 import * as fs from 'fs';
 import { readdirSync } from 'fs';
 import AdmZip from 'adm-zip';
 import { rewriteWithSvgOptimizations } from './optimize';
-import { Config } from './Config';
+import { Config } from './config';
 
 import { ensureDirectories, logger } from './utils';
 

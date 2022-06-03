@@ -1,7 +1,7 @@
 import * as fs from 'fs';
-import { PathLike } from 'fs';
-import { CollectionType } from '@ks/common/src';
-import { Config } from './Config';
+import type { PathLike } from 'fs';
+import { CollectionType } from '@common/models';
+import { Config } from './config';
 
 export const ensureDirectories = (...dirNames: PathLike[]): void => {
     for (const dirName of dirNames) {

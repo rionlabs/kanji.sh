@@ -3,12 +3,13 @@
  */
 import * as path from 'path';
 import * as fs from 'fs';
-import { generatePageTitle, logger, readSourceFile } from './utils';
+import { generatePageTitle, logger, readSourceFile } from '../src/utils';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { CollectionType, DefaultWorksheetConfig, Worksheet } from '@ks/common/src';
-import { Config } from './Config';
-import { createWorksheet } from './generator';
+import type { Worksheet } from '@common/models';
+import { CollectionType, DefaultWorksheetConfig } from '@common/models';
+import { Config } from '../src/config';
+import { createWorksheet } from '../src/generator';
 
 type CollectionMetadata = Array<{ key: string; worksheet: Worksheet }>;
 

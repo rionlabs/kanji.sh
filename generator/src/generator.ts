@@ -1,14 +1,16 @@
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs';
-import puppeteer, { ConsoleMessage } from 'puppeteer';
+import type { ConsoleMessage } from 'puppeteer';
+import * as puppeteer from 'puppeteer';
 import fetch from 'node-fetch';
 import PQueue from 'p-queue';
 import PDFMerger from 'pdf-merger-js';
 import { ensureDirectories, logger } from './utils';
-import { DefaultWorksheetConfig, Worksheet, WorksheetConfig } from '@ks/common/src';
+import type { Worksheet, WorksheetConfig } from '@common/models';
+import { DefaultWorksheetConfig } from '@common/models';
 import { Md5 } from 'ts-md5/dist/md5';
-import { Config } from './Config';
+import { Config } from './config';
 import buildUrl from 'build-url-ts';
 
 const sortByPage = (array: string[]): string[] => {

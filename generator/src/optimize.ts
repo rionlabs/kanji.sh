@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { PathLike } from 'fs';
+import type { PathLike } from 'fs';
 
 const removeKvgAttrs = (line: string): string => {
     const regExs = [

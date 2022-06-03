@@ -1,10 +1,10 @@
 import * as path from 'path';
 
 // Absolute path to assets directory
-const assetsDirPath = path.join(__dirname, '../assets');
+const assetsDirPath = path.resolve(process.cwd(), 'generator/assets');
 
 // Absolute path to build directory
-const outDirPath = path.join(__dirname, '../dist');
+const outDirPath = path.resolve(process.cwd(), 'generator/dist');
 
 /**
  * Defines the directory structure, location of source files.

@@ -13,7 +13,8 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./rapp/*"]
+      "~/*": ["./rapp/*"],
+      "@common/models": ["./common/models.ts"],
     },
 
     // Remix takes care of building everything in `remix build`.
