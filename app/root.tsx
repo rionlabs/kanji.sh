@@ -28,9 +28,9 @@ export const links: LinksFunction = () => ([
 
 
 export const meta: MetaFunction = ({ location }) => {
-    const pageTitle = PageConfig[location.pathname]['title'];
+    const pageTitle = PageConfig[location.pathname]?.title;
     const title = pageTitle?.concat(' | Kanji.sh') ?? '';
-    const pageDescription = PageConfig[location.pathname]['description'];
+    const pageDescription = PageConfig[location.pathname]?.description;
     const description = pageDescription ?? '';
     return {
         charset: 'utf-8',
