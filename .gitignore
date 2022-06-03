@@ -15,7 +15,7 @@ dist
 
 # Don't add genrated PDFs to version control
 generator/build
-app/public/pdf/
+napp/public/pdf/
 
 # misc
 .DS_Store

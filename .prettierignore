@@ -1,4 +1,4 @@
 .next
 generator/build
 node_modules
-app/src/images/anim
+napp/src/images/anim
