@@ -7,7 +7,7 @@ interface Subscription {
     lastName?: string;
     email?: string;
 }
-
+/* TODO: Remove formik dependecy, and use remix-forms */
 const SubscriptionForm: React.FC = () => (
     <div className="container max-w-screen-sm sm:max-w-[480px]">
         <Formik

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import lottie from 'lottie-web';
-import construction from '../../images/anim/construction_in_process.json';
-import reading from '../../images/anim/reading_book.json';
-import writing from '../../images/anim/writing.json';
+
+import construction from '../../assets/animations/construction_in_process.json';
+import reading from '../../assets/animations/reading_book.json';
+import writing from '../../assets/animations/writing.json';
 
 type AnimationProps = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
