@@ -1,6 +1,7 @@
-import React, { PropsWithChildren, useEffect, useRef } from 'react';
+import type { PropsWithChildren} from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Document, Page } from 'react-pdf';
-import { FileData } from '../Metadata';
+import type { FileData } from 'app/metadata';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const styles = {
@@ -12,7 +13,7 @@ const styles = {
     },
     dialogPaper: {
         height: '100vh',
-        ["theme.breakpoints.down('xs')"]: {
+        "theme.breakpoints.down('xs')": {
             margin: 0
         }
     },

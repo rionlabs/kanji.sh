@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { FileData } from '../Metadata';
-import { logEvent } from '../firebase';
-import FilePreview from './FilePreview';
+import type { FileData } from 'app/metadata';
 
 interface Props {
     fileData: FileData;
@@ -12,11 +10,11 @@ const FileCard: (props: Props) => JSX.Element = (props: Props) => {
     const [open, setOpen] = useState(false);
 
     const _downloadFile: (fileData: FileData) => void = (fileData: FileData) => {
-        logEvent('file_download', { file: fileData.title });
+        // FixMe: logEvent('file_download', { file: fileData.title });
     };
 
     const _previewFile: (fileData: FileData) => void = (fileData: FileData) => {
-        logEvent('file_preview', { file: fileData.title });
+        // FixMe: logEvent('file_preview', { file: fileData.title });
         setOpen(true);
     };
 

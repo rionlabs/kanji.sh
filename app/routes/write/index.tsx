@@ -1,45 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'
-import type { CollectionCardProps } from 'app/components/molecules/CollectionCard';
 import CollectionCard from 'app/components/molecules/CollectionCard';
 import { WritingAnimation } from 'app/components/atoms/AnimatedImage';
-
-const METADATA: Record<string, Omit<CollectionCardProps, 'collectionKey'>> = {
-    jlpt: {
-        title: 'JLPT',
-        description:
-            'The Official Worldwide Japanese-Language Proficiency Test, operated by the Japan Foundation and JEES.',
-        metaColor: '#1A7EC3',
-        backgroundImageUrl: '/assets/png/jlpt.png'
-    },
-    grade: {
-        title: 'GRADE',
-        description:
-            'List of 1,026 kanji for Japanese students in elementary school, from 1st grade to sixth grade.',
-        metaColor: '#5C9F4F',
-        backgroundImageUrl: '/assets/png/grade.png'
-    },
-    wanikani: {
-        title: 'WANIKANI',
-        description:
-            'WaniKani is a Japanese radicals, kanji, and vocabulary learning web app that uses mnemonics and SRS to make kanji learning simple.',
-        metaColor: '#00AAFF',
-        backgroundImageUrl: '/assets/png/wanikani.png'
-    },
-    kanjigarden: {
-        title: 'KANJI GARDEN',
-        description:
-            'Kanji Garden is a free mnemonic-based SRS kanji learning tool that features about 2600 kanji.',
-        metaColor: '#e2506d',
-        backgroundImageUrl: '/assets/png/kanjigarden.png'
-    },
-    frequency: {
-        title: 'FREQUENCY',
-        description: 'Kanji list ordered by the frequency they are used in the Japanese Language.',
-        metaColor: '#0D2542',
-        backgroundImageUrl: '/assets/png/frequency.png'
-    }
-};
+import { METADATA } from 'app/metadata';
 
 const WritePage: React.FC = () => {
     const navigate = useNavigate();
@@ -79,8 +42,8 @@ const WritePage: React.FC = () => {
                             <div
                                 className="max-w-[320px] mx-auto sm:h-full button rounded-lg"
                                 onClick={async () => {
-                                    console.log(`write/collection/${key}`);
-                                    navigate(`write/collection/${key}`);
+                                    console.log(`/write/collection/${key}`);
+                                    navigate(`/write/collection/${key}`);
                                     if (typeof window !== undefined) {
                                         window.scrollTo(0, 0);
                                     }

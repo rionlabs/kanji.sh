@@ -1,14 +1,7 @@
+import type { CollectionCardData } from 'app/metadata';
 import React from 'react';
 
-export interface CollectionCardProps {
-    collectionKey: string;
-    title: string;
-    description: string;
-    metaColor: string;
-    backgroundImageUrl: string;
-}
-
-const CollectionCard: (props: CollectionCardProps) => JSX.Element = (props) => {
+const CollectionCard: (props: CollectionCardData) => JSX.Element = (props) => {
     const { title, description, metaColor, backgroundImageUrl } = props;
     return (
         <div className="flex-grow flex flex-col cursor-pointer max-w-screen-sm h-full mx-auto p-6 gap-6">

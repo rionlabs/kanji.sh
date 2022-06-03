@@ -6,7 +6,8 @@ const Config = {
     contactEmail: "mail@kanji.sh",
     bmcUrl: "https://www.buymeacoffee.com/aruke",
     authorWebsiteUrl: "https://aruke.dev",
-    maintainer: "Rajanikant Deshmukh"
+    maintainer: "Rajanikant Deshmukh",
+    pdfStoragePath: ""
 };
 
 export default Config;

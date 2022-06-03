@@ -1,4 +1,12 @@
-import Config from './config/Config';
+import Config from 'app/config';
+
+export interface CollectionCardData {
+    collectionKey: string;
+    title: string;
+    description: string;
+    metaColor: string;
+    backgroundImageUrl: string;
+}
 
 export type GroupData = {
     heading: string;
@@ -106,3 +114,40 @@ mappedData.set('grade', gradesData);
 mappedData.set('wanikani', wanikaniData);
 mappedData.set('frequency', frequencyData);
 mappedData.set('kanjigarden', kanjiGardenData);
+
+export const METADATA: Record<string, Omit<CollectionCardData, 'collectionKey'>> = {
+    jlpt: {
+        title: 'JLPT',
+        description:
+            'The Official Worldwide Japanese-Language Proficiency Test, operated by the Japan Foundation and JEES.',
+        metaColor: '#1A7EC3',
+        backgroundImageUrl: '/assets/png/jlpt.png'
+    },
+    grade: {
+        title: 'GRADE',
+        description:
+            'List of 1,026 kanji for Japanese students in elementary school, from 1st grade to sixth grade.',
+        metaColor: '#5C9F4F',
+        backgroundImageUrl: '/assets/png/grade.png'
+    },
+    wanikani: {
+        title: 'WANIKANI',
+        description:
+            'WaniKani is a Japanese radicals, kanji, and vocabulary learning web app that uses mnemonics and SRS to make kanji learning simple.',
+        metaColor: '#00AAFF',
+        backgroundImageUrl: '/assets/png/wanikani.png'
+    },
+    kanjigarden: {
+        title: 'KANJI GARDEN',
+        description:
+            'Kanji Garden is a free mnemonic-based SRS kanji learning tool that features about 2600 kanji.',
+        metaColor: '#e2506d',
+        backgroundImageUrl: '/assets/png/kanjigarden.png'
+    },
+    frequency: {
+        title: 'FREQUENCY',
+        description: 'Kanji list ordered by the frequency they are used in the Japanese Language.',
+        metaColor: '#0D2542',
+        backgroundImageUrl: '/assets/png/frequency.png'
+    }
+};
