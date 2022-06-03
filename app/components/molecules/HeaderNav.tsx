@@ -11,9 +11,6 @@ interface HeaderNavProps extends React.PropsWithChildren<LinkProps> {
 
 const HeaderNav: React.FC<HeaderNavProps> = ({ eventPath, children, ...props }) => {
     const location = useLocation();
-    console.log("props: ", props);
-    console.log("location.pathname: ", location.pathname);
-
     const match = location.pathname.includes(props.to.toString());
     return (
         <Link {...props}>
