@@ -35,3 +35,8 @@ yarn-debug.log*
 yarn-error.log*
 
 .vercel
+
+/.cache
+/build
+/public/build
+.env
