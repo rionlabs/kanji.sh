@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import { Link } from '@remix-run/react';
 
 const Footer: React.FC = () => {
     return (
@@ -17,10 +17,10 @@ const Footer: React.FC = () => {
                     </div>
                     <div className="display-none md:flex flex-1" />
                     <div className="w-full md:w-1/2 text-center space-y-2">
-                        <Link href={'/about/privacy-policy'}>
+                        <Link to={'/about/privacy-policy'} prefetch="intent">
                             <div className="mix-blend-color-burn">Privacy Policy</div>
                         </Link>
-                        <Link href={'/about/terms'}>
+                        <Link to={'/about/terms'} prefetch="intent">
                             <div>Terms Of Use</div>
                         </Link>
                     </div>

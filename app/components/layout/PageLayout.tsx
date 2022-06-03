@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from './component/Header';
-import Footer from './component/Footer';
+import Header from './Header';
+import Footer from './Footer';
 
 export const PageLayout: React.FC = (props) => {
     const { children } = props;

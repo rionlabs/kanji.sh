@@ -7,6 +7,7 @@ import {
     Scripts,
     ScrollRestoration
 } from '@remix-run/react';
+import PageLayout from 'app/components/layout/PageLayout';
 
 import styles from './styles/app.css';
 
@@ -21,18 +22,20 @@ export const meta: MetaFunction = () => ({
 });
 
 export default function App() {
-  return (
-    <html lang="en">
-      <head>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </body>
-    </html>
-  );
+    return (
+        <html lang='en'>
+        <head>
+            <Meta />
+            <Links />
+        </head>
+        <body>
+            <PageLayout>
+                <Outlet />
+            </PageLayout>
+            <ScrollRestoration />
+            <Scripts />
+            <LiveReload />
+        </body>
+        </html>
+    );
 }

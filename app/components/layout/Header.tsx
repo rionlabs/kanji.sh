@@ -1,7 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
-import { logEvent } from '../firebase';
-import HeaderNav from './molecules/HeaderNav';
+import { Link } from '@remix-run/react';
+import HeaderNav from '../molecules/HeaderNav';
 
 const Header: React.FC = () => {
     return (
@@ -9,8 +8,10 @@ const Header: React.FC = () => {
             <div className="py-12 sm:py-16 sm:container">
                 {/* Toolbar */}
                 <div className="flex flex-col sm:flex-row items-center gap-6">
-                    <Link href={'/'}>
-                        <div onClickCapture={() => logEvent('navigation', { path: 'home' })}>
+                    <Link to={'/'}>
+                        <div onClickCapture={() => {
+                            // FixMe: logEvent('navigation', { path: 'home' });
+                        }}>
                             <h3 className="cursor-pointer font-black select-none text-white">
                                 kanji.sh
                             </h3>
@@ -18,13 +19,13 @@ const Header: React.FC = () => {
                     </Link>
                     <span className="hidden sm:flex sm:flex-1" />
                     <div className="space-x-8">
-                        <HeaderNav href={'/read'} eventPath={'read'}>
+                        <HeaderNav to={'/read'} eventPath={'read'}>
                             read
                         </HeaderNav>
-                        <HeaderNav href={'/write'} eventPath={'write'}>
+                        <HeaderNav to={'/write'} eventPath={'write'}>
                             write
                         </HeaderNav>
-                        <HeaderNav href={'/about'} eventPath={'about'}>
+                        <HeaderNav to={'/about'} eventPath={'about'}>
                             about
                         </HeaderNav>
                     </div>
