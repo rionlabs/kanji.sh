@@ -1,5 +1,6 @@
-import React, { PropsWithChildren } from 'react';
-import { IconType } from 'react-icons';
+import React from 'react';
+import type { PropsWithChildren } from 'react';
+import type { IconType } from 'react-icons';
 
 interface LinkButtonProps {
     link?: string;
