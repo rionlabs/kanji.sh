@@ -8,6 +8,7 @@ import {
     ScrollRestoration
 } from '@remix-run/react';
 import PageLayout from 'app/components/layout/PageLayout';
+import { PageConfig } from 'app/page.config';
 import React from 'react';
 import { pdfjs } from 'react-pdf';
 
@@ -26,12 +27,18 @@ export const links: LinksFunction = () => ([
 ]);
 
 
-export const meta: MetaFunction = () => ({
-    charset: 'utf-8',
-    'theme-color': '#000',
-    title: 'Kanji.sh',
-    viewport: 'minimum-scale=1,initial-scale=1,width=device-width'
-});
+export const meta: MetaFunction = ({ location }) => {
+    const pageTitle = PageConfig[location.pathname]['title'];
+    const title = pageTitle?.concat(' | Kanji.sh') ?? '';
+    const pageDescription = PageConfig[location.pathname]['description'];
+    const description = pageDescription ?? '';
+    return {
+        charset: 'utf-8',
+        'theme-color': '#000',
+        viewport: 'minimum-scale=1,initial-scale=1,width=device-width',
+        title, description
+    };
+};
 
 export default function App() {
     // Loads PDF.js worker for previews
