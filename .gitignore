@@ -40,3 +40,6 @@ yarn-error.log*
 /build
 /public/build
 .env
+
+# Tailwind generated CSS
+app/styles/app.css
