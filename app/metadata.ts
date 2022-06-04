@@ -1,4 +1,7 @@
+import { CollectionType } from '@common/models';
 import Config from 'app/config';
+
+export const PreBuiltCollections = [CollectionType.JLPT];
 
 export interface CollectionCardData {
     collectionKey: string;

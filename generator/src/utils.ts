@@ -1,15 +1,12 @@
 import * as fs from 'fs';
 import type { PathLike } from 'fs';
 import { CollectionType } from '@common/models';
-import { Config } from './config';
 
-export const ensureDirectories = (...dirNames: PathLike[]): void => {
+export const ensureDirectoriesExist = (...dirNames: PathLike[]): void => {
     for (const dirName of dirNames) {
         fs.existsSync(dirName) || fs.mkdirSync(dirName, { recursive: true });
     }
 };
-
-ensureDirectories(Config.outDirPath);
 
 export const readSourceFile = (inputFilePath: PathLike): string[] => {
     const content = fs.readFileSync(inputFilePath, { encoding: 'utf-8', flag: 'r' });

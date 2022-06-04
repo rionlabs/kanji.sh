@@ -1,15 +1,14 @@
+import { createWorksheetHash } from 'generator/src/hash';
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs';
 import type { ConsoleMessage } from 'puppeteer';
-import * as puppeteer from 'puppeteer';
-import fetch from 'node-fetch';
+import puppeteer from 'puppeteer';
 import PQueue from 'p-queue';
 import PDFMerger from 'pdf-merger-js';
-import { ensureDirectories, logger } from './utils';
+import { ensureDirectoriesExist, logger } from './utils';
 import type { Worksheet, WorksheetConfig } from '@common/models';
 import { DefaultWorksheetConfig } from '@common/models';
-import { Md5 } from 'ts-md5/dist/md5';
 import { Config } from './config';
 import buildUrl from 'build-url-ts';
 
@@ -25,14 +24,10 @@ async function generatePDF(
     worksheetConfig: WorksheetConfig
 ): Promise<{ hash: string; pageCount: number }> {
     // Calculate hash for as unique identifier for this Worksheet
-    const worksheetHash: string = new Md5()
-        .appendStr(data.join(''))
-        .appendStr(JSON.stringify(worksheetConfig))
-        .end()
-        .toString();
+    const worksheetHash: string = createWorksheetHash({ data, worksheetTitle, worksheetConfig });
 
     const tempDirPath = path.join(Config.outPdfPath, worksheetHash, 'pages');
-    ensureDirectories(tempDirPath);
+    ensureDirectoriesExist(tempDirPath);
 
     // Do not proceed if file already exists
     const outputPdfFilePath = `${path.join(Config.outPdfPath, worksheetHash)}.pdf`;
@@ -57,7 +52,7 @@ async function generatePDF(
 
         let times = 0;
         for (let index = 0; index < data.length; index += 5) {
-            const processing = async function (index: number, kanjiArray: string[]) {
+            const processing = async function(index: number, kanjiArray: string[]) {
                 const page = await browser.newPage();
                 page.setDefaultTimeout(timeout);
 
@@ -115,7 +110,7 @@ async function generatePDF(
         await merger.save(outputPdfFilePath);
 
         // Cleanup
-        await fs.rmdirSync(path.join(Config.outPdfPath, worksheetHash), { recursive: true });
+        await fs.rmSync(path.join(Config.outPdfPath, worksheetHash), { recursive: true });
 
         return { hash: worksheetHash, pageCount: generatedPDFPaths.length };
     } catch (error) {
@@ -123,22 +118,6 @@ async function generatePDF(
         throw error;
     }
 }
-
-// Download kanji data
-const downloadKanjiData = async (): Promise<void> => {
-    logger.start('Downloading Kanji data');
-    const outputDataPath = path.join(Config.outDirPath, 'all-data.json');
-    if (fs.existsSync(outputDataPath)) {
-        logger.done('Kanji data already downloaded');
-        return;
-    }
-    const response = await fetch(
-        'https://raw.githubusercontent.com/davidluzgouveia/kanji-data/master/kanji.json'
-    );
-    const json = await response.buffer();
-    await fs.writeFileSync(outputDataPath, json);
-    logger.done('Kanji data downloaded');
-};
 
 /**
  * Generates worksheet and uploads it to the storage. Returns Worksheet object.
@@ -153,10 +132,6 @@ export const createWorksheet = async (
     worksheetConfig: WorksheetConfig = DefaultWorksheetConfig,
     parentDirectory: string[] = []
 ): Promise<Worksheet> => {
-    // Download Kanji Data is necessary
-    // TODO: Make data available offline
-    await downloadKanjiData();
-
     // Generate PDF
     const { hash, pageCount } = await generatePDF(data, worksheetTitle, worksheetConfig);
 
@@ -164,7 +139,7 @@ export const createWorksheet = async (
     const storageFilePath = path.join(...parentDirectory, hash);
     // TODO: FixMe await StorageClient.instance.putFile(storageFilePath, localFilePath, {});
 
-    fs.unlinkSync(localFilePath);
+    // TODO: Do not remove files, instead use hash as cache fs.unlinkSync(localFilePath);
 
     // Return Worksheet
     return {

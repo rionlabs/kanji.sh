@@ -1,6 +1,7 @@
 /**
  * This file generates PDFs for the predefined sources.
  */
+import { buildKanjiDiagrams } from 'generator/src/kanjivg';
 import * as path from 'path';
 import * as fs from 'fs';
 import { generatePageTitle, logger, readSourceFile } from '../src/utils';
@@ -9,7 +10,7 @@ import { hideBin } from 'yargs/helpers';
 import type { Worksheet } from '@common/models';
 import { CollectionType, DefaultWorksheetConfig } from '@common/models';
 import { Config } from '../src/config';
-import { createWorksheet } from '../src/generator';
+import { createWorksheet } from '../src/generate';
 
 type CollectionMetadata = Array<{ key: string; worksheet: Worksheet }>;
 
@@ -118,11 +119,26 @@ const timerLabel = `Generate Data for ${argv.source}`;
 
 console.time(timerLabel);
 generateData(sourceType, argv.group, argv.dryRun)
-    .then(function () {
+    .then(function() {
         console.timeEnd(timerLabel);
         process.exit(0);
     })
-    .catch(function (error) {
+    .catch(function(error) {
         console.error('Error occurred ' + error);
+        process.exit(1);
+    });
+
+// Runner from KanjiVG
+
+console.time('BuildKanjiDiagrams');
+buildKanjiDiagrams()
+    .then(function() {
+        console.log(`BuildKanjiDiagrams finished`);
+        console.timeEnd('BuildKanjiDiagrams');
+        process.exit(0);
+    })
+    .catch(function(error) {
+        console.error('Error occurred while running kanji-vg script.');
+        console.error(error);
         process.exit(1);
     });

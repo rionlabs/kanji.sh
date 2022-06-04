@@ -15,6 +15,7 @@
     "paths": {
       "~/*": ["./rapp/*"],
       "@common/models": ["./common/models.ts"],
+      "@generator": ["./generator/src/index.ts"],
     },
 
     // Remix takes care of building everything in `remix build`.

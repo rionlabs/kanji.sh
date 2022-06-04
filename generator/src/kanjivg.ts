@@ -1,13 +1,13 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import type { PathLike } from 'fs';
 import { readdirSync } from 'fs';
 import AdmZip from 'adm-zip';
-import { rewriteWithSvgOptimizations } from './optimize';
 import { Config } from './config';
 
-import { ensureDirectories, logger } from './utils';
+import { ensureDirectoriesExist, logger } from './utils';
 
-const extractKanjiVG = async (): Promise<void> => {
+const _extractKanjiVG = async (): Promise<void> => {
     try {
         if (fs.readdirSync(Config.outKanjiVGDataPath).length !== 0) {
             logger.done('KanjiVG already extracted');
@@ -36,20 +36,20 @@ const extractKanjiVG = async (): Promise<void> => {
     logger.done('KanjiVG extraction');
 };
 
-const runCommonOptimizations = async (): Promise<void> => {
+const _runCommonOptimizations = async (): Promise<void> => {
     logger.start('Common optimizations');
     const filenames = fs.readdirSync(Config.outKanjiVGDataPath);
     const promises = [];
     for (const filename of filenames) {
         const inputFilePath = path.join(Config.outKanjiVGDataPath, filename);
         const outputFilePath = path.join(Config.outStrokePath, filename);
-        promises.push(rewriteWithSvgOptimizations(inputFilePath, outputFilePath));
+        promises.push(_rewriteWithSvgOptimizations(inputFilePath, outputFilePath));
     }
     await Promise.all(promises);
     logger.done('Common optimizations');
 };
 
-const convertToTraces = async (): Promise<void> => {
+const _convertToTraces = async (): Promise<void> => {
     logger.start('Convert To Traces');
     const filenames = fs.readdirSync(Config.outStrokePath);
     for (const filename of filenames) {
@@ -68,27 +68,90 @@ const convertToTraces = async (): Promise<void> => {
     logger.start('Convert To Traces');
 };
 
-const buildKanjiDiagrams = async (): Promise<void> => {
-    ensureDirectories(
+const _removeKvgAttrs = (line: string): string => {
+    const regExs = [
+        /kvg:element=".*"\s/gu,
+        /kvg:variant=".*"\s/gu,
+        /kvg:partial=".*"\s/gu,
+        /kvg:original=".*"\s/gu,
+        /kvg:part=".*"\s/gu,
+        /kvg:number=".*"\s/gu,
+        /kvg:tradForm=".*"\s/gu,
+        /kvg:radicalForm=".*"\s/gu,
+        /kvg:position=".*"\s/gu,
+        /kvg:radical=".*"\s/gu,
+        /kvg:phon=".*"\s/gu,
+        /kvg:type=".*"\s/gu
+    ];
+    for (const regEx of regExs) {
+        while (line.search(regEx) !== -1) line = line.replace(regEx, '');
+    }
+
+    // Worst coding example, caused due to lack of RegEx
+    const endRegExs = [
+        /kvg:element=".*">/gu,
+        /kvg:variant=".*">/gu,
+        /kvg:partial=".*">/gu,
+        /kvg:original=".*">/gu,
+        /kvg:part=".*">/gu,
+        /kvg:number=".*">/gu,
+        /kvg:tradForm=".*">/gu,
+        /kvg:radicalForm=".*">/gu,
+        /kvg:position=".*">/gu,
+        /kvg:radical=".*">/gu,
+        /kvg:phon=".*">/gu,
+        /kvg:type=".*">/gu
+    ];
+
+    for (const regEx of endRegExs) {
+        while (line.search(regEx) !== -1) {
+            line = line.replace(regEx, '>');
+        }
+    }
+
+    return line;
+};
+
+const _increaseSize = (line: string): string =>
+    line.replace('width="109" height="109"', 'width="512" height="512"');
+
+const _rewriteWithSvgOptimizations = async (
+    inputFilePath: PathLike,
+    outputFilePath: PathLike
+): Promise<void> => {
+    const content = fs.readFileSync(inputFilePath, { encoding: 'utf-8', flag: 'r' });
+    const lines = content.split('\n').filter(Boolean);
+    const newLines = [];
+    for (let i = 0; i < lines.length; i++) {
+        // Common optimizations for both kanji styles
+        if (lines[i].startsWith('<!--')) {
+            // Skip till end of commend is found
+            while (!lines[i].endsWith('-->')) {
+                i++;
+            }
+            continue;
+        }
+        if (lines[i].startsWith('<!DOCTYPE')) {
+            // Skip DOCTYPE
+            while (!lines[i].endsWith(']>')) {
+                i++;
+            }
+            continue;
+        }
+        newLines.push(_increaseSize(_removeKvgAttrs(lines[i])));
+    }
+    // Write optimized file
+    await fs.writeFileSync(outputFilePath, newLines.join('\n'), { flag: 'w+' });
+};
+
+export const buildKanjiDiagrams = async (): Promise<void> => {
+    ensureDirectoriesExist(
         Config.outDirPath,
         Config.outKanjiVGDataPath,
         Config.outStrokePath,
         Config.outTracerPath
     );
-    await extractKanjiVG();
-    await runCommonOptimizations();
-    await convertToTraces();
+    await _extractKanjiVG();
+    await _runCommonOptimizations();
+    await _convertToTraces();
 };
-
-console.time('BuildKanjiDiagrams');
-buildKanjiDiagrams()
-    .then(function () {
-        console.log(`BuildKanjiDiagrams finished`);
-        console.timeEnd('BuildKanjiDiagrams');
-        process.exit(0);
-    })
-    .catch(function (error) {
-        console.error('Error occurred while running kanji-vg script.');
-        console.error(error);
-        process.exit(1);
-    });
