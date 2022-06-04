@@ -1,10 +1,10 @@
 /**
  * This file generates PDFs for the predefined sources.
  */
-import { buildKanjiDiagrams } from 'generator/src/kanjivg';
+import { buildKanjiDiagrams } from '../src/kanjivg';
 import * as path from 'path';
 import * as fs from 'fs';
-import { generatePageTitle, logger, readSourceFile } from '../src/utils';
+import { generatePageTitle, logger, readFile } from '../src/utils';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import type { Worksheet } from '@common/models';
@@ -28,7 +28,7 @@ const generatePDFs = async (
         if (filenames.length === 1) {
             const inputFilePath = path.join(collectionDir, filenames[0]);
             logger.start(`Reading file ${inputFilePath}...`);
-            const data = readSourceFile(inputFilePath);
+            const data = readFile(inputFilePath);
             let fileNumber = 0;
             for (let index = 0; index < data.length; index += group) {
                 const sourceGroup = `${index + 1}-${index + group}`;
@@ -55,7 +55,7 @@ const generatePDFs = async (
                 const inputFilePath = path.join(collectionDir, sourceFile);
                 const sourceGroup = sourceFile.split('.')[0];
                 logger.start(`File ${inputFilePath} for ${collectionType}`);
-                const data = readSourceFile(inputFilePath);
+                const data = readFile(inputFilePath);
                 if (!dryRun) {
                     const worksheet = await createWorksheet(
                         data,

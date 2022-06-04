@@ -124,30 +124,26 @@ async function generatePDF(
  * @param data              Array of kanji
  * @param worksheetTitle    Title to put on every page of the worksheet
  * @param worksheetConfig   Configuration for the worksheet
- * @param parentDirectory   The directory in which this worksheet will be uploaded.
  */
 export const createWorksheet = async (
     data: string[],
     worksheetTitle: string,
-    worksheetConfig: WorksheetConfig = DefaultWorksheetConfig,
-    parentDirectory: string[] = []
+    worksheetConfig: WorksheetConfig = DefaultWorksheetConfig
 ): Promise<Worksheet> => {
     // Generate PDF
     const { hash, pageCount } = await generatePDF(data, worksheetTitle, worksheetConfig);
 
-    const localFilePath = path.join(Config.outPdfPath, `${hash}.pdf`);
-    const storageFilePath = path.join(...parentDirectory, hash);
+    const fileLocation = path.join(Config.outPdfPath, `${hash}.pdf`);
+    // const storageFilePath = path.join(...parentDirectory, hash);
     // TODO: FixMe await StorageClient.instance.putFile(storageFilePath, localFilePath, {});
 
     // TODO: Do not remove files, instead use hash as cache fs.unlinkSync(localFilePath);
 
     // Return Worksheet
     return {
+        name: worksheetTitle,
+        kanji: data,
         config: worksheetConfig,
-        fileLocation: storageFilePath,
-        hash: hash,
-        kanjiCount: data.length,
-        kanjis: data,
-        pageCount: pageCount
+        hash, pageCount, fileLocation
     };
 };

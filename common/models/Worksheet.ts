@@ -1,10 +1,10 @@
-import { WorksheetConfig } from './WorksheetConfig';
+import type { WorksheetConfig } from './WorksheetConfig';
 
 export type Worksheet = {
     hash: string;
-    kanjis: string[];
+    kanji: string[];
+    name: string,
     config: WorksheetConfig;
     pageCount: number;
-    kanjiCount: number;
     fileLocation: string;
 };

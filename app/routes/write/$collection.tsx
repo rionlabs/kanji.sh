@@ -1,6 +1,6 @@
 import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
 import type { FileData, GroupData } from 'app/metadata';
 import React from 'react';
 import FileCard from 'app/components/molecules/FileCard';
@@ -25,6 +25,7 @@ function CollectionPage() {
                 {groupData.files.map((fileData: FileData) => (
                     <div className="" key={fileData.filePath}>
                         <FileCard fileData={fileData} />
+                        <Link to={`${fileData.title.toLowerCase()}`}>Link</Link>
                     </div>
                 ))}
             </div>

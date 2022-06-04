@@ -1,7 +1,7 @@
 import type { LoaderFunction } from '@remix-run/node';
 import { json, Response } from '@remix-run/node';
 import { useCatch, useLoaderData } from '@remix-run/react';
-import { createWorksheet } from 'app/routes/write/generate/index.server';
+import { createWorksheet } from 'app/routes/write/index.server';
 
 export const loader: LoaderFunction = async () => {
     try {

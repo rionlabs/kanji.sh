@@ -5,11 +5,11 @@ import { readdirSync } from 'fs';
 import AdmZip from 'adm-zip';
 import { Config } from './config';
 
-import { ensureDirectoriesExist, logger } from './utils';
+import { ensureDirectoriesExist, logger, isDirEmpty } from './utils';
 
 const _extractKanjiVG = async (): Promise<void> => {
     try {
-        if (fs.readdirSync(Config.outKanjiVGDataPath).length !== 0) {
+        if (!isDirEmpty(Config.outKanjiVGDataPath)) {
             logger.done('KanjiVG already extracted');
         }
     } catch (error) {
@@ -65,7 +65,7 @@ const _convertToTraces = async (): Promise<void> => {
             .join('\n');
         fs.writeFileSync(outputFile, lines, { encoding: 'utf-8', flag: 'w+' });
     }
-    logger.start('Convert To Traces');
+    logger.done('Convert To Traces');
 };
 
 const _removeKvgAttrs = (line: string): string => {
@@ -151,7 +151,13 @@ export const buildKanjiDiagrams = async (): Promise<void> => {
         Config.outStrokePath,
         Config.outTracerPath
     );
-    await _extractKanjiVG();
-    await _runCommonOptimizations();
-    await _convertToTraces();
+
+    if (isDirEmpty(Config.outStrokePath) || isDirEmpty(Config.outTracerPath)) {
+        await _extractKanjiVG();
+        await _runCommonOptimizations();
+        await _convertToTraces();
+        return;
+    }
+
+    logger.done('KanjiVG already processed');
 };
