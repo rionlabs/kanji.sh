@@ -18,10 +18,11 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ eventPath, children, ...props }) 
                 onClickCapture={() => {
                     // FixMe: logEvent('navigation', { path: eventPath })
                 }}
-                className="transform-none m-1 p-1 cursor-pointer text-lg">
+                className="transform-none m-1 p-1 cursor-pointer text-lg relative">
                 <h6
+                    data-content={children}
                     className={clsx(
-                        'transition-all contents self-center select-none font-serif text-white header-nav',
+                        'header-nav absolute transition-all contents self-center select-none font-serif text-white header-nav',
                         { 'font-bold': match },
                         { 'font-normal': !match }
                     )}>

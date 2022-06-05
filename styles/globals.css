@@ -1,9 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Quicksand:wght@400;500;700&display=swap");
-@import 'tailwindcss/screens.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @tailwind screens;
 
 @layer base {
@@ -116,10 +114,11 @@
 }
 
 .header-nav::after {
-    content: attr(text-content);
-    height: 0;
+    position: absolute;
+    content: attr(data-content);
+    height: 1px;
     visibility: hidden;
-    font-weight: 700;
+    font-weight: 800;
 }
 
 @screen sm {

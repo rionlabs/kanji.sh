@@ -9,9 +9,9 @@ const CollectionCard: (props: CollectionCardProps) => JSX.Element = (props) => {
         <div className='flex-grow flex flex-col cursor-pointer max-w-screen-sm h-full mx-auto p-6 gap-6'>
             {/* CardMedia */}
             <div
-                className='relative h-40 w-auto rounded-lg p-4　pressed shadow-inner'
+                className='h-40 w-auto rounded-lg p-4　pressed shadow-inner'
                 style={{ backgroundColor: metaColor }}>
-                <img className='rounded-lg' src={backgroundImageUrl} alt={title} />
+                <img className='rounded-lg h-full w-full' src={backgroundImageUrl} alt={title} />
             </div>
 
             {/* Card Content */}
