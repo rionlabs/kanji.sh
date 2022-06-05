@@ -1,7 +1,7 @@
+import fs from 'fs';
 import { createWorksheetHash } from 'generator/src/hash';
 import * as os from 'os';
 import * as path from 'path';
-import * as fs from 'fs';
 import type { ConsoleMessage } from 'puppeteer';
 import puppeteer from 'puppeteer';
 import PQueue from 'p-queue';
@@ -12,7 +12,7 @@ import { DefaultWorksheetConfig } from '@common/models';
 import { Config } from './config';
 import buildUrl from 'build-url-ts';
 
-const sortByPage = (array: string[]): string[] => {
+const sortByPageNumber = (array: string[]): string[] => {
     const getNumber = (path: string): number =>
         Number.parseInt(path.split('/').slice(-1)[0].split('.')[0]);
     return array.sort((pathA, pathB) => getNumber(pathA) - getNumber(pathB));
@@ -29,15 +29,8 @@ async function generatePDF(
     const tempDirPath = path.join(Config.outPdfPath, worksheetHash, 'pages');
     ensureDirectoriesExist(tempDirPath);
 
-    // Do not proceed if file already exists
-    const outputPdfFilePath = `${path.join(Config.outPdfPath, worksheetHash)}.pdf`;
-    if (fs.existsSync(outputPdfFilePath)) {
-        // return;
-        // TODO どうしよか？
-    }
-
     try {
-        const timeout = 60 * 1000;
+        const timeout = 180 * 1000;
         const browser = await puppeteer.launch({
             timeout: timeout,
             args: ['--disable-web-security']
@@ -45,10 +38,10 @@ async function generatePDF(
 
         // To avoid timeout, if the number of pages are too much, 5 pages per core
         const browserPageQueue = new PQueue({
-            concurrency: os.cpus().length * 100,
+            concurrency: os.cpus().length * 5,
             autoStart: true
         });
-        const generatedPDFPaths: string[] = [];
+        const intermediatePages: string[] = [];
 
         let times = 0;
         for (let index = 0; index < data.length; index += 5) {
@@ -56,6 +49,7 @@ async function generatePDF(
                 const page = await browser.newPage();
                 page.setDefaultTimeout(timeout);
 
+                // Log any output generated from puppeteer launched browser
                 page.on('console', (consoleObj: ConsoleMessage) => {
                     if (!consoleObj) return;
                     console.log(`[Browser][${consoleObj.type()}]${consoleObj.text()}`);
@@ -79,43 +73,44 @@ async function generatePDF(
                     waitUntil: ['load', 'networkidle0', 'networkidle2', 'domcontentloaded']
                 });
 
-                const pdfName = path.join(tempDirPath, `${index}.pdf`);
+                const pagePath = path.join(tempDirPath, `${index}.pdf`);
                 await page.pdf({
-                    path: pdfName,
+                    path: pagePath,
                     displayHeaderFooter: false,
                     printBackground: true,
-                    format: 'A4'
+                    format: 'A4',
+                    timeout: timeout
                 });
 
-                generatedPDFPaths.push(pdfName);
+                intermediatePages.push(pagePath);
 
                 await page.close();
             };
 
-            browserPageQueue
-                .add(async () => processing(times++, data.slice(index, index + 5)))
-                .then(() => {
-                    // NoOp
-                });
+            // eslint-disable-next-line no-loop-func
+            await browserPageQueue.add(() => {
+                processing(times++, data.slice(index, index + 5));
+            });
         }
 
         await browserPageQueue.onIdle();
         await browser.close();
 
         // Merge the generated PDFs
+        const outputPdfFilePath = `${path.join(Config.outPdfPath, worksheetHash)}.pdf`;
         const merger = new PDFMerger();
-        for (const generatedPDFPath of sortByPage(generatedPDFPaths)) {
+        for (const generatedPDFPath of sortByPageNumber(intermediatePages)) {
             merger.add(generatedPDFPath);
         }
         await merger.save(outputPdfFilePath);
 
-        // Cleanup
-        await fs.rmSync(path.join(Config.outPdfPath, worksheetHash), { recursive: true });
-
-        return { hash: worksheetHash, pageCount: generatedPDFPaths.length };
+        return { hash: worksheetHash, pageCount: intermediatePages.length };
     } catch (error) {
         logger.start(`Error on ${JSON.stringify(worksheetConfig)} : ${error}`);
         throw error;
+    } finally {
+        // Cleanup of directory
+        fs.rmdirSync(path.join(Config.outPdfPath, worksheetHash), { recursive: true });
     }
 }
 
@@ -130,26 +125,24 @@ export const createWorksheet = async (
     worksheetTitle: string,
     worksheetConfig: WorksheetConfig = DefaultWorksheetConfig
 ): Promise<Worksheet> => {
+    logger.start(`Worksheet generation: ${worksheetTitle}`);
+
     // Ensure output directories
     ensureDirectoriesExist(Config.outPdfPath, Config.outMetadataPath);
-
     // Generate PDF
     const { hash, pageCount } = await generatePDF(data, worksheetTitle, worksheetConfig);
-
+    // Get location of file as absolute path
     const fileLocation = path.join(Config.outPdfPath, `${hash}.pdf`);
-    // const storageFilePath = path.join(...parentDirectory, hash);
-    // TODO: FixMe await StorageClient.instance.putFile(storageFilePath, localFilePath, {});
-
-    // TODO: Do not remove files, instead use hash as cache fs.unlinkSync(localFilePath);
-
+    // Create Metadata
     const worksheetOutput = {
         name: worksheetTitle,
         kanji: data,
         config: worksheetConfig,
         hash, pageCount, fileLocation
     };
-
+    // Write metadata file
     writeFile(path.join(Config.outMetadataPath, `${hash}.json`), JSON.stringify(worksheetOutput));
+    logger.done(`Worksheet generation: ${worksheetTitle}`);
 
     // Return Worksheet
     return worksheetOutput;

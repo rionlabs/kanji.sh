@@ -7,7 +7,7 @@ import { downloadKanjiData } from 'generator/src/download';
 import { createWorksheet } from 'generator/src/generate';
 import { createWorksheetHash } from 'generator/src/hash';
 import { buildKanjiDiagrams } from 'generator/src/kanjivg';
-import { readFile } from 'generator/src/utils';
+import { logger, readFile } from 'generator/src/utils';
 import path from 'path';
 
 /**
@@ -22,17 +22,20 @@ export const generateWorksheet = async (
     worksheetConfig: WorksheetConfig = DefaultWorksheetConfig
 ): Promise<Worksheet> => {
     await downloadKanjiData();
-
     await buildKanjiDiagrams();
 
+    logger.start(`Generating worksheet ${worksheetTitle} for ${data.length} kanji`)
     const hash = createWorksheetHash({ data, worksheetTitle, worksheetConfig });
     const metaFileLocation = path.join(Config.outMetadataPath, `${hash}.json`);
     const pdfFileLocation = path.join(Config.outPdfPath, `${hash}.pdf`);
     if (fs.existsSync(pdfFileLocation) && fs.existsSync(metaFileLocation)) {
+        logger.done(`Worksheet ${worksheetTitle} already exists`)
         return getWorksheetMeta(hash);
     }
 
-    return await createWorksheet(data, worksheetTitle, worksheetConfig);
+    const worksheet = await createWorksheet(data, worksheetTitle, worksheetConfig);
+    logger.done(`Worksheet ${worksheetTitle} with ${worksheet.pageCount} pages`)
+    return worksheet
 };
 
 /**

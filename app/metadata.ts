@@ -115,7 +115,7 @@ const frequencyData: CollectionCardData = {
     files: []
 };
 
-for (let i = 0, fileCounter = 0; i < 1000; i += 50, fileCounter++) {
+for (let i = 0, fileCounter = 1; i < 1000; i += 50, fileCounter++) {
     frequencyData.files.push({
         key: `f-${fileCounter}`,
         title: `F${fileCounter}`,
