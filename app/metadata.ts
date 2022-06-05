@@ -17,6 +17,7 @@ export type GroupData = {
 };
 
 export type FileData = {
+    key: string;
     title: string;
     description: string;
     metaColor: string;
@@ -32,6 +33,7 @@ const gradesData: GroupData = {
 const gradeColors = ['#AEEA00', '#00E676', '#0091EA', '#6200EA', '#AA00FF', '#D50000'];
 for (let i = 1; i <= 6; i++) {
     gradesData.files.push({
+        key: `g-${i}`,
         title: `G${i}`,
         description: `Grade ${i} Kanji`,
         metaColor: gradeColors[i - 1],
@@ -48,6 +50,7 @@ const jlptColors = ['#39c370', '#c6a737', '#e89843', '#ca3f4e', '#ab1c2b'];
 let colorCounter = 0;
 for (let i = 5; i >= 1; i--) {
     JLPTData.files.push({
+        key: `n-${i}`,
         title: `N${i}`,
         description: `JLPT Level N${i} Kanji`,
         metaColor: jlptColors[colorCounter++],
@@ -64,6 +67,7 @@ const WKColors = ['#2ea36e', '#00aaff', '#ee505e'];
 for (let level = 1; level <= 60; level++) {
     const colorIndex = Math.floor((level - 1) / 20);
     wanikaniData.files.push({
+        key: `wk-${level}`,
         title: `WK ${level}`,
         description: `Wanikani Level ${level} Kanji`,
         metaColor: WKColors[colorIndex],
@@ -78,10 +82,10 @@ const kanjiGardenData: GroupData = {
     files: []
 };
 
-let fileCounter = 0;
-for (let i = 0; i <= 2645; i += 50) {
+for (let i = 0, fileCounter = 1; i <= 2645; i += 50, fileCounter++) {
     kanjiGardenData.files.push({
-        title: `KG${++fileCounter}`,
+        key: `kg-${fileCounter}`,
+        title: `KG${fileCounter}`,
         description: `KanjiGarden Kanji ${i + 1}-${Math.min(fileCounter * 50, 2645)}`,
         metaColor: '#e2506d',
         filePath: `${pdfFileDirectory}/kanjigarden/${i + 1}-${i + 50}.pdf`
@@ -93,10 +97,10 @@ const frequencyData: GroupData = {
     files: []
 };
 
-fileCounter = 0;
-for (let i = 0; i < 1000; i += 50) {
+for (let i = 0, fileCounter = 0; i < 1000; i += 50, fileCounter++) {
     frequencyData.files.push({
-        title: `F${++fileCounter}`,
+        key: `f-${fileCounter}`,
+        title: `F${fileCounter}`,
         description: `Kanji with frequency ${i + 1}-${i + 50}`,
         metaColor: '#616161',
         filePath: `${pdfFileDirectory}/frequency/${i + 1}-${i + 50}.pdf`

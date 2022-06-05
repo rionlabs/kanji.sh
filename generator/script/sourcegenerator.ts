@@ -17,7 +17,7 @@ export const generateSourceJson = async () => {
     const jlptWorksheets: Partial<WorksheetWithKey>[] = [];
     for (let i = 5; i >= 1; i--) {
         jlptWorksheets.push({
-            key: `n${i}`,
+            key: `n-${i}`,
             name: `JLPT Level N${i} Kanji`,
             kanji: readFile(path.join(Config.collectionSrcRoot, 'jlpt', `n${i}.source`))
         });
@@ -28,7 +28,7 @@ export const generateSourceJson = async () => {
     const gradesWorksheets: Partial<WorksheetWithKey>[] = [];
     for (let i = 1; i <= 6; i++) {
         gradesWorksheets.push({
-            key: `g${i}`,
+            key: `g-${i}`,
             name: `Grade ${i} Kanji`,
             kanji: readFile(path.join(Config.collectionSrcRoot, 'grade', `g${i}.source`))
         });
@@ -39,7 +39,7 @@ export const generateSourceJson = async () => {
     const wkWorksheets: Partial<WorksheetWithKey>[] = [];
     for (let level = 1; level <= 60; level++) {
         wkWorksheets.push({
-            key: `l${level}`,
+            key: `wk-${level}`,
             name: `Wanikani Level ${level} Kanji`,
             kanji: readFile(path.join(Config.collectionSrcRoot, 'wanikani', `${level}.source`))
         });
@@ -51,7 +51,7 @@ export const generateSourceJson = async () => {
     const allKgData = readFile(path.join(Config.collectionSrcRoot, 'kanjigarden', `all.source`));
     for (let index = 0, fileCounter = 1; index <= allKgData.length; index += 50, fileCounter++) {
         kgWorksheets.push({
-            key: `kg${fileCounter}`,
+            key: `kg-${fileCounter}`,
             name: `KanjiGarden Kanji ${index + 1}-${Math.min(fileCounter * 50, allKgData.length)}`,
             kanji: allKgData.slice(index, index + 50)
         });
@@ -63,7 +63,7 @@ export const generateSourceJson = async () => {
     const allFrequencyData = readFile(path.join(Config.collectionSrcRoot, 'frequency', `all.source`));
     for (let index = 0, fileCounter = 1; index < allFrequencyData.length; index += 50, fileCounter++) {
         frequencyWorksheets.push({
-            key: `f${fileCounter}`,
+            key: `f-${fileCounter}`,
             name: `Kanji with frequency ${index + 1}-${fileCounter * 50}`,
             kanji: allFrequencyData.slice(index, index + 50)
         });

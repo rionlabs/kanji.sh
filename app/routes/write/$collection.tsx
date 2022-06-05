@@ -25,7 +25,7 @@ function CollectionPage() {
                 {groupData.files.map((fileData: FileData) => (
                     <div className="" key={fileData.filePath}>
                         <FileCard fileData={fileData} />
-                        <Link to={`${fileData.title.toLowerCase()}`}>Link</Link>
+                        <Link to={`${fileData.key}`}>Link</Link>
                     </div>
                 ))}
             </div>
