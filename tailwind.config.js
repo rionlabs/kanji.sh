@@ -18,7 +18,11 @@ module.exports = {
                 '2xl': '2rem'
             }
         },
-        extend: {}
+        extend: {
+            aspectRatio: {
+                'A4': '210 / 297'
+            }
+        }
     },
     plugins: []
 };

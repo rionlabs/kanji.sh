@@ -5,11 +5,11 @@ import Footer from './Footer';
 export const PageLayout: React.FC = (props) => {
     const { children } = props;
     return (
-        <div className="flex-grow min-h-full relative">
+        <div className="min-h-screen">
             <Header />
-            <div className="py-8 sm:py-12 container">
-                <div>{children}</div>
-            </div>
+            <main className="py-12 sm:py-12 container">
+                {children}
+            </main>
             <Footer />
         </div>
     );

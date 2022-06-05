@@ -137,3 +137,9 @@
     /* TODO Add curved shadow to toolbar */
     box-shadow:  0.2rem 0.2rem 0.8rem rgba(0, 0, 0, 1);
 }
+
+.react-pdf__Page__canvas {
+    width: 100% !important;
+    height: auto !important;
+    @apply rounded;
+}
