@@ -1,9 +1,14 @@
-import type { CollectionType } from '@common/models';
+import type { CollectionType, Worksheet } from '@common/models';
 import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import { PDFView } from 'app/components/molecules/PDFView';
 import { getWorksheet } from 'app/routes/write/index.server';
 import invariant from 'tiny-invariant';
+
+type LoaderData = {
+    worksheet: Worksheet
+}
 
 export const loader: LoaderFunction = async ({ params }) => {
     const { collection, file } = params;
@@ -14,6 +19,11 @@ export const loader: LoaderFunction = async ({ params }) => {
 }
 
 export default function FileRoute() {
-    const data = useLoaderData();
-    return <div>{JSON.stringify(data, null, 3)}</div>
+    const data = useLoaderData() as LoaderData;
+    return <div>
+        {JSON.stringify(data, null, 3)}
+        <div>
+            <PDFView fileUrl={`/write/files/${data.worksheet.hash}`}/>
+        </div>
+    </div>
 }

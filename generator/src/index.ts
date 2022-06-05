@@ -1,12 +1,13 @@
-import type { Worksheet, WorksheetConfig, CollectionType } from '@common/models';
+import type { CollectionType, Worksheet, WorksheetConfig } from '@common/models';
 import { DefaultWorksheetConfig } from '@common/models';
 import fs from 'fs';
 import { generateSourceJson } from 'generator/script/sourcegenerator';
+import { Config } from 'generator/src/config';
 import { downloadKanjiData } from 'generator/src/download';
 import { createWorksheet } from 'generator/src/generate';
 import { createWorksheetHash } from 'generator/src/hash';
 import { buildKanjiDiagrams } from 'generator/src/kanjivg';
-import { Config } from 'generator/src/config';
+import { readFile } from 'generator/src/utils';
 import path from 'path';
 
 /**
@@ -25,15 +26,10 @@ export const generateWorksheet = async (
     await buildKanjiDiagrams();
 
     const hash = createWorksheetHash({ data, worksheetTitle, worksheetConfig });
-    const fileLocation = path.join(Config.outPdfPath, `${hash}.pdf`);
-    const pageCount = 0; // FixMe read page count from PDF file
-    if (fs.existsSync(fileLocation)) {
-        return {
-            name: worksheetTitle,
-            kanji: data,
-            config: worksheetConfig,
-            hash, pageCount, fileLocation
-        };
+    const metaFileLocation = path.join(Config.outMetadataPath, `${hash}.json`);
+    const pdfFileLocation = path.join(Config.outPdfPath, `${hash}.pdf`);
+    if (fs.existsSync(pdfFileLocation) && fs.existsSync(metaFileLocation)) {
+        return getWorksheetMeta(hash);
     }
 
     return await createWorksheet(data, worksheetTitle, worksheetConfig);
@@ -53,3 +49,8 @@ export const getPreBuiltWorksheet = async (
     }
     return generateWorksheet(worksheetInfo.kanji, worksheetInfo.name, worksheetInfo.config);
 };
+
+export const getWorksheetMeta = (hash: string): Worksheet => {
+    const metaFilePath = path.join(Config.outMetadataPath, `${hash}.json`)
+    return JSON.parse(readFile(metaFilePath).join()) as Worksheet
+}

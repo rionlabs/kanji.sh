@@ -6,7 +6,7 @@ import type { ConsoleMessage } from 'puppeteer';
 import puppeteer from 'puppeteer';
 import PQueue from 'p-queue';
 import PDFMerger from 'pdf-merger-js';
-import { ensureDirectoriesExist, logger } from './utils';
+import { ensureDirectoriesExist, logger, writeFile } from './utils';
 import type { Worksheet, WorksheetConfig } from '@common/models';
 import { DefaultWorksheetConfig } from '@common/models';
 import { Config } from './config';
@@ -130,6 +130,9 @@ export const createWorksheet = async (
     worksheetTitle: string,
     worksheetConfig: WorksheetConfig = DefaultWorksheetConfig
 ): Promise<Worksheet> => {
+    // Ensure output directories
+    ensureDirectoriesExist(Config.outPdfPath, Config.outMetadataPath);
+
     // Generate PDF
     const { hash, pageCount } = await generatePDF(data, worksheetTitle, worksheetConfig);
 
@@ -139,11 +142,15 @@ export const createWorksheet = async (
 
     // TODO: Do not remove files, instead use hash as cache fs.unlinkSync(localFilePath);
 
-    // Return Worksheet
-    return {
+    const worksheetOutput = {
         name: worksheetTitle,
         kanji: data,
         config: worksheetConfig,
         hash, pageCount, fileLocation
     };
+
+    writeFile(path.join(Config.outMetadataPath, `${hash}.json`), JSON.stringify(worksheetOutput));
+
+    // Return Worksheet
+    return worksheetOutput;
 };
