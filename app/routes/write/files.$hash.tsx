@@ -17,7 +17,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     return new Response(pdfBuffer, {
         status: 200,
         headers: {
-            'Content-Type': 'application/pdfBuffer',
+            'Content-Type': 'application/pdf',
             'Content-Length': pdfBuffer.length.toString(),
             'Content-Disposition': contentDisposition
         }

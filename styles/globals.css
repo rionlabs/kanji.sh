@@ -91,7 +91,7 @@
 
 @layer components {
     .button {
-        @apply rounded-l-full rounded-r-full py-3;
+        @apply rounded-l-full rounded-r-full py-3 text-center;
         @apply border border-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
         @apply elevated focus:elevated hover:paper-brighten active:shadow-none active:paper;
         @apply transition-shadow duration-300;

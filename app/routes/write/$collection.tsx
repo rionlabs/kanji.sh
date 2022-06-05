@@ -1,31 +1,39 @@
+import type { CollectionType, Worksheet } from '@common/models';
 import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
-import type { FileData, GroupData } from 'app/metadata';
+import { useLoaderData } from '@remix-run/react';
+import type { FileCardData } from 'app/metadata';
 import React from 'react';
 import FileCard from 'app/components/molecules/FileCard';
-import { mappedData } from 'app/metadata';
+import { METADATA } from 'app/metadata';
 import invariant from 'tiny-invariant';
+import { getWorksheet } from './index.server';
 
-type LoaderData = { groupData: GroupData };
+type LoaderData = {
+    heading: string;
+    files: Array<{ cardData: FileCardData, worksheet: Worksheet }>;
+};
 
-export const loader: LoaderFunction = ({params}) => {
+export const loader: LoaderFunction = async ({ params }) => {
     const { collection } = params;
-    invariant(typeof collection === 'string', "Collection must be string");
-    const groupData = mappedData.get(collection)!!;
-    return json<LoaderData>({ groupData })
-}
+    invariant(typeof collection === 'string', 'Collection must be string');
+    const collectionData = METADATA.get(collection)!!;
+    const files = await Promise.all(collectionData.files.map(async cardData => ({
+        cardData,
+        worksheet: await getWorksheet(collection as CollectionType, cardData.key)
+    })));
+    return json<LoaderData>({ heading: collectionData.heading, files });
+};
 
 function CollectionPage() {
-    const { groupData } = useLoaderData<LoaderData>();
+    const { heading, files } = useLoaderData<LoaderData>();
     return (
         <div>
-            <h3 className="p-4">{groupData.heading}</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:md:grid-cols-4 gap-8 py-12">
-                {groupData.files.map((fileData: FileData) => (
-                    <div className="" key={fileData.filePath}>
-                        <FileCard fileData={fileData} />
-                        <Link to={`${fileData.key}`}>Link</Link>
+            <h3 className='p-4'>{heading}</h3>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:md:grid-cols-4 gap-8 py-12'>
+                {files.map(({ cardData, worksheet }) => (
+                    <div className='' key={cardData.key}>
+                        <FileCard cardData={cardData} worksheet={worksheet} />
                     </div>
                 ))}
             </div>

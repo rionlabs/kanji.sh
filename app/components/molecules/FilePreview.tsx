@@ -1,7 +1,7 @@
 import type { PropsWithChildren} from 'react';
 import React, { useEffect, useRef } from 'react';
 import { Document, Page } from 'react-pdf';
-import type { FileData } from 'app/metadata';
+import type { FileCardData } from 'app/metadata';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const styles = {
@@ -66,7 +66,7 @@ const DialogActions = (props: PropsWithChildren<any>) => {
 export interface FilePreviewProps {
     id: string;
     children: React.ReactNode;
-    fileData: FileData;
+    fileData: FileCardData;
     open: boolean;
     onClose: () => void;
 }
@@ -115,7 +115,7 @@ const FilePreview: (props: FilePreviewProps) => JSX.Element = (props) => {
                         inputRef={pdfDocument}
                         className="{pdfCanvas}"
                         externalLinkTarget={'_blank'}
-                        file={`/api/download?path=${fileData.filePath}&name=${fileData.title}`}
+                        file={`/api/download?path=&name=${fileData.title}`}
                         loading={
                             <div>
                                 <progress />

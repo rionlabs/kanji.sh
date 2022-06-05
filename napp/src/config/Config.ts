@@ -13,8 +13,7 @@ const Config = {
         storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
         appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
         measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-    },
-    pdfStoragePath: `${process.env.NEXT_PUBLIC_BRANCH_NAME || 'main'}/pdf`
+    }
 };
 
 export default Config;
