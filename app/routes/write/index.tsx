@@ -49,17 +49,15 @@ const WritePage: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className='py-8 flex flex-col sm:flex-row sm:flex-wrap gap-16 justify-center items-stretch'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 py-12'>
                 {collections.map(collection =>
-                    (<div className='' key={collection.key}>
-                        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-                        <div
-                            className='max-w-[320px] mx-auto sm:h-full button rounded-lg'
-                            onClick={async () => {
-                                navigate(`/write/${collection.key}`);
-                            }}>
-                            <CollectionCard {...collection} />
-                        </div>
+                    (<div
+                        key={collection.key}
+                        className='max-w-[320px] mx-auto cursor-pointer'
+                        onClick={async () => {
+                            navigate(`/write/${collection.key}`);
+                        }}>
+                        <CollectionCard {...collection} />
                     </div>)
                 )}
             </div>
