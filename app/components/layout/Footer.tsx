@@ -8,15 +8,15 @@ const Footer: React.FC = () => {
             <div className='container text-white text-opacity-90'>
                 <div className='flex flex-col sm:flex-row gap-4 justify-evenly py-12'>
                     <div className='w-full sm:w-auto flex flex-col gap-2'>
-                        <a href={Config.githubUrl} target='_blank' rel="noreferrer">GitHub</a>
-                        <a href={Config.bmcUrl} target='_blank' rel="noreferrer">Buy a Sushi</a>
+                        <a className="after:content-['_↗']" href={Config.githubUrl} target='_blank' rel="noreferrer">GitHub</a>
+                        <a className="after:content-['_↗']" href={Config.bmcUrl} target='_blank' rel="noreferrer">Buy a Sushi</a>
                     </div>
                     <div className='display-none sm:flex' />
                     <div className='w-full sm:w-auto flex flex-col gap-2'>
                         <Link to={'/about'} prefetch='intent'>
                             About
                         </Link>
-                        <Link to={'/acknowledgments'} prefetch='intent'>
+                        <Link to={'/about/acknowledgments'} prefetch='intent'>
                             Acknowledgments
                         </Link>
                         <Link to={'/about/privacy-policy'} prefetch='intent'>
