@@ -109,8 +109,13 @@
 
 }
 
+.page-layout {
+    @apply grid min-h-screen;
+    grid-template-rows: auto 1fr auto;
+}
+
 .curve {
-    clip-path: ellipse(90% 100% at 41.6% 0%);
+    clip-path: ellipse(90% 99% at 50% 0%);
 }
 
 .header-nav::after {
@@ -119,23 +124,6 @@
     height: 1px;
     visibility: hidden;
     font-weight: 800;
-}
-
-@screen sm {
-    .curve {
-        clip-path: ellipse(81% 100% at 57.75% 0%);
-    }
-}
-
-@screen sm {
-    .curve {
-        clip-path: ellipse(87% 100% at 65.17% 0%);
-    }
-}
-
-.toolbar {
-    /* TODO Add curved shadow to toolbar */
-    box-shadow:  0.2rem 0.2rem 0.8rem rgba(0, 0, 0, 1);
 }
 
 .react-pdf__Page__canvas {

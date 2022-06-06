@@ -4,8 +4,8 @@ import HeaderNav from '../molecules/HeaderNav';
 
 const Header: React.FC = () => {
     return (
-        <div className="static bg-indigo-800 paper bg-blend-color-burn curve toolbar">
-            <div className="py-12 sm:py-16 sm:container">
+        <div className="static bg-indigo-800 paper bg-blend-color-burn curve">
+            <div className="py-12 sm:pt-12 sm:pb-16 sm:container">
                 {/* Toolbar */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-6">
                     <Link to={'/'}>

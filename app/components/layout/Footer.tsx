@@ -1,32 +1,38 @@
+import Config from 'app/config';
 import React from 'react';
 import { Link } from '@remix-run/react';
 
 const Footer: React.FC = () => {
     return (
-        <div>
-            <div className="py-8 static bg-indigo-800 paper bg-blend-color-burn">
-                <div className="flex flex-col gap-4 items-center justify-center">
-                    <div className="w-full md:w-1/2 text-center">
-                        <div className="text-sm flex-grow self-center text-white flex-no-wrap">
-                            <a
-                                className="decoration-none text-xl font-bold text-white  mix-blend-soft-light"
-                                href="https://aruke.dev">
-                                aruke
-                            </a>{' '}
-                        </div>
+        <footer className='bg-indigo-800 paper bg-blend-color-burn'>
+            <div className='container text-white text-opacity-90'>
+                <div className='flex flex-col sm:flex-row gap-4 justify-evenly py-12'>
+                    <div className='w-full sm:w-auto flex flex-col gap-2'>
+                        <a href={Config.githubUrl} target='_blank' rel="noreferrer">GitHub</a>
+                        <a href={Config.bmcUrl} target='_blank' rel="noreferrer">Buy a Sushi</a>
                     </div>
-                    <div className="display-none md:flex flex-1" />
-                    <div className="w-full md:w-1/2 text-center space-y-2">
-                        <Link to={'/about/privacy-policy'} prefetch="intent">
-                            <div className="mix-blend-color-burn">Privacy Policy</div>
+                    <div className='display-none sm:flex' />
+                    <div className='w-full sm:w-auto flex flex-col gap-2'>
+                        <Link to={'/about'} prefetch='intent'>
+                            About
                         </Link>
-                        <Link to={'/about/terms'} prefetch="intent">
-                            <div>Terms Of Use</div>
+                        <Link to={'/acknowledgments'} prefetch='intent'>
+                            Acknowledgments
+                        </Link>
+                        <Link to={'/about/privacy-policy'} prefetch='intent'>
+                            Privacy Policy
+                        </Link>
+                        <Link to={'/about/terms'} prefetch='intent'>
+                            Terms Of Use
                         </Link>
                     </div>
                 </div>
+                <hr className="bg-white opacity-10"/>
+                <div className='text-center py-4 opacity-80 font-thin'>
+                    &copy; RionLabs. All rights reserved.
+                </div>
             </div>
-        </div>
+        </footer>
     );
 };
 
