@@ -131,3 +131,7 @@
     height: auto !important;
     @apply rounded;
 }
+
+.react-pdf__Page__annotations {
+    display: none;
+}

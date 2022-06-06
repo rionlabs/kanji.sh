@@ -7,7 +7,16 @@ type PDFViewProps = {
 }
 
 const PagePlaceholder = () => {
-    return <div className='w-full aspect-A4 bg-white rounded-md'></div>;
+    return <div className='w-full aspect-A4 bg-white rounded-md'>
+        <div className='animate-pulse w-full h-full grid place-items-center'>
+            <div className='w-5/6 flex flex-col items-stretch gap-4'>
+                <div className='h-12 bg-slate-50 rounded' />
+                <div className='h-12 bg-slate-50 rounded' />
+                <div className='h-12 bg-slate-50 rounded' />
+                <div className='h-12 bg-slate-50 rounded' />
+            </div>
+        </div>
+    </div>;
 };
 
 export const PDFView = (props: PDFViewProps) => {
@@ -16,8 +25,13 @@ export const PDFView = (props: PDFViewProps) => {
     const [pageNumber, setPageNumber] = React.useState(1);
     const pdfDocument = useRef<HTMLDivElement>(null);
     const pdfPage = useRef<HTMLDivElement>(null);
+
+    function changePage(offset: number) {
+        setPageNumber(prevPageNumber => prevPageNumber + offset);
+    }
+
     return (
-        <figure>
+        <figure className='min-h-full'>
             <Document
                 className=''
                 inputRef={pdfDocument}
@@ -29,22 +43,26 @@ export const PDFView = (props: PDFViewProps) => {
                 noData={
                     <PagePlaceholder />
                 }
+                onLoadProgress={(data) => {
+                    const progress = data.loaded / data.total;
+                    console.log(`${data.loaded}/${data.total} = ${progress}`);
+                }}
                 onLoadSuccess={(pdf) => {
                     setPageCount(pdf.numPages);
-                    console.log(`Loaded PDF`);
                 }}>
                 <Page
-                    className='drop-shadow-md'
+                    key={pageNumber}
+                    className='drop-shadow-md transition transition-all'
                     pageNumber={pageNumber}
                     inputRef={pdfPage}
+                    loading={<PagePlaceholder />}
                 />
             </Document>
-            <nav className='mt-2'>
-                <button onClick={() => setPageNumber(pageNumber + 1)}>Previous</button>
-                <p>
-                    Page {pageNumber} of {pageCount}
-                </p>
-                <button onClick={() => setPageNumber(pageNumber + 1)}>Next</button>
+            <div className="mt-6 text-center text-xs">PAGES</div>
+            <nav className='mt-2 grid grid-cols-3 items-center justify-evenly'>
+                <button disabled={pageNumber <= 1} onClick={() => changePage(-1)}>Previous</button>
+                <p className='text-center'>{pageNumber} / {pageCount}</p>
+                <button disabled={pageNumber >= pageCount} onClick={() => changePage(1)}>Next</button>
             </nav>
         </figure>
     );

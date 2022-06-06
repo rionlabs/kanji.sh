@@ -4,6 +4,7 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { PDFView } from 'app/components/molecules/PDFView';
 import { getWorksheet } from 'app/routes/write/index.server';
+import React from 'react';
 import invariant from 'tiny-invariant';
 
 type LoaderData = {
@@ -24,9 +25,18 @@ export default function CollectionFileRoute() {
         <div className='flex flex-col sm:flex-row gap-4'>
             <div className='w-full sm:w-1/2'>
                 <h4>{worksheet.name}</h4>
-                <text>{worksheet.pageCount} Pages</text>
-                <div>
-                    <pre>{JSON.stringify(worksheet.config, null, 3)}</pre>
+                <div className='mb-4'>
+                    {worksheet.pageCount} Pages on {worksheet.config.pageType} layout.
+                </div>
+                <div className="my-8">
+                    <a
+                        href={`/write/files/${worksheet.hash}?download`}
+                        target='_blank'
+                        rel='noreferrer'
+                        className='button px-4'
+                        download>
+                        Download
+                    </a>
                 </div>
                 <h6 className='mb-4'>Included Kanji</h6>
                 <div className='flex flex-row flex-wrap gap-1 text-lg leading-none'>
