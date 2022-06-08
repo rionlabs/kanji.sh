@@ -94,7 +94,8 @@ async function generatePDF(
         }
 
         await browserPageQueue.onIdle();
-        await browser.close();
+        // FixMe: Causes error
+        // await browser.close();
 
         // Merge the generated PDFs
         const outputPdfFilePath = `${path.join(Config.outPdfPath, worksheetHash)}.pdf`;

@@ -29,8 +29,6 @@ export const buildWorksheets = async () => {
             (collection.worksheets.map(worksheet => ({ key: worksheet.key, collection: collection.type }))))
         .reduce((previousValue, currentValue) => previousValue.concat(currentValue)) as ResultType[];
 
-    // console.log(JSON.stringify(result, null, 3))
-
     result.forEach(({ collection, key }) => {
         buildPdfQueue.add(async () => {
             try {
@@ -40,4 +38,6 @@ export const buildWorksheets = async () => {
             }
         });
     });
+
+    await buildPdfQueue.onIdle();
 };
