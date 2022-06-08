@@ -21,7 +21,7 @@ export const generateWorksheet = async (
     worksheetTitle: string,
     worksheetConfig: WorksheetConfig = DefaultWorksheetConfig
 ): Promise<Worksheet> => {
-    await downloadKanjiData();
+    await downloadKanjiData({ outputDir: Config.outDirPath, outputFileName: 'all-data.json' });
     await buildKanjiDiagrams();
 
     logger.start(`Generating worksheet ${worksheetTitle} for ${data.length} kanji`)
