@@ -5,7 +5,7 @@ import PQueue from 'p-queue';
 
 type ResultType = { key: string, collection: CollectionType }
 
-export const buildWorksheets = async () => {
+export const buildWorksheetCollection = async (collection: CollectionType) => {
     const buildPdfQueue = new PQueue({
         concurrency: 1,
         autoStart: true
@@ -24,6 +24,7 @@ export const buildWorksheets = async () => {
     });
 
     const result: ResultType[] = sources
+        .filter(data => data.type === collection)
         .map(collection =>
             (collection.worksheets.map(worksheet => ({ key: worksheet.key, collection: collection.type }))))
         .reduce((previousValue, currentValue) => previousValue.concat(currentValue)) as ResultType[];
