@@ -31,7 +31,7 @@ const _extractKanjiVG = async (): Promise<void> => {
         );
         fs.unlinkSync(path.join(tempDirectory, filename));
     }
-    fs.rmdirSync(tempDirectory);
+    fs.rmSync(tempDirectory, { recursive: true });
 
     logger.done('KanjiVG extraction');
 };

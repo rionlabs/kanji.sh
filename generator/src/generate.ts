@@ -110,7 +110,7 @@ async function generatePDF(
         throw error;
     } finally {
         // Cleanup of directory
-        fs.rmdirSync(path.join(Config.outPdfPath, worksheetHash), { recursive: true });
+        fs.rmSync(path.join(Config.outPdfPath, worksheetHash), { recursive: true });
     }
 }
 
