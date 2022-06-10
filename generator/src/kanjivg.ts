@@ -3,8 +3,8 @@ import * as fs from 'fs';
 import type { PathLike } from 'fs';
 import { readdirSync } from 'fs';
 import AdmZip from 'adm-zip';
-import { Config } from './config';
 
+import { Config } from './config';
 import { ensureDirectoriesExist, logger, isDirEmpty } from './utils';
 
 const _extractKanjiVG = async (): Promise<void> => {

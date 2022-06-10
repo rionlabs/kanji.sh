@@ -1,7 +1,8 @@
 import fs from 'fs';
-import { ensureDirectoriesExist, logger } from './utils';
 import fetch from 'node-fetch';
 import path from 'path';
+
+import { ensureDirectoriesExist, logger } from './utils';
 
 type Params = {
     outputDir: string,

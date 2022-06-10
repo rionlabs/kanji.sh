@@ -1,26 +1,17 @@
 import type { CollectionType } from '@common/models';
 import { getPreBuiltWorksheet } from '@generator';
-import { sources } from 'generator/src/sources';
 import PQueue from 'p-queue';
+
+import { sources } from './sources';
 
 type ResultType = { key: string, collection: CollectionType }
 
-export const buildWorksheetCollection = async (collection: CollectionType) => {
+export const buildWorksheetCollectionBatch = async (collection: CollectionType) => {
+    const timerLabel = `Build ${collection} Collection`;
+    console.time(timerLabel);
     const buildPdfQueue = new PQueue({
         concurrency: 1,
         autoStart: true
-    });
-    buildPdfQueue.addListener('active', () => {
-        console.log('BuildPdfQueue: active');
-    });
-    buildPdfQueue.addListener('add', () => {
-        console.log('BuildPdfQueue: add');
-    });
-    buildPdfQueue.addListener('next', () => {
-        console.log('BuildPdfQueue: next');
-    });
-    buildPdfQueue.addListener('idle', () => {
-        console.log('BuildPdfQueue: idle');
     });
 
     const result: ResultType[] = sources
@@ -40,4 +31,5 @@ export const buildWorksheetCollection = async (collection: CollectionType) => {
     });
 
     await buildPdfQueue.onIdle();
+    console.timeEnd(timerLabel);
 };

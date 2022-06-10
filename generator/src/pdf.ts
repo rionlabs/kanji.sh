@@ -6,11 +6,13 @@ import type { ConsoleMessage } from 'puppeteer';
 import puppeteer from 'puppeteer';
 import PQueue from 'p-queue';
 import PDFMerger from 'pdf-merger-js';
-import { ensureDirectoriesExist, logger, writeFile } from './utils';
+import buildUrl from 'build-url-ts';
+
 import type { Worksheet, WorksheetConfig } from '@common/models';
 import { DefaultWorksheetConfig } from '@common/models';
+
 import { Config } from './config';
-import buildUrl from 'build-url-ts';
+import { ensureDirectoriesExist, logger, writeFile } from './utils';
 
 const sortByPageNumber = (array: string[]): string[] => {
     const getNumber = (path: string): number =>
@@ -86,6 +88,7 @@ async function generatePDF(
                 await page.close();
             };
 
+            // noinspection ES6MissingAwait
             browserPageQueue.add(() => processing(pageIndex, data.slice(index, index + 5)));
         }
 

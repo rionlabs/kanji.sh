@@ -1,13 +1,12 @@
-import { CollectionType } from '@common/models';
 import type { EntryContext } from '@remix-run/node';
 import { RemixServer } from '@remix-run/react';
-import { buildWorksheetCollection } from 'generator/script/runner2';
+import { generatePreBuiltWorksheets } from '@generator';
 import { renderToString } from 'react-dom/server';
 
 // Run PDF worker
 if (process.env.BUILD_WORKSHEETS === 'true') {
     (async () => {
-        await buildWorksheetCollection(CollectionType.GRADE);
+        await generatePreBuiltWorksheets();
         process.exit(0);
     })();
 }

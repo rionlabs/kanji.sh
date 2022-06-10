@@ -1,10 +1,12 @@
-import type { CollectionType, Worksheet, WorksheetConfig } from '@common/models';
-import { DefaultWorksheetConfig } from '@common/models';
 import fs from 'fs';
+import type { Worksheet, WorksheetConfig } from '@common/models';
+import { DefaultWorksheetConfig, CollectionType } from '@common/models';
+
+import { buildWorksheetCollectionBatch } from './batch';
 import path from 'path';
 import { Config } from './config';
 import { downloadKanjiData } from './download';
-import { createWorksheet } from './generate';
+import { createWorksheet } from './pdf';
 import { createWorksheetHash } from './hash';
 import { buildKanjiDiagrams } from './kanjivg';
 import { sources } from './sources';
@@ -55,4 +57,18 @@ export const getPreBuiltWorksheet = async (
 export const getWorksheetMeta = (hash: string): Worksheet => {
     const metaFilePath = path.join(Config.outMetadataPath, `${hash}.json`);
     return JSON.parse(readFile(metaFilePath).join()) as Worksheet;
+};
+
+export const generatePreBuiltWorksheets = async () => {
+    let collectionType: CollectionType;
+    try {
+        const collectionString = process.env.COLLECTION as string;
+        collectionType = CollectionType[collectionString.toUpperCase() as keyof typeof CollectionType];
+    } catch (error) {
+        console.error('Type of collection must be specified as environment variable "COLLECTION". See enum CollectionType for values.');
+        process.exit(1);
+    }
+    logger.start(`Start generation for CollectionType ${collectionType}`);
+    await buildWorksheetCollectionBatch(collectionType);
+    logger.done(`Finish prebuilt worksheets generation for CollectionType ${collectionType}`);
 };
