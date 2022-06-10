@@ -5,9 +5,10 @@ import { renderToString } from 'react-dom/server';
 
 // Run PDF worker
 if (process.env.BUILD_WORKSHEETS === 'true') {
-    buildWorksheets().then(() => {
-        console.log("Built worksheets.");
-    });
+    (async () => {
+        await buildWorksheets();
+        process.exit(0);
+    })();
 }
 
 export default function handleRequest(

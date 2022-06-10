@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { createWorksheetHash } from 'generator/src/hash';
+import { createWorksheetHash } from './hash';
 import * as os from 'os';
 import * as path from 'path';
 import type { ConsoleMessage } from 'puppeteer';
@@ -43,17 +43,16 @@ async function generatePDF(
         });
         const intermediatePages: string[] = [];
 
-        let times = 0;
-        for (let index = 0; index < data.length; index += 5) {
+        for (let index = 0, pageIndex = 0; index < data.length; index += 5, pageIndex++) {
             const processing = async function(index: number, kanjiArray: string[]) {
                 const page = await browser.newPage();
                 page.setDefaultTimeout(timeout);
 
                 // Log any output generated from puppeteer launched browser
-                page.on('console', (consoleObj: ConsoleMessage) => {
-                    if (!consoleObj) return;
-                    console.log(`[Browser][${consoleObj.type()}]${consoleObj.text()}`);
-                    const location = consoleObj.location();
+                page.on('console', (consoleMessage: ConsoleMessage) => {
+                    if (!consoleMessage) return;
+                    console.log(`[Browser][${consoleMessage.type()}]${consoleMessage.text()}`);
+                    const location = consoleMessage.location();
                     if (location) {
                         console.log(
                             `[Browser][@]${location.url}:${location.lineNumber}:${location.columnNumber}`
@@ -73,7 +72,7 @@ async function generatePDF(
                     waitUntil: ['load', 'networkidle0', 'networkidle2', 'domcontentloaded']
                 });
 
-                const pagePath = path.join(tempDirPath, `${index}.pdf`);
+                const pagePath = path.join(tempDirPath, `${pageIndex}.pdf`);
                 await page.pdf({
                     path: pagePath,
                     displayHeaderFooter: false,
@@ -87,13 +86,11 @@ async function generatePDF(
                 await page.close();
             };
 
-            // eslint-disable-next-line no-loop-func
-            await browserPageQueue.add(() => {
-                processing(times++, data.slice(index, index + 5));
-            });
+            browserPageQueue.add(() => processing(pageIndex, data.slice(index, index + 5)));
         }
 
         await browserPageQueue.onIdle();
+
         // FixMe: Causes error
         // await browser.close();
 
@@ -107,7 +104,9 @@ async function generatePDF(
 
         return { hash: worksheetHash, pageCount: intermediatePages.length };
     } catch (error) {
-        logger.start(`Error on ${JSON.stringify(worksheetConfig)} : ${error}`);
+        // Remove the file, because it is not a valid PDF
+        fs.rmSync(path.join(Config.outPdfPath, `${worksheetHash}.pdf`));
+        logger.error(`Error on ${JSON.stringify(worksheetConfig)} : ${error}`);
         throw error;
     } finally {
         // Cleanup of directory

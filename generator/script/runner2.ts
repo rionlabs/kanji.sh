@@ -1,6 +1,6 @@
 import type { CollectionType } from '@common/models';
 import { getPreBuiltWorksheet } from '@generator';
-import { generateSourceJson } from 'generator/script/sourcegenerator';
+import { sources } from 'generator/src/sources';
 import PQueue from 'p-queue';
 
 type ResultType = { key: string, collection: CollectionType }
@@ -14,7 +14,7 @@ export const buildWorksheets = async () => {
         console.log('BuildPdfQueue: active');
     });
     buildPdfQueue.addListener('add', () => {
-        // console.log('BuildPdfQueue: add');
+        console.log('BuildPdfQueue: add');
     });
     buildPdfQueue.addListener('next', () => {
         console.log('BuildPdfQueue: next');
@@ -23,8 +23,7 @@ export const buildWorksheets = async () => {
         console.log('BuildPdfQueue: idle');
     });
 
-    const source = await generateSourceJson();
-    const result: ResultType[] = source
+    const result: ResultType[] = sources
         .map(collection =>
             (collection.worksheets.map(worksheet => ({ key: worksheet.key, collection: collection.type }))))
         .reduce((previousValue, currentValue) => previousValue.concat(currentValue)) as ResultType[];

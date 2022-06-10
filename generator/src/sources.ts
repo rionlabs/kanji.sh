@@ -1,15 +1,13 @@
-import { CollectionType, DefaultWorksheetConfig } from '../../common/models';
-import type { Worksheet } from '../../common/models';
-import { readFile, writeFile } from '../../generator/src/utils';
-import { Config } from '../../generator/src/config';
 import path from 'path';
+import type { Worksheet } from '@common/models';
+import { CollectionType, DefaultWorksheetConfig } from '@common/models';
+import { Config } from './config';
+import { readFile } from './utils';
 
 /**
- * Generates collection metadata
- * Run from project root with command:
- * ts-node-script --skip-project generator/script/sourcegenerator.ts
+ * Generates collection metadata by processing source files.
  */
-export const generateSourceJson = async () => {
+export const processSourceFiles = () => {
     type WorksheetWithKey = Worksheet & { key: string }
     const collections: { type: CollectionType, worksheets: Partial<WorksheetWithKey>[] }[] = [];
 
@@ -71,13 +69,10 @@ export const generateSourceJson = async () => {
     collections.push({ type: CollectionType.FREQUENCY, worksheets: frequencyWorksheets });
 
     // Add worksheet configurations to collections
-    const collectionsWithConfig = collections.map(collection => ({
+    return collections.map(collection => ({
         type: collection.type,
         worksheets: collection.worksheets.map(worksheet => ({ ...worksheet, config: DefaultWorksheetConfig }))
-    }));
-
-    return collectionsWithConfig
-    // writeFile(path.join(Config.outDirPath, 'collection.json'), JSON.stringify(collectionsWithConfig));
+    }))
 };
 
-// generateSourceJson();
+export const sources = processSourceFiles()

@@ -7,13 +7,15 @@
     "node": ">=14.0.0"
   },
   "scripts": {
-    "build": "npm run build:css && remix build",
     "build:css": "tailwindcss -m -i ./styles/globals.css -o app/styles/app.css",
+    "build": "npm run build:css && remix build",
+    "postbuild": "BUILD_WORKSHEETS=true npx remix-serve build",
     "predev": "npm run clean",
     "dev": "concurrently \"npm run dev:css\" \"remix dev\"",
     "dev:css": "tailwindcss -w -i ./styles/globals.css -o app/styles/app.css",
     "start": "remix-serve build",
     "clean": "rimraf .cache build",
+    "clean:all": "rimraf .cache build generator/dist",
     "test": "jest"
   },
   "dependencies": {
