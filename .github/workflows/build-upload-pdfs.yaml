@@ -15,44 +15,34 @@ jobs:
         source: [frequency, grade, jlpt, kanjigarden, wanikani]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
 
       - name: Get npm cache directory path
         id: npm-cache
         run: |
           echo "::set-output name=dir::$(npm config get cache)"
+
       - name: Cache/Restore
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.npm-cache.outputs.dir }}
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install NPM depedencies
+      - name: Install NPM dependencies
         run: npm install
 
-      - name: Process KanjiVG
-        working-directory: generator
-        run: node kanjivg.js
+      - name: Build Remix app
+        run: npm run build
 
       - name: Generate PDF files
-        working-directory: generator
-        run: node main.js --source=${{ matrix.source }}
-
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-
-      - name: Upload PDFs to Firebase Storage bucket
-        uses: google-github-actions/upload-cloud-storage@main
-        with:
-          credentials: ${{ secrets.STORAGE_SERVICE_ACCOUNT }}
-          path: generator/build/pdf/${{ matrix.source }}
-          destination: ${{ secrets.STORAGE_BUCKET }}/${{ steps.extract_branch.outputs.branch }}/pdf
+        run: npx remix-serve build
+        env:
+          BUILD_WORKSHEETS: true
+          COLLECTION: ${{ matrix.source }}
