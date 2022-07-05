@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrintingAnimation } from 'app/components/atoms/AnimatedImage';
-import SubscriptionForm from 'app/components/molecules/SubscriptionForm';
+import { SubscriptionForm } from 'app/components/molecules/SubscriptionForm';
 
 const ReadPage: React.FC = () => {
     return (
@@ -15,7 +15,7 @@ const ReadPage: React.FC = () => {
                 <div>We haven&apos;t started adding reading worksheets yet.</div>
                 <div>If you would like it, signup for the updates. No spams, I promise!</div>
             </div>
-            <div>
+            <div className="mt-8">
                 <SubscriptionForm />
             </div>
         </div>

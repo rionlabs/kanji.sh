@@ -22,8 +22,8 @@ const FileCard: (props: Props) => JSX.Element = (props: Props) => {
             </div>
 
             {/* CardContent */}
-            <div className='flex flex-col gap-4'>
-                <div className='text-center'>{cardData.description}</div>
+            <div className='flex flex-col flex-grow gap-4'>
+                <div className='flex-grow text-center'>{cardData.description}</div>
 
                 <Link
                     to={cardData.key}

@@ -1,8 +1,7 @@
 import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import CollectionCard from 'app/components/molecules/CollectionCard';
 import { WritingAnimation } from 'app/components/atoms/AnimatedImage';
 import type { CollectionCardData } from 'app/metadata';
@@ -21,7 +20,6 @@ export const loader: LoaderFunction = () => {
 
 const WritePage: React.FC = () => {
     const { collections } = useLoaderData<LoaderData>();
-    const navigate = useNavigate();
     return (
         <div>
             <div className='flex flex-col sm:flex-row justify-center gap-2'>
@@ -49,16 +47,14 @@ const WritePage: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 py-12'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-12'>
                 {collections.map(collection =>
-                    (<div
+                    (<Link
                         key={collection.key}
-                        className='max-w-[320px] mx-auto cursor-pointer'
-                        onClick={async () => {
-                            navigate(`/write/${collection.key}`);
-                        }}>
+                        to={`/write/${collection.key}`}
+                        className='p-4 sm:p-6 max-w-[320px] mx-auto cursor-pointer rounded-xl hover:elevated active:shadow-none transition-shadow group'>
                         <CollectionCard {...collection} />
-                    </div>)
+                    </Link>)
                 )}
             </div>
         </div>

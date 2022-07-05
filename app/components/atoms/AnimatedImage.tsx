@@ -5,6 +5,7 @@ import construction from '../../assets/animations/construction_in_process.json';
 import reading from '../../assets/animations/reading_book.json';
 import writing from '../../assets/animations/writing.json';
 import printing from '../../assets/animations/printing.json';
+import subscribed from '../../assets/animations/subscribed.json';
 
 type AnimationProps = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,6 +27,7 @@ const AnimatedImage: (props: AnimationProps) => JSX.Element = (props: AnimationP
                 container: element.current
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [animationData]);
 
     return (
@@ -50,3 +52,7 @@ export const WritingAnimation: (props: { className: string }) => JSX.Element = (
 export const PrintingAnimation: (props: { className: string }) => JSX.Element = (props: {
     className: string;
 }) => <AnimatedImage className={props.className} loop={false} animationData={printing} />;
+
+export const SubscribedAnimation: (props: { className: string }) => JSX.Element = (props: {
+    className: string;
+}) => <AnimatedImage className={props.className} loop={false} animationData={subscribed} />;

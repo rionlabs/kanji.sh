@@ -28,12 +28,12 @@ export default function CollectionFileRoute() {
                 <div className='mb-4'>
                     {worksheet.pageCount} Pages on {worksheet.config.pageType} layout.
                 </div>
-                <div className="my-8">
+                <div className="my-12">
                     <a
                         href={`/write/files/${worksheet.hash}?download`}
                         target='_blank'
                         rel='noreferrer'
-                        className='button px-4'
+                        className='button px-8'
                         download>
                         Download
                     </a>
