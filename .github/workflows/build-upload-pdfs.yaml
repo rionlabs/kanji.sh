@@ -43,6 +43,8 @@ jobs:
 
       - name: Setup storage environment
         run: echo $STORAGE_ENV | base64 --d > .env.storage
+        env:
+          STORAGE_ENV: ${{ secrets.STORAGE_ENV }}
 
       - name: Generate PDF files
         run: npx --yes env-cmd -f .env.storage npx remix-serve build
