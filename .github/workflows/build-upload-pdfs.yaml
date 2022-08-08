@@ -41,8 +41,11 @@ jobs:
       - name: Build Remix app
         run: npm run build
 
+      - name: Setup storage environment
+        run: echo $STORAGE_ENV | base64 --d > .env.storage
+
       - name: Generate PDF files
-        run: npx remix-serve build
+        run: npx --yes env-cmd -f .env.storage npx remix-serve build
         env:
           BUILD_WORKSHEETS: true
           COLLECTION: ${{ matrix.source }}
