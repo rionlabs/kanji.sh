@@ -15,6 +15,7 @@
     "start": "remix-serve build",
     "clean": "rimraf .cache build",
     "clean:all": "rimraf .cache build generator/dist",
+    "pretest": "docker compose --file docker-compose.test.yaml up --build",
     "test": "jest"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "clsx": "^1.1.1",
     "formik": "^2.2.9",
     "lottie-web": "^5.9.4",
+    "minio": "^7.0.29",
     "node-fetch": "2.6.7",
     "p-queue": "6.6.2",
     "pdf-merger-js": "^3.4.0",
@@ -43,6 +45,7 @@
     "@remix-run/eslint-config": "^1.5.1",
     "@types/adm-zip": "^0.5.0",
     "@types/jest": "^28.1.1",
+    "@types/minio": "^7.0.13",
     "@types/node-fetch": "^2.6.1",
     "@types/react": "^17.0.45",
     "@types/react-dom": "^17.0.17",

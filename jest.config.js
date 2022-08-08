@@ -2,4 +2,8 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
+
+  'moduleNameMapper': {
+    '@common/models': '<rootDir>/common/models',
+  }
 };
