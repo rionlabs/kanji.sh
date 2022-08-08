@@ -39,7 +39,6 @@ yarn-error.log*
 /.cache
 /build
 /public/build
-.env
 
 # Tailwind generated CSS
 app/styles/app.css

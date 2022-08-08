@@ -7,7 +7,7 @@ import React from 'react';
 import FileCard from 'app/components/molecules/FileCard';
 import { METADATA } from 'app/metadata';
 import invariant from 'tiny-invariant';
-import { getWorksheet } from './index.server';
+import { getWorksheet } from '../index.server';
 
 type LoaderData = {
     heading: string;

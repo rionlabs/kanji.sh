@@ -6,5 +6,4 @@ export type Worksheet = {
     name: string,
     config: WorksheetConfig;
     pageCount: number;
-    fileLocation: string;
 };

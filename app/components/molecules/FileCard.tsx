@@ -33,7 +33,7 @@ const FileCard: (props: Props) => JSX.Element = (props: Props) => {
                 </Link>
 
                 <a
-                    href={`/write/files/${worksheet.hash}?download`}
+                    href={`/api/files/${worksheet.hash}?download`}
                     target='_blank'
                     rel='noreferrer'
                     className='button w-full mt-1'

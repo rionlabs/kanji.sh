@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   test-storage:
-    container_name: test-storage
+    container_name: kanji-sh-storage
     image: minio/minio
     ports: [ "9007:9000", "9009:9001" ]
     command: server /data --console-address :9001

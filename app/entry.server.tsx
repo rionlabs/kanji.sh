@@ -1,12 +1,21 @@
+import { CollectionType } from '@common/models';
 import type { EntryContext } from '@remix-run/node';
 import { RemixServer } from '@remix-run/react';
 import { generatePreBuiltWorksheets } from '@generator';
 import { renderToString } from 'react-dom/server';
 
-// Run PDF worker
+// Run PDF Batch generation worker
 if (process.env.BUILD_WORKSHEETS === 'true') {
     (async () => {
-        await generatePreBuiltWorksheets();
+        let collectionType: CollectionType;
+        try {
+            const collectionString = process.env.COLLECTION as string;
+            collectionType = CollectionType[collectionString.toUpperCase() as keyof typeof CollectionType];
+        } catch (error) {
+            console.error('Type of collection must be specified as environment variable "COLLECTION". See enum CollectionType for values.');
+            process.exit(1);
+        }
+        await generatePreBuiltWorksheets(collectionType);
         process.exit(0);
     })();
 }

@@ -7,13 +7,9 @@ export const ensureDirectoriesExist = (...dirNames: PathLike[]): void => {
     }
 };
 
-export const readFile = (inputFilePath: PathLike): string[] => {
+export const readLinesInFile = (inputFilePath: PathLike): string[] => {
     const content = fs.readFileSync(inputFilePath, { encoding: 'utf-8', flag: 'r' });
     return content.split('\n').filter(Boolean);
-};
-
-export const writeFile = (outputFilePath: PathLike, content: string) => {
-    fs.writeFileSync(outputFilePath, content, {encoding: 'utf-8', flag: 'w+'})
 };
 
 export const isDirEmpty = (dirPath: PathLike): boolean => {

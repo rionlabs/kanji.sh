@@ -15,8 +15,7 @@ export const Config = {
     outDirPath,
     collectionSrcRoot: path.join(assetsDirPath, 'sources'),
     templatePath: path.join(assetsDirPath, 'template/page.html'),
-    outPdfPath: path.join(outDirPath, 'PDF'),
-    outMetadataPath: path.join(outDirPath, 'META'),
+    tempDirPath: path.join(outDirPath, 'temp'),
     outKanjiVGDataPath: path.join(outDirPath, 'SVG', 'kanjiVG'),
     outStrokePath: path.join(outDirPath, 'SVG', 'kanjiStrokes'),
     outTracerPath: path.join(outDirPath, 'SVG', 'kanjiTracer')

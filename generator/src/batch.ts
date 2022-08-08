@@ -1,5 +1,6 @@
 import type { CollectionType } from '@common/models';
-import { getPreBuiltWorksheet } from '@generator';
+import { generateWorksheet } from '@generator';
+import { logger } from './utils';
 import PQueue from 'p-queue';
 
 import { sources } from './sources';
@@ -23,9 +24,15 @@ export const buildWorksheetCollectionBatch = async (collection: CollectionType) 
     result.forEach(({ collection, key }) => {
         buildPdfQueue.add(async () => {
             try {
-                await getPreBuiltWorksheet(collection, key);
+                const worksheetInfo = sources.find(col => col.type === collection)?.worksheets.find(w => w.key === key);
+                if (!worksheetInfo || !worksheetInfo.kanji || !worksheetInfo.name) {
+                    logger.error(`Worksheet information not found for ${collection} ${key}`);
+                } else {
+                    await generateWorksheet(worksheetInfo.kanji, worksheetInfo.name, worksheetInfo.config);
+                }
             } catch (error) {
                 console.log(`Failed to create worksheet for ${collection}/${key}`);
+                console.error(error);
             }
         });
     });

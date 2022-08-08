@@ -12,7 +12,7 @@ import type { Worksheet, WorksheetConfig } from '@common/models';
 import { DefaultWorksheetConfig } from '@common/models';
 
 import { Config } from './config';
-import { ensureDirectoriesExist, logger, writeFile } from './utils';
+import { ensureDirectoriesExist, logger } from './utils';
 
 const sortByPageNumber = (array: string[]): string[] => {
     const getNumber = (path: string): number =>
@@ -24,11 +24,11 @@ async function generatePDF(
     data: string[],
     worksheetTitle: string,
     worksheetConfig: WorksheetConfig
-): Promise<{ hash: string; pageCount: number }> {
+): Promise<{ hash: string; pageCount: number; contents: Buffer }> {
     // Calculate hash for as unique identifier for this Worksheet
     const worksheetHash: string = createWorksheetHash({ data, worksheetTitle, worksheetConfig });
 
-    const tempDirPath = path.join(Config.outPdfPath, worksheetHash, 'pages');
+    const tempDirPath = path.join(Config.tempDirPath, worksheetHash, 'pages');
     ensureDirectoriesExist(tempDirPath);
 
     try {
@@ -98,27 +98,24 @@ async function generatePDF(
         // await browser.close();
 
         // Merge the generated PDFs
-        const outputPdfFilePath = `${path.join(Config.outPdfPath, worksheetHash)}.pdf`;
         const merger = new PDFMerger();
         for (const generatedPDFPath of sortByPageNumber(intermediatePages)) {
             merger.add(generatedPDFPath);
         }
-        await merger.save(outputPdfFilePath);
+        const contentBuffer = await merger.saveAsBuffer();
 
-        return { hash: worksheetHash, pageCount: intermediatePages.length };
+        return { hash: worksheetHash, pageCount: intermediatePages.length, contents: contentBuffer };
     } catch (error) {
-        // Remove the file, because it is not a valid PDF
-        fs.rmSync(path.join(Config.outPdfPath, `${worksheetHash}.pdf`));
         logger.error(`Error on ${JSON.stringify(worksheetConfig)} : ${error}`);
         throw error;
     } finally {
         // Cleanup of directory
-        fs.rmSync(path.join(Config.outPdfPath, worksheetHash), { recursive: true });
+        fs.rmSync(path.join(Config.tempDirPath, worksheetHash), { recursive: true });
     }
 }
 
 /**
- * Generates worksheet and uploads it to the storage. Returns Worksheet object.
+ * Generates worksheet and returns Worksheet object and contents.
  * @param data              Array of kanji
  * @param worksheetTitle    Title to put on every page of the worksheet
  * @param worksheetConfig   Configuration for the worksheet
@@ -127,26 +124,19 @@ export const createWorksheet = async (
     data: string[],
     worksheetTitle: string,
     worksheetConfig: WorksheetConfig = DefaultWorksheetConfig
-): Promise<Worksheet> => {
+): Promise<{worksheet: Worksheet, contents: Buffer}> => {
     logger.start(`Worksheet generation: ${worksheetTitle}`);
-
-    // Ensure output directories
-    ensureDirectoriesExist(Config.outPdfPath, Config.outMetadataPath);
     // Generate PDF
-    const { hash, pageCount } = await generatePDF(data, worksheetTitle, worksheetConfig);
-    // Get location of file as absolute path
-    const fileLocation = path.join(Config.outPdfPath, `${hash}.pdf`);
-    // Create Metadata
-    const worksheetOutput = {
+    const { hash, pageCount, contents } = await generatePDF(data, worksheetTitle, worksheetConfig);
+    // Create Metadata from generated content
+    const worksheet: Worksheet = {
         name: worksheetTitle,
         kanji: data,
         config: worksheetConfig,
-        hash, pageCount, fileLocation
+        hash,
+        pageCount
     };
-    // Write metadata file
-    writeFile(path.join(Config.outMetadataPath, `${hash}.json`), JSON.stringify(worksheetOutput));
     logger.done(`Worksheet generation: ${worksheetTitle}`);
-
     // Return Worksheet
-    return worksheetOutput;
+    return { worksheet, contents };
 };

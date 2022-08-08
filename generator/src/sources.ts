@@ -2,7 +2,7 @@ import path from 'path';
 import type { Worksheet } from '@common/models';
 import { CollectionType, DefaultWorksheetConfig } from '@common/models';
 import { Config } from './config';
-import { readFile } from './utils';
+import { readLinesInFile } from './utils';
 
 /**
  * Generates collection metadata by processing source files.
@@ -17,7 +17,7 @@ export const processSourceFiles = () => {
         jlptWorksheets.push({
             key: `n-${i}`,
             name: `JLPT Level N${i} Kanji`,
-            kanji: readFile(path.join(Config.collectionSrcRoot, 'jlpt', `n${i}.source`))
+            kanji: readLinesInFile(path.join(Config.collectionSrcRoot, 'jlpt', `n${i}.source`))
         });
     }
     collections.push({ type: CollectionType.JLPT, worksheets: jlptWorksheets });
@@ -28,7 +28,7 @@ export const processSourceFiles = () => {
         gradesWorksheets.push({
             key: `g-${i}`,
             name: `Grade ${i} Kanji`,
-            kanji: readFile(path.join(Config.collectionSrcRoot, 'grade', `g${i}.source`))
+            kanji: readLinesInFile(path.join(Config.collectionSrcRoot, 'grade', `g${i}.source`))
         });
     }
     collections.push({ type: CollectionType.GRADE, worksheets: gradesWorksheets });
@@ -39,14 +39,14 @@ export const processSourceFiles = () => {
         wkWorksheets.push({
             key: `wk-${level}`,
             name: `Wanikani Level ${level} Kanji`,
-            kanji: readFile(path.join(Config.collectionSrcRoot, 'wanikani', `${level}.source`))
+            kanji: readLinesInFile(path.join(Config.collectionSrcRoot, 'wanikani', `${level}.source`))
         });
     }
     collections.push({ type: CollectionType.WANIKANI, worksheets: wkWorksheets });
 
     // Kanji Garden
     const kgWorksheets: Partial<WorksheetWithKey>[] = [];
-    const allKgData = readFile(path.join(Config.collectionSrcRoot, 'kanjigarden', `all.source`));
+    const allKgData = readLinesInFile(path.join(Config.collectionSrcRoot, 'kanjigarden', `all.source`));
     for (let index = 0, fileCounter = 1; index <= allKgData.length; index += 50, fileCounter++) {
         kgWorksheets.push({
             key: `kg-${fileCounter}`,
@@ -58,7 +58,7 @@ export const processSourceFiles = () => {
 
     // Frequency
     const frequencyWorksheets: Partial<WorksheetWithKey>[] = [];
-    const allFrequencyData = readFile(path.join(Config.collectionSrcRoot, 'frequency', `all.source`));
+    const allFrequencyData = readLinesInFile(path.join(Config.collectionSrcRoot, 'frequency', `all.source`));
     for (let index = 0, fileCounter = 1; index < allFrequencyData.length; index += 50, fileCounter++) {
         frequencyWorksheets.push({
             key: `f-${fileCounter}`,

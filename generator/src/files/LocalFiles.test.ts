@@ -2,7 +2,6 @@ import { DefaultWorksheetConfig } from '@common/models';
 import type { Worksheet} from '@common/models';
 import { beforeEach, afterEach, describe } from '@jest/globals';
 import fs from 'fs';
-import { ensureDirectoriesExist } from '../utils';
 import { createWorksheetHash } from '../hash';
 import path from 'path';
 import { LocalFiles } from './LocalFiles';
@@ -25,9 +24,6 @@ describe('LocalFiles', () => {
     let localFiles: LocalFiles;
 
     beforeEach(() => {
-        // Make sure the directories exist
-        ensureDirectoriesExist(testPdfPath, testMetadataPath);
-
         localFiles = new LocalFiles(testPdfPath, testMetadataPath);
     });
 

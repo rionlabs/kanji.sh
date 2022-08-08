@@ -3,7 +3,7 @@ import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { PDFView } from 'app/components/molecules/PDFView';
-import { getWorksheet } from 'app/routes/write/index.server';
+import { getWorksheet } from 'app/routes/index.server';
 import React from 'react';
 import invariant from 'tiny-invariant';
 
@@ -30,7 +30,7 @@ export default function CollectionFileRoute() {
                 </div>
                 <div className="my-12">
                     <a
-                        href={`/write/files/${worksheet.hash}?download`}
+                        href={`/api/files/${worksheet.hash}?download`}
                         target='_blank'
                         rel='noreferrer'
                         className='button px-8'
@@ -48,7 +48,7 @@ export default function CollectionFileRoute() {
             <div className='w-full sm:w-1/2'>
                 <h6 className='text-center mb-4'>PDF Preview</h6>
                 <div className='max-w-[420px] mx-auto'>
-                    <PDFView pageCount={worksheet.pageCount} fileUrl={`/write/files/${worksheet.hash}`} />
+                    <PDFView pageCount={worksheet.pageCount} fileUrl={`/api/files/${worksheet.hash}`} />
                 </div>
             </div>
         </div>

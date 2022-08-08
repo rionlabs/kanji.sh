@@ -2,12 +2,13 @@ import type { Worksheet } from '@common/models';
 import fs from 'fs';
 import path from 'path';
 import Url from 'url';
-import { readFile } from '../utils';
+import { ensureDirectoriesExist, readLinesInFile } from '../utils';
 import type { Files } from './Files';
 
 export class LocalFiles implements Files {
 
     constructor(private pdfPath: string, private metadataPath: string) {
+        ensureDirectoriesExist(pdfPath, metadataPath);
     }
 
     async getUrl(hash: string): Promise<URL> {
@@ -21,7 +22,7 @@ export class LocalFiles implements Files {
 
     async readMetaData(hash: string): Promise<Worksheet> {
         const metaFilePath = path.join(this.metadataPath, `${hash}.json`);
-        return JSON.parse(readFile(metaFilePath).join()) as Worksheet;
+        return JSON.parse(readLinesInFile(metaFilePath).join()) as Worksheet;
     }
 
     async readPDF(hash: string): Promise<Buffer> {

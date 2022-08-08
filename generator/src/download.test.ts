@@ -4,7 +4,7 @@ import path from 'path';
 import fetch from 'node-fetch';
 
 import { downloadKanjiData } from '../src/download';
-import { readFile } from '../src/utils';
+import { readLinesInFile } from '../src/utils';
 
 const TEST_DIR = path.resolve(__dirname, '__fixtures__');
 const JSON_MOCK = { key: 'value' };
@@ -26,7 +26,7 @@ describe('Download', () => {
         expect(fs.existsSync(path.join(outputDir, outputFileName)));
 
         // Confirm data
-        const fileData = readFile(path.join(outputDir, outputFileName)).join()
+        const fileData = readLinesInFile(path.join(outputDir, outputFileName)).join()
         expect(fileData).toBe(JSON.stringify(JSON_MOCK));
 
         // Methods

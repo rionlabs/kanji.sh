@@ -1,16 +1,40 @@
-import fs from 'fs';
-import type { Worksheet, WorksheetConfig } from '@common/models';
-import { DefaultWorksheetConfig, CollectionType } from '@common/models';
-
-import { buildWorksheetCollectionBatch } from './batch';
+import type { CollectionType, Worksheet, WorksheetConfig } from '@common/models';
+import { DefaultWorksheetConfig } from '@common/models';
+import { CloudFiles } from 'generator/src/files/CloudFiles';
+import { CombinedFiles } from 'generator/src/files/CombinedFiles';
+import { LocalFiles } from 'generator/src/files/LocalFiles';
+import { Client } from 'minio';
 import path from 'path';
+import { buildWorksheetCollectionBatch } from './batch';
 import { Config } from './config';
 import { downloadKanjiData } from './download';
-import { createWorksheet } from './pdf';
 import { createWorksheetHash } from './hash';
 import { buildKanjiDiagrams } from './kanjivg';
+import { createWorksheet } from './pdf';
 import { sources } from './sources';
-import { logger, readFile } from './utils';
+import { logger } from './utils';
+
+const files = new CombinedFiles(
+    new LocalFiles(
+        path.join(Config.outDirPath, 'PDF'),
+        path.join(Config.outDirPath, 'META')
+    ),
+    new CloudFiles(
+        new Client({
+            endPoint: process.env.STORAGE_ENDPOINT as string,
+            port: +(process.env.STORAGE_PORT as string),
+            accessKey: process.env.STORAGE_ACCESS_KEY as string,
+            secretKey: process.env.STORAGE_SECRET_KEY as string,
+            useSSL: process.env.STORAGE_USE_SSL as string == 'true'
+        }),
+        {
+            bucketName: process.env.STORAGE_BUCKET_NAME as string,
+            bucketRegion: process.env.STORAGE_BUCKET_REGION as string,
+            rootDirectory: process.env.STORAGE_ROOT_DIR as string,
+            cloudHost: process.env.STORAGE_CLOUD_HOST as string
+        }
+    )
+);
 
 /**
  * Generates worksheet from given data.
@@ -28,16 +52,16 @@ export const generateWorksheet = async (
 
     logger.start(`Generating worksheet ${worksheetTitle} for ${data.length} kanji`);
     const hash = createWorksheetHash({ data, worksheetTitle, worksheetConfig });
-    const metaFileLocation = path.join(Config.outMetadataPath, `${hash}.json`);
-    const pdfFileLocation = path.join(Config.outPdfPath, `${hash}.pdf`);
-    if (fs.existsSync(pdfFileLocation) && fs.existsSync(metaFileLocation)) {
+    const worksheetExists = await files.exists(hash);
+    if (worksheetExists) {
         logger.done(`Worksheet ${worksheetTitle} already exists`);
-        return getWorksheetMeta(hash);
+        return files.readMetaData(hash);
+    } else {
+        const { worksheet, contents } = await createWorksheet(data, worksheetTitle, worksheetConfig);
+        await files.writePDF(worksheet, contents);
+        logger.done(`Worksheet ${worksheetTitle} with ${worksheet.pageCount} pages`);
+        return worksheet;
     }
-
-    const worksheet = await createWorksheet(data, worksheetTitle, worksheetConfig);
-    logger.done(`Worksheet ${worksheetTitle} with ${worksheet.pageCount} pages`);
-    return worksheet;
 };
 
 /**
@@ -51,23 +75,31 @@ export const getPreBuiltWorksheet = async (
     if (!worksheetInfo || !worksheetInfo.kanji || !worksheetInfo.name) {
         throw Error('Worksheet information not found');
     }
-    return generateWorksheet(worksheetInfo.kanji, worksheetInfo.name, worksheetInfo.config);
-};
-
-export const getWorksheetMeta = (hash: string): Worksheet => {
-    const metaFilePath = path.join(Config.outMetadataPath, `${hash}.json`);
-    return JSON.parse(readFile(metaFilePath).join()) as Worksheet;
-};
-
-export const generatePreBuiltWorksheets = async () => {
-    let collectionType: CollectionType;
-    try {
-        const collectionString = process.env.COLLECTION as string;
-        collectionType = CollectionType[collectionString.toUpperCase() as keyof typeof CollectionType];
-    } catch (error) {
-        console.error('Type of collection must be specified as environment variable "COLLECTION". See enum CollectionType for values.');
-        process.exit(1);
+    const hash = createWorksheetHash({
+        data: worksheetInfo.kanji,
+        worksheetTitle: worksheetInfo.name,
+        worksheetConfig: worksheetInfo.config
+    });
+    const worksheetExists = await files.exists(hash);
+    if (!worksheetExists) {
+        throw Error('Worksheet not found. Is it built yet?');
     }
+    return files.readMetaData(hash);
+};
+
+export const getWorksheetMeta = async (hash: string): Promise<Worksheet> => {
+    return files.readMetaData(hash);
+};
+
+export const getWorksheetContents = async (hash: string): Promise<Buffer> => {
+    return files.readPDF(hash);
+};
+
+/**
+ * Long-running function that generates worksheets for all kanji for given collection.
+ * @param collectionType
+ */
+export const generatePreBuiltWorksheets = async (collectionType: CollectionType) => {
     logger.start(`Start generation for CollectionType ${collectionType}`);
     await buildWorksheetCollectionBatch(collectionType);
     logger.done(`Finish prebuilt worksheets generation for CollectionType ${collectionType}`);
