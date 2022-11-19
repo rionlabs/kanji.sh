@@ -22,7 +22,7 @@
     "firebase-admin": "^9.5.0",
     "formik": "^2.2.6",
     "formik-material-ui": "^3.0.1",
-    "next": "^10.0.8",
+    "next": "^13.0.4",
     "next-seo": "^4.17.0",
     "postcss": "^8.2.1",
     "react": "^17.0.1",
