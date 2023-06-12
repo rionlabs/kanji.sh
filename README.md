@@ -9,7 +9,7 @@
 </div>
 <br/>
 <div align="center">
-<img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/aruke/kanji.sh/Deploy?label=deploy&logo=github"> 
+<img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/aruke/kanji.sh/build-upload-pdfs.yaml?logo=github&label=deploy"> 
 <img alt="Website" src="https://img.shields.io/website?label=vercel&logo=vercel&up_color=black&up_message=kanji.sh&url=https%3A%2F%2Fkanji.sh"> 
 <img alt="Codacy grade" src="https://img.shields.io/codacy/grade/5b4867029b8b4bd1bf6b7c638d5bacee?logo=codacy"> 
 <img alt="GitHub" src="https://img.shields.io/github/license/aruke/kanji.sh"> 
