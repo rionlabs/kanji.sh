@@ -3,8 +3,8 @@ import type { Files } from './Files';
 
 export class CombinedFiles implements Files {
 
-    constructor(private local: Files, private cloud: Files) {
-    }
+    // eslint-disable-next-line no-useless-constructor
+    constructor(private local: Files, private cloud: Files) {}
 
     /**
      * Checks if the file exists in the local filesystem or in the cloud.

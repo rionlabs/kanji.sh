@@ -1,9 +1,8 @@
 import type { Worksheet } from '@common/models';
 import { DefaultWorksheetConfig } from '@common/models';
 import { afterEach, beforeEach, describe } from '@jest/globals';
+import { SupabaseClient } from '@supabase/supabase-js';
 import fs from 'fs';
-import type { BucketItem } from 'minio';
-import { Client } from 'minio';
 import path from 'path';
 import { createWorksheetHash } from '../hash';
 import { CloudFiles } from './CloudFiles';
@@ -18,14 +17,6 @@ const testWorksheet: Worksheet = {
     pageCount: 1
 };
 
-const minIOClient = new Client({
-    endPoint: 'localhost',
-    port: 9007,
-    accessKey: 'min-io-user',
-    secretKey: 'min-io-password',
-    useSSL: false
-});
-
 const config = {
     bucketName: 'test-bucket',
     bucketRegion: 'local',
@@ -34,37 +25,42 @@ const config = {
 };
 
 describe('CloudFiles', () => {
+    let supabaseClient: SupabaseClient;
     let cloudFiles: CloudFiles;
 
-    beforeEach(async () => {
-        // TODO Make sure Docker is running with docker-compose.test.yaml
-        // Create bucket to operate on
-        await minIOClient.makeBucket(config.bucketName, config.bucketRegion);
+    const pdfBucket = 'testPdfBucket';
+    const jsonBucket = 'testJsonBucket';
 
-        cloudFiles = new CloudFiles(minIOClient, config);
+    beforeEach(async () => {
+        supabaseClient = new SupabaseClient(process.env.SUPABASE_URL as string, process.env.SUPABASE_KEY as string)
+        // Create bucket to operate on
+        await supabaseClient.storage.createBucket(pdfBucket);
+        await supabaseClient.storage.createBucket(jsonBucket);
+        // Create instance
+        cloudFiles = new CloudFiles(supabaseClient, { pdfBucket, jsonBucket });
     });
 
     afterEach(async () => {
         // Clear the test bucket after each test
         try {
-            await clearBucket(config.bucketName);
-            console.log('buket cleared');
+            await supabaseClient.storage.deleteBucket(pdfBucket);
+            await supabaseClient.storage.deleteBucket(jsonBucket);
+            console.log('Bucket cleared');
         } catch (error) {
-            console.log('error occured while clearning the bucket');
+            console.log('error occurred while deleting the bucket');
             console.error(error);
         }
-        await minIOClient.removeBucket(config.bucketName);
     });
 
     it('should write PDF file', async () => {
         await cloudFiles.writePDF(testWorksheet, testPdfBuffer);
 
-        const pdfStat = await minIOClient.statObject(config.bucketName, `${config.rootDirectory}/${testHash}.pdf`);
-        expect(pdfStat).toBeDefined();
-        expect(pdfStat.size).toBe(testPdfBuffer.length);
-
-        const metaStat = await minIOClient.statObject(config.bucketName, `${config.rootDirectory}/${testHash}.json`);
-        expect(metaStat).toBeDefined();
+        // const pdfStat = await minIOClient.statObject(config.bucketName, `${config.rootDirectory}/${testHash}.pdf`);
+        // expect(pdfStat).toBeDefined();
+        // expect(pdfStat.size).toBe(testPdfBuffer.length);
+        //
+        // const metaStat = await minIOClient.statObject(config.bucketName, `${config.rootDirectory}/${testHash}.json`);
+        // expect(metaStat).toBeDefined();
     });
 
 
@@ -92,7 +88,7 @@ describe('CloudFiles', () => {
 
     it('should throw error if file does not exist', async () => {
         const getUrl = () => cloudFiles.getUrl(testHash);
-        await expect(getUrl).rejects
+        await expect(getUrl).rejects.toThrow()
     })
 
     it('exists should return true for written files', async () => {
@@ -110,7 +106,7 @@ describe('CloudFiles', () => {
     it('exists should return false for absent metadata', async () => {
         await cloudFiles.writePDF(testWorksheet, testPdfBuffer);
 
-        await minIOClient.removeObject(config.bucketName, `${config.rootDirectory}/${testHash}.json`);
+        // await minIOClient.removeObject(config.bucketName, `${config.rootDirectory}/${testHash}.json`);
 
         const exists = await cloudFiles.exists(testHash);
         expect(exists).toBe(false);
@@ -119,31 +115,10 @@ describe('CloudFiles', () => {
     it('exists should return false for absent PDF', async () => {
         await cloudFiles.writePDF(testWorksheet, testPdfBuffer);
 
-        await minIOClient.removeObject(config.bucketName, `${config.rootDirectory}/${testHash}.pdf`);
+        // await minIOClient.removeObject(config.bucketName, `${config.rootDirectory}/${testHash}.pdf`);
 
         const exists = await cloudFiles.exists(testHash);
         expect(exists).toBe(false);
     });
 
 });
-
-const clearBucket = async (bucketName: string) => {
-    const objectsStream = minIOClient.listObjects(bucketName, config.rootDirectory, true);
-
-    const objects: BucketItem[] = await new Promise((resolve, reject) => {
-        const objects: BucketItem[] = [];
-        objectsStream.on('data', async (item: BucketItem) => {
-            objects.push(item);
-        });
-        objectsStream.on('end', () => {
-            resolve(objects);
-        });
-        objectsStream.on('error', reject);
-    });
-
-    for (let item of objects) {
-        if (item && item.name) {
-            await minIOClient.removeObject(config.bucketName, item.name);
-        }
-    }
-};

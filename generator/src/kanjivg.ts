@@ -20,7 +20,7 @@ const _extractKanjiVG = async (): Promise<void> => {
     // TODO: Automate downloading latest version with GH Actions
     const kanjiVgFile = path.join(Config.assetsDirPath, 'kanjivg-20160426-main.zip');
     const zip = new AdmZip(kanjiVgFile);
-    await zip.extractAllTo(Config.outKanjiVGDataPath, true);
+    zip.extractAllTo(Config.outKanjiVGDataPath, true);
 
     // The output is "kanji" directory. Move the contents to parent directory, & delete temp
     const tempDirectory = path.join(Config.outKanjiVGDataPath, 'kanji');
@@ -125,7 +125,7 @@ const _rewriteWithSvgOptimizations = async (
     for (let i = 0; i < lines.length; i++) {
         // Common optimizations for both kanji styles
         if (lines[i].startsWith('<!--')) {
-            // Skip till end of commend is found
+            // Skip till the end of comment is found
             while (!lines[i].endsWith('-->')) {
                 i++;
             }
@@ -141,7 +141,7 @@ const _rewriteWithSvgOptimizations = async (
         newLines.push(_increaseSize(_removeKvgAttrs(lines[i])));
     }
     // Write optimized file
-    await fs.writeFileSync(outputFilePath, newLines.join('\n'), { flag: 'w+' });
+    fs.writeFileSync(outputFilePath, newLines.join('\n'), { flag: 'w+' });
 };
 
 export const buildKanjiDiagrams = async (): Promise<void> => {

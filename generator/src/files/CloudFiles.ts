@@ -1,80 +1,83 @@
 import type { Worksheet } from '@common/models';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Files } from './Files';
-import type { Client as MinIOClient, ItemBucketMetadata } from 'minio';
-import path from 'path';
 
-export type CloudConfig = {
-    bucketName: string;
-    bucketRegion: string;
-    rootDirectory: string;
-    cloudHost: string;
+const DEFAULT_CACHE_CONTROL = 'public,max-age=604800;stale-while-revalidate=86400';
+
+type Buckets = {
+    pdfBucket: string;
+    jsonBucket: string;
+}
+
+const defaultBuckets: Buckets = {
+    pdfBucket: 'PDFs',
+    jsonBucket: 'JSONs'
 }
 
 export class CloudFiles implements Files {
 
-    constructor(private minIOClient: MinIOClient, private config: CloudConfig) {
-    }
+    // eslint-disable-next-line no-useless-constructor
+    constructor(private supabaseClient: SupabaseClient, private buckets: Buckets = defaultBuckets) {}
 
-    private pdfPath(hash: string): string {
-        return path.join(this.config.rootDirectory, `${hash}.pdf`);
-    }
-
-    private metadataPath(hash: string): string {
-        return path.join(this.config.rootDirectory, `${hash}.json`);
+    async exists(hash: string): Promise<boolean> {
+        // FixMe: Find a better way to check if file exists
+        try {
+            const pdfFile = await this.readPDF(hash);
+            const metaFile = await this.readMetaData(hash);
+            return !!(pdfFile && metaFile);
+        } catch (error) {
+            return false;
+        }
     }
 
     async getUrl(hash: string): Promise<URL> {
-        if (await this.exists(hash)) {
-            return new URL(`${this.config.cloudHost}/${this.pdfPath(hash)}`);
-        }
-        throw Error(`File ${hash} does not exist.`);
+        const { data: { publicUrl } } = this.supabaseClient.storage.from(this.buckets.pdfBucket)
+            .getPublicUrl(`${hash}.pdf`, { download: false });
+        return new URL(publicUrl);
     }
 
     async readMetaData(hash: string): Promise<Worksheet> {
-        const readableStream = await this.minIOClient.getObject(this.config.bucketName, this.metadataPath(hash));
-        const buffer = await this.streamToBuffer(readableStream);
-        return JSON.parse(buffer.toString()) as Worksheet;
+        const { data, error } = await this.supabaseClient.storage.from(this.buckets.jsonBucket).download(`${hash}.json`);
+        if (error || !data) {
+            throw error;
+        }
+        return JSON.parse(data.toString()) as Worksheet;
     }
 
     async readPDF(hash: string): Promise<Buffer> {
-        const readableStream = await this.minIOClient.getObject(this.config.bucketName, this.pdfPath(hash));
-        return await this.streamToBuffer(readableStream);
+        const { data, error } = await this.supabaseClient.storage.from(this.buckets.pdfBucket).download(`${hash}.pdf`);
+        if (error || !data) {
+            throw error;
+        }
+        return this.streamToBuffer(data.stream());
     }
 
     async writePDF(metadata: Worksheet, pdf: Buffer): Promise<void> {
-        // Put PDF file
-        const pdfItemMetadata: ItemBucketMetadata = {
-            'x-amz-acl': 'public-read' // Makes the file public READ in DO Spaces
-        };
-        await this.minIOClient.putObject(
-            this.config.bucketName,
-            this.pdfPath(metadata.hash),
-            pdf,
-            pdfItemMetadata
-        );
+        // Write PDF
+        const { error: metaError } = await this.supabaseClient
+            .storage.from(this.buckets.jsonBucket)
+            .upload(`${metadata.hash}.json`, JSON.stringify(metadata), {
+                cacheControl: DEFAULT_CACHE_CONTROL, upsert: true, contentType: 'application/json'
+            });
+        if (metaError) {
+            throw metaError;
+        }
+        // Write Metadata
+        const { error: pdfError } = await this.supabaseClient
+            .storage.from(this.buckets.pdfBucket)
+            .upload(`${metadata.hash}.pdf`, pdf, {
+                cacheControl: DEFAULT_CACHE_CONTROL, upsert: true, contentType: 'application/pdf'
+            });
 
-        // Put Metadata file
-        await this.minIOClient.putObject(
-            this.config.bucketName,
-            this.metadataPath(metadata.hash),
-            JSON.stringify(metadata),
-            {}
-        );
-    }
-
-    async exists(hash: string): Promise<boolean> {
-        try {
-            const pdfFileStats = await this.minIOClient.statObject(this.config.bucketName, this.pdfPath(hash));
-            const metaFileStats = await this.minIOClient.statObject(this.config.bucketName, this.metadataPath(hash));
-            return !!(pdfFileStats && metaFileStats);
-        } catch (error) {
-            return false;
+        if (pdfError) {
+            throw pdfError;
         }
     }
 
     /**
      * Converts [ReadableStream] to [Buffer].
      * @param readableStream
+     * @private
      */
     private async streamToBuffer(readableStream: NodeJS.ReadableStream): Promise<Buffer> {
         return new Promise((resolve, reject) => {

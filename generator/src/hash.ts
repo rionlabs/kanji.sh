@@ -9,10 +9,13 @@ type HashInput = {
 
 export const createWorksheetHash = (hashInput: HashInput): string => {
     const { data, worksheetTitle, worksheetConfig } = hashInput;
-    return new Md5()
+    const hash = new Md5()
         .appendStr(data.join(''))
         .appendStr(worksheetTitle)
         .appendStr(JSON.stringify(worksheetConfig))
-        .end()
-        .toString();
+        .end();
+    if (hash === undefined) {
+        throw new Error("Hash is undefined");
+    }
+    return hash.toString()
 };

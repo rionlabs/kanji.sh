@@ -27,8 +27,8 @@ export const downloadKanjiData = async (params: Params): Promise<void> => {
     const response = await fetch(
         'https://raw.githubusercontent.com/davidluzgouveia/kanji-data/master/kanji.json'
     );
-    const json = await response.buffer();
-    await fs.writeFileSync(outputDataLocation, json);
+    const json = await response.arrayBuffer();
+    fs.writeFileSync(outputDataLocation, Buffer.from(json));
 
     logger.done('Kanji data downloaded');
 };

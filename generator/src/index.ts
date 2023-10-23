@@ -1,9 +1,9 @@
 import type { CollectionType, Worksheet, WorksheetConfig } from '@common/models';
 import { DefaultWorksheetConfig } from '@common/models';
+import { SupabaseClient } from '@supabase/supabase-js';
 import { CloudFiles } from 'generator/src/files/CloudFiles';
 import { CombinedFiles } from 'generator/src/files/CombinedFiles';
 import { LocalFiles } from 'generator/src/files/LocalFiles';
-import { Client } from 'minio';
 import path from 'path';
 import { buildWorksheetCollectionBatch } from './batch';
 import { Config } from './config';
@@ -14,27 +14,15 @@ import { createWorksheet } from './pdf';
 import { sources } from './sources';
 import { logger } from './utils';
 
-const files = new CombinedFiles(
-    new LocalFiles(
-        path.join(Config.outDirPath, 'PDF'),
-        path.join(Config.outDirPath, 'META')
-    ),
-    new CloudFiles(
-        new Client({
-            endPoint: process.env.STORAGE_ENDPOINT as string,
-            port: +(process.env.STORAGE_PORT as string),
-            accessKey: process.env.STORAGE_ACCESS_KEY as string,
-            secretKey: process.env.STORAGE_SECRET_KEY as string,
-            useSSL: process.env.STORAGE_USE_SSL as string == 'true'
-        }),
-        {
-            bucketName: process.env.STORAGE_BUCKET_NAME as string,
-            bucketRegion: process.env.STORAGE_BUCKET_REGION as string,
-            rootDirectory: process.env.STORAGE_ROOT_DIR as string,
-            cloudHost: process.env.STORAGE_CLOUD_HOST as string
-        }
-    )
-);
+const localFiles = new LocalFiles(path.join(Config.outDirPath, 'OUT/PDFs'), path.join(Config.outDirPath, 'OUT/JSONs'));
+
+const cloudFiles = new CloudFiles(new SupabaseClient(process.env.SUPABASE_URL as string, process.env.SUPABASE_KEY as string, {
+    global: {
+        headers: {}
+    }
+}));
+
+const files = new CombinedFiles(localFiles, cloudFiles);
 
 /**
  * Generates worksheet from given data.
@@ -42,11 +30,7 @@ const files = new CombinedFiles(
  * @param worksheetTitle
  * @param worksheetConfig
  */
-export const generateWorksheet = async (
-    data: string[],
-    worksheetTitle: string,
-    worksheetConfig: WorksheetConfig = DefaultWorksheetConfig
-): Promise<Worksheet> => {
+export const generateWorksheet = async (data: string[], worksheetTitle: string, worksheetConfig: WorksheetConfig = DefaultWorksheetConfig): Promise<Worksheet> => {
     await downloadKanjiData({ outputDir: Config.outDirPath, outputFileName: 'all-data.json' });
     await buildKanjiDiagrams();
 
@@ -67,18 +51,13 @@ export const generateWorksheet = async (
 /**
  * Returns prebuilt worksheet.
  */
-export const getPreBuiltWorksheet = async (
-    collection: CollectionType,
-    key: string
-): Promise<Worksheet> => {
+export const getPreBuiltWorksheet = async (collection: CollectionType, key: string): Promise<Worksheet> => {
     const worksheetInfo = sources.find(col => col.type === collection)?.worksheets.find(w => w.key === key);
     if (!worksheetInfo || !worksheetInfo.kanji || !worksheetInfo.name) {
         throw Error('Worksheet information not found');
     }
     const hash = createWorksheetHash({
-        data: worksheetInfo.kanji,
-        worksheetTitle: worksheetInfo.name,
-        worksheetConfig: worksheetInfo.config
+        data: worksheetInfo.kanji, worksheetTitle: worksheetInfo.name, worksheetConfig: worksheetInfo.config
     });
     const worksheetExists = await files.exists(hash);
     if (!worksheetExists) {

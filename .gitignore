@@ -30,6 +30,10 @@ tsconfig.tsbuildinfo
 .env.production
 .env.production.local
 
+# Supabase
+supabase/.branches
+supabase/.temp
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -39,6 +43,3 @@ yarn-error.log*
 /.cache
 /build
 /public/build
-
-# Tailwind generated CSS
-app/styles/app.css

@@ -34,11 +34,12 @@ async function generatePDF(
     try {
         const timeout = 180 * 1000;
         const browser = await puppeteer.launch({
+            headless: "new",
             timeout: timeout,
             args: ['--disable-web-security']
         });
 
-        // To avoid timeout, if the number of pages are too much, 5 pages per core
+        // To avoid timeout, limit the number of pages to five pages per core
         const browserPageQueue = new PQueue({
             concurrency: os.cpus().length * 5,
             autoStart: true
@@ -50,7 +51,7 @@ async function generatePDF(
                 const page = await browser.newPage();
                 page.setDefaultTimeout(timeout);
 
-                // Log any output generated from puppeteer launched browser
+                // Log any output generated from puppeteer-launched browser
                 page.on('console', (consoleMessage: ConsoleMessage) => {
                     if (!consoleMessage) return;
                     console.log(`[Browser][${consoleMessage.type()}]${consoleMessage.text()}`);
@@ -88,19 +89,19 @@ async function generatePDF(
                 await page.close();
             };
 
-            // noinspection ES6MissingAwait
-            browserPageQueue.add(() => processing(pageIndex, data.slice(index, index + 5)));
+
+            await browserPageQueue.add(() => processing(pageIndex, data.slice(index, index + 5)));
         }
 
         await browserPageQueue.onIdle();
 
         // FixMe: Causes error
-        // await browser.close();
+        await browser.close();
 
         // Merge the generated PDFs
         const merger = new PDFMerger();
         for (const generatedPDFPath of sortByPageNumber(intermediatePages)) {
-            merger.add(generatedPDFPath);
+            await merger.add(generatedPDFPath);
         }
         const contentBuffer = await merger.saveAsBuffer();
 
