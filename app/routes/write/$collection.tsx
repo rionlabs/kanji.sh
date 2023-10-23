@@ -4,7 +4,7 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { FileCardData } from 'app/metadata';
 import React from 'react';
-import FileCard from 'app/components/molecules/FileCard';
+import { FileCard } from 'app/components/molecules/FileCard';
 import { METADATA } from 'app/metadata';
 import invariant from 'tiny-invariant';
 import { getWorksheet } from '../index.server';
@@ -17,6 +17,7 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ params }) => {
     const { collection } = params;
     invariant(typeof collection === 'string', 'Collection must be string');
+    // eslint-disable-next-line @typescript-eslint/no-extra-non-null-assertion
     const collectionData = METADATA.get(collection)!!;
     const files = await Promise.all(collectionData.files.map(async cardData => ({
         cardData,

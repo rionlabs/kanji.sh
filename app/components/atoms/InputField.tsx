@@ -2,7 +2,7 @@ import type { InputHTMLAttributes } from 'react';
 
 export type FieldProps = InputHTMLAttributes<HTMLInputElement>;
 
-const InputField: (props: FieldProps) => JSX.Element = (props: FieldProps) => {
+export const InputField = (props: FieldProps) => {
     return (
         <input
             className="field w-full"
@@ -13,5 +13,3 @@ const InputField: (props: FieldProps) => JSX.Element = (props: FieldProps) => {
         />
     );
 };
-
-export default InputField;

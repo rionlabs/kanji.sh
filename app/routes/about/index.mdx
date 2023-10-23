@@ -5,10 +5,9 @@ meta:
 ---
 
 import { FaMoneyBill, FaEnvelope, FaGithub } from 'react-icons/fa';
-import LinkButton from '../../components/atoms/LinkButton';
 import TextLogo from '../../components/atoms/TextLogo';
 import Config from '../../config';
-import ShareSheet from '../../components/molecules/ShareSheet';
+import { FaFacebook, FaReddit, FaTwitter } from 'react-icons/fa';
 
 
 #### About
@@ -20,13 +19,9 @@ focus on the reading. So, I&apos;m making this website for myself and others who
 want to want to study kanji distraction-free. For now, there are hundreds of
 worksheets for download and practice writing. Why write kanji rather than using an
 app to dribble? Here are{' '}
-<a
-    href={
-        'https://blog.remarkable.com/5-reasons-why-hand-writing-notes-while-studying-improves-your-learning-5f43a397155b'
-    }>
-    5 reasons why handwriting notes while studying improves your learning
-</a>
-. The same thing works with kanji too.
+<a className="link"
+   href={'https://blog.remarkable.com/5-reasons-why-hand-writing-notes-while-studying-improves-your-learning-5f43a397155b'}>5
+    reasons why handwriting notes while studying improves your learning</a>. The same thing works with kanji too.
 
 <br />
 
@@ -38,7 +33,11 @@ support <TextLogo /> in many ways.
 The simplest one is sharing <TextLogo /> with all people you know are learning
 Japanese, spread the word, and let them know <TextLogo /> here.
 
-<ShareSheet />
+<div className='flex flex-col sm:flex-row sm:flex-wrap gap-8 my-8'>
+    <a rel='noopener noreferrer' target='_blank' href={Config.ShareURLs.twitter} className='btn btn-ghost'><FaTwitter className="fill-[#00acee]" />Twitter</a>
+    <a rel='noopener noreferrer' target='_blank' href={Config.ShareURLs.facebook} className='btn btn-ghost'><FaFacebook className="fill-[#4267B2]" />Facebook</a>
+    <a rel='noopener noreferrer' target='_blank' href={Config.ShareURLs.reddit} className='btn btn-ghost'><FaReddit className="fill-[#FF5700]" />Reddit</a>
+</div>
 
 ##### Feedback & Suggestions
 
@@ -47,9 +46,7 @@ nothing, you can drop me a mail telling me how I am doing with <TextLogo />. Few
 words of encouragement never hurt!
 
 <div className="py-8">
-    <LinkButton link={`mailto:${Config.contactEmail}`} startIcon={FaEnvelope}>
-        Send
-    </LinkButton>
+    <a href={`mailto:${Config.contactEmail}`} className="btn btn-ghost"><FaEnvelope />Send</a>
 </div>
 
 ##### Contribute to the development
@@ -60,9 +57,7 @@ build it yourself, file an <a href={`${Config.githubUrl}/issues`}>issue</a>, and
 make it better! Show your love by sharing this website and starring the [GitHub repository](Config.githubUrl)
 
 <div className="py-8">
-    <LinkButton link={Config.githubUrl} startIcon={FaGithub}>
-        GitHub
-    </LinkButton>
+    <a rel='noopener noreferrer' target='_blank' href={Config.githubUrl} className='btn btn-ghost'><FaGithub className="fill-[#171515]" />GitHub</a>
 </div>
 
 ##### Buy me Sushi
@@ -73,7 +68,5 @@ also covers costs for servers, domain, and keeps me motivated to put more time t
 improve <TextLogo />.
 
 <div className="py-8">
-    <LinkButton link={Config.bmcUrl} startIcon={FaMoneyBill}>
-        Buy Now
-    </LinkButton>
+    <a rel='noopener noreferrer' target='_blank' href={Config.bmcUrl} className='btn btn-ghost'><FaMoneyBill />Buy Now</a>
 </div>

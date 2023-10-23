@@ -1,3 +1,1 @@
-const TextLogo: () => JSX.Element = () => <span className="font-serif font-bold">kanji.sh</span>;
-
-export default TextLogo;
+export const TextLogo = () => <span className="font-serif font-medium">kanji.sh</span>

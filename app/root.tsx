@@ -12,7 +12,7 @@ import { PageConfig } from 'app/page.config';
 import React from 'react';
 import { pdfjs } from 'react-pdf';
 
-import styles from './styles/app.css';
+import styles from './tailwind.css';
 
 export const links: LinksFunction = () => ([
     { rel: 'stylesheet', href: styles },

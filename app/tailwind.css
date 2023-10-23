@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Quicksand:wght@400;500;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,14 +15,14 @@
     ::before,
     ::after {
         /* Resets border-color added by tailwind */
-        border-color: transparent !important;
+        /*border-color: transparent !important;*/
     }
 
     .paper {
         /*noinspection CssUnknownTarget*/
         background-image: url('/assets/jpg/bg.jpg');
         background-blend-mode: darken;
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(0, 0, 0, 0.01);
     }
 
     .paper-brighten {
@@ -99,6 +100,13 @@
 }
 
 @layer components {
+    .btn {
+        @apply rounded-l-full rounded-r-full py-3 text-center border-none;
+        @apply border border-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
+        @apply elevated focus:elevated hover:paper-brighten active:shadow-none active:paper;
+        @apply transition-shadow duration-150;
+        @apply font-normal text-opacity-70 select-none;
+    }
     .button {
         @apply rounded-l-full rounded-r-full py-3 text-center;
         @apply border border-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
@@ -116,6 +124,37 @@
         @apply transition-shadow duration-300;
         @apply font-medium text-opacity-80;
     }
+
+    .btn {
+        @apply rounded-l-full rounded-r-full;
+        @apply border border-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
+        @apply elevated focus:elevated hover:paper-brighten active:shadow-none active:paper;
+        @apply transition-shadow duration-150;
+        @apply font-normal text-opacity-70 select-none;
+        @apply h-auto min-h-fit px-12 py-3;
+        @apply font-normal gap-4;
+    }
+
+    .btn > svg {
+        @apply h-6 w-6 opacity-80;
+        @apply mix-blend-multiply;
+    }
+
+    .btn.loading:before {
+        @apply w-4 h-4 mr-0;
+    }
+
+    .btn.loading > svg {
+        display: none;
+    }
+
+    .btn-outline[disabled] {
+        background-color: transparent;
+    }
+
+    .link {
+        text-underline-offset: 0.25rem;
+    }
 }
 
 /** Avoids UserAgent coloring of auto fills */
@@ -128,6 +167,10 @@ input:-webkit-autofill:focus {
 
 }
 
+html:before {
+    @apply paper;
+}
+
 .page-layout {
     @apply grid min-h-screen;
     grid-template-rows: auto 1fr auto;
@@ -137,12 +180,45 @@ input:-webkit-autofill:focus {
     clip-path: ellipse(90% 99% at 50% 0%);
 }
 
-.header-nav::after {
-    position: absolute;
+.header-nav {
+    position: relative;
+}
+
+.header-nav::before {
     content: attr(data-content);
-    height: 1px;
+    width: 100%;
+    height: 0;
     visibility: hidden;
     font-weight: 800;
+    overflow: hidden;
+    user-select: none;
+    pointer-events: none;
+}
+
+.hover-underline-animation {
+    display: inline-flex;
+    flex-direction: column;
+    position: relative;
+    color: white;
+}
+
+.hover-underline-animation::after {
+    content: '';
+    position: absolute;
+    width: 110%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -0.25rem;
+    left: -5%;
+    background-color: white;
+    transform-origin: center center;
+    transition: transform 0.25s ease-out;
+    @apply border-0 border-transparent rounded-l-full rounded-r-full;
+}
+
+.hover-underline-animation:hover::after {
+    transform: scaleX(1);
+    transform-origin: center center;
 }
 
 .react-pdf__Page__canvas {

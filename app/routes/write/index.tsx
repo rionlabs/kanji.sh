@@ -2,7 +2,7 @@ import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import React from 'react';
-import CollectionCard from 'app/components/molecules/CollectionCard';
+import { CollectionCard } from 'app/components/molecules/CollectionCard';
 import { WritingAnimation } from 'app/components/atoms/AnimatedImage';
 import type { CollectionCardData } from 'app/metadata';
 import { METADATA } from 'app/metadata';

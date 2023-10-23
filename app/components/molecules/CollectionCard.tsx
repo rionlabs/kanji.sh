@@ -3,7 +3,7 @@ import React from 'react';
 
 type CollectionCardProps = Pick<CollectionCardData, 'title' | 'description' | 'metaColor' | 'backgroundImageUrl'>;
 
-const CollectionCard: (props: CollectionCardProps) => JSX.Element = (props) => {
+export const CollectionCard = (props: CollectionCardProps) => {
     const { title, description, metaColor, backgroundImageUrl } = props;
     return (
         <div className='flex flex-col max-w-screen-sm mx-auto gap-4'>
@@ -21,6 +21,4 @@ const CollectionCard: (props: CollectionCardProps) => JSX.Element = (props) => {
             </div>
         </div>
     );
-};
-
-export default CollectionCard;
+}

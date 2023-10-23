@@ -1,59 +1,5 @@
 import React from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const styles = {
-    root: {
-        flexGrow: 1,
-        minHeight: 'theme.spacing(50)',
-        marginTop: 'theme.spacing(4)',
-        marginBottom: 'theme.spacing(4)'
-    },
-    rootCard: {
-        minHeight: 'inherit',
-        borderRadius: 'theme.spacing(4)'
-    },
-    imageBox: {
-        padding: 'theme.spacing(3)'
-    },
-    textBoxEnd: {
-        minHeight: 'inherit',
-        background: 'linear-gradient(0deg, rgba(55,60,129,1) 0%, rgba(62,42,144,1) 100%)',
-        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 20% 100%)',
-        ["theme.breakpoints.down('xs')"]: {
-            clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0% 100%)'
-        }
-    },
-    textBoxStart: {
-        minHeight: 'inherit',
-        background: 'linear-gradient(0deg, rgba(42,77,144,1) 0%, rgba(26,33,129,1) 100%)',
-        clipPath: 'polygon(0 0, 80% 0, 100% 100%, 0 100%)',
-        ["theme.breakpoints.down('xs')"]: {
-            clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0% 100%)'
-        }
-    },
-    textContainerStart: {
-        height: '100%',
-        paddingEnd: '20%',
-        paddingStart: '10%',
-        textAlign: 'start',
-        ["theme.breakpoints.down('xs')"]: {
-            textAlign: 'end',
-            paddingEnd: '10%',
-            paddingStart: '10%'
-        }
-    },
-    textContainerEnd: {
-        height: '100%',
-        paddingEnd: '10%',
-        paddingStart: '20%',
-        textAlign: 'end',
-        ["theme.breakpoints.down('xs')"]: {
-            paddingEnd: '10%',
-            paddingStart: '10%'
-        }
-    }
-};
-
 interface Props {
     title: string;
     subtitle: string;
@@ -62,8 +8,8 @@ interface Props {
 }
 
 export enum Direction {
-    start,
-    end
+    start = 'start',
+    end = 'end',
 }
 
 const ServiceCard: React.FC<Props> = (props: Props) => {

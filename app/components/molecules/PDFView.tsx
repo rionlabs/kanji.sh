@@ -52,7 +52,7 @@ export const PDFView = (props: PDFViewProps) => {
                 }}>
                 <Page
                     key={pageNumber}
-                    className='drop-shadow-md transition transition-all'
+                    className='drop-shadow-md transition-all'
                     pageNumber={pageNumber}
                     inputRef={pdfPage}
                     loading={<PagePlaceholder />}

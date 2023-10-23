@@ -2,13 +2,14 @@ import type { Worksheet } from '@common/models';
 import { Link } from '@remix-run/react';
 import React from 'react';
 import type { FileCardData } from 'app/metadata';
+import { FiDownload, FiEye } from 'react-icons/fi';
 
 interface Props {
     worksheet: Worksheet;
     cardData: FileCardData;
 }
 
-const FileCard: (props: Props) => JSX.Element = (props: Props) => {
+export const FileCard = (props: Props) => {
     const { worksheet, cardData } = props;
 
     return (
@@ -27,8 +28,10 @@ const FileCard: (props: Props) => JSX.Element = (props: Props) => {
 
                 <Link
                     to={cardData.key}
-                    className='button w-full mt-1'
+                    className='btn w-full mt-1'
                     prefetch='intent'>
+                    <FiEye/>
+
                     Preview
                 </Link>
 
@@ -36,13 +39,12 @@ const FileCard: (props: Props) => JSX.Element = (props: Props) => {
                     href={`/api/files/${worksheet.hash}?download`}
                     target='_blank'
                     rel='noreferrer'
-                    className='button w-full mt-1'
+                    className='btn w-full mt-1'
                     download>
+                    <FiDownload/>
                     Download
                 </a>
             </div>
         </div>
     );
-};
-
-export default FileCard;
+}
