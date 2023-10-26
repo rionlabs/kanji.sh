@@ -1,0 +1,38 @@
+{
+  "name": "kanji.sh-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/kanji.sh-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/kanji.sh-e2e/cypress.config.ts",
+        "baseUrl": "http://localhost:3000",
+        "testingType": "e2e",
+        "skipServe": true
+      },
+      "dependsOn": ["dev-server"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/kanji.sh-e2e/**/*.{js,ts}"]
+      }
+    },
+    "dev-server": {
+      "command": "nx serve kanji.sh",
+      "options": {
+        "readyWhen": "Server started"
+      },
+      "configurations": {
+        "production": {
+          "command": "nx serve kanji.sh --configuration=production"
+        }
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["kanji.sh"]
+}

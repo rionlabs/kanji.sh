@@ -1,9 +1,5 @@
-/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
-module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
+import { getJestProjects } from '@nx/jest';
 
-  'moduleNameMapper': {
-    '@common/models': '<rootDir>/common/models',
-  }
+export default {
+    projects: getJestProjects()
 };

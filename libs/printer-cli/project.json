@@ -1,0 +1,28 @@
+{
+  "name": "printer-cli",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/printer-cli/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/printer-cli",
+        "main": "libs/printer-cli/src/index.ts",
+        "tsConfig": "libs/printer-cli/tsconfig.lib.json",
+        "assets": ["libs/printer-cli/*.md"],
+        "generatePackageJson": true,
+        "format": ["cjs"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/printer-cli/**/*.ts", "libs/printer-cli/package.json"]
+      }
+    }
+  },
+  "tags": []
+}

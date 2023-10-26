@@ -1,0 +1,63 @@
+import type { CollectionType, Worksheet } from '@kanji-sh/models';
+import type { LoaderFunction } from '@remix-run/node';
+import { json } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
+import { PDFView } from '../../components/molecules/PDFView';
+import { getWorksheet } from '../index.server';
+import React from 'react';
+import invariant from 'tiny-invariant';
+
+type LoaderData = {
+    worksheet: Worksheet;
+};
+
+export const loader: LoaderFunction = async ({ params }) => {
+    const { collection, file } = params;
+    invariant(typeof collection === 'string', 'Collection must be string');
+    invariant(typeof file === 'string', 'Collection must be string');
+    const worksheet = await getWorksheet(collection as CollectionType, file);
+    return json<LoaderData>({ worksheet });
+};
+
+export default function CollectionFileRoute() {
+    const { worksheet } = useLoaderData<LoaderData>();
+    return (
+        <div className="flex flex-col sm:flex-row gap-4">
+            <div className="w-full sm:w-1/2">
+                <h4>{worksheet.name}</h4>
+                <div className="mb-4">
+                    {worksheet.pageCount} Pages on {worksheet.config.pageType} layout.
+                </div>
+                <div className="my-12">
+                    <a
+                        href={`/api/files/${worksheet.hash}?download`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="button px-8"
+                        download>
+                        Download
+                    </a>
+                </div>
+                <h6 className="mb-4">Included Kanji</h6>
+                <div className="flex flex-row flex-wrap gap-1 text-lg leading-none">
+                    {worksheet.kanji.map((kanji) => (
+                        <div
+                            key={kanji}
+                            className="p-2.5 bg-white bg-opacity-20 rounded font-light">
+                            {kanji}
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="w-full sm:w-1/2">
+                <h6 className="text-center mb-4">PDF Preview</h6>
+                <div className="max-w-[420px] mx-auto">
+                    <PDFView
+                        pageCount={worksheet.pageCount}
+                        fileUrl={`/api/files/${worksheet.hash}`}
+                    />
+                </div>
+            </div>
+        </div>
+    );
+}

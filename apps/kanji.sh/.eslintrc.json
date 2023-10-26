@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "../../.eslintrc.json",
+    "@remix-run/eslint-config"
+  ]
+}

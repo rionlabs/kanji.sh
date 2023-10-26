@@ -1,0 +1,32 @@
+{
+  "root": true,
+  "plugins": [
+    "@nx/eslint-plugin"
+  ],
+  "extends": [
+    "plugin:prettier/recommended"
+  ],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "extends": [
+        "plugin:@nx/typescript"
+      ],
+      "parser": "@typescript-eslint/parser"
+    },
+    {
+      "files": ["*.js"],
+      "extends": [
+        "plugin:@nx/javascript"
+      ],
+      "parser": "@typescript-eslint/parser"
+    },
+    {
+      "files": ["*.json"],
+      "parser": "jsonc-eslint-parser",
+      "rules": {
+        "@nx/dependency-checks": "error"
+      }
+    }
+  ]
+}

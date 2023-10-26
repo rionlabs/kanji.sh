@@ -1,4 +1,4 @@
-const {join} = require('path');
+import { join } from 'path';
 
 /**
  * @type {import("puppeteer").Configuration}
