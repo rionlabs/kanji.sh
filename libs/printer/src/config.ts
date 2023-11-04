@@ -1,11 +1,12 @@
-import { workspaceRoot } from '@nx/devkit';
 import * as path from 'path';
 
+console.log(__dirname);
+console.log(process.cwd());
 // Absolute path to assets directory
-const assetsDirPath = path.resolve(workspaceRoot, 'libs/printer/assets');
+const assetsDirPath = path.resolve(/*workspaceRoot*/ '.', 'libs/printer/assets');
 
 // Absolute path to build directory
-const outDirPath = path.resolve(workspaceRoot, 'dist/printed');
+const outDirPath = path.resolve(/*workspaceRoot*/ '.', 'dist/printed');
 
 /**
  * Defines the directory structure, location of source files.
@@ -21,3 +22,5 @@ export const Config = {
     outStrokePath: path.join(outDirPath, 'SVG', 'kanjiStrokes'),
     outTracerPath: path.join(outDirPath, 'SVG', 'kanjiTracer')
 };
+
+console.log(JSON.stringify(Config, null, 2));

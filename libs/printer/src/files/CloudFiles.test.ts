@@ -2,8 +2,8 @@ import type { Worksheet } from '@kanji-sh/models';
 import { DefaultWorksheetConfig } from '@kanji-sh/models';
 import { afterEach, beforeEach, describe } from '@jest/globals';
 import { SupabaseClient } from '@supabase/supabase-js';
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 import { createWorksheetHash } from '../hash';
 import { CloudFiles } from './CloudFiles';
 

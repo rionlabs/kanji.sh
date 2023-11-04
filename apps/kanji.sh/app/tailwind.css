@@ -221,10 +221,20 @@ html:before {
     transform-origin: center center;
 }
 
+.react-pdf__Document {
+    @apply rounded border-0 drop-shadow overflow-clip;
+}
+
+.react-pdf__Page {
+    min-width: auto !important;
+    min-height: auto !important;
+    @apply rounded overflow-clip;
+}
+
 .react-pdf__Page__canvas {
     width: 100% !important;
     height: auto !important;
-    @apply rounded;
+    @apply rounded overflow-clip;
 }
 
 .react-pdf__Page__annotations {

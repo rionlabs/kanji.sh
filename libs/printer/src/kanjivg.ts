@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import type { PathLike } from 'fs';
 import { readdirSync } from 'fs';
-import AdmZip from 'adm-zip';
+import { Open } from 'unzipper';
 
 import { Config } from './config';
 import { ensureDirectoriesExist, logger, isDirEmpty } from './utils';
@@ -18,9 +18,13 @@ const _extractKanjiVG = async (): Promise<void> => {
 
     logger.start('Extracting KanjiVg file...');
     // TODO: Automate downloading latest version with GH Actions
-    const kanjiVgFile = path.join(Config.assetsDirPath, 'kanjivg-20160426-main.zip');
-    const zip = new AdmZip(kanjiVgFile);
-    zip.extractAllTo(Config.outKanjiVGDataPath, true);
+    const kanjiVgFilePath = path.join(Config.assetsDirPath, 'kanjivg-20160426-main.zip');
+    const kanjiVgFile = await Open.file(kanjiVgFilePath);
+    await kanjiVgFile.extract({
+        path: Config.outKanjiVGDataPath,
+        forceStream: true,
+        concurrency: 10
+    });
 
     // The output is "kanji" directory. Move the contents to parent directory, & delete temp
     const tempDirectory = path.join(Config.outKanjiVGDataPath, 'kanji');

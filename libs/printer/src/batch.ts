@@ -1,13 +1,17 @@
-import type { CollectionType } from '@kanji-sh/models';
+import type { CollectionType, Worksheet } from '@kanji-sh/models';
+import { processSourceFiles } from './sources';
+import PQueue from 'p-queue';
+import * as process from 'process';
 import { generateWorksheet } from './index';
 import { logger } from './utils';
-import PQueue from 'p-queue';
-
-import { sources } from './sources';
 
 type ResultType = { key: string; collection: CollectionType };
 
-export const buildWorksheetCollectionBatch = async (collection: CollectionType) => {
+type BatchWorksheetResult = Record<string, Worksheet>;
+
+export const buildWorksheetCollectionBatch = async (
+    collection: CollectionType
+): Promise<BatchWorksheetResult> => {
     const timerLabel = `Build ${collection} Collection`;
     console.time(timerLabel);
     const buildPdfQueue = new PQueue({
@@ -15,6 +19,7 @@ export const buildWorksheetCollectionBatch = async (collection: CollectionType) 
         autoStart: true
     });
 
+    const sources = processSourceFiles();
     const result: ResultType[] = sources
         .filter((data) => data.type === collection)
         .map((collection) =>
@@ -27,6 +32,7 @@ export const buildWorksheetCollectionBatch = async (collection: CollectionType) 
             previousValue.concat(currentValue)
         ) as ResultType[];
 
+    const worksheetResults: BatchWorksheetResult = {};
     result.forEach(({ collection, key }) => {
         buildPdfQueue.add(async () => {
             try {
@@ -36,19 +42,25 @@ export const buildWorksheetCollectionBatch = async (collection: CollectionType) 
                 if (!worksheetInfo || !worksheetInfo.kanji || !worksheetInfo.name) {
                     logger.error(`Worksheet information not found for ${collection} ${key}`);
                 } else {
-                    await generateWorksheet(
+                    const worksheet = await generateWorksheet(
                         worksheetInfo.kanji,
                         worksheetInfo.name,
                         worksheetInfo.config
+                    );
+                    worksheetResults[key] = worksheet;
+                    console.log(
+                        `Generated worksheet for ${collection}/${key} with ${worksheet.pageCount} pages`
                     );
                 }
             } catch (error) {
                 console.log(`Failed to create worksheet for ${collection}/${key}`);
                 console.error(error);
+                process.exit(1);
             }
         });
     });
 
     await buildPdfQueue.onIdle();
     console.timeEnd(timerLabel);
+    return worksheetResults;
 };

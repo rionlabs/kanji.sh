@@ -1,3 +1,4 @@
+import { CollectionType } from '@kanji-sh/models';
 import type { Worksheet } from '@kanji-sh/models';
 import type { Files } from './Files';
 
@@ -68,6 +69,28 @@ export class CombinedFiles implements Files {
     async writePDF(metadata: Worksheet, pdf: Buffer): Promise<void> {
         await this.local.writePDF(metadata, pdf);
         await this.cloud.writePDF(metadata, pdf);
+    }
+
+    async readCollectionMetaData(collection: CollectionType): Promise<Record<string, Worksheet>> {
+        const local = await this.local.readCollectionMetaData(collection);
+        if (local) {
+            return local;
+        }
+        const cloud = await this.cloud.readCollectionMetaData(collection);
+        if (cloud) {
+            await this.local.writeCollection(collection, cloud);
+            return cloud;
+        }
+
+        throw new Error(`Collection file for ${collection} does not exist anywhere.`);
+    }
+
+    async writeCollection(
+        collection: CollectionType,
+        data: Record<string, Worksheet>
+    ): Promise<void> {
+        await this.local.writeCollection(collection, data);
+        await this.cloud.writeCollection(collection, data);
     }
 
     private async copyLocalToCloud(hash: string) {

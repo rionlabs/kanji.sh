@@ -1,4 +1,4 @@
-import type { Worksheet } from '@kanji-sh/models';
+import { CollectionType, Worksheet } from '@kanji-sh/models';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Files } from './Files';
 
@@ -7,11 +7,13 @@ const DEFAULT_CACHE_CONTROL = 'public,max-age=604800;stale-while-revalidate=8640
 type Buckets = {
     pdfBucket: string;
     jsonBucket: string;
+    collectionBucket: string;
 };
 
 const defaultBuckets: Buckets = {
-    pdfBucket: 'PDFs',
-    jsonBucket: 'JSONs'
+    pdfBucket: 'pdfs',
+    jsonBucket: 'jsons',
+    collectionBucket: 'collections'
 };
 
 export class CloudFiles implements Files {
@@ -48,7 +50,8 @@ export class CloudFiles implements Files {
         if (error || !data) {
             throw error;
         }
-        return JSON.parse(data.toString()) as Worksheet;
+        const jsonString = await data.text();
+        return JSON.parse(jsonString) as Worksheet;
     }
 
     async readPDF(hash: string): Promise<Buffer> {
@@ -58,11 +61,12 @@ export class CloudFiles implements Files {
         if (error || !data) {
             throw error;
         }
-        return this.streamToBuffer(data.stream());
+        const arrayBuffer = await data.arrayBuffer();
+        return Buffer.from(arrayBuffer);
     }
 
     async writePDF(metadata: Worksheet, pdf: Buffer): Promise<void> {
-        // Write PDF
+        // Write Metadata
         const { error: metaError } = await this.supabaseClient.storage
             .from(this.buckets.jsonBucket)
             .upload(`${metadata.hash}.json`, JSON.stringify(metadata), {
@@ -73,7 +77,7 @@ export class CloudFiles implements Files {
         if (metaError) {
             throw metaError;
         }
-        // Write Metadata
+        // Write PDF
         const { error: pdfError } = await this.supabaseClient.storage
             .from(this.buckets.pdfBucket)
             .upload(`${metadata.hash}.pdf`, pdf, {
@@ -87,21 +91,30 @@ export class CloudFiles implements Files {
         }
     }
 
-    /**
-     * Converts [ReadableStream] to [Buffer].
-     * @param readableStream
-     * @private
-     */
-    private async streamToBuffer(readableStream: NodeJS.ReadableStream): Promise<Buffer> {
-        return new Promise((resolve, reject) => {
-            const chunks: Buffer[] = [];
-            readableStream.on('data', (data: Buffer | string) => {
-                chunks.push(data instanceof Buffer ? data : Buffer.from(data));
+    async readCollectionMetaData(collection: CollectionType): Promise<Record<string, Worksheet>> {
+        const { data, error } = await this.supabaseClient.storage
+            .from(this.buckets.collectionBucket)
+            .download(`${collection}.json`);
+        if (error || !data) {
+            throw error;
+        }
+        const jsonString = await data.text();
+        return JSON.parse(jsonString) as Record<string, Worksheet>;
+    }
+
+    async writeCollection(
+        collection: CollectionType,
+        data: Record<string, Worksheet>
+    ): Promise<void> {
+        const { error } = await this.supabaseClient.storage
+            .from(this.buckets.collectionBucket)
+            .upload(`${collection}.json`, JSON.stringify(data), {
+                cacheControl: DEFAULT_CACHE_CONTROL,
+                upsert: true,
+                contentType: 'application/json'
             });
-            readableStream.on('end', () => {
-                resolve(Buffer.concat(chunks));
-            });
-            readableStream.on('error', reject);
-        });
+        if (error) {
+            throw error;
+        }
     }
 }

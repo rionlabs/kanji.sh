@@ -1,21 +1,42 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
   "compilerOptions": {
+    "jsx": "preserve",
     "allowJs": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ES2019"
-    ],
-    "moduleResolution": "node",
     "noEmit": true,
     "resolveJsonModule": true,
-    "strict": true,
-    "target": "ES2019"
+    "isolatedModules": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "types": [
+      "node",
+      "next"
+    ],
+    "skipLibCheck": true,
+    "module": "esnext"
   },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    ".//.next/types/**/*.ts",
+    "../../dist/apps/kanji.sh/.next/types/**/*.ts",
+    "next-env.d.ts",
+    "../../apps/kanji.sh/.next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
 }

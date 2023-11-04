@@ -4,19 +4,20 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { CloudFiles } from './files/CloudFiles';
 import { CombinedFiles } from './files/CombinedFiles';
 import { LocalFiles } from './files/LocalFiles';
-import path from 'path';
+import * as path from 'path';
 import { buildWorksheetCollectionBatch } from './batch';
 import { Config } from './config';
 import { downloadKanjiData } from './download';
 import { createWorksheetHash } from './hash';
 import { buildKanjiDiagrams } from './kanjivg';
 import { createWorksheet } from './pdf';
-import { sources } from './sources';
+import { processSourceFiles } from './sources';
 import { logger } from './utils';
 
 const localFiles = new LocalFiles(
-    path.join(Config.outDirPath, 'OUT/PDFs'),
-    path.join(Config.outDirPath, 'OUT/JSONs')
+    path.join(Config.outDirPath, 'OUT/pdfs'),
+    path.join(Config.outDirPath, 'OUT/jsons'),
+    path.join(Config.outDirPath, 'OUT/collections')
 );
 
 const cloudFiles = new CloudFiles(
@@ -66,13 +67,37 @@ export const generateWorksheet = async (
 };
 
 /**
+ *
+ */
+class AppOps {
+    getCollectionMeta = async (collection: CollectionType): Promise<Record<string, Worksheet>> => {
+        return cloudFiles.readCollectionMetaData(collection);
+    };
+
+    getWorksheetHash = async (collection: CollectionType, key: string): Promise<string> => {
+        const collectionMeta = await this.getCollectionMeta(collection);
+        return collectionMeta[key].hash;
+    };
+
+    getWorksheetMeta = async (hash: string): Promise<Worksheet> => {
+        return cloudFiles.readMetaData(hash);
+    };
+
+    getWorksheetContents = async (hash: string): Promise<Buffer> => {
+        return cloudFiles.readPDF(hash);
+    };
+}
+
+export const appOps = new AppOps();
+
+/**
  * Returns prebuilt worksheet.
  */
 export const getPreBuiltWorksheet = async (
     collection: CollectionType,
     key: string
 ): Promise<Worksheet> => {
-    const worksheetInfo = sources
+    const worksheetInfo = processSourceFiles()
         .find((col) => col.type === collection)
         ?.worksheets.find((w) => w.key === key);
     if (!worksheetInfo || !worksheetInfo.kanji || !worksheetInfo.name) {
@@ -90,20 +115,13 @@ export const getPreBuiltWorksheet = async (
     return files.readMetaData(hash);
 };
 
-export const getWorksheetMeta = async (hash: string): Promise<Worksheet> => {
-    return files.readMetaData(hash);
-};
-
-export const getWorksheetContents = async (hash: string): Promise<Buffer> => {
-    return files.readPDF(hash);
-};
-
 /**
  * Long-running function that generates worksheets for all kanji for given collection.
  * @param collectionType
  */
 export const generatePreBuiltWorksheets = async (collectionType: CollectionType) => {
     logger.start(`Start generation for CollectionType ${collectionType}`);
-    await buildWorksheetCollectionBatch(collectionType);
+    const result = await buildWorksheetCollectionBatch(collectionType);
+    await files.writeCollection(collectionType, result);
     logger.done(`Finish prebuilt worksheets generation for CollectionType ${collectionType}`);
 };

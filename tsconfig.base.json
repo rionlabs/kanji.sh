@@ -8,8 +8,8 @@
     "paths": {
       "@kanji-sh/models": ["libs/models/src/index.ts"],
       "@kanji-sh/printer": ["libs/printer/src/index.ts"],
+      "@kanji-sh/app/*": ["apps/app/src/*"],
       "printer-cli": ["libs/printer-cli/src/index.ts"],
-      "~/*": ["./rapp/*"]
     }
   },
   "exclude": ["node_modules", "dist", "tmp"]

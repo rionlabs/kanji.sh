@@ -38,3 +38,6 @@ supabase/.temp
 
 # NX
 .nx
+
+# Next.js
+.next

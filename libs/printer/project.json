@@ -4,21 +4,6 @@
   "sourceRoot": "libs/printer/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nx/esbuild:esbuild",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/printer",
-        "main": "libs/printer/src/index.ts",
-        "tsConfig": "libs/printer/tsconfig.lib.json",
-        "assets": [
-          "libs/printer/*.md",
-          "libs/printer/assets/**/*"
-        ],
-        "generatePackageJson": true,
-        "format": ["cjs"]
-      }
-    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],

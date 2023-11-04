@@ -1,9 +1,9 @@
 import { DefaultWorksheetConfig } from '@kanji-sh/models';
 import type { Worksheet } from '@kanji-sh/models';
 import { beforeEach, afterEach, describe } from '@jest/globals';
-import fs from 'fs';
+import * as fs from 'fs';
 import { createWorksheetHash } from '../hash';
-import path from 'path';
+import * as path from 'path';
 import { LocalFiles } from './LocalFiles';
 
 const testPdfBuffer = fs.readFileSync(path.resolve(__dirname, '../files/__tests__/blank.pdf'));
@@ -21,25 +21,26 @@ const testWorksheet: Worksheet = {
 };
 
 const testPdfPath = path.resolve(__dirname, '../files/__tests__/testPdfPath');
-const testMetadataPath = path.resolve(__dirname, '../files/__tests__/testMetadataPath');
+const testJsonPath = path.resolve(__dirname, '../files/__tests__/testJsonPath');
+const testCollectionPath = path.resolve(__dirname, '../files/__tests__/testCollectionPath');
 
 describe('LocalFiles', () => {
     let localFiles: LocalFiles;
 
     beforeEach(() => {
-        localFiles = new LocalFiles(testPdfPath, testMetadataPath);
+        localFiles = new LocalFiles(testPdfPath, testJsonPath, testCollectionPath);
     });
 
     afterEach(() => {
         // Clear the test files after each test
         fs.rmSync(testPdfPath, { recursive: true });
-        fs.rmSync(testMetadataPath, { recursive: true });
+        fs.rmSync(testJsonPath, { recursive: true });
     });
 
     it('should write PDF file', async () => {
         await localFiles.writePDF(testWorksheet, testPdfBuffer);
         expect(fs.existsSync(path.resolve(testPdfPath, `${testHash}.pdf`))).toBe(true);
-        expect(fs.existsSync(path.resolve(testMetadataPath, `${testHash}.json`))).toBe(true);
+        expect(fs.existsSync(path.resolve(testJsonPath, `${testHash}.json`))).toBe(true);
     });
 
     it('should read metadata', async () => {
@@ -81,7 +82,7 @@ describe('LocalFiles', () => {
 
     it('exists should return false for absent metadata', async () => {
         await localFiles.writePDF(testWorksheet, testPdfBuffer);
-        fs.rmSync(path.join(testMetadataPath, `${testHash}.json`));
+        fs.rmSync(path.join(testJsonPath, `${testHash}.json`));
 
         const exists = await localFiles.exists(testHash);
         expect(exists).toBe(false);

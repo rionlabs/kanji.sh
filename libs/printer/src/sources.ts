@@ -1,4 +1,4 @@
-import path from 'path';
+import * as path from 'path';
 import type { Worksheet } from '@kanji-sh/models';
 import { CollectionType, DefaultWorksheetConfig } from '@kanji-sh/models';
 import { Config } from './config';
@@ -87,5 +87,3 @@ export const processSourceFiles = () => {
         }))
     }));
 };
-
-export const sources = processSourceFiles();

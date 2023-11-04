@@ -1,9 +1,10 @@
 import { generatePreBuiltWorksheets } from '@kanji-sh/printer';
 import { CollectionType } from '@kanji-sh/models';
-import yargs from 'yargs/yargs';
+import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
 (async () => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const options = await yargs(hideBin(process.argv))
         .usage('Usage: -c <collection>')
         .help(true)

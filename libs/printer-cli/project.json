@@ -5,15 +5,16 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/esbuild:esbuild",
+      "executor": "@nx/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/printer-cli",
         "main": "libs/printer-cli/src/index.ts",
         "tsConfig": "libs/printer-cli/tsconfig.lib.json",
+        "swcrc": "libs/printer-cli/swcrc.json",
         "assets": ["libs/printer-cli/*.md"],
         "generatePackageJson": true,
-        "format": ["cjs"]
+        "external": "all"
       }
     },
     "lint": {

@@ -5,23 +5,62 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nx/remix:build",
+      "executor": "@nx/next:build",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/kanji.sh"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/kanji.sh"
+        },
+        "production": {}
       }
     },
     "serve": {
-      "executor": "@nx/remix:serve",
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
       "options": {
-        "port": 3000
+        "buildTarget": "kanji.sh:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "kanji.sh:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "kanji.sh:build:production",
+          "dev": false
+        }
       }
     },
-    "start": {
-      "dependsOn": ["build"],
-      "command": "remix-serve build",
+    "export": {
+      "executor": "@nx/next:export",
       "options": {
-        "cwd": "apps/kanji.sh"
+        "buildTarget": "kanji.sh:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/kanji.sh/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/kanji.sh/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },
