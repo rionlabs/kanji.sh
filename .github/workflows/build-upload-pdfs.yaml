@@ -12,6 +12,7 @@ on:
 jobs:
   generate-pdfs:
     runs-on: macos-latest
+    environment: Production
     strategy:
       matrix:
         source: [frequency, grade, jlpt, kanjigarden, wanikani]
