@@ -1,4 +1,4 @@
-import { generatePreBuiltWorksheets } from '@kanji-sh/printer';
+import { cliOps } from '@kanji-sh/printer';
 import { CollectionType } from '@kanji-sh/models';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
@@ -12,26 +12,51 @@ import { hideBin } from 'yargs/helpers';
             alias: 'c',
             describe: 'Collection to build PDFs for',
             type: 'string',
-            demandOption: true
+            choices: Object.values(CollectionType)
         })
+        .option('kanji', {
+            alias: 'k',
+            describe: 'String containing kanji list to build PDFs for.',
+            type: 'string'
+        })
+        .conflicts('collection', 'kanji')
         .parse();
 
-    try {
-        let collection: CollectionType;
+    if (options.kanji) {
         try {
-            const collectionString = options.collection.toUpperCase();
-            collection = CollectionType[collectionString as keyof typeof CollectionType];
+            await cliOps.generateWorksheet(options.kanji.split(''), 'Custom Worksheet');
+            process.exit(0);
         } catch (error) {
-            console.error(`Option collection must be one of ${Object(CollectionType).values()}`);
+            console.error('Error generating worksheet:', error);
             process.exit(1);
         }
-
-        await generatePreBuiltWorksheets(collection);
-        process.exit(0);
-    } catch (error) {
-        console.error('Error generating pre-built worksheets:', error);
-        process.exit(1);
     }
+
+    if (options.collection) {
+        try {
+            await cliOps.generatePreBuiltWorksheets(options.collection);
+            process.exit(0);
+        } catch (error) {
+            console.error('Error generating pre-built worksheets:', error);
+            process.exit(1);
+        }
+    }
+    // try {
+    //     let collection: CollectionType;
+    //     try {
+    //         const collectionString = options.collection.toUpperCase();
+    //         collection = CollectionType[collectionString as keyof typeof CollectionType];
+    //     } catch (error) {
+    //         console.error(`Option collection must be one of ${Object(CollectionType).values()}`);
+    //         process.exit(1);
+    //     }
+    //
+    //     await cliOps.generatePreBuiltWorksheets(collection);
+    //     process.exit(0);
+    // } catch (error) {
+    //     console.error('Error generating pre-built worksheets:', error);
+    //     process.exit(1);
+    // }
 })();
 
 /**

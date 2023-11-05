@@ -170,7 +170,7 @@
     </script>
 
     <script>
-        $(document).ready(async function () {
+        $(async function () {
             // Load the data first
             const allData = await $.getJSON(`../../../../dist/printed/all-data.json`);
 
@@ -200,8 +200,8 @@
 
                 displayData[kanji] = {
                     kanji: kanji,
-                    svgUrl: `../../dist/SVG/kanjiStrokes/${getKanjiImageFileName(kanji)}`,
-                    svgUrlForWriting: `../../dist/SVG/kanjiTracer/${getKanjiImageFileName(
+                    svgUrl: `../../../../dist/printed/SVG/kanjiStrokes/${getKanjiImageFileName(kanji)}`,
+                    svgUrlForWriting: `../../../../dist/printed/SVG/kanjiTracer/${getKanjiImageFileName(
                         kanji
                     )}`,
                     meaning: extractData(kanjiData, 'meanings'),
@@ -214,7 +214,7 @@
         });
     </script>
     <script>
-        $(document).ready(async function () {
+        $(async function () {
             const title = getParam('title');
             const page = getParam('page');
             $('#title').text(title);
