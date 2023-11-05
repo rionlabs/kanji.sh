@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+import Image from 'next/image';
 import React from 'react';
 
 interface Props {
@@ -15,22 +17,33 @@ export enum Direction {
 const ServiceCard: React.FC<Props> = (props: Props) => {
     const { title, subtitle, imageUrl, imageDirection } = props;
     return (
-        <div className="flex-grow min-h-80 p-8">
-            <div className="container flex flex-col sm:flex-row items-stretch imageDirection">
+        <div className="flex-grow min-h-80 rounded-lg sm:rounded-2xl">
+            <div
+                className={clsx('container flex flex-col items-stretch gap-8', {
+                    'sm:flex-row': imageDirection === 'start',
+                    'sm:flex-row-reverse': imageDirection === 'end'
+                })}>
                 {/* Image */}
                 <div className="flex flex-row items-center align-middle">
-                    <img
+                    <Image
+                        width={1024}
+                        height={800}
                         style={{ width: '80%', height: '100%', margin: 'auto' }}
                         src={imageUrl}
                         alt={'Study Kanji!'}
                     />
                 </div>
-
                 {/* Text */}
-                <div className="imageDirection" style={{ minHeight: 'inherit' }}>
-                    <div className="py-4 space-y-4">
+                <div
+                    className={clsx({
+                        'text-start': imageDirection === 'end',
+                        'text-end': imageDirection === 'start'
+                    })}
+                    style={{ minHeight: 'inherit' }}>
+                    <div className="py-4 space-y-8">
                         <h3 className="font-bold select-none lowercase">{title}</h3>
                         <div className="">{subtitle}</div>
+                        <button className="btn">Learn More</button>
                     </div>
                 </div>
             </div>

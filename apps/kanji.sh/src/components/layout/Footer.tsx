@@ -1,4 +1,4 @@
-// import Config from '../../config';
+import { Config } from '../../config';
 import React from 'react';
 import Link from 'next/link';
 
@@ -10,14 +10,14 @@ export const Footer = () => {
                     <div className="w-full sm:w-auto flex flex-col gap-2">
                         <a
                             className="link link-hover after:content-['_↗']"
-                            // href={Config.githubUrl}
+                            href={Config.githubUrl}
                             target="_blank"
                             rel="noreferrer">
                             GitHub
                         </a>
                         <a
                             className="link link-hover after:content-['_↗']"
-                            // href={Config.bmcUrl}
+                            href={Config.bmcUrl}
                             target="_blank"
                             rel="noreferrer">
                             Buy a Sushi

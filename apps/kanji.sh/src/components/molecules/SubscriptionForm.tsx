@@ -43,7 +43,7 @@ export const SubscriptionForm = () => {
                     <em
                         aria-hidden={isSubmitting}
                         className="text-red-800 transition-all text-sm"></em>
-                    <button type="submit" className="button px-6 mt-4">
+                    <button type="submit" className="btn px-6 mt-4">
                         {isSubmitting ? 'Submitting...' : 'Subscribe'}
                     </button>
                 </fieldset>

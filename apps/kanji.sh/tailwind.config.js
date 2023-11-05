@@ -20,15 +20,16 @@ const tailwindCssConfig = {
             center: true,
             padding: {
                 DEFAULT: '2rem',
-                sm: '2rem',
-                lg: '2rem',
-                xl: '2rem',
-                '2xl': '2rem'
+                sm: '3rem',
+                lg: '4rem'
             }
         },
         extend: {
             aspectRatio: {
                 A4: '210 / 297'
+            },
+            gridTemplateRows: {
+                sandwich: 'auto 1fr auto'
             }
         }
     },
@@ -38,10 +39,11 @@ const tailwindCssConfig = {
         themes: [
             {
                 light: {
-                    'base-100': '#DFE0EC',
-                    primary: '#db5ea9',
-                    secondary: '#d1f23e',
-                    accent: '#a2d3f9',
+                    primary: '#3730A3',
+                    'primary-content': '#ffffff',
+                    secondary: '#D1F23E',
+                    secondaryContent: '#ffffff',
+                    accent: '#A2D3F9',
                     neutral: '#181925',
                     info: '#3DA7C7',
                     success: '#2AA78C',

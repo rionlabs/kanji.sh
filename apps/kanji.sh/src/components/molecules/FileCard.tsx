@@ -13,7 +13,7 @@ export const FileCard = (props: Props) => {
     const { worksheet, cardData } = props;
 
     return (
-        <div className="max-w-[320px] sm:h-full m-auto flex flex-col p-4 gap-4">
+        <div className="max-w-[480px] sm:h-full m-auto flex flex-col p-4 gap-4">
             {/* CardMedia */}
             <div
                 className="h-40 rounded-md pressed shadow-inner paper mix-blend-multiply"

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
@@ -52,7 +53,7 @@ export const PDFView = (props: PDFViewProps) => {
     }
 
     return (
-        <figure className="min-h-full">
+        <div className="min-h-full">
             <Document
                 inputRef={pdfDocument}
                 externalLinkTarget={'_blank'}
@@ -80,20 +81,27 @@ export const PDFView = (props: PDFViewProps) => {
                     loading={<PagePlaceholder />}
                 />
             </Document>
-            <div className="mt-6 text-center text-xs">PAGES</div>
-            <nav className="mt-2 grid grid-cols-3 items-center justify-evenly">
-                <button disabled={pageNumber <= 1 || !pdfLoaded} onClick={() => changePage(-1)}>
-                    Previous
-                </button>
-                <p className="text-center">
-                    {pageNumber} / {pageCount}
-                </p>
+            <div className="py-4 text-center text-xs text-base-content/90">PAGES</div>
+
+            <nav className="join w-full grid grid-cols-3 items-center justify- border rounded-l-full rounded-r-full btn p-0">
                 <button
+                    className="join-item flex flex-col items-start px-8 py-4"
+                    disabled={pageNumber <= 1 || !pdfLoaded}
+                    onClick={() => changePage(-1)}>
+                    {!(pageNumber <= 1 || !pdfLoaded) && <FiChevronLeft className="w-5 h-5" />}
+                </button>
+                <div className="join-item text-center cursor-auto">
+                    {pageNumber} <span className="opacity-50">/</span> {pageCount}
+                </div>
+                <button
+                    className="join-item flex flex-col items-end px-8 py-4"
                     disabled={pageNumber >= pageCount || !pdfLoaded}
                     onClick={() => changePage(1)}>
-                    Next
+                    {!(pageNumber >= pageCount || !pdfLoaded) && (
+                        <FiChevronRight className="w-5 h-5" />
+                    )}
                 </button>
             </nav>
-        </figure>
+        </div>
     );
 };

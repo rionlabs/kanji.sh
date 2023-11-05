@@ -1,5 +1,7 @@
+import { Footer } from 'apps/kanji.sh/src/components/layout/Footer';
+import { Header } from 'apps/kanji.sh/src/components/layout/Header';
+import React from 'react';
 import { pdfjs } from 'react-pdf';
-import { PageLayout } from 'apps/kanji.sh/src/components/layout/PageLayout';
 
 import './tailwind.css';
 
@@ -28,7 +30,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <meta name="description" content={metadata.description} />
             </head>
             <body>
-                <PageLayout>{children}</PageLayout>
+                <div className="grid grid-rows-sandwich min-h-screen">
+                    <Header />
+                    <main className="py-12 container">{children}</main>
+                    <Footer />
+                </div>
             </body>
         </html>
     );

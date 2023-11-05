@@ -1,15 +1,17 @@
+'use client';
+
 import clsx from 'clsx';
-import React from 'react';
+import { usePathname } from 'next/navigation';
+import React, { useMemo } from 'react';
 import Link, { LinkProps } from 'next/link';
 
 const HeaderNavItem = (props: React.PropsWithChildren<LinkProps<any>>) => {
     const { children, ...otherProps } = props;
-    //const router = useRouter();
-    const match = false;
-    // const match = useMemo<Boolean>(
-    //     () => window.location.pathname.includes(props.href.toString()),
-    //     [props.href, window.location.pathname]
-    // );
+    const pathname = usePathname();
+    const match = useMemo<Boolean>(
+        () => pathname.includes(props.href.toString()),
+        [props.href, pathname]
+    );
     return (
         <Link {...otherProps}>
             <h6

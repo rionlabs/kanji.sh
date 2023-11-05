@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Quicksand:wght@400;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Quicksand:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,15 +7,7 @@
 
 @layer base {
     * {
-        @apply font-normal;
-        @apply font-sans;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    }
-    *,
-    ::before,
-    ::after {
-        /* Resets border-color added by tailwind */
-        /*border-color: transparent !important;*/
     }
 
     .paper {
@@ -25,16 +17,7 @@
         background-color: rgba(0, 0, 0, 0.01);
     }
 
-    .paper-brighten {
-        background-color: rgba(0, 0, 0, 0.08);
-    }
-
-    .paper-darken {
-        background-color: rgba(0, 0, 0, 0.12);
-    }
-
     body {
-        /*noinspection CssUnknownTarget*/
         @apply paper;
         color: rgba(0, 0, 0, 0.8);
     }
@@ -80,39 +63,48 @@
 
     .elevated {
         @apply paper;
-        box-shadow:  0.2rem 0.2rem 0.8rem rgba(0, 0, 0, 0.1), -0.4rem -0.4rem 1rem rgba(255, 255, 255, 0.6);
+        box-shadow:
+            0.2rem 0.2rem 0.8rem rgba(0, 0, 0, 0.1),
+            -0.4rem -0.4rem 1rem rgba(255, 255, 255, 0.6);
     }
 
     .elevated-sm {
         @apply paper;
-        box-shadow:  0.1rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2), -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.5);
-    }
-
-    .pressed {
-        @apply paper paper-darken;
-        @apply shadow-inner shadow-2xl;
-        background: linear-gradient(145deg, rgba(0, 0, 0, 0.02), rgba(255, 255, 255, 0.4));
-    }
-
-    .popped {
-        background: linear-gradient(145deg, rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.001));
+        box-shadow:
+            0.1rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2),
+            -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.5);
     }
 }
 
 @layer components {
     .btn {
-        @apply rounded-l-full rounded-r-full py-3 text-center border-none;
+        @apply rounded-l-full rounded-r-full border-none;
         @apply border border-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
-        @apply elevated focus:elevated hover:paper-brighten active:shadow-none active:paper;
+        @apply elevated focus:elevated hover:paper active:shadow-none active:paper;
         @apply transition-shadow duration-150;
-        @apply font-normal text-opacity-70 select-none;
+        @apply font-normal select-none;
+        @apply h-auto min-h-fit px-8 py-4;
+        @apply font-medium gap-4 bg-blend-lighten;
+        @apply text-base-content;
+        color: black;
+
+        & > svg {
+            @apply h-4 w-4 opacity-70;
+            @apply mix-blend-multiply;
+        }
+
+        &[disabled] {
+            background-color: transparent;
+            @apply shadow-none;
+        }
     }
-    .button {
-        @apply rounded-l-full rounded-r-full py-3 text-center;
-        @apply border border-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
-        @apply elevated focus:elevated hover:paper-brighten active:shadow-none active:paper;
-        @apply transition-shadow duration-150;
-        @apply font-normal text-opacity-70 select-none;
+
+    .btn.loading:before {
+        @apply w-4 h-4 mr-0;
+    }
+
+    .btn.loading > svg {
+        display: none;
     }
 
     .field {
@@ -125,33 +117,6 @@
         @apply font-medium text-opacity-80;
     }
 
-    .btn {
-        @apply rounded-l-full rounded-r-full;
-        @apply border border-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
-        @apply elevated focus:elevated hover:paper-brighten active:shadow-none active:paper;
-        @apply transition-shadow duration-150;
-        @apply font-normal text-opacity-70 select-none;
-        @apply h-auto min-h-fit px-12 py-3;
-        @apply font-normal gap-4;
-    }
-
-    .btn > svg {
-        @apply h-6 w-6 opacity-80;
-        @apply mix-blend-multiply;
-    }
-
-    .btn.loading:before {
-        @apply w-4 h-4 mr-0;
-    }
-
-    .btn.loading > svg {
-        display: none;
-    }
-
-    .btn-outline[disabled] {
-        background-color: transparent;
-    }
-
     .link {
         text-underline-offset: 0.25rem;
     }
@@ -160,20 +125,16 @@
 /** Avoids UserAgent coloring of auto fills */
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-    transition: background-color 600000s 0s, color 600000s 0s;
+    transition:
+        background-color 600000s 0s,
+        color 600000s 0s;
 }
 
 @layer utilities {
-
 }
 
 html:before {
     @apply paper;
-}
-
-.page-layout {
-    @apply grid min-h-screen;
-    grid-template-rows: auto 1fr auto;
 }
 
 .curve {
@@ -182,17 +143,16 @@ html:before {
 
 .header-nav {
     position: relative;
-}
-
-.header-nav::before {
-    content: attr(data-content);
-    width: 100%;
-    height: 0;
-    visibility: hidden;
-    font-weight: 800;
-    overflow: hidden;
-    user-select: none;
-    pointer-events: none;
+    &::before {
+        content: attr(data-content);
+        width: 100%;
+        height: 0;
+        visibility: hidden;
+        font-weight: 800;
+        overflow: hidden;
+        user-select: none;
+        pointer-events: none;
+    }
 }
 
 .hover-underline-animation {
@@ -200,43 +160,40 @@ html:before {
     flex-direction: column;
     position: relative;
     color: white;
+    &::after {
+        content: '';
+        position: absolute;
+        width: 110%;
+        transform: scaleX(0);
+        height: 2px;
+        bottom: -0.25rem;
+        left: -5%;
+        background-color: white;
+        transform-origin: center center;
+        transition: transform 0.25s ease-out;
+        @apply border-0 border-transparent rounded-l-full rounded-r-full;
+    }
+    &:hover::after {
+        transform: scaleX(1);
+        transform-origin: center center;
+    }
 }
 
-.hover-underline-animation::after {
-    content: '';
-    position: absolute;
-    width: 110%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: -0.25rem;
-    left: -5%;
-    background-color: white;
-    transform-origin: center center;
-    transition: transform 0.25s ease-out;
-    @apply border-0 border-transparent rounded-l-full rounded-r-full;
-}
-
-.hover-underline-animation:hover::after {
-    transform: scaleX(1);
-    transform-origin: center center;
-}
-
-.react-pdf__Document {
-    @apply rounded border-0 drop-shadow overflow-clip;
-}
-
-.react-pdf__Page {
-    min-width: auto !important;
-    min-height: auto !important;
-    @apply rounded overflow-clip;
-}
-
-.react-pdf__Page__canvas {
-    width: 100% !important;
-    height: auto !important;
-    @apply rounded overflow-clip;
-}
-
-.react-pdf__Page__annotations {
-    display: none;
+.react-pdf {
+    &__Document {
+        @apply rounded border-0 drop-shadow overflow-clip;
+    }
+    &__Page {
+        min-width: auto !important;
+        min-height: auto !important;
+        @apply rounded overflow-clip;
+        &__canvas {
+            width: 100% !important;
+            height: auto !important;
+            @apply rounded overflow-clip;
+        }
+        &__annotations {
+            display: none;
+        }
+    }
 }

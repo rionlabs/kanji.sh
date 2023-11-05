@@ -1,5 +1,4 @@
 import { CollectionCard } from '../../src/components/molecules/CollectionCard';
-import Link from 'next/link';
 import { CollectionCardData, METADATA } from '../../src/metadata';
 import { WritingAnimation } from '../../src/components/atoms/AnimatedImage';
 import React from 'react';
@@ -43,13 +42,8 @@ export default async function WritePage() {
                 </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-12">
-                {collections.map((collection) => (
-                    <Link
-                        key={`${collection.key}-link`}
-                        href={`/write/${collection.key}`}
-                        className="p-4 sm:p-6 max-w-[320px] mx-auto cursor-pointer rounded-xl hover:elevated active:shadow-none transition-shadow group">
-                        <CollectionCard {...collection} />
-                    </Link>
+                {collections.map(({ key, ...collection }) => (
+                    <CollectionCard key={key} href={`/write/${key}`} {...collection} />
                 ))}
             </div>
         </div>
