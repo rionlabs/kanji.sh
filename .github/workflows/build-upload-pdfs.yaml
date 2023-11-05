@@ -1,4 +1,4 @@
-# Generates and Uploads PDFs to Firebase Storage bucket.
+# Generates and Uploads PDFs to Supabase Storage bucket.
 
 name: Upload PDFs
 on:
@@ -6,10 +6,12 @@ on:
     paths:
       - 'generator/**'
       - '.github/workflows/**'
+  workflow_dispatch:
+
 
 jobs:
   generate-pdfs:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       matrix:
         source: [frequency, grade, jlpt, kanjigarden, wanikani]
@@ -20,34 +22,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-
-      - name: Get npm cache directory path
-        id: npm-cache
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-
-      - name: Cache/Restore
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.npm-cache.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
 
       - name: Install NPM dependencies
         run: npm install
 
-      - name: Build Remix app
-        run: npm run build
-
-      - name: Setup storage environment
-        run: echo $STORAGE_ENV | base64 --d > .env.storage
-        env:
-          STORAGE_ENV: ${{ secrets.STORAGE_ENV }}
-
       - name: Generate PDF files
-        run: npx --yes env-cmd -f .env.storage npx remix-serve build
+        run: npm run build-worksheets -- --collection=${{ matrix.source }}
         env:
-          BUILD_WORKSHEETS: true
-          COLLECTION: ${{ matrix.source }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
