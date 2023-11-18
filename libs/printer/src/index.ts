@@ -16,24 +16,6 @@ import { createWorksheet } from './pdf';
 import { processSourceFiles } from './sources';
 import { logger } from './utils';
 
-const localFiles = new LocalFiles(
-    path.join(Config.outDirPath, 'OUT/pdfs'),
-    path.join(Config.outDirPath, 'OUT/jsons'),
-    path.join(Config.outDirPath, 'OUT/collections')
-);
-
-const cloudFiles = new CloudFiles(
-    new SupabaseClient(
-        process.env['SUPABASE_URL'] as string,
-        process.env['SUPABASE_KEY'] as string,
-        {
-            global: {
-                headers: {}
-            }
-        }
-    )
-);
-
 type ResultType = { key: string; collection: CollectionType };
 
 type BatchWorksheetResult = Record<string, Worksheet>;
@@ -191,5 +173,30 @@ class CLIOps {
     };
 }
 
-export const appOps = new AppOps(cloudFiles);
-export const cliOps = new CLIOps(new CombinedFiles(localFiles, cloudFiles));
+const createCloudFiles = () =>
+    new CloudFiles(
+        new SupabaseClient(
+            process.env['SUPABASE_URL'] as string,
+            process.env['SUPABASE_KEY'] as string,
+            {
+                global: {
+                    headers: {}
+                }
+            }
+        )
+    );
+
+export const appOperations = () => {
+    const cloudFiles = createCloudFiles();
+    return new AppOps(cloudFiles);
+};
+
+export const cliOperations = () => {
+    const cloudFiles = createCloudFiles();
+    const localFiles = new LocalFiles(
+        path.join(Config.outDirPath, 'OUT/pdfs'),
+        path.join(Config.outDirPath, 'OUT/jsons'),
+        path.join(Config.outDirPath, 'OUT/collections')
+    );
+    return new CLIOps(new CombinedFiles(localFiles, cloudFiles));
+};

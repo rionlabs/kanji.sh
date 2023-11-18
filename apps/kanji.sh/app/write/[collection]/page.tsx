@@ -1,5 +1,5 @@
 import { CollectionType, Worksheet } from '@kanji-sh/models';
-import { appOps } from '@kanji-sh/printer';
+import { appOperations } from '@kanji-sh/printer';
 import { FileCard } from 'apps/kanji.sh/src/components/molecules/FileCard';
 import { CollectionCardData, FileCardData, METADATA } from 'apps/kanji.sh/src/metadata';
 import React from 'react';
@@ -13,7 +13,9 @@ type CollectionData = {
 
 async function getCollection(collection: string): Promise<CollectionData | null> {
     try {
-        const collectionWorksheets = await appOps.getCollectionMeta(collection as CollectionType);
+        const collectionWorksheets = await appOperations().getCollectionMeta(
+            collection as CollectionType
+        );
         const { files, ...collectionCardData } = METADATA.get(collection)!!;
         console.log(collectionWorksheets);
         // Merge object collectionWorksheets with collectionColors

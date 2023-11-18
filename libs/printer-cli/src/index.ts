@@ -1,4 +1,4 @@
-import { cliOps } from '@kanji-sh/printer';
+import { cliOperations } from '@kanji-sh/printer';
 import { CollectionType } from '@kanji-sh/models';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
@@ -21,6 +21,8 @@ import { hideBin } from 'yargs/helpers';
         })
         .conflicts('collection', 'kanji')
         .parse();
+
+    const cliOps = cliOperations();
 
     if (options.kanji) {
         try {

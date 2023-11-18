@@ -1,13 +1,13 @@
 import { CollectionType } from '@kanji-sh/models';
-import { appOps } from '@kanji-sh/printer';
+import { appOperations } from '@kanji-sh/printer';
 import { FiDownload } from 'react-icons/fi';
 import { PDFView } from '../../../../src/components/molecules/PDFView';
 import React from 'react';
-
 import { notFound } from 'next/navigation';
 
 async function getWorksheet(collection: string, file: string) {
     try {
+        const appOps = appOperations();
         const hash = await appOps.getWorksheetHash(collection as CollectionType, file);
         const worksheet = await appOps.getWorksheetMeta(hash);
         return { worksheet };
