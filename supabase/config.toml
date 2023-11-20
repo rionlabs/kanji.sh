@@ -49,7 +49,7 @@ port = 54324
 
 [storage]
 # The maximum file size allowed (e.g. "5MB", "500KB").
-file_size_limit = "50MiB"
+file_size_limit = "100MiB"
 
 [auth]
 # The base URL of your website. Used as an allow-list for redirects and for constructing URLs used

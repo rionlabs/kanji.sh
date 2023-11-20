@@ -36,7 +36,7 @@ async function generatePDF(
     try {
         const timeout = 180 * 1000;
         const browser = await puppeteer.launch({
-            headless: false,
+            headless: 'new',
             timeout: timeout,
             args: ['--disable-web-security']
         });
