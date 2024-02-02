@@ -83,7 +83,14 @@ const addContact = async ({ name, email }: Subscription): Promise<void> => {
             throw new Error('Error subscribing : Invalid input');
         }
         default: {
-            throw new Error(`Error subscribing : ${response.status}`);
+            console.log(
+                `[End] API Call: API called with error. Returned data: ${JSON.stringify(
+                    response,
+                    null,
+                    3
+                )}`
+            );
+            throw new Error(`Unknown Error occurred while subscribing.`);
         }
     }
 };

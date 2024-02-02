@@ -1,31 +1,6 @@
-'use client';
-
-import clsx from 'clsx';
-import { usePathname } from 'next/navigation';
-import React, { useMemo } from 'react';
-import Link, { LinkProps } from 'next/link';
-
-const HeaderNavItem = (props: React.PropsWithChildren<LinkProps<any>>) => {
-    const { children, ...otherProps } = props;
-    const pathname = usePathname();
-    const match = useMemo<Boolean>(
-        () => pathname.includes(props.href.toString()),
-        [props.href, pathname]
-    );
-    return (
-        <Link {...otherProps}>
-            <h6
-                data-content={children}
-                className={clsx(
-                    'header-nav hover-underline-animation select-none font-serif text-center text-white',
-                    { 'font-bold': match },
-                    { 'font-normal': !match }
-                )}>
-                {children}
-            </h6>
-        </Link>
-    );
-};
+import { HeaderNavItem } from '../atoms/HeaderNavLink';
+import React from 'react';
+import Link from 'next/link';
 
 export const Header = () => {
     return (

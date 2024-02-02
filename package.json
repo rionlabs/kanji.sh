@@ -22,6 +22,7 @@
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.0.0",
     "@supabase/supabase-js": "^2.38.4",
+    "@vercel/analytics": "^1.1.2",
     "adm-zip": "^0.5.10",
     "build-url-ts": "^6.1.5",
     "clsx": "^2.0.0",
