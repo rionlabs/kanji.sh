@@ -8,13 +8,22 @@
       "options": {
         "cypressConfig": "apps/kanji.sh-e2e/cypress.config.ts",
         "testingType": "e2e",
-        "devServerTarget": "kanji.sh:serve"
+        "additionalProperties": {
+          "chromeWebSecurity": false
+        }
       },
       "configurations": {
-        "production": {
+        "ci": {
           "devServerTarget": "kanji.sh:serve:production"
+        },
+        "studio": {
+          "devServerTarget": "kanji.sh:serve:development",
+          "watch": true,
+          "browser": "electron",
+          "runnerUi": true
         }
-      }
+      },
+      "defaultConfiguration": "studio"
     },
     "lint": {
       "executor": "@nx/eslint:lint",
