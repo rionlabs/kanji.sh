@@ -1,7 +1,12 @@
+import { Metadata } from 'next';
 import { CollectionCard } from '../../src/components/molecules/CollectionCard';
 import { CollectionCardData, METADATA } from '../../src/metadata';
 import { WritingAnimation } from '../../src/components/atoms/AnimatedImage';
 import React from 'react';
+
+export const metadata: Metadata = {
+    title: 'Download Kanji worksheets for Free'
+};
 
 async function getCollections() {
     const collections: Omit<CollectionCardData, 'files' | 'heading'>[] = [];

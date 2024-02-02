@@ -1,6 +1,32 @@
 import { ReadingBookAnimation } from 'apps/kanji.sh/src/components/atoms/AnimatedImage';
 import ServiceCard, { Direction } from 'apps/kanji.sh/src/components/molecules/ServiceCard';
+import { Config } from '../src/config';
 import React from 'react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    metadataBase: new URL(Config.publicUrl),
+    alternates: {
+        canonical: '/'
+    },
+    title: 'Your one-stop tool for practicing Kanji',
+    description: 'Practice the Kanji you learned over the years with distraction-free sheets.',
+    openGraph: {
+        locale: 'en_US',
+        url: 'https://kanji.sh',
+        title: 'Kanji.sh',
+        siteName: 'Kanji.sh',
+        description: 'Free tool to practice reading & writing Japanese kanji.',
+        images: [
+            {
+                url: '/poster.png',
+                width: 512,
+                height: 300,
+                alt: 'Kanji.sh Poster'
+            }
+        ]
+    }
+};
 
 export default async function Index() {
     return (

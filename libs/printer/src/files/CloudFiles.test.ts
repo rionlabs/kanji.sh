@@ -34,6 +34,7 @@ describe('CloudFiles', () => {
 
     const pdfBucket = 'testPdfBucket';
     const jsonBucket = 'testJsonBucket';
+    const collectionBucket = 'testCollectionBucket';
 
     beforeEach(async () => {
         supabaseClient = new SupabaseClient(
@@ -44,7 +45,7 @@ describe('CloudFiles', () => {
         await supabaseClient.storage.createBucket(pdfBucket);
         await supabaseClient.storage.createBucket(jsonBucket);
         // Create instance
-        cloudFiles = new CloudFiles(supabaseClient, { pdfBucket, jsonBucket });
+        cloudFiles = new CloudFiles(supabaseClient, { pdfBucket, jsonBucket, collectionBucket });
     });
 
     afterEach(async () => {
