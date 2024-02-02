@@ -11,35 +11,30 @@ interface Props {
 
 export const FileCard = (props: Props) => {
     const { worksheet, cardData } = props;
-
     return (
-        <div className="max-w-[480px] sm:h-full m-auto flex flex-col p-4 gap-4">
+        <div className="max-w-[320px] sm:h-full m-auto flex flex-col p-5 gap-5">
             {/* CardMedia */}
             <div
-                className="h-40 rounded-md pressed shadow-inner paper mix-blend-multiply"
+                className="h-40 rounded-md pressed shadow-inner paper bg-blend-multiply"
                 style={{ backgroundColor: cardData.metaColor }}>
-                <h2 className="text-center font-bold leading-[10rem] text-white select-none">
+                <div className="text-center text-5xl font-serif font-bold leading-[10rem] text-white select-none">
                     {cardData.title}
-                </h2>
+                </div>
             </div>
-
             {/* CardContent */}
-            <div className="flex flex-col flex-grow gap-4">
-                <div className="flex-grow text-center">{cardData.description}</div>
-
+            <div className="flex flex-col items-center gap-5">
+                <div className="grow text-center">{cardData.description}</div>
                 <Link
                     href={`/write/${cardData.collectionKey}/${cardData.key}`}
-                    className="btn w-full mt-1">
+                    className={`btn btn-wide btn-neutral`}>
                     <FiEye />
                     Preview
                 </Link>
-
                 <a
                     href={`/api/files/${worksheet.hash}?download`}
                     target="_blank"
                     rel="noreferrer"
-                    className="btn w-full mt-1"
-                    download>
+                    className="btn btn-wide btn-primary">
                     <FiDownload />
                     Download
                 </a>

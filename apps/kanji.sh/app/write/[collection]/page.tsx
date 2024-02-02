@@ -17,7 +17,6 @@ async function getCollection(collection: string): Promise<CollectionData | null>
             collection as CollectionType
         );
         const { files, ...collectionCardData } = METADATA.get(collection)!!;
-        console.log(collectionWorksheets);
         // Merge object collectionWorksheets with collectionColors
         const worksheets: CollectionData['worksheets'] = [];
         for (let worksheetKey in collectionWorksheets) {
@@ -26,7 +25,6 @@ async function getCollection(collection: string): Promise<CollectionData | null>
             if (!cardData) throw new Error(`Worksheet ${worksheetKey} not found in metadata`);
             worksheets.push({ worksheet, cardData });
         }
-        console.log(JSON.stringify(collectionWorksheets, null, 2));
 
         return { collectionData: collectionCardData, worksheets };
     } catch (error) {
@@ -49,13 +47,14 @@ export default async function CollectionPage(props: PageProps) {
     }
     const { collectionData, worksheets } = data;
     return (
-        <div>
-            <h3 className="p-4">{collectionData.heading}</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 py-12">
+        <div className="flex flex-col gap-4">
+            <div className="p-4">
+                <h3>{collectionData.heading}</h3>
+                <p>{collectionData.description}</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-12">
                 {worksheets.map(({ cardData, worksheet }) => (
-                    <div className="" key={cardData.key}>
-                        <FileCard cardData={cardData} worksheet={worksheet} />
-                    </div>
+                    <FileCard key={cardData.key} cardData={cardData} worksheet={worksheet} />
                 ))}
             </div>
         </div>

@@ -14,7 +14,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             return NextResponse.json<ActionData>(
                 {
                     status: 'error',
-                    errors: { name: 'Please input your name. (or nickname) 😄' }
+                    errors: { name: 'Please input your name/nickname' }
                 },
                 { status: 400 }
             );
@@ -24,12 +24,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         invariant(typeof email === 'string', 'Email must be a string');
         if (!email || email.trim().length === 0) {
             return NextResponse.json<ActionData>(
-                { status: 'error', errors: { email: 'Please input your email. 🥹' } },
+                { status: 'error', errors: { email: 'Please input your email' } },
                 { status: 400 }
             );
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
             return NextResponse.json<ActionData>(
-                { status: 'error', errors: { email: 'Valid email, please. 🙏🏻' } },
+                { status: 'error', errors: { email: 'Please input a valid email' } },
                 { status: 400 }
             );
         }
@@ -48,15 +48,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             );
         }
         return NextResponse.json<ActionData>(
-            { status: 'error', formError: 'Unknown error occurred.' },
+            { status: 'error', formError: 'Unknown error occurred' },
             { status: 500 }
         );
     }
 }
 
 const addContact = async ({ name, email }: Subscription): Promise<void> => {
-    const groupId = process.env.GROUP_ID as string;
-    const apiToken = process.env.API_TOKEN as string;
+    const apiToken = process.env.MAILERLITE_API_TOKEN as string;
+    const groupId = process.env.MAILERLITE_GROUP_ID as string;
     console.log('[Start] Add subscriber to group');
     const response = await fetch(`https://connect.mailerlite.com/api/subscribers/`, {
         method: 'POST',

@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     content="minimum-scale=1,initial-scale=1,width=device-width"
                 />
             </head>
-            <body>
+            <body data-theme="light" className="light">
                 <div className="grid grid-rows-sandwich min-h-screen">
                     <Header />
                     <main className="py-12 container">{children}</main>

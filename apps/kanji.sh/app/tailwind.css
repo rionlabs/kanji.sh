@@ -1,25 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Quicksand:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Quicksand:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@tailwind screens;
+@tailwind variants;
 
 @layer base {
     * {
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
 
+    .paper-light {
+        background-image: url('/assets/bg/light.jpg');
+    }
+    .paper-dark {
+        background-image: url('/assets/jpg/bg-dark.webp');
+    }
     .paper {
-        /*noinspection CssUnknownTarget*/
-        background-image: url('/assets/jpg/bg.jpg');
-        background-blend-mode: darken;
-        background-color: rgba(0, 0, 0, 0.01);
+        @apply paper-light dark:paper-dark;
     }
 
     body {
         @apply paper;
-        color: rgba(0, 0, 0, 0.8);
+    }
+
+    header, footer {
+        @apply paper bg-primary bg-blend-color-burn;
     }
 
     h1 {
@@ -61,64 +67,38 @@
         @apply font-normal;
     }
 
-    .elevated {
-        @apply paper;
-        box-shadow:
-            0.2rem 0.2rem 0.8rem rgba(0, 0, 0, 0.1),
-            -0.4rem -0.4rem 1rem rgba(255, 255, 255, 0.6);
-    }
-
-    .elevated-sm {
-        @apply paper;
-        box-shadow:
-            0.1rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2),
-            -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.5);
+    p {
+        @apply text-base-content;
     }
 }
 
 @layer components {
     .btn {
-        @apply rounded-l-full rounded-r-full border-none;
-        @apply border border-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
-        @apply elevated focus:elevated hover:paper active:shadow-none active:paper;
-        @apply transition-shadow duration-150;
-        @apply font-normal select-none;
-        @apply h-auto min-h-fit px-8 py-4;
-        @apply font-medium gap-4 bg-blend-lighten;
-        @apply text-base-content;
-        color: black;
-
+        @apply rounded-l-full rounded-r-full;
+        @apply select-none font-medium;
+        @apply hover:shadow focus:shadow flex-nowrap;
+        @apply h-auto min-h-fit px-8 py-4 gap-4;
         & > svg {
-            @apply h-4 w-4 opacity-70;
-            @apply mix-blend-multiply;
+            @apply h-4 w-4 opacity-80;
         }
-
         &[disabled] {
-            background-color: transparent;
-            @apply shadow-none;
+            @apply cursor-not-allowed;
         }
-    }
-
-    .btn.loading:before {
-        @apply w-4 h-4 mr-0;
-    }
-
-    .btn.loading > svg {
-        display: none;
+        &.loading {
+            &:before {
+                @apply w-4 h-4 mr-0;
+            }
+            & > svg {
+                display: none;
+            }
+        }
     }
 
     .field {
-        @apply rounded-l-full rounded-r-full py-2 px-4;
-        @apply border focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
-        @apply paper focus:shadow-inner;
-        /* Override paper  */
-        background-color: rgba(0, 0, 0, 0.05);
+        @apply rounded-l-full rounded-r-full py-3 px-5 paper bg-opacity-10;
+        @apply border-2 focus:border-primary/75 aria-invalid:border-error/75;
+        @apply focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
         @apply transition-shadow duration-300;
-        @apply font-medium text-opacity-80;
-    }
-
-    .link {
-        text-underline-offset: 0.25rem;
     }
 }
 
@@ -130,36 +110,25 @@ input:-webkit-autofill:focus {
         color 600000s 0s;
 }
 
-@layer utilities {
-}
-
-html:before {
-    @apply paper;
-}
-
 .curve {
-    clip-path: ellipse(90% 99% at 50% 0%);
+    clip-path: ellipse(95% 99% at 55% 0%);
 }
 
 .header-nav {
+    @apply select-none text-xl font-serif text-center text-primary-content;
     position: relative;
     &::before {
         content: attr(data-content);
         width: 100%;
         height: 0;
         visibility: hidden;
-        font-weight: 800;
+        font-weight: 700;
         overflow: hidden;
         user-select: none;
         pointer-events: none;
     }
-}
-
-.hover-underline-animation {
     display: inline-flex;
     flex-direction: column;
-    position: relative;
-    color: white;
     &::after {
         content: '';
         position: absolute;
@@ -168,10 +137,9 @@ html:before {
         height: 2px;
         bottom: -0.25rem;
         left: -5%;
-        background-color: white;
         transform-origin: center center;
         transition: transform 0.25s ease-out;
-        @apply border-0 border-transparent rounded-l-full rounded-r-full;
+        @apply border-0 border-transparent rounded-l-full rounded-r-full bg-primary-content;
     }
     &:hover::after {
         transform: scaleX(1);

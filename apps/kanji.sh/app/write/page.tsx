@@ -20,12 +20,12 @@ async function getCollections() {
 export default async function WritePage() {
     const collections = await getCollections();
     return (
-        <div>
+        <div className="flex flex-col items-center">
             <div className="flex flex-col sm:flex-row justify-center gap-2">
                 {/* Text Content */}
                 <div className="w-full sm:w-1/2">
                     <div className="space-y-4 justify-center">
-                        <h4 className="mb-3">Writing Matters.</h4>
+                        <h4>Writing Matters.</h4>
                         <div>
                             Yes, you know hundreds of Kanji, and you can read a newspaper or your
                             favorite manga all the way to the end. But can you write? If you want to
@@ -46,7 +46,9 @@ export default async function WritePage() {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-12">
+            {/* Collections */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 py-12">
+                {/*<div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-stretch place-content-center gap-8 py-12">*/}
                 {collections.map(({ key, ...collection }) => (
                     <CollectionCard key={key} href={`/write/${key}`} {...collection} />
                 ))}

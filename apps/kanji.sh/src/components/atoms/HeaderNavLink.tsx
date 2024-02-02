@@ -16,11 +16,7 @@ export const HeaderNavItem = (props: React.PropsWithChildren<LinkProps<any>>) =>
         <Link
             {...otherProps}
             data-content={children}
-            className={clsx(
-                'header-nav hover-underline-animation select-none text-xl font-serif text-center text-white',
-                { 'font-bold': match },
-                { 'font-normal': !match }
-            )}>
+            className={clsx('header-nav', { 'font-semibold': match }, { 'font-normal': !match })}>
             {children}
         </Link>
     );

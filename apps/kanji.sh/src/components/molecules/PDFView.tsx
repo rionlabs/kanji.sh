@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import React, { useRef } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Document, Page, pdfjs } from 'react-pdf';
@@ -81,25 +82,24 @@ export const PDFView = (props: PDFViewProps) => {
                     loading={<PagePlaceholder />}
                 />
             </Document>
-            <div className="py-4 text-center text-xs text-base-content/90">PAGES</div>
+            <div className="pt-5 pb-4 text-center text-base-content/90">PAGES</div>
 
-            <nav className="join w-full grid grid-cols-3 items-center justify- border rounded-l-full rounded-r-full btn p-0">
+            <nav className="w-full grid grid-cols-3 items-stretch rounded-l-full rounded-r-full p-0">
                 <button
-                    className="join-item flex flex-col items-start px-8 py-4"
+                    className="btn btn-neutral rounded-r-none px-8 py-4"
                     disabled={pageNumber <= 1 || !pdfLoaded}
                     onClick={() => changePage(-1)}>
-                    {!(pageNumber <= 1 || !pdfLoaded) && <FiChevronLeft className="w-5 h-5" />}
+                    <FiChevronLeft className="w-5 h-5" /> Prev
                 </button>
-                <div className="join-item text-center cursor-auto">
+                <div className="select-none text-center text-xl leading-[3rem] font-serif font-bold bg-neutral text-neutral-content">
                     {pageNumber} <span className="opacity-50">/</span> {pageCount}
                 </div>
                 <button
-                    className="join-item flex flex-col items-end px-8 py-4"
+                    className="btn btn-neutral rounded-l-none px-8 py-4"
                     disabled={pageNumber >= pageCount || !pdfLoaded}
                     onClick={() => changePage(1)}>
-                    {!(pageNumber >= pageCount || !pdfLoaded) && (
-                        <FiChevronRight className="w-5 h-5" />
-                    )}
+                    Next
+                    <FiChevronRight className="w-5 h-5" />
                 </button>
             </nav>
         </div>

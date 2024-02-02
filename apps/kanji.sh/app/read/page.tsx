@@ -1,5 +1,6 @@
 'use client';
 
+import { ErrorMessage } from 'apps/kanji.sh/src/components/atoms/ErrorMessage';
 import { ActionData, FormState } from 'apps/kanji.sh/src/subscription/Types';
 import React, { FormEvent } from 'react';
 import { PrintingAnimation, SubscribedAnimation } from '../../src/components/atoms/AnimatedImage';
@@ -39,80 +40,60 @@ export default function ReadPage() {
     }
 
     return (
-        <div className="container flex flex-col items-stretch gap-4 justify-center">
-            <div className="text-center">
-                <h4>Work In Progress!</h4>
-            </div>
-            <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col items-stretch gap-4 justify-center">
+            <h4 className="text-center">Work In Progress</h4>
+            <div className="flex flex-col gap-8">
                 <div className="max-w-[240px] sm:max-w-[320px] mx-auto">
                     <PrintingAnimation className="opacity-95" />
                 </div>
                 <div className="space-y-8">
-                    <div className="text-center">
-                        <div>We haven&apos;t started adding reading worksheets yet.</div>
+                    <div className="text-center space-y-2">
+                        <div>Worksheets for reading practice will be available soon.</div>
                         <div>
-                            If you would like it, signup for the updates. No spams, I promise!
+                            If you would like to try, signup for the updates. No spams, We promise!
                         </div>
                     </div>
-                    <div className="container max-w-[480px] grid grid-cols-1 grid-rows-1">
+                    <div className="container max-w-[512px] grid grid-cols-1 grid-rows-1">
                         {formState !== 'submitted' ? (
                             <form
                                 onSubmit={onSubmit}
-                                className="transition-all"
+                                className="flex flex-col items-stretch gap-4 transition-all duration-700"
                                 method="post"
                                 data-cy="subscribe"
                                 noValidate>
-                                <fieldset
-                                    className="flex flex-col items-stretch gap-4"
-                                    disabled={formState === 'submitting'}>
-                                    <input
-                                        className="field"
-                                        name="name"
-                                        type="text"
-                                        placeholder="Taro"
-                                        aria-label="Name"
-                                    />
-                                    <em
-                                        hidden={
-                                            formState !== 'idle' &&
-                                            actionData?.errors?.name === undefined
-                                        }
-                                        aria-hidden={formState !== 'idle'}
-                                        className="text-red-800 transition-all text-sm"
-                                        data-cy="name-error">
-                                        {actionData?.errors?.name}
-                                    </em>
-                                    <input
-                                        className="field"
-                                        name="email"
-                                        type="email"
-                                        placeholder="taro@kanji.sh"
-                                        aria-label="Email"
-                                    />
-                                    <em
-                                        hidden={formState !== 'idle'}
-                                        aria-hidden={formState !== 'idle'}
-                                        className="text-red-800 transition-all text-sm"
-                                        data-cy="email-error">
-                                        {actionData?.errors?.email}
-                                    </em>
-                                    <button type="submit" className="btn px-6 mt-4">
-                                        {formState === 'submitting' ? 'Submitting...' : 'Subscribe'}
-                                    </button>
-                                    <em
-                                        hidden={
-                                            formState !== 'idle' &&
-                                            actionData?.formError === undefined
-                                        }
-                                        aria-hidden={
-                                            formState !== 'idle' &&
-                                            actionData?.formError === undefined
-                                        }
-                                        className="text-red-800 transition-all text-sm"
-                                        data-cy="form-error">
-                                        {actionData?.formError}
-                                    </em>
-                                </fieldset>
+                                <input
+                                    className="field"
+                                    name="name"
+                                    type="text"
+                                    placeholder="Taro"
+                                    disabled={formState === 'submitting'}
+                                    aria-label="Name"
+                                    aria-invalid={actionData?.errors?.name !== undefined}
+                                />
+                                <ErrorMessage
+                                    hidden={formState !== 'idle'}
+                                    message={actionData?.errors?.name}
+                                />
+                                <input
+                                    className="field"
+                                    name="email"
+                                    type="email"
+                                    placeholder="taro@kanji.sh"
+                                    disabled={formState === 'submitting'}
+                                    aria-label="Email"
+                                    aria-invalid={actionData?.errors?.email !== undefined}
+                                />
+                                <ErrorMessage
+                                    hidden={formState !== 'idle'}
+                                    message={actionData?.errors?.email}
+                                />
+                                <button type="submit" className="btn btn-primary px-6 mt-4">
+                                    {formState === 'submitting' ? 'Subscribing...' : 'Subscribe'}
+                                </button>
+                                <ErrorMessage
+                                    hidden={formState !== 'idle'}
+                                    message={actionData?.formError}
+                                />
                             </form>
                         ) : (
                             <div className="relative transition-all">
@@ -128,7 +109,7 @@ export default function ReadPage() {
                                 </div>
                             </div>
                         )}
-                        <em className="text-center text-red-800　select-none">{'　'}</em>
+                        <br />
                     </div>
                 </div>
             </div>

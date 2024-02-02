@@ -43,8 +43,7 @@ export default async function CollectionFilePage(props: PageProps) {
                         href={`/api/files/${worksheet.hash}?download`}
                         target="_blank"
                         rel="noreferrer"
-                        className="btn btn-wide mt-1"
-                        download>
+                        className="btn btn-wide btn-primary mt-1">
                         <FiDownload />
                         Download
                     </a>
@@ -52,7 +51,7 @@ export default async function CollectionFilePage(props: PageProps) {
                 <h6 className="mb-4">Included Kanji</h6>
                 <div className="flex flex-row flex-wrap gap-1 text-lg leading-none">
                     {worksheet.kanji.map((kanji) => (
-                        <div key={kanji} className="p-2.5 bg-base-200/10 rounded">
+                        <div key={kanji} className="p-2.5 bg-base-200/10 rounded border">
                             {kanji}
                         </div>
                     ))}

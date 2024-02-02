@@ -13,8 +13,8 @@ export const CollectionCard = (props: CollectionCardProps) => {
     return (
         <Link
             href={href}
-            className="p-4 sm:p-6 max-w-[320px] border rounded-xl shadow hover:elevated active:shadow-none transition-all group">
-            <div className="flex flex-col max-w-screen-sm mx-auto gap-4">
+            className="p-4 sm:p-6 max-w-[320px] border rounded-xl shadow hover:shadow-md active:shadow-none transition-all group">
+            <div className="flex flex-col mx-auto gap-4">
                 {/* CardMedia */}
                 <div
                     className="relative h-40 w-auto rounded-lg mix-blend-multiply"
@@ -28,12 +28,9 @@ export const CollectionCard = (props: CollectionCardProps) => {
                         alt={title}
                     />
                 </div>
-
                 {/* Card Content */}
-                <div className="opacity-80 group-hover:opacity-95 transition-all">
-                    <h5 className="text-center font-serif text-xl font-regular group-hover:font-medium select-none">
-                        {title}
-                    </h5>
+                <div className="opacity-90 group-hover:opacity-100 transition-all">
+                    <div className="text-center font-serif text-xl select-none">{title}</div>
                     <div className="mt-4">{description}</div>
                 </div>
             </div>
