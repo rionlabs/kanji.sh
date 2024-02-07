@@ -59,7 +59,7 @@
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^2.2.1",
-    "puppeteer": "^5.2.1",
+    "puppeteer": "^22.0.0",
     "sharp": "^0.27.0",
     "typescript": "^4.1.3",
     "yarg": "^1.0.8",
