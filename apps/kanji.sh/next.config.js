@@ -15,6 +15,15 @@ const nextConfig = {
     devIndicators: {
         buildActivityPosition: 'top-right'
     },
+    redirects: async () => {
+        return [
+            {
+                source: '/write/collection/:key',
+                destination: '/write/:key',
+                permanent: true
+            }
+        ];
+    },
     experimental: {
         mdxRs: true,
         webpackBuildWorker: true
