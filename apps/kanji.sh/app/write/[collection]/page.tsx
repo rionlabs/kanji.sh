@@ -39,6 +39,17 @@ type PageProps = {
     };
 };
 
+export async function generateMetadata({ params }: PageProps) {
+    const data = await getCollection(params.collection);
+    if (!data) {
+        return notFound();
+    }
+    const { collectionData } = data;
+    return {
+        title: collectionData.heading
+    };
+}
+
 export default async function CollectionPage(props: PageProps) {
     const { collection } = props.params;
     const data = await getCollection(collection);

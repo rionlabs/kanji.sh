@@ -1,5 +1,6 @@
 import { CollectionType } from '@kanji-sh/models';
 import { appOperations } from '@kanji-sh/printer';
+import { Metadata } from 'next';
 import { FiDownload } from 'react-icons/fi';
 import { PDFView } from '../../../../src/components/molecules/PDFView';
 import React from 'react';
@@ -23,6 +24,16 @@ type PageProps = {
         file: string;
     };
 };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { worksheet } = await getWorksheet(params.collection, params.file);
+    if (!worksheet) {
+        return notFound();
+    }
+    return {
+        title: `Download worksheet for ${worksheet.name}`
+    };
+}
 
 export default async function CollectionFilePage(props: PageProps) {
     const { collection, file } = props.params;
