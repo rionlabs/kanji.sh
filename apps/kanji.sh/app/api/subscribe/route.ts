@@ -63,7 +63,7 @@ const addContact = async ({ name, email }: Subscription): Promise<void> => {
         headers: new Headers({
             'Content-Type': 'application/json',
             Accept: 'application/json',
-            'X-MailerLite-ApiKey': apiToken
+            Authorization: `Bearer ${apiToken}`
         }),
         body: JSON.stringify({ email, fields: { name }, groups: [groupId] })
     });
