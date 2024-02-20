@@ -57,7 +57,7 @@
     "p-queue": "^6.6.1",
     "pdf-merger-js": "^3.0.5",
     "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-preset-env": "^6.7.0",
+    "postcss-preset-env": "^9.4.0",
     "prettier": "^2.2.1",
     "puppeteer": "^5.2.1",
     "sharp": "^0.27.0",
