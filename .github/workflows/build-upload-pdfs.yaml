@@ -13,9 +13,10 @@ jobs:
   generate-pdfs:
     runs-on: macos-latest
     environment: Production
+    if: ${{ !startsWith(github.actor, 'dependabot') }}
     strategy:
       matrix:
-        source: [frequency, grade, jlpt, kanjigarden, wanikani]
+        source: [ jlpt, grade, wanikani, frequency, kanjigarden ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

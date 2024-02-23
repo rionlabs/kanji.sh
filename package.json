@@ -21,6 +21,7 @@
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.0.0",
+    "@next/third-parties": "^14.1.0",
     "@supabase/supabase-js": "^2.38.4",
     "@vercel/analytics": "^1.1.2",
     "adm-zip": "^0.5.10",

@@ -4,10 +4,10 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     commit-message:
       prefix: ":arrow_up:"
     labels:
       - "dependencies"
-    open-pull-requests-limit: 7
-    target-branch: "next"
+    open-pull-requests-limit: 3
+    target-branch: "main"

@@ -1,3 +1,5 @@
 User-Agent: *
 Allow: /
 Disallow: /api/
+Disallow: /_next/
+Disallow: /_error/
