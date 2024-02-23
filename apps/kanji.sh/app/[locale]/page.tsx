@@ -1,41 +1,47 @@
 import { ReadingBookAnimation } from 'apps/kanji.sh/src/components/atoms/AnimatedImage';
 import ServiceCard, { Direction } from 'apps/kanji.sh/src/components/molecules/ServiceCard';
-import { Config } from '../src/config';
+import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import React from 'react';
-import { Metadata } from 'next';
 
-export const metadata: Metadata = {
-    metadataBase: new URL(Config.publicUrl),
-    alternates: {
-        canonical: '/'
-    },
-    title: 'Your one-stop tool for practicing Kanji',
-    description: 'Practice the Kanji you learned over the years with distraction-free sheets.',
-    openGraph: {
-        locale: 'en_US',
-        url: 'https://kanji.sh',
-        title: 'Kanji.sh',
-        siteName: 'Kanji.sh',
-        description: 'Free tool to practice reading & writing Japanese kanji.',
-        images: [
-            {
-                url: '/poster.png',
-                width: 512,
-                height: 300,
-                alt: 'Kanji.sh Poster'
-            }
-        ]
-    }
+export const generateMetadata = async ({ params: { locale } }: LocaleParams) => {
+    const t = await getTranslations('home');
+    const config = await getTranslations('config');
+    return {
+        metadataBase: config('baseUrl'),
+        alternates: {
+            canonical: '/'
+        },
+        title: t('title'),
+        description: t('description'),
+        openGraph: {
+            locale,
+            url: config('baseUrl'),
+            siteName: 'Kanji.sh',
+            title: t('title'),
+            description: t('description'),
+            images: [
+                {
+                    url: '/poster.png',
+                    width: 512,
+                    height: 300,
+                    alt: 'Kanji.sh Poster'
+                }
+            ]
+        }
+    };
 };
 
-export default async function Index() {
+export default async function IndexPage({ params: { locale } }: LocaleParams) {
+    unstable_setRequestLocale(locale);
+    const t = await getTranslations('home.content');
     return (
         <div>
             <div className="flex flex-col sm:flex-row sm:items-center">
                 <div className="w-full">
                     <div className="w-full flex flex-col gap-4 justify-center">
                         <div>
-                            <h4>Your one stop tool for practicing kanji.</h4>
+                            <h4>{t('welcome-message')}</h4>
                         </div>
                         <div className="text-lg">
                             It already has every kanji worksheet for writing, and soon it will have

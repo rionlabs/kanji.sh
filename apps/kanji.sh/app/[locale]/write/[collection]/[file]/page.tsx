@@ -1,28 +1,32 @@
 import { CollectionType } from '@kanji-sh/models';
 import { appOperations } from '@kanji-sh/printer';
+import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
 import { Metadata } from 'next';
+import { unstable_setRequestLocale } from 'next-intl/server';
 import { FiDownload } from 'react-icons/fi';
-import { PDFView } from '../../../../src/components/molecules/PDFView';
+import { PDFView } from 'apps/kanji.sh/src/components/molecules/PDFView';
 import React from 'react';
 import { notFound } from 'next/navigation';
-
-async function getWorksheet(collection: string, file: string) {
-    try {
-        const appOps = appOperations();
-        const hash = await appOps.getWorksheetHash(collection as CollectionType, file);
-        const worksheet = await appOps.getWorksheetMeta(hash);
-        return { worksheet };
-    } catch (error) {
-        console.error(error);
-        return { worksheet: null };
-    }
-}
 
 type PageProps = {
     params: {
         collection: string;
         file: string;
     };
+} & LocaleParams;
+
+export const generateStaticParams = async () => {
+    const appOps = appOperations();
+    const collections = Object.values(CollectionType);
+    return Promise.all(
+        collections.map(async (collection) => {
+            const fileRecord = await appOps.getCollectionMeta(collection);
+            return Object.keys(fileRecord).map((file) => ({
+                collection,
+                file
+            }));
+        })
+    );
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -36,14 +40,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function CollectionFilePage(props: PageProps) {
-    const { collection, file } = props.params;
+    const { locale, collection, file } = props.params;
+    unstable_setRequestLocale(locale);
     const { worksheet } = await getWorksheet(collection, file);
     if (!worksheet) {
         return notFound();
     }
 
     return (
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-8">
             <div className="w-full sm:w-1/2">
                 <h4>{worksheet.name}</h4>
                 <div className="mb-4">
@@ -79,4 +84,16 @@ export default async function CollectionFilePage(props: PageProps) {
             </div>
         </div>
     );
+}
+
+async function getWorksheet(collection: string, file: string) {
+    try {
+        const appOps = appOperations();
+        const hash = await appOps.getWorksheetHash(collection as CollectionType, file);
+        const worksheet = await appOps.getWorksheetMeta(hash);
+        return { worksheet };
+    } catch (error) {
+        console.error(error);
+        return { worksheet: null };
+    }
 }

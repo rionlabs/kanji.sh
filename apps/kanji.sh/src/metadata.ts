@@ -4,11 +4,6 @@ export const PreBuiltCollections = [CollectionType.JLPT];
 
 export interface CollectionCardData {
     key: string;
-    title: string;
-    heading: string;
-    description: string;
-    metaColor: string;
-    backgroundImageUrl: string;
     files: Array<FileCardData>;
 }
 
@@ -22,12 +17,6 @@ export type FileCardData = {
 
 const gradesData: CollectionCardData = {
     key: 'grade',
-    title: 'GRADE',
-    heading: 'Japan School Grades',
-    description:
-        'List of 1,026 kanji for Japanese students in elementary school, from 1st grade to sixth grade.',
-    metaColor: '#5C9F4F',
-    backgroundImageUrl: '/assets/png/grade.png',
     files: []
 };
 const gradeColors = ['#AEEA00', '#00E676', '#0091EA', '#6200EA', '#AA00FF', '#D50000'];
@@ -43,12 +32,6 @@ for (let i = 1; i <= 6; i++) {
 
 const JLPTData: CollectionCardData = {
     key: 'jlpt',
-    title: 'JLPT',
-    heading: 'JLPT',
-    description:
-        'The Official Worldwide Japanese-Language Proficiency Test, operated by the Japan Foundation and JEES.',
-    metaColor: '#1A7EC3',
-    backgroundImageUrl: '/assets/png/jlpt.png',
     files: []
 };
 
@@ -66,12 +49,6 @@ for (let i = 5; i >= 1; i--) {
 
 const wanikaniData: CollectionCardData = {
     key: 'wanikani',
-    title: 'WANIKANI',
-    heading: 'Wanikani',
-    description:
-        'WaniKani is a Japanese radicals, kanji, and vocabulary learning web app that uses mnemonics and SRS to make kanji learning simple.',
-    metaColor: '#00AAFF',
-    backgroundImageUrl: '/assets/png/wanikani.png',
     files: []
 };
 
@@ -91,12 +68,6 @@ for (let level = 1; level <= 60; level++) {
 
 const kanjiGardenData: CollectionCardData = {
     key: 'kanjigarden',
-    heading: 'Kanji Garden',
-    title: 'KANJI GARDEN',
-    description:
-        'Kanji Garden is a free mnemonic-based SRS kanji learning tool that features about 2600 kanji.',
-    metaColor: '#e2506d',
-    backgroundImageUrl: '/assets/png/kanjigarden.png',
     files: []
 };
 
@@ -112,11 +83,6 @@ for (let i = 0, fileCounter = 1; i <= 2645; i += 50, fileCounter++) {
 
 const frequencyData: CollectionCardData = {
     key: 'frequency',
-    heading: 'Frequency',
-    title: 'FREQUENCY',
-    description: 'Kanji list ordered by the frequency they are used in the Japanese Language.',
-    metaColor: '#0D2542',
-    backgroundImageUrl: '/assets/png/frequency.png',
     files: []
 };
 

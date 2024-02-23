@@ -1,4 +1,4 @@
-import { Config } from '../../src/config';
+import { Config } from '../../../src/config';
 import { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

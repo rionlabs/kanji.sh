@@ -1,0 +1,94 @@
+{
+  "home": {
+    "title": "Your one-stop tool for practicing Kanji",
+    "description": "Free tool to practice reading & writing Japanese kanji.",
+    "content": {
+      "welcome-title": "Your one stop tool for practicing kanji.",
+      "welcome-message": "It already has every kanji worksheet for writing, and soon it will have plenty to practice reading.",
+      "sections": {
+        "read-title": "read",
+        "read-description": "What's the point of remembering kanji if you can't read them in a sentence, eh? Soon you will get practice sessions here for the kanjis you know so that you will be able to read 飛躍的に through anything.",
+        "read-button": "Join the Wait-List",
+        "write": "write",
+        "write-description": "Although it seems old school, writing is still one of the best ways to improve language skills. Dive in the stroke orders, and make sense of complex kanjis.",
+        "write-button": "Download Worksheets"
+      }
+    }
+  },
+  "read": {
+    "title": "Reading sheets coming soon",
+    "description": "Subscribe for updates to get your hands on reading practice sheets.",
+    "content": {
+      "title": "Work In Progress",
+      "description-1": "Worksheets for reading practice will be available soon.",
+      "description-2": "If you would like to try, signup for the updates. No spams, We promise!"
+    }
+  },
+  "form": {
+    "name-label": "Name",
+    "name-placeholder": "Taro",
+    "email-label": "Email",
+    "email-placeholder": "taro@kanji.sh",
+    "button": "Subscribe",
+    "button-loading": "Subscribing...",
+    "post-subscribe-message": "Thanks for subscribing!!"
+  },
+  "write": {
+    "title": "Download Kanji worksheets for Free",
+    "description": "Download printable handwriting practice worksheets for Japanese Kanji by JLPT level, Grade Level, Wanikani Level, and Frequency for free.",
+    "content": {
+      "title": "Writing Matters.",
+      "description-1": "Yes, you know hundreds of Kanji, and you can read a newspaper or your favorite manga all the way to the end. But can you write? If you want to learn Kanji by writing or learn writing Kanji, this is your one-stop site for all the worksheets.",
+      "description-2": "Download printable handwriting practice worksheets for Japanese Kanji by JLPT level, Grade Level, Wanikani Level, and Frequency. Every sheet is free, now and forever!"
+    }
+  },
+  "about": {
+    "title": "",
+    "description": "",
+    "content": {
+      "title": "About",
+      "description": "Kanji Practice is a free tool for practicing Kanji. It has every Kanji worksheet for writing, and soon it will have plenty to practice reading. It is a work in progress, and we are working hard to make it better every day. If you have any suggestions or feedback, please feel free to reach out to us."
+    }
+  },
+  "collections": {
+    "jlpt": {
+      "title": "JLPT",
+      "heading": "Japanese Language Proficiency Test",
+      "description": "The Official Worldwide Japanese Language Proficiency Test, operated by the Japan Foundation and JEES."
+    },
+    "grade": {
+      "title": "Grades",
+      "heading": "Japan Elementary School Grades",
+      "description": "List of 1,026 kanji for Japanese students in elementary school, from 1st grade to 6th grade."
+    },
+    "wanikani": {
+      "title": "Wanikani",
+      "heading": "Wanikani",
+      "description": "Wanikani is a Japanese radicals, kanji, and vocabulary learning web app that uses mnemonics and SRS to make kanji learning simple."
+    },
+    "frequency": {
+      "title": "Frequency",
+      "heading": "Frequency",
+      "description": "Kanji list ordered by the frequency they are used in the Japanese Language."
+    },
+    "kanjigarden": {
+      "title": "KanjiGarden",
+      "heading": "Kanji Garden",
+      "description": "Kanji Garden is a free mnemonic-based SRS kanji learning tool that features about 2600 kanji."
+    }
+  },
+  "header": {
+    "read": "read",
+    "write": "write",
+    "about": "about"
+  },
+  "footer": {
+    "github": "GitHub",
+    "donate": "Buy a Sushi",
+    "about": "About",
+    "acknowledgements": "Acknowledgements",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "copyright": "© RionLabs. All rights reserved."
+  }
+}

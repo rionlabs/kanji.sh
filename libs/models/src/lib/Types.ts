@@ -1,7 +1,7 @@
 export enum CollectionType {
     JLPT = 'jlpt',
-    WANIKANI = 'wanikani',
     GRADE = 'grade',
+    WANIKANI = 'wanikani',
     FREQUENCY = 'frequency',
     KANJIGARDEN = 'kanjigarden'
 }

@@ -67,7 +67,7 @@
         @apply font-normal;
     }
 
-    p {
+    p, ul {
         @apply text-base-content;
     }
 }

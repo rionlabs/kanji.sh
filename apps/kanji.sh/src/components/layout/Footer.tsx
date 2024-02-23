@@ -1,8 +1,10 @@
-import { Config } from '../../config';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import Link from 'next/link';
 
 export const Footer = () => {
+    const t = useTranslations('footer');
+    const config = useTranslations('config');
     return (
         <footer className="">
             <div className="container text-primary-content/95">
@@ -10,14 +12,14 @@ export const Footer = () => {
                     <nav className="w-full sm:w-auto flex flex-col gap-3">
                         <a
                             className="link link-hover after:content-['_↗']"
-                            href={Config.githubUrl}
+                            href={config('githubUrl')}
                             target="_blank"
                             rel="noreferrer">
                             GitHub
                         </a>
                         <a
                             className="link link-hover after:content-['_↗']"
-                            href={Config.bmcUrl}
+                            href={config('bmcUrl')}
                             target="_blank"
                             rel="noreferrer">
                             Buy a Sushi
@@ -26,23 +28,21 @@ export const Footer = () => {
                     <div className="display-none sm:flex" />
                     <nav className="w-full sm:w-auto flex flex-col gap-3">
                         <Link className="link link-hover" href={'/about'}>
-                            About
+                            {t('about')}
                         </Link>
                         <Link className="link link-hover" href={'/about/acknowledgments'}>
-                            Acknowledgments
+                            {t('acknowledgements')}
                         </Link>
                         <Link className="link link-hover" href={'/about/privacy-policy'}>
-                            Privacy Policy
+                            {t('privacy')}
                         </Link>
                         <Link className="link link-hover" href={'/about/terms'}>
-                            Terms Of Use
+                            {t('terms')}
                         </Link>
                     </nav>
                 </div>
                 <hr className="bg-primary-content opacity-10" />
-                <div className="text-center py-4 opacity-80 font-thin">
-                    &copy; RionLabs. All rights reserved.
-                </div>
+                <div className="text-center py-4 opacity-80 font-thin">{t('copyright')}</div>
             </div>
         </footer>
     );

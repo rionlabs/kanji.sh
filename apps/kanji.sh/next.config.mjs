@@ -1,5 +1,9 @@
-const { composePlugins, withNx } = require('@nx/next');
-const withMDX = require('@next/mdx')();
+import { composePlugins, withNx } from '@nx/next';
+import createMDXPlugin from '@next/mdx';
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin();
+const withMDX = createMDXPlugin();
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -11,7 +15,7 @@ const nextConfig = {
         // See: https://github.com/gregberge/svgr
         svgr: false
     },
-    pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+    pageExtensions: ['ts', 'tsx', 'mdx'],
     devIndicators: {
         buildActivityPosition: 'top-right'
     },
@@ -28,7 +32,7 @@ const nextConfig = {
         mdxRs: true,
         webpackBuildWorker: true
     },
-    webpack: (config, options) => {
+    webpack: (config) => {
         // https://github.com/wojtekmaj/react-pdf/blob/main/packages/react-pdf/README.md#nextjs
         config.resolve.alias.canvas = false;
         // SVGR
@@ -41,6 +45,6 @@ const nextConfig = {
     }
 };
 
-const plugins = [withMDX, withNx];
+const plugins = [withMDX, withNextIntl, withNx];
 
-module.exports = composePlugins(...plugins)(nextConfig);
+export default composePlugins(...plugins)(nextConfig);

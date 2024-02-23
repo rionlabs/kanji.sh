@@ -27,7 +27,12 @@ const tailwindCssConfig = {
         },
         extend: {
             colors: {
-                current: 'currentColor'
+                current: 'currentColor',
+                jlpt: '#1A7EC3',
+                grade: 'rgb(92, 159, 79)',
+                wanikani: 'rgb(0, 170, 255)',
+                frequency: 'rgb(13, 37, 66)',
+                kanjigarden: 'rgb(226, 80, 109)'
             },
             aspectRatio: {
                 A4: '210 / 297'
@@ -46,7 +51,6 @@ const tailwindCssConfig = {
         require('daisyui')
     ],
     daisyui: {
-        logs: true,
         themes: [
             {
                 light: {
