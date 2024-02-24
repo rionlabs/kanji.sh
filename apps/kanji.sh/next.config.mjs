@@ -21,6 +21,17 @@ const nextConfig = {
     devIndicators: {
         buildActivityPosition: 'top-right'
     },
+    headers: async () => [
+        {
+            source: '/assets/:path(json|jpg|png|svg)',
+            headers: [
+                {
+                    key: 'Cache-Control',
+                    value: 'public, max-age=31536000, stale-while-revalidate',
+                },
+            ],
+        },
+    ],
     redirects: async () => {
         return [
             {
