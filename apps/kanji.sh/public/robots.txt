@@ -3,3 +3,6 @@ Allow: /
 Disallow: /api/
 Disallow: /_next/
 Disallow: /_error/
+
+Sitemap: https://kanji.sh/en/sitemap.xml
+Sitemap: https://kanji.sh/en/write/sitemap.xml

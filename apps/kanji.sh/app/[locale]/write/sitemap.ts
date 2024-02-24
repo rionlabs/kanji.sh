@@ -1,10 +1,9 @@
 import { METADATA } from 'apps/kanji.sh/src/metadata';
-import { getTranslations } from 'next-intl/server';
 import { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const config = await getTranslations('config');
-    const basePath = `${config('baseUrl')}/write`;
+    // TODO: Read baseUrl from ${config('baseUrl')}
+    const basePath = 'https://kanji.sh/write';
 
     const collectionPaths: string[] = [];
     const filePaths: string[] = [];
