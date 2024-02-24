@@ -4,7 +4,7 @@ import { FileCard } from 'apps/kanji.sh/src/components/molecules/FileCard';
 import { CollectionCardData, FileCardData, METADATA } from 'apps/kanji.sh/src/metadata';
 import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
-import React from 'react';
+import React, { cache } from 'react';
 
 import { notFound } from 'next/navigation';
 
@@ -27,10 +27,12 @@ export async function generateMetadata({ params }: PageProps) {
     };
 }
 
+const cachedCollection = cache(getCollection);
+
 export default async function CollectionPage(props: PageProps) {
     const { collection, locale } = props.params;
     unstable_setRequestLocale(locale);
-    const data = await getCollection(collection);
+    const data = await cachedCollection(collection);
     const t = await getTranslations({
         locale,
         namespace: `collections.${collection}`
@@ -70,7 +72,9 @@ async function getCollection(collection: string): Promise<CollectionData | null>
         for (let worksheetKey in collectionWorksheets) {
             const worksheet = collectionWorksheets[worksheetKey];
             const cardData = files.find((file) => file.key === worksheetKey);
-            if (!cardData) throw new Error(`Worksheet ${worksheetKey} not found in metadata`);
+            if (!cardData) {
+                console.error(`Worksheet ${worksheetKey} not found in metadata`);
+            }
             worksheets.push({ worksheet, cardData });
         }
 

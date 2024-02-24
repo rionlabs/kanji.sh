@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { FiDownload } from 'react-icons/fi';
 import { PDFView } from 'apps/kanji.sh/src/components/molecules/PDFView';
-import React from 'react';
+import React, { cache } from 'react';
 import { notFound } from 'next/navigation';
 
 type PageProps = {
@@ -29,8 +29,10 @@ export const generateStaticParams = async () => {
     );
 };
 
+const cachedWorksheet = cache(getWorksheet);
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { worksheet } = await getWorksheet(params.collection, params.file);
+    const { worksheet } = await cachedWorksheet(params.collection, params.file);
     if (!worksheet) {
         return notFound();
     }
@@ -42,7 +44,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CollectionFilePage(props: PageProps) {
     const { locale, collection, file } = props.params;
     unstable_setRequestLocale(locale);
-    const { worksheet } = await getWorksheet(collection, file);
+    const { worksheet } = await cachedWorksheet(collection, file);
     if (!worksheet) {
         return notFound();
     }
