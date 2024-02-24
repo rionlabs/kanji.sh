@@ -74,6 +74,7 @@ async function getCollection(collection: string): Promise<CollectionData | null>
             const cardData = files.find((file) => file.key === worksheetKey);
             if (!cardData) {
                 console.error(`Worksheet ${worksheetKey} not found in metadata`);
+                return null;
             }
             worksheets.push({ worksheet, cardData });
         }
