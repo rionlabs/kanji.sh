@@ -1,9 +1,11 @@
 import { composePlugins, withNx } from '@nx/next';
 import createMDXPlugin from '@next/mdx';
 import createNextIntlPlugin from 'next-intl/plugin';
+import createBundleAnalyzer from '@next/bundle-analyzer'
 
 const withNextIntl = createNextIntlPlugin();
 const withMDX = createMDXPlugin();
+const withAnalyzer = createBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -45,6 +47,6 @@ const nextConfig = {
     }
 };
 
-const plugins = [withMDX, withNextIntl, withNx];
+const plugins = [withMDX, withNextIntl, withNx, withAnalyzer];
 
 export default composePlugins(...plugins)(nextConfig);
