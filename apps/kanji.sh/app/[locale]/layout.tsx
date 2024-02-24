@@ -5,7 +5,6 @@ import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import React from 'react';
 import { Analytics } from '@vercel/analytics/react';
-import { pdfjs } from 'react-pdf';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 import '../tailwind.css';
@@ -17,7 +16,6 @@ type PageProps = {
 export const generateStaticParams = () => Locale.locales.map((locale) => ({ locale }));
 
 export default async function RootLayout({ children, params: { locale } }: PageProps) {
-    pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
     unstable_setRequestLocale(locale);
     const analyticsId = process.env.NEXT_PUBLIC_G_ANALYTICS_ID;
     if (!analyticsId) {

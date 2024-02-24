@@ -1,6 +1,5 @@
 'use client';
 
-import clsx from 'clsx';
 import React, { useRef } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Document, Page, pdfjs } from 'react-pdf';
@@ -62,10 +61,6 @@ export const PDFView = (props: PDFViewProps) => {
                 loading={<PagePlaceholder />}
                 noData={<PagePlaceholder />}
                 error={<PageError />}
-                onLoadProgress={(data) => {
-                    const progress = data.loaded / data.total;
-                    console.log(`${data.loaded}/${data.total} = ${progress}`);
-                }}
                 onLoadSuccess={(pdf) => {
                     setPdfLoaded(true);
                     setPageCount(pdf.numPages);

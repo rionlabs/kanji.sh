@@ -1,61 +1,69 @@
 'use client';
 
+import clsx from 'clsx';
 import React, { useEffect, useRef } from 'react';
-import lottie from 'lottie-web';
-
-import construction from '../../assets/animations/construction_in_process.json';
-import reading from '../../assets/animations/reading_book.json';
-import writing from '../../assets/animations/writing.json';
-import printing from '../../assets/animations/printing.json';
-import subscribed from '../../assets/animations/subscribed.json';
+import Lottie from 'lottie-web';
+import ReadingSvg from '../../assets/vectors/reading.svg';
+import WritingSvg from '../../assets/vectors/writing.svg';
+import PrintingSvg from '../../assets/vectors/printing.svg';
+import SubscribedSvg from '../../assets/vectors/subscribed.svg';
 
 type AnimationProps = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    animationData?: any;
+    animationName: 'reading' | 'writing' | 'printing' | 'subscribed';
     className: string;
-    loop?: boolean | number;
+    loop?: boolean;
 };
 
-const AnimatedImage: (props: AnimationProps) => JSX.Element = (props: AnimationProps) => {
-    const element = useRef<HTMLDivElement>(null);
-    const lottieInstance = useRef<any>();
+const SvgFallbacks = {
+    reading: ReadingSvg,
+    writing: WritingSvg,
+    printing: PrintingSvg,
+    subscribed: SubscribedSvg
+};
 
-    const { animationData, className, loop } = props;
+export const AnimatedImage = ({ animationName, className, loop = false }: AnimationProps) => {
+    const animationContainerRef = useRef<HTMLDivElement>(null);
+    const [display, setDisplay] = React.useState<'anim' | 'svg'>('svg');
+
+    const SvgFallback = SvgFallbacks[animationName];
 
     useEffect(() => {
-        if (element.current) {
-            lottieInstance.current = lottie.loadAnimation({
-                animationData,
+        if (animationContainerRef.current) {
+            const animationItem = Lottie.loadAnimation({
+                path: `/assets/anim/${animationName}.json`,
                 loop,
-                container: element.current
+                renderer: 'svg',
+                container: animationContainerRef.current
+            });
+            animationItem.addEventListener('data_ready', () => {
+                setDisplay('anim');
             });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [animationData]);
+    }, []);
 
     return (
-        <div className={props.className}>
-            <div className={className} ref={element} />
+        <div className={clsx(className)}>
+            <div
+                ref={animationContainerRef}
+                className={clsx('w-full h-full', { hidden: display === 'svg' })}
+            />
+            <SvgFallback className={clsx('w-full h-full', { hidden: display === 'anim' })} />
         </div>
     );
 };
 
-export const ReadingBookAnimation: (props: { className: string }) => JSX.Element = (props: {
-    className: string;
-}) => <AnimatedImage className={props.className} animationData={reading} />;
+export const ReadingAnimation = (props: { className: string }) => (
+    <AnimatedImage className={props.className} loop={true} animationName={'reading'} />
+);
 
-export const ConstructionAnimation: (props: { className: string }) => JSX.Element = (props: {
-    className: string;
-}) => <AnimatedImage className={props.className} animationData={construction} />;
+export const WritingAnimation = (props: { className: string }) => (
+    <AnimatedImage className={props.className} loop={true} animationName={'writing'} />
+);
 
-export const WritingAnimation: (props: { className: string }) => JSX.Element = (props: {
-    className: string;
-}) => <AnimatedImage className={props.className} animationData={writing} />;
+export const PrintingAnimation = (props: { className: string }) => (
+    <AnimatedImage className={props.className} loop={false} animationName={'printing'} />
+);
 
-export const PrintingAnimation: (props: { className: string }) => JSX.Element = (props: {
-    className: string;
-}) => <AnimatedImage className={props.className} loop={false} animationData={printing} />;
-
-export const SubscribedAnimation: (props: { className: string }) => JSX.Element = (props: {
-    className: string;
-}) => <AnimatedImage className={props.className} loop={false} animationData={subscribed} />;
+export const SubscribedAnimation = (props: { className: string }) => (
+    <AnimatedImage className={props.className} loop={false} animationName={'subscribed'} />
+);

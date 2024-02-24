@@ -22,8 +22,7 @@
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "kanji.sh:build",
-        "dev": true
+        "buildTarget": "kanji.sh:build"
       },
       "configurations": {
         "development": {

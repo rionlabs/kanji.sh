@@ -1,4 +1,4 @@
-import { ReadingBookAnimation } from 'apps/kanji.sh/src/components/atoms/AnimatedImage';
+import { ReadingAnimation } from 'apps/kanji.sh/src/components/atoms/AnimatedImage';
 import ServiceCard, { Direction } from 'apps/kanji.sh/src/components/molecules/ServiceCard';
 import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
@@ -51,7 +51,7 @@ export default async function IndexPage({ params: { locale } }: LocaleParams) {
                 </div>
                 <div className="w-full">
                     <div className="max-w-[420px] w-[420px] h-[420px]">
-                        <ReadingBookAnimation className="p-4" />
+                        <ReadingAnimation className="p-4" />
                     </div>
                 </div>
             </div>
