@@ -35,12 +35,26 @@ export class CloudFiles implements Files {
     }
 
     async getUrl(hash: string): Promise<URL> {
-        const {
-            data: { publicUrl }
-        } = this.supabaseClient.storage
+        // Expiry time in seconds
+        const expiresIn = 24 * 60 * 60;
+        const metadata = await this.readMetaData(hash);
+        const { data, error } = await this.supabaseClient.storage
             .from(this.buckets.pdfBucket)
-            .getPublicUrl(`${hash}.pdf`, { download: false });
-        return new URL(publicUrl);
+            .createSignedUrl(`${hash}.pdf`, expiresIn, { download: `${metadata.name}.pdf` });
+        if (error || !data) {
+            throw error;
+        }
+        return new URL(data.signedUrl);
+    }
+
+    async getDownloadUrl(hash: string, expiresIn: number, fileName: string): Promise<URL> {
+        const { data, error } = await this.supabaseClient.storage
+            .from(this.buckets.pdfBucket)
+            .createSignedUrl(`${hash}.pdf`, expiresIn, { download: `${fileName}.pdf` });
+        if (error || !data) {
+            throw error;
+        }
+        return new URL(data.signedUrl);
     }
 
     async readMetaData(hash: string): Promise<Worksheet> {

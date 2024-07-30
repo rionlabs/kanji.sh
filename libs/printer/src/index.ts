@@ -25,7 +25,7 @@ type BatchWorksheetResult = Record<string, Worksheet>;
  * Only use cloud storage in these operations because the local file system is not available in Next.js.
  */
 class AppOps {
-    constructor(private files: Files) {}
+    constructor(private files: CloudFiles) {}
 
     getCollectionMeta = async (collection: CollectionType): Promise<Record<string, Worksheet>> => {
         return this.files.readCollectionMetaData(collection);
@@ -42,6 +42,16 @@ class AppOps {
 
     getWorksheetContents = async (hash: string): Promise<Buffer> => {
         return this.files.readPDF(hash);
+    };
+
+    getWorksheetUrl = async (hash: string): Promise<URL> => {
+        return this.files.getUrl(hash);
+    };
+
+    getWorksheetDownloadUrl = async (hash: string): Promise<URL> => {
+        const metaFile = await this.files.readMetaData(hash);
+        const expiresIn = 24 * 60 * 60;
+        return this.files.getDownloadUrl(hash, expiresIn, metaFile.name);
     };
 }
 

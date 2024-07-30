@@ -13,15 +13,14 @@ export async function GET(request: NextRequest, context: Context): Promise<NextR
     const download = new URL(request.url).searchParams.has('download');
 
     const appOps = appOperations();
-    const worksheet = await appOps.getWorksheetMeta(hash);
-    const pdfBuffer = await appOps.getWorksheetContents(hash);
-    const contentDisposition = download ? `attachment; filename="${worksheet.name}.pdf"` : 'inline';
-    return new NextResponse(pdfBuffer, {
-        status: 200,
-        headers: {
-            'Content-Type': 'application/pdf',
-            'Content-Length': pdfBuffer.length.toString(),
-            'Content-Disposition': contentDisposition
-        }
-    });
+
+    if (!download) {
+        const downloadUrl = await appOps.getWorksheetUrl(hash);
+        return NextResponse.redirect(downloadUrl, {
+            status: 302
+        });
+    } else {
+        const downloadUrl = await appOps.getWorksheetDownloadUrl(hash);
+        return NextResponse.redirect(downloadUrl.toString());
+    }
 }
