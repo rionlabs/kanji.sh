@@ -2,3 +2,5 @@
 generator/build
 node_modules
 napp/src/images/anim
+
+/.nx/workspace-data

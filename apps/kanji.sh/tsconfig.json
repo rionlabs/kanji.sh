@@ -31,7 +31,8 @@
     ".//.next/types/**/*.ts",
     "../../dist/apps/kanji.sh/.next/types/**/*.ts",
     "next-env.d.ts",
-    "../../apps/kanji.sh/.next/types/**/*.ts"
+    "../../apps/kanji.sh/.next/types/**/*.ts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

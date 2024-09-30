@@ -1,25 +1,25 @@
 {
   "root": true,
-  "plugins": [
-    "@nx/eslint-plugin"
-  ],
-  "extends": [
-    "plugin:prettier/recommended"
-  ],
+  "plugins": ["@nx/eslint-plugin"],
+  "extends": ["plugin:prettier/recommended"],
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": [
-        "plugin:@nx/typescript"
-      ],
-      "parser": "@typescript-eslint/parser"
+      "extends": ["plugin:@nx/typescript"],
+      "parser": "@typescript-eslint/parser",
+      "rules": {
+        "@typescript-eslint/no-extra-semi": "error",
+        "no-extra-semi": "off"
+      }
     },
     {
       "files": ["*.js"],
-      "extends": [
-        "plugin:@nx/javascript"
-      ],
-      "parser": "@typescript-eslint/parser"
+      "extends": ["plugin:@nx/javascript"],
+      "parser": "@typescript-eslint/parser",
+      "rules": {
+        "@typescript-eslint/no-extra-semi": "error",
+        "no-extra-semi": "off"
+      }
     },
     {
       "files": ["*.json"],
