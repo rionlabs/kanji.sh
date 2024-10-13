@@ -6,47 +6,33 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/next:build",
-      "outputs": ["{options.outputPath}"],
+      "executor": "nx:run-commands",
       "defaultConfiguration": "production",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/kanji.sh"
-      },
-      "configurations": {
-        "development": {
-          "outputPath": "apps/kanji.sh"
-        },
-        "production": {}
+        "cwd": "apps/kanji.sh",
+        "commands": [
+          "npx remix vite:build --emptyOutDir",
+          "npx remix-sitemap"
+        ]
       }
     },
-    "serve": {
-      "executor": "@nx/next:server",
+    "start": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "defaultConfiguration": "production",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "command": "npx remix-serve dist/apps/kanji.sh/server/index.js"
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
       "defaultConfiguration": "development",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "buildTarget": "kanji.sh:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "kanji.sh:build:development",
-          "dev": true
-        },
-        "production": {
-          "buildTarget": "kanji.sh:build:production",
-          "dev": false
-        }
-      }
-    },
-    "export": {
-      "executor": "@nx/next:export",
-      "options": {
-        "buildTarget": "kanji.sh:build:production"
-      }
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "apps/kanji.sh/jest.config.ts"
+        "cwd": "apps/kanji.sh",
+        "command": "npx remix vite:dev"
       }
     },
     "lint": {

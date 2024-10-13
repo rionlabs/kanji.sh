@@ -1,0 +1,9 @@
+{
+  "name": "kanji.sh",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

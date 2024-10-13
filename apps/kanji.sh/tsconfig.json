@@ -1,43 +1,28 @@
 {
   "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "jsx": "preserve",
-    "allowJs": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "types": [
-      "node",
-      "next"
-    ],
-    "skipLibCheck": true,
-    "module": "esnext"
-  },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "**/*.js",
-    "**/*.jsx",
-    ".//.next/types/**/*.ts",
-    "../../dist/apps/kanji.sh/.next/types/**/*.ts",
-    "next-env.d.ts",
-    "../../apps/kanji.sh/.next/types/**/*.ts",
-    ".next/types/**/*.ts"
+    "env.d.ts",
+    "**/.server/**/*.ts",
+    "**/.server/**/*.tsx",
+    "**/.client/**/*.ts",
+    "**/.client/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules",
-    "jest.config.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts"
-  ]
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "types": ["@remix-run/node"],
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "target": "ES2022",
+    "strict": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true
+  }
 }

@@ -6,7 +6,7 @@
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "baseUrl": ".",
     "paths": {
-      "@kanji-sh/app/*": ["apps/app/src/*"],
+      "@kanji-sh/app/components": ["apps/kanji.sh/app/components/_index.ts"],
       "@kanji-sh/models": ["libs/models/src/index.ts"],
       "@kanji-sh/printer": ["libs/printer/src/index.ts"],
       "printer-cli": ["libs/printer-cli/src/index.ts"]
