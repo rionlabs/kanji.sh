@@ -7,6 +7,7 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import svgr from 'vite-plugin-svgr';
 import mdx from '@mdx-js/rollup';
+import { vercelPreset } from '@vercel/remix/vite';
 
 export default defineConfig(({ mode }) => {
     return {
@@ -20,6 +21,7 @@ export default defineConfig(({ mode }) => {
                 ]
             }),
             remix({
+                presets: [vercelPreset],
                 basename: "/",
                 buildDirectory: path.resolve(workspaceRoot, 'dist/apps/kanji.sh'),
                 future: {

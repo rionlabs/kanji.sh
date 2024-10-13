@@ -1,9 +1,16 @@
 {
-  "framework": "nextjs",
+  "framework": "remix",
   "installCommand": "npm install",
   "buildCommand": "nx run kanji.sh:build --prod",
   "outputDirectory": "dist/apps/kanji.sh/.next",
   "ignoreCommand": "node tools/skipDeploy.js",
   "trailingSlash": false,
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/write/collection/:key",
+      "destination": "/write/:key",
+      "permanent": true
+    }
+  ]
 }
