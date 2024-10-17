@@ -7,6 +7,7 @@ import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { useChangeLanguage } from 'remix-i18next/react';
 import i18nServer from './i18n/i18n.server';
+import { Analytics } from '@vercel/analytics/react';
 
 import './tailwind.css';
 
@@ -43,8 +44,9 @@ export function Layout() {
             <Outlet />
         </main>
         <Footer />
-        <ScrollRestoration />
+        <Analytics />
         <Scripts />
+        <ScrollRestoration />
         </body>
         </html>
     );

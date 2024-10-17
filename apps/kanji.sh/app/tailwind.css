@@ -14,7 +14,7 @@
         background-image: url('/assets/bg/light.jpg');
     }
     .paper-dark {
-        background-image: url('/assets/jpg/bg-dark.webp');
+        background-image: url('/assets/bg/dark.jpg');
     }
     .paper {
         @apply paper-light dark:paper-dark;
