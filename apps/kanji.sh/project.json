@@ -12,12 +12,12 @@
       "options": {
         "cwd": "apps/kanji.sh",
         "commands": [
-          "npx remix vite:build --emptyOutDir",
-          "npx remix-sitemap"
+          "npx remix-sitemap",
+          "npx remix vite:build --emptyOutDir"
         ]
       }
     },
-    "start": {
+    "serve": {
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
       "defaultConfiguration": "production",

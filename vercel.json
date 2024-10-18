@@ -1,9 +1,8 @@
 {
   "framework": "remix",
-  "installCommand": "npm install --legacy-peer-deps",
-  "buildCommand": "nx run kanji.sh:build --prod",
-  "outputDirectory": "dist/apps/kanji.sh/.next",
-  "ignoreCommand": "node tools/skipDeploy.js",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build:app",
+  "ignoreCommand": "node tools/skipDeploy.cjs",
   "trailingSlash": false,
   "cleanUrls": true,
   "redirects": [

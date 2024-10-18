@@ -1,11 +1,9 @@
 import { workspaceRoot } from '@nx/devkit';
 import path from 'node:path';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import { type Config } from 'tailwindcss';
 
-/**
- * @type {import('tailwindcss').Config}
- */
-const tailwindCssConfig = {
+const tailwindCssConfig: Config = {
     darkMode: 'class',
     content: [
         path.join(workspaceRoot, 'apps/**/*.{js,ts,jsx,tsx,mdx}')
@@ -50,6 +48,7 @@ const tailwindCssConfig = {
         require('daisyui')
     ],
     daisyui: {
+        logs: false,
         themes: [
             {
                 light: {
