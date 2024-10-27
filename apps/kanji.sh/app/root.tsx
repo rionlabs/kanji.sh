@@ -1,13 +1,15 @@
 // noinspection HtmlRequiredTitleElement
 
 import { json, LoaderFunctionArgs } from '@remix-run/node';
-
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData, useRouteLoaderData } from '@remix-run/react';
+
+import { Analytics } from '@vercel/analytics/react';
+import { useChangeLanguage } from 'remix-i18next/react';
+
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
-import { useChangeLanguage } from 'remix-i18next/react';
 import i18nServer from './i18n/i18n.server';
-import { Analytics } from '@vercel/analytics/react';
+
 
 import './tailwind.css';
 

@@ -1,10 +1,12 @@
-import clsx from 'clsx';
 import React, { useEffect, useRef } from 'react';
+
+import clsx from 'clsx';
 import Lottie from 'lottie-web';
-import { default as ReadingSvg } from '../assets/vectors/reading.svg?react';
-import { default as WritingSvg } from '../assets/vectors/writing.svg?react';
+
 import { default as PrintingSvg } from '../assets/vectors/printing.svg?react';
+import { default as ReadingSvg } from '../assets/vectors/reading.svg?react';
 import { default as SubscribedSvg } from '../assets/vectors/subscribed.svg?react';
+import { default as WritingSvg } from '../assets/vectors/writing.svg?react';
 
 type AnimationName = 'reading' | 'writing' | 'printing' | 'subscribed';
 
@@ -39,7 +41,7 @@ export const AnimatedImage = ({ animationName, className, loop = false }: Animat
                 setDisplay('anim');
             });
         }
-        // eslint-disable-next-line
+
     }, []);
 
     return (

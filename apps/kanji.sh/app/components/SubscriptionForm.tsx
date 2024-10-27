@@ -1,6 +1,8 @@
-import { SubscribedAnimation } from './AnimatedImage';
 import React, { FormEvent } from 'react';
+
 import { useTranslation } from 'react-i18next';
+
+import { SubscribedAnimation } from './AnimatedImage';
 
 export type FormState = 'idle' | 'submitting' | 'submitted';
 

@@ -1,5 +1,6 @@
-import { useTranslation } from 'react-i18next';
 import { Link } from '@remix-run/react';
+
+import { useTranslation } from 'react-i18next';
 
 export const Footer = () => {
     const { t } = useTranslation('footer');

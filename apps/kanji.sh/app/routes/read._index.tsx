@@ -1,6 +1,8 @@
 import { LoaderFunction } from '@remix-run/node';
-import { PrintingAnimation , SubscriptionForm } from '@kanji-sh/app/components';
+
 import { useTranslation } from 'react-i18next';
+
+import { PrintingAnimation, SubscriptionForm } from '@kanji-sh/app/components';
 
 export const loader: LoaderFunction = async () => {
     return null;

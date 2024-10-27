@@ -1,7 +1,9 @@
-import { describe, expect } from '@jest/globals';
-import * as fs from 'fs';
+import fs from 'node:fs';
 import * as path from 'path';
+
+import { describe, expect } from '@jest/globals';
 import fetch from 'node-fetch';
+
 
 import { downloadKanjiData } from '../src/download';
 import { readLinesInFile } from '../src/utils';

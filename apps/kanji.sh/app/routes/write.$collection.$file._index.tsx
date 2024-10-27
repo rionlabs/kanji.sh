@@ -1,9 +1,12 @@
-import { CollectionType, Worksheet } from '@kanji-sh/models';
-import { useLoaderData } from '@remix-run/react';
-import { PDFView } from 'apps/kanji.sh/app/components/PDFView';
-import { FiDownload } from 'react-icons/fi';
-import { appOperations } from '../printer.server';
 import { json, LoaderFunction } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
+
+import { FiDownload } from 'react-icons/fi';
+
+import { PDFView } from '@kanji-sh/app/components';
+import { CollectionType, Worksheet } from '@kanji-sh/models';
+
+import { appOperations } from '../printer.server';
 
 type LoaderData = {
     worksheet: Worksheet

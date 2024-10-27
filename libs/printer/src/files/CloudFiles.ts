@@ -1,5 +1,7 @@
-import { CollectionType, Worksheet } from '@kanji-sh/models';
 import type { SupabaseClient } from '@supabase/supabase-js';
+
+import { CollectionType, Worksheet } from '@kanji-sh/models';
+
 import type { Files } from './Files';
 
 const DEFAULT_CACHE_CONTROL = 'public,max-age=604800;stale-while-revalidate=86400';
@@ -17,9 +19,10 @@ const defaultBuckets: Buckets = {
 };
 
 export class CloudFiles implements Files {
-    // eslint-disable-next-line no-useless-constructor
     constructor(
+
         private supabaseClient: SupabaseClient,
+
         private buckets: Buckets = defaultBuckets
     ) {}
 
@@ -30,6 +33,7 @@ export class CloudFiles implements Files {
             const metaFile = await this.readMetaData(hash);
             return !!(pdfFile && metaFile);
         } catch (error) {
+            console.error(error);
             return false;
         }
     }

@@ -1,4 +1,5 @@
 import { LoaderFunction } from '@remix-run/node';
+
 import { appOperations } from '../printer.server';
 
 export const loader: LoaderFunction = async ({ request, params }) => {

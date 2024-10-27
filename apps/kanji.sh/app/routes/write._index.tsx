@@ -1,7 +1,10 @@
 import { LoaderFunction, MetaFunction } from '@remix-run/node';
-import { CollectionCard , WritingAnimation } from '@kanji-sh/app/components';
-import { CollectionType } from '@kanji-sh/models';
+
 import { useTranslation } from 'react-i18next';
+
+import { CollectionCard, WritingAnimation } from '@kanji-sh/app/components';
+import { CollectionType } from '@kanji-sh/models';
+
 
 export const meta: MetaFunction = () => {
     // return {

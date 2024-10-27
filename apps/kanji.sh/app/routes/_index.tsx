@@ -1,6 +1,8 @@
-import type { MetaFunction } from "@remix-run/node";
-import { ServiceCard, ReadingAnimation , Direction } from '@kanji-sh/app/components';
+import type { MetaFunction } from '@remix-run/node';
+
 import { useTranslation } from 'react-i18next';
+
+import { Direction, ReadingAnimation, ServiceCard } from '@kanji-sh/app/components';
 
 export const meta: MetaFunction = () => {
     // const t = await getTranslations('home');
@@ -64,7 +66,7 @@ export default function IndexRoute() {
                     buttonText={'Join the Waitlist'}
                     buttonLink={'/read'}
                     imageUrl={'/assets/svg/undraw_book_lover.svg'}
-                    imageDirection={Direction.start}
+                    imageDirection={Direction.START}
                 />
                 <ServiceCard
                     title={'write'}
@@ -74,7 +76,7 @@ export default function IndexRoute() {
                     buttonText={'Download Worksheets'}
                     buttonLink={'/write'}
                     imageUrl={'/assets/svg/undraw_studying.svg'}
-                    imageDirection={Direction.end}
+                    imageDirection={Direction.END}
                 />
             </div>
         </div>

@@ -1,6 +1,8 @@
 import * as path from 'path';
+
 import type { Worksheet } from '@kanji-sh/models';
 import { CollectionType, DefaultWorksheetConfig } from '@kanji-sh/models';
+
 import { Config } from './config';
 import { readLinesInFile } from './utils';
 

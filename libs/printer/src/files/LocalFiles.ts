@@ -1,10 +1,12 @@
-import { CollectionType } from '@kanji-sh/models';
-import type { Worksheet } from '@kanji-sh/models';
-import * as fs from 'fs';
+import fs from 'node:fs';
 import * as path from 'path';
 import Url from 'url';
-import { ensureDirectoriesExist, readLinesInFile } from '../utils';
+
+import type { Worksheet } from '@kanji-sh/models';
+import { CollectionType } from '@kanji-sh/models';
+
 import type { Files } from './Files';
+import { ensureDirectoriesExist, readLinesInFile } from '../utils';
 
 export class LocalFiles implements Files {
     constructor(

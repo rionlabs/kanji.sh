@@ -1,6 +1,8 @@
-import { Link } from '@remix-run/react';
-import clsx from 'clsx';
 import React from 'react';
+
+import { Link } from '@remix-run/react';
+
+import clsx from 'clsx';
 
 interface Props {
     title: string;
@@ -12,8 +14,8 @@ interface Props {
 }
 
 export enum Direction {
-    start = 'start',
-    end = 'end'
+    START = 'START',
+    END = 'END'
 }
 
 export const ServiceCard: React.FC<Props> = (props: Props) => {
@@ -22,8 +24,8 @@ export const ServiceCard: React.FC<Props> = (props: Props) => {
         <div className="grow min-h-80">
             <div
                 className={clsx('container flex flex-col items-stretch gap-8', {
-                    'sm:flex-row': imageDirection === 'start',
-                    'sm:flex-row-reverse': imageDirection === 'end'
+                    'sm:flex-row': imageDirection === 'START',
+                    'sm:flex-row-reverse': imageDirection === 'END'
                 })}>
                 {/* Image */}
                 <div className="flex flex-row items-center align-middle">
@@ -38,8 +40,8 @@ export const ServiceCard: React.FC<Props> = (props: Props) => {
                 {/* Text */}
                 <div
                     className={clsx({
-                        'text-start': imageDirection === 'end',
-                        'text-end': imageDirection === 'start'
+                        'text-start': imageDirection === 'END',
+                        'text-end': imageDirection === 'START'
                     })}
                     style={{ minHeight: 'inherit' }}>
                     <div className="py-4 space-y-8">

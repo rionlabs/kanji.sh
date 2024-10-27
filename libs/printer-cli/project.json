@@ -1,6 +1,6 @@
 {
-  "name": "printer-cli",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "printer-cli",
   "sourceRoot": "libs/printer-cli/src",
   "projectType": "library",
   "targets": {
@@ -21,7 +21,7 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/printer-cli/**/*.ts", "libs/printer-cli/package.json"]
+        "lintFilePatterns": ["libs/printer-cli/**/*.ts"]
       }
     }
   },

@@ -1,6 +1,8 @@
 import { ActionFunction, json } from '@remix-run/node';
-import { ActionData, Subscription } from '@kanji-sh/app/components';
+
 import invariant from 'tiny-invariant';
+
+import { ActionData, Subscription } from '@kanji-sh/app/components';
 
 export const action: ActionFunction = async ({ request }) => {
     try {
@@ -37,11 +39,10 @@ export const action: ActionFunction = async ({ request }) => {
         console.log('[Start] Function Subscribe');
         await addContact({ name, email });
         return json<ActionData>({ status: 'success' }, { status: 201 });
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.log('[Error] Function Subscribe');
         console.log(JSON.stringify(error, null, 3));
-        if ('message' in error) {
+        if (error instanceof Error && 'message' in error) {
             return json<ActionData>(
                 { status: 'error', formError: error.message },
                 { status: 400 }

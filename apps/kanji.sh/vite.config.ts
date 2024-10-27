@@ -1,13 +1,15 @@
-import { workspaceRoot } from '@nx/devkit';
 import fs from 'node:fs';
+import path from 'node:path';
+
+import { vitePlugin as remix } from '@remix-run/dev';
+
+import mdx from '@mdx-js/rollup';
+import { workspaceRoot } from '@nx/devkit';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
-import { vitePlugin as remix } from '@remix-run/dev';
-import path from 'node:path';
 import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import svgr from 'vite-plugin-svgr';
-import mdx from '@mdx-js/rollup';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 const isVercel = process.env.VERCEL === "1";
 

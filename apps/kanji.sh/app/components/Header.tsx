@@ -1,6 +1,8 @@
-import { useTranslation } from 'react-i18next';
-import { Link, NavLink, NavLinkProps } from '@remix-run/react';
+import type { NavLinkProps } from '@remix-run/react';
+import { Link, NavLink } from '@remix-run/react';
+
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 
 const HeaderNavItem = (props: NavLinkProps) => {
     const { children, ...otherProps } = props;

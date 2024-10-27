@@ -3,7 +3,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 declare module "*.mdx" {
-    let MDXComponent: (props: unknown) => JSX.Element;
+    let MDXComponent: (props: unknown) => Element;
     export const frontmatter: Record<string, unknown>;
     export default MDXComponent;
 }

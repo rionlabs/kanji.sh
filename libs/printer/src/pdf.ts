@@ -1,18 +1,21 @@
-import * as fs from 'fs';
-import { createWorksheetHash } from './hash';
+
+import fs from 'node:fs';
 import * as os from 'os';
 import * as path from 'path';
+
+import buildUrl from 'build-url-ts';
+import PQueue from 'p-queue';
+import PDFMerger from 'pdf-merger-js';
 import type { ConsoleMessage } from 'puppeteer';
 import puppeteer from 'puppeteer';
-import PQueue from 'p-queue';
-import buildUrl from 'build-url-ts';
+
 import type { Worksheet, WorksheetConfig } from '@kanji-sh/models';
 import { DefaultWorksheetConfig } from '@kanji-sh/models';
 
 import { Config } from './config';
+import { createWorksheetHash } from './hash';
 import { ensureDirectoriesExist, logger } from './utils';
 
-import PDFMerger from 'pdf-merger-js';
 
 const sortByPageNumber = (array: string[]): string[] => {
     const getNumber = (path: string): number =>

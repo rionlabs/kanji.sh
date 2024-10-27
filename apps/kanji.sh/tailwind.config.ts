@@ -1,7 +1,11 @@
-import { workspaceRoot } from '@nx/devkit';
 import path from 'node:path';
-import defaultTheme from 'tailwindcss/defaultTheme';
+
+import { workspaceRoot } from '@nx/devkit';
+import containerQueriesPlugin from '@tailwindcss/container-queries';
+import typographyPlugin from '@tailwindcss/typography';
+import daisyuiPlugin from 'daisyui';
 import { type Config } from 'tailwindcss';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 const tailwindCssConfig: Config = {
     darkMode: 'class',
@@ -43,9 +47,9 @@ const tailwindCssConfig: Config = {
         }
     },
     plugins: [
-        require('@tailwindcss/typography'),
-        require('@tailwindcss/container-queries'),
-        require('daisyui')
+        typographyPlugin,
+        containerQueriesPlugin,
+        daisyuiPlugin
     ],
     daisyui: {
         logs: false,
