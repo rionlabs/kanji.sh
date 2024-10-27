@@ -42,3 +42,6 @@ supabase/.temp
 # Next.js
 .next
 analyze
+
+# Vite
+**/vite.config.{js,ts,mjs,mts,cjs,cts}.timestamp*
