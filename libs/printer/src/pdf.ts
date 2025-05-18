@@ -1,7 +1,6 @@
-
 import fs from 'node:fs';
-import * as os from 'os';
-import * as path from 'path';
+import os from 'node:os';
+import path from 'node:path';
 
 import buildUrl from 'build-url-ts';
 import PQueue from 'p-queue';
@@ -16,7 +15,6 @@ import { Config } from './config';
 import { createWorksheetHash } from './hash';
 import { ensureDirectoriesExist, logger } from './utils';
 
-
 const sortByPageNumber = (array: string[]): string[] => {
     const getNumber = (path: string): number =>
         Number.parseInt(path.split('/').slice(-1)[0].split('.')[0]);
@@ -29,7 +27,7 @@ async function generatePDF(
     worksheetConfig: WorksheetConfig
 ): Promise<{ hash: string; pageCount: number; contents: Buffer }> {
     // Calculate hash for as unique identifier for this Worksheet
-    const worksheetHash: string = createWorksheetHash({ data, worksheetTitle, worksheetConfig });
+    const worksheetHash: string = createWorksheetHash({ data, worksheetTitle: worksheetTitle, worksheetConfig });
 
     const tempDirPath = path.join(Config.tempDirPath, worksheetHash, 'pages');
     ensureDirectoriesExist(tempDirPath);

@@ -61,8 +61,3 @@ import { cliOperations } from '@kanji-sh/printer';
     //     process.exit(1);
     // }
 })();
-
-/**
- * "build:generator": "esbuild --bundle --platform=node --target=node16 --outfile=generator/dist/index.js generator/src/index.ts",
- *     "build:worksheets": "./scripts/build:worksheets",
- */

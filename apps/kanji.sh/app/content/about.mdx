@@ -24,11 +24,10 @@ Being free & open source, we need all the help we can get. You can support us in
 The simplest one is sharing <TextLogo /> with all people you know are learning
 Japanese, spread the word, and let them know <TextLogo /> here.
 
--
 <div className='flex flex-col sm:flex-row sm:flex-wrap gap-8 my-8'>
-  <a rel='noopener noreferrer' target='_blank' href={Config.ShareURLs.twitter} className='btn btn-outline'><FaXTwitter/>Twitter</a>
-  <a rel='noopener noreferrer' target='_blank' href={Config.ShareURLs.facebook} className='btn btn-outline'><FaFacebook/>Facebook</a>
-  <a rel='noopener noreferrer' target='_blank' href={Config.ShareURLs.reddit} className='btn btn-outline'><FaReddit />Reddit</a>
+  <a rel='noopener noreferrer' target='_blank' href={props.t('share.twitter')} className='btn btn-outline'><FaXTwitter/>Twitter</a>
+  <a rel='noopener noreferrer' target='_blank' href={props.t('share..facebook')} className='btn btn-outline'><FaFacebook/>Facebook</a>
+  <a rel='noopener noreferrer' target='_blank' href={props.t('share.reddit')} className='btn btn-outline'><FaReddit />Reddit</a>
 </div>
 
 ##### Feedback & Suggestions
@@ -38,18 +37,18 @@ nothing, you can drop an email telling us you feel about the site. Few
 words of encouragement never hurt!
 
 <div className="pb-8">
-  <a href={`mailto:${Config.contactEmail}`} className="btn btn-outline"><HiOutlineMail />Send</a>
+  <a href={`mailto:${props.t('contactEmail')}`} className="btn btn-outline"><HiOutlineMail />Send</a>
 </div>
 
 ##### Contribute to the development
 
 If you are a software developer, good news for you. <TextLogo /> is open source!
-Check out the <a href={Config.githubUrl}>GitHub page</a> to see the source code,
-build it yourself, file an <a href={`${Config.githubUrl}/issues`}>issue</a>, and
+Check out the <a href={props.t('githubUrl')}>GitHub page</a> to see the source code,
+build it yourself, file an <a href={`${props.t('githubUrl')}/issues`}>issue</a>, and
 make some PRs! Show your love by sharing this website and starring the GitHub repository.
 
 <div className="pb-8">
-  <a rel='noopener noreferrer' target='_blank' href={Config.githubUrl} className='btn btn-outline'><FaGithub />Star on GitHub</a>
+  <a rel='noopener noreferrer' target='_blank' href={props.t('githubUrl')} className='btn btn-outline'><FaGithub />Star on GitHub</a>
 </div>
 
 ##### Buy me Sushi
@@ -60,5 +59,5 @@ also covers costs for servers, domain, and keeps me motivated to put more time t
 improve <TextLogo />.
 
 <div className="pb-8">
-  <a rel='noopener noreferrer' target='_blank' href={Config.bmcUrl} className='btn btn-outline'><GiSushis />Buy me a Sushi</a>
+  <a rel='noopener noreferrer' target='_blank' href={props.t('bmcUrl')} className='btn btn-outline'><GiSushis />Buy me a Sushi</a>
 </div>

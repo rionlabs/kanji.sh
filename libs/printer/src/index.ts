@@ -1,14 +1,12 @@
-import * as path from 'path';
-import * as process from 'process';
 
-import { SupabaseClient } from '@supabase/supabase-js';
+import path from 'node:path';
+import process from 'node:process';
+
+import { createClient } from '@supabase/supabase-js';
 import PQueue from 'p-queue';
 
 import type { CollectionType, Worksheet, WorksheetConfig } from '@kanji-sh/models';
 import { DefaultWorksheetConfig } from '@kanji-sh/models';
-
-
-
 
 import { Config } from './config';
 import { downloadKanjiData } from './download';
@@ -82,7 +80,7 @@ class CLIOps {
         await buildKanjiDiagrams();
 
         logger.start(`Generating worksheet ${worksheetTitle} for ${data.length} kanji`);
-        const hash = createWorksheetHash({ data, worksheetTitle, worksheetConfig });
+        const hash = createWorksheetHash({ data, worksheetTitle: worksheetTitle, worksheetConfig });
         const worksheetExists = await this.files.exists(hash);
         if (worksheetExists) {
             logger.done(`Worksheet ${worksheetTitle} already exists`);
@@ -191,7 +189,7 @@ class CLIOps {
 
 const createCloudFiles = () =>
     new CloudFiles(
-        new SupabaseClient(
+        createClient(
             process.env['SUPABASE_URL'] as string,
             process.env['SUPABASE_KEY'] as string,
             {
@@ -216,3 +214,7 @@ export const cliOperations = () => {
     );
     return new CLIOps(new CombinedFiles(localFiles, cloudFiles));
 };
+
+// Temporary
+export * from './collections/processors';
+export * from './collections/CollectionSource';

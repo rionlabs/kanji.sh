@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import * as path from 'path';
+import path from 'node:path';
 
 import { describe, expect } from '@jest/globals';
 import fetch from 'node-fetch';

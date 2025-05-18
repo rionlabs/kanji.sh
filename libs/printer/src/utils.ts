@@ -20,7 +20,7 @@ export const isDirEmpty = (dirPath: PathLike): boolean => {
 };
 
 class Logger {
-    start: (message: string) => void = (message) => console.log(`[START] ${message}`);
+    start = (message: string) => { console.log(`[START] ${message}`) };
     done: (message: string) => void = (message) => console.log(`[DONE✓] ${message}`);
     error: (message: string) => void = (message) => console.error(`[ERROR] ${message}`);
 }

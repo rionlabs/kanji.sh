@@ -5,16 +5,32 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/js:swc",
+      "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/printer-cli",
         "main": "libs/printer-cli/src/index.ts",
         "tsConfig": "libs/printer-cli/tsconfig.lib.json",
-        "swcrc": "libs/printer-cli/swcrc.json",
         "assets": ["libs/printer-cli/*.md"],
-        "generatePackageJson": true,
-        "external": "all"
+        "format": ["esm"],
+        "esbuildOptions": {
+          "alias": {
+            "lodash": "lodash-es"
+          }
+        }
+      }
+    },
+    "run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run printer-cli:build --skip-nx-cache",
+          "node dist/libs/printer-cli/index.js"
+        ],
+        "parallel": false,
+        "env": {
+          "DEBUG": "printer:cli"
+        }
       }
     },
     "lint": {

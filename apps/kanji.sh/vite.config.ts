@@ -65,11 +65,17 @@ export default defineConfig(({ mode }) => {
                 configNames: ['tsconfig.json', 'tsconfig.base.json']
             }),
         ],
+        resolve: {
+            preserveSymlinks: true,
+            alias: {
+                lodash: 'lodash-es',
+            },
+        },
         ssr: {
-            noExternal: ['@supabase/supabase-js', 'react-i18next', "remix-utils"]
+            noExternal: ['@supabase/supabase-js', 'react-i18next', "remix-utils", "@react-pdf/renderer"],
         },
         optimizeDeps: {
-            include: ['@supabase/supabase-js']
+            include: ['@supabase/supabase-js', "@react-pdf/renderer"]
         },
         server: {
             host: '0.0.0.0',

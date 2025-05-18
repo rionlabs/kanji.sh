@@ -1,4 +1,4 @@
-import * as path from 'path';
+import path from 'node:path';
 
 import type { Worksheet } from '@kanji-sh/models';
 import { CollectionType, DefaultWorksheetConfig } from '@kanji-sh/models';
