@@ -1,9 +1,17 @@
 import { composePlugins, withNx } from '@nx/next';
 import createMDXPlugin from '@next/mdx';
 import createNextIntlPlugin from 'next-intl/plugin';
-import createBundleAnalyzer from '@next/bundle-analyzer'
+import createBundleAnalyzer from '@next/bundle-analyzer';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const withNextIntl = createNextIntlPlugin();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+const withNextIntl = createNextIntlPlugin({
+    requestConfig: path.resolve(__dirname, './i18n/request.ts'),
+});
 const withMDX = createMDXPlugin();
 const withAnalyzer = createBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
 
@@ -19,7 +27,7 @@ const nextConfig = {
     },
     pageExtensions: ['ts', 'tsx', 'mdx'],
     devIndicators: {
-        buildActivityPosition: 'top-right'
+        position: 'top-right'
     },
     headers: async () => [
         {
@@ -27,10 +35,10 @@ const nextConfig = {
             headers: [
                 {
                     key: 'Cache-Control',
-                    value: 'public, max-age=31536000, stale-while-revalidate',
-                },
-            ],
-        },
+                    value: 'public, max-age=31536000, stale-while-revalidate'
+                }
+            ]
+        }
     ],
     redirects: async () => {
         return [

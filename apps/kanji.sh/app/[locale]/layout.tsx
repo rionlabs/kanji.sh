@@ -1,22 +1,27 @@
-import { Locale } from 'apps/kanji.sh/i18n';
+import { GoogleAnalytics } from '@next/third-parties/google';
+import { Analytics } from '@vercel/analytics/react';
+import { routing } from 'apps/kanji.sh/i18n/routing';
 import { Footer } from 'apps/kanji.sh/src/components/layout/Footer';
 import { Header } from 'apps/kanji.sh/src/components/layout/Header';
 import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
-import { unstable_setRequestLocale } from 'next-intl/server';
-import React from 'react';
-import { Analytics } from '@vercel/analytics/react';
-import { GoogleAnalytics } from '@next/third-parties/google';
+import { setRequestLocale } from 'next-intl/server';
+import React, { ReactNode } from 'react';
 
 import '../tailwind.css';
 
 type PageProps = {
-    children: React.ReactNode;
+    children: ReactNode;
 } & LocaleParams;
 
-export const generateStaticParams = () => Locale.locales.map((locale) => ({ locale }));
+export const generateStaticParams = () => {
+    return routing.locales.map((locale) => ({
+        locale
+    }));
+};
 
-export default async function RootLayout({ children, params: { locale } }: PageProps) {
-    unstable_setRequestLocale(locale);
+export default async function RootLayout({ children, params }: PageProps) {
+    const locale = (await params).locale;
+    setRequestLocale(locale);
     const analyticsId = process.env.NEXT_PUBLIC_G_ANALYTICS_ID;
     if (!analyticsId) {
         throw new Error('Google Analytics ID is not set');

@@ -1,12 +1,14 @@
 import { ReadingAnimation } from 'apps/kanji.sh/src/components/atoms/AnimatedImage';
+import ClientOnly from 'apps/kanji.sh/src/components/atoms/ClientOnly';
 import ServiceCard, { Direction } from 'apps/kanji.sh/src/components/molecules/ServiceCard';
 import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import React from 'react';
 
-export const generateMetadata = async ({ params: { locale } }: LocaleParams) => {
+export const generateMetadata = async ({ params }: LocaleParams) => {
     const t = await getTranslations('home');
     const config = await getTranslations('config');
+    const locale = (await params).locale;
     return {
         metadataBase: config('baseUrl'),
         alternates: {
@@ -32,8 +34,9 @@ export const generateMetadata = async ({ params: { locale } }: LocaleParams) => 
     };
 };
 
-export default async function IndexPage({ params: { locale } }: LocaleParams) {
-    unstable_setRequestLocale(locale);
+export default async function IndexPage({ params }: LocaleParams) {
+    const locale = (await params).locale;
+    setRequestLocale(locale);
     const t = await getTranslations('home.content');
     return (
         <div>
@@ -51,7 +54,9 @@ export default async function IndexPage({ params: { locale } }: LocaleParams) {
                 </div>
                 <div className="w-full">
                     <div className="max-w-[420px] w-[420px] h-[420px]">
-                        <ReadingAnimation className="p-4" />
+                        <ClientOnly>
+                            <ReadingAnimation className="p-4" />
+                        </ClientOnly>
                     </div>
                 </div>
             </div>

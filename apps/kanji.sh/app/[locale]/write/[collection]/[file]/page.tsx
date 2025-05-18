@@ -2,17 +2,17 @@ import { CollectionType } from '@kanji-sh/models';
 import { appOperations } from '@kanji-sh/printer';
 import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
 import { Metadata } from 'next';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import { FiDownload } from 'react-icons/fi';
 import { PDFView } from 'apps/kanji.sh/src/components/molecules/PDFView';
 import React, { cache } from 'react';
 import { notFound } from 'next/navigation';
 
 type PageProps = {
-    params: {
+    params: Promise<{
         collection: string;
         file: string;
-    };
+    }>;
 } & LocaleParams;
 
 export const generateStaticParams = async () => {
@@ -32,7 +32,8 @@ export const generateStaticParams = async () => {
 const cachedWorksheet = cache(getWorksheet);
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { worksheet } = await cachedWorksheet(params.collection, params.file);
+    const { collection, file } = await params;
+    const { worksheet } = await cachedWorksheet(collection, file);
     if (!worksheet) {
         return notFound();
     }
@@ -42,8 +43,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function CollectionFilePage(props: PageProps) {
-    const { locale, collection, file } = props.params;
-    unstable_setRequestLocale(locale);
+    const { locale, collection, file } = await props.params;
+    setRequestLocale(locale);
     const { worksheet } = await cachedWorksheet(collection, file);
     if (!worksheet) {
         return notFound();
