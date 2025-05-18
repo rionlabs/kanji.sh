@@ -1,5 +1,6 @@
-import { CollectionType } from '@kanji-sh/models';
 import type { Worksheet } from '@kanji-sh/models';
+import { CollectionType } from '@kanji-sh/models';
+
 import type { Files } from './Files';
 
 export class CombinedFiles implements Files {

@@ -1,4 +1,4 @@
-import * as path from 'path';
+import path from 'node:path';
 
 // Absolute path to assets directory
 const assetsDirPath = path.resolve('.', 'libs/printer/assets');

@@ -1,5 +1,6 @@
-import { METADATA } from 'apps/kanji.sh/src/metadata';
 import { MetadataRoute } from 'next';
+
+import { METADATA } from 'apps/kanji.sh/src/metadata';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // TODO: Read baseUrl from ${config('baseUrl')}

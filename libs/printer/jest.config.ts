@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
     displayName: 'printer',
     preset: '../../jest.preset.js',

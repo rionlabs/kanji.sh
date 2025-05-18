@@ -1,8 +1,12 @@
-import { CollectionType } from '@kanji-sh/models';
+import React from 'react';
+
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
 import ClientOnly from 'apps/kanji.sh/src/components/atoms/ClientOnly';
 import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import React from 'react';
+
+import { CollectionType } from '@kanji-sh/models';
+
 import { WritingAnimation } from '../../../src/components/atoms/AnimatedImage';
 import { CollectionCard } from '../../../src/components/molecules/CollectionCard';
 

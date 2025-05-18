@@ -1,11 +1,12 @@
-import clsx from 'clsx';
-import { useTranslations } from 'next-intl';
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 
+import clsx from 'clsx';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+
 type CollectionCardProps = {
-    collectionKey: String;
+    collectionKey: string;
 };
 
 export const CollectionCard = (props: CollectionCardProps) => {

@@ -1,10 +1,12 @@
 'use client';
 
+import React, { FormEvent } from 'react';
+
+import { useTranslations } from 'next-intl';
+
 import { SubscribedAnimation } from 'apps/kanji.sh/src/components/atoms/AnimatedImage';
 import { ErrorMessage } from 'apps/kanji.sh/src/components/atoms/ErrorMessage';
 import { ActionData, FormState } from 'apps/kanji.sh/src/subscription/Types';
-import { useTranslations } from 'next-intl';
-import React, { FormEvent } from 'react';
 
 export type FormProps = {};
 

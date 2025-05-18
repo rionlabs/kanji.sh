@@ -1,7 +1,9 @@
-import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
+import React from 'react';
+
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
-import React from 'react';
+
+import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
 
 type PageProps = {
     children: React.ReactNode;

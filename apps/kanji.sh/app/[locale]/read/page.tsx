@@ -1,11 +1,14 @@
+import React from 'react';
+
+import { Metadata } from 'next';
+import { pick } from 'next/dist/lib/pick';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
+
 import ClientOnly from 'apps/kanji.sh/src/components/atoms/ClientOnly';
 import { SubscriptionForm } from 'apps/kanji.sh/src/components/molecules/SubscriptionForm';
 import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
-import { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
-import { pick } from 'next/dist/lib/pick';
-import React from 'react';
+
 import { PrintingAnimation } from '../../../src/components/atoms/AnimatedImage';
 
 export const generateMetadata = async (): Promise<Metadata> => {

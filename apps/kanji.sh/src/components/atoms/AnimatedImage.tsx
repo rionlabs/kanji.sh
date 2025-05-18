@@ -1,8 +1,10 @@
 'use client';
 
+import React, { useEffect, useMemo, useRef } from 'react';
+
 import clsx from 'clsx';
 import Lottie from 'lottie-web';
-import React, { useEffect, useMemo, useRef } from 'react';
+
 import PrintingSvg from '../../assets/vectors/printing.svg';
 import ReadingSvg from '../../assets/vectors/reading.svg';
 import SubscribedSvg from '../../assets/vectors/subscribed.svg';

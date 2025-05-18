@@ -1,9 +1,12 @@
-import { DefaultWorksheetConfig } from '@kanji-sh/models';
-import type { Worksheet } from '@kanji-sh/models';
+import fs from 'node:fs';
+import path from 'node:path';
+
 import { beforeEach, afterEach, describe } from '@jest/globals';
-import * as fs from 'fs';
+
+import type { Worksheet } from '@kanji-sh/models';
+import { DefaultWorksheetConfig } from '@kanji-sh/models';
+
 import { createWorksheetHash } from '../hash';
-import * as path from 'path';
 import { LocalFiles } from './LocalFiles';
 
 const testPdfBuffer = fs.readFileSync(path.resolve(__dirname, '../files/__tests__/blank.pdf'));
