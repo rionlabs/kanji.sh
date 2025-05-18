@@ -1,6 +1,7 @@
-import * as fs from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
+
 import fetch from 'node-fetch-commonjs';
-import * as path from 'path';
 
 import { ensureDirectoriesExist, logger } from './utils';
 

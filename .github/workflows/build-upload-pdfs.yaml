@@ -8,7 +8,6 @@ on:
       - '.github/workflows/**'
   workflow_dispatch:
 
-
 jobs:
   generate-pdfs:
     runs-on: macos-latest

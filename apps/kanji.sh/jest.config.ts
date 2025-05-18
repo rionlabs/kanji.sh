@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
     displayName: 'kanji.sh',
     preset: '../../jest.preset.js',

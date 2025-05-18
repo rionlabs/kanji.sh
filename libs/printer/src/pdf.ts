@@ -1,19 +1,21 @@
-import * as fs from 'fs';
-import { createWorksheetHash } from './hash';
-import * as os from 'os';
-import * as path from 'path';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+
+import buildUrl from 'build-url-ts';
+import PQueue from 'p-queue';
 import type { ConsoleMessage } from 'puppeteer';
 import puppeteer from 'puppeteer';
-import PQueue from 'p-queue';
-import buildUrl from 'build-url-ts';
+
 import type { Worksheet, WorksheetConfig } from '@kanji-sh/models';
 import { DefaultWorksheetConfig } from '@kanji-sh/models';
 
 import { Config } from './config';
+import { createWorksheetHash } from './hash';
 import { ensureDirectoriesExist, logger } from './utils';
 
 // Import statement doesn't work for some reason
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const PDFMerger = require('pdf-merger-js');
 
 const sortByPageNumber = (array: string[]): string[] => {

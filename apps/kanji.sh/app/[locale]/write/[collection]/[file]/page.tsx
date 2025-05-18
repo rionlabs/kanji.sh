@@ -1,12 +1,15 @@
-import { CollectionType } from '@kanji-sh/models';
-import { appOperations } from '@kanji-sh/printer';
-import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
+import React, { cache } from 'react';
+
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { FiDownload } from 'react-icons/fi';
+
 import { PDFView } from 'apps/kanji.sh/src/components/molecules/PDFView';
-import React, { cache } from 'react';
-import { notFound } from 'next/navigation';
+import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
+
+import { CollectionType } from '@kanji-sh/models';
+import { appOperations } from '@kanji-sh/printer';
 
 type PageProps = {
     params: Promise<{

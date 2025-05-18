@@ -1,6 +1,7 @@
-import { ActionData, Subscription } from 'apps/kanji.sh/src/subscription/Types';
 import { NextRequest, NextResponse } from 'next/server';
 import invariant from 'tiny-invariant';
+
+import { ActionData, Subscription } from 'apps/kanji.sh/src/subscription/Types';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
     try {

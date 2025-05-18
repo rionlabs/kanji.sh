@@ -1,10 +1,10 @@
-import { cliOperations } from '@kanji-sh/printer';
-import { CollectionType } from '@kanji-sh/models';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
+import { CollectionType } from '@kanji-sh/models';
+import { cliOperations } from '@kanji-sh/printer';
+
 (async () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const options = await yargs(hideBin(process.argv))
         .usage('Usage: -c <collection>')
         .help(true)

@@ -1,7 +1,8 @@
-import * as path from 'path';
-import * as fs from 'fs';
 import type { PathLike } from 'fs';
 import { readdirSync } from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
+
 import { Open } from 'unzipper';
 
 import { Config } from './config';
@@ -13,7 +14,7 @@ const _extractKanjiVG = async (): Promise<void> => {
             logger.done('KanjiVG already extracted');
         }
     } catch (error) {
-        // NoOp
+        logger.error(`Error while checking KanjiVG extraction ${error}`);
     }
 
     logger.start('Extracting KanjiVg file...');

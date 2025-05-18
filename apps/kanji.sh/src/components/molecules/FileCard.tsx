@@ -1,8 +1,11 @@
-import type { Worksheet } from '@kanji-sh/models';
-import Link from 'next/link';
 import React from 'react';
-import type { FileCardData } from '../../metadata';
+
+import Link from 'next/link';
 import { FiDownload, FiEye } from 'react-icons/fi';
+
+import type { Worksheet } from '@kanji-sh/models';
+
+import type { FileCardData } from '../../metadata';
 
 interface Props {
     worksheet: Worksheet;

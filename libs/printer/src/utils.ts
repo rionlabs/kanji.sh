@@ -1,8 +1,9 @@
-import * as fs from 'fs';
 import type { PathLike } from 'fs';
+import fs from 'node:fs';
 
 export const ensureDirectoriesExist = (...dirNames: PathLike[]): void => {
     for (const dirName of dirNames) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         fs.existsSync(dirName) || fs.mkdirSync(dirName, { recursive: true });
     }
 };

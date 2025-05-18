@@ -1,13 +1,14 @@
-import { composePlugins, withNx } from '@nx/next';
-import createMDXPlugin from '@next/mdx';
-import createNextIntlPlugin from 'next-intl/plugin';
-import createBundleAnalyzer from '@next/bundle-analyzer';
 import path from 'node:path';
+import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+
+import createBundleAnalyzer from '@next/bundle-analyzer';
+import createMDXPlugin from '@next/mdx';
+import { composePlugins, withNx } from '@nx/next';
+import createNextIntlPlugin from 'next-intl/plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 
 const withNextIntl = createNextIntlPlugin({
     requestConfig: path.resolve(__dirname, './i18n/request.ts'),

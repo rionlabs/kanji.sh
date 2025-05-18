@@ -1,7 +1,9 @@
-import { useTranslations } from 'next-intl';
-import { HeaderNavItem } from '../atoms/HeaderNavLink';
 import React from 'react';
+
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+
+import { HeaderNavItem } from '../atoms/HeaderNavLink';
 
 export const Header = () => {
     const t = useTranslations('header');

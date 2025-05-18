@@ -1,12 +1,14 @@
-import { CollectionType, Worksheet } from '@kanji-sh/models';
-import { appOperations } from '@kanji-sh/printer';
-import { FileCard } from 'apps/kanji.sh/src/components/molecules/FileCard';
-import { CollectionCardData, FileCardData, METADATA } from 'apps/kanji.sh/src/metadata';
-import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
 import React, { cache } from 'react';
 
 import { notFound } from 'next/navigation';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
+import { FileCard } from 'apps/kanji.sh/src/components/molecules/FileCard';
+import { CollectionCardData, FileCardData, METADATA } from 'apps/kanji.sh/src/metadata';
+import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
+
+import { CollectionType, Worksheet } from '@kanji-sh/models';
+import { appOperations } from '@kanji-sh/printer';
 
 type PageProps = {
     params: Promise<{
@@ -66,10 +68,10 @@ async function getCollection(collection: string): Promise<CollectionData | null>
         const collectionWorksheets = await appOperations().getCollectionMeta(
             collection as CollectionType
         );
-        const { files, ...collectionCardData } = METADATA.get(collection)!!;
+        const { files, ...collectionCardData } = METADATA.get(collection)!;
         // Merge object collectionWorksheets with collectionColors
         const worksheets: CollectionData['worksheets'] = [];
-        for (let worksheetKey in collectionWorksheets) {
+        for (const worksheetKey in collectionWorksheets) {
             const worksheet = collectionWorksheets[worksheetKey];
             const cardData = files.find((file) => file.key === worksheetKey);
             if (!cardData) {

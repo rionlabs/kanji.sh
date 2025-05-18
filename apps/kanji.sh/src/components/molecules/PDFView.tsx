@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
+
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
@@ -41,7 +42,7 @@ const PageError = () => {
 };
 
 export const PDFView = (props: PDFViewProps) => {
-    let { fileUrl, pageCount: totalPageCount } = props;
+    const { fileUrl, pageCount: totalPageCount } = props;
     const [pageCount, setPageCount] = React.useState(totalPageCount);
     const [pageNumber, setPageNumber] = React.useState(1);
     const [pdfLoaded, setPdfLoaded] = React.useState(false);

@@ -1,9 +1,11 @@
+import React from 'react';
+
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
 import { ReadingAnimation } from 'apps/kanji.sh/src/components/atoms/AnimatedImage';
 import ClientOnly from 'apps/kanji.sh/src/components/atoms/ClientOnly';
 import ServiceCard, { Direction } from 'apps/kanji.sh/src/components/molecules/ServiceCard';
 import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import React from 'react';
 
 export const generateMetadata = async ({ params }: LocaleParams) => {
     const t = await getTranslations('home');

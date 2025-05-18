@@ -1,5 +1,5 @@
-import { CollectionType } from '@kanji-sh/models';
 import type { Worksheet } from '@kanji-sh/models';
+import { CollectionType } from '@kanji-sh/models';
 
 export interface Files {
     readMetaData(hash: string): Promise<Worksheet>;

@@ -1,11 +1,13 @@
+import React, { ReactNode } from 'react';
+
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
+import { setRequestLocale } from 'next-intl/server';
+
 import { routing } from 'apps/kanji.sh/i18n/routing';
 import { Footer } from 'apps/kanji.sh/src/components/layout/Footer';
 import { Header } from 'apps/kanji.sh/src/components/layout/Header';
 import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
-import { setRequestLocale } from 'next-intl/server';
-import React, { ReactNode } from 'react';
 
 import '../tailwind.css';
 

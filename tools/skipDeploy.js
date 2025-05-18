@@ -1,4 +1,5 @@
-const { execSync } = require('child_process');
+import { execSync } from 'child_process';
+import process from 'node:process';
 
 (async () => {
     // Check for Dependabot PR
