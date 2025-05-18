@@ -1,9 +1,10 @@
 import { CollectionType } from '@kanji-sh/models';
+import ClientOnly from 'apps/kanji.sh/src/components/atoms/ClientOnly';
 import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
-import { CollectionCard } from '../../../src/components/molecules/CollectionCard';
-import { WritingAnimation } from '../../../src/components/atoms/AnimatedImage';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import React from 'react';
+import { WritingAnimation } from '../../../src/components/atoms/AnimatedImage';
+import { CollectionCard } from '../../../src/components/molecules/CollectionCard';
 
 export const generateMetadata = async () => {
     const t = await getTranslations('write');
@@ -13,8 +14,9 @@ export const generateMetadata = async () => {
     };
 };
 
-export default async function WritePage({ params: { locale } }: LocaleParams) {
-    unstable_setRequestLocale(locale);
+export default async function WritePage({ params }: LocaleParams) {
+    const locale = (await params).locale;
+    setRequestLocale(locale);
     const t = await getTranslations('write.content');
     return (
         <div className="flex flex-col items-center">
@@ -30,7 +32,9 @@ export default async function WritePage({ params: { locale } }: LocaleParams) {
                 {/* Jumbo Image */}
                 <div className="w-full sm:w-1/2 py-4">
                     <div className="text-center">
-                        <WritingAnimation className="w-5/6 h-auto m-auto" />
+                        <ClientOnly>
+                            <WritingAnimation className="w-5/6 h-auto m-auto" />
+                        </ClientOnly>
                     </div>
                 </div>
             </div>

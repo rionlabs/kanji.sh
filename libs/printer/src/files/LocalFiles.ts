@@ -1,8 +1,8 @@
 import { CollectionType } from '@kanji-sh/models';
 import type { Worksheet } from '@kanji-sh/models';
-import * as fs from 'fs';
-import * as path from 'path';
-import Url from 'url';
+import fs from 'node:fs';
+import path from 'node:path';
+import Url from 'node:url';
 import { ensureDirectoriesExist, readLinesInFile } from '../utils';
 import type { Files } from './Files';
 
@@ -18,7 +18,7 @@ export class LocalFiles implements Files {
     async getUrl(hash: string): Promise<URL> {
         if (await this.exists(hash)) {
             const fileLocation = path.join(this.pdfPath, `${hash}.pdf`);
-            return Url.pathToFileURL(fileLocation);
+            return URL.parse(Url.pathToFileURL(fileLocation).toString()) as URL;
         } else {
             throw Error(`File ${hash} does not exist.`);
         }

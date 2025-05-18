@@ -1,12 +1,12 @@
 'use client';
 
 import clsx from 'clsx';
-import React, { useEffect, useRef } from 'react';
 import Lottie from 'lottie-web';
-import ReadingSvg from '../../assets/vectors/reading.svg';
-import WritingSvg from '../../assets/vectors/writing.svg';
+import React, { useEffect, useMemo, useRef } from 'react';
 import PrintingSvg from '../../assets/vectors/printing.svg';
+import ReadingSvg from '../../assets/vectors/reading.svg';
 import SubscribedSvg from '../../assets/vectors/subscribed.svg';
+import WritingSvg from '../../assets/vectors/writing.svg';
 
 type AnimationProps = {
     animationName: 'reading' | 'writing' | 'printing' | 'subscribed';
@@ -24,30 +24,39 @@ const SvgFallbacks = {
 export const AnimatedImage = ({ animationName, className, loop = false }: AnimationProps) => {
     const animationContainerRef = useRef<HTMLDivElement>(null);
     const [display, setDisplay] = React.useState<'anim' | 'svg'>('svg');
+    const [windowShown, setWindowShown] = React.useState(false);
+
+    const showSvg = useMemo(() => !windowShown || display === 'svg', [display, windowShown]);
 
     const SvgFallback = SvgFallbacks[animationName];
 
     useEffect(() => {
-        if (animationContainerRef.current) {
-            const animationItem = Lottie.loadAnimation({
-                path: `/assets/anim/${animationName}.json`,
-                loop,
-                renderer: 'svg',
-                container: animationContainerRef.current
-            });
-            animationItem.addEventListener('data_ready', () => {
-                setDisplay('anim');
-            });
+        if (typeof window !== 'undefined') {
+            setWindowShown(true);
+            if (animationContainerRef.current) {
+                const animationItem = Lottie.loadAnimation({
+                    path: `/assets/anim/${animationName}.json`,
+                    loop,
+                    renderer: 'svg',
+                    container: animationContainerRef.current
+                });
+                animationItem.addEventListener('data_ready', () => {
+                    setDisplay('anim');
+                });
+            }
         }
-    }, []);
+    }, [animationContainerRef.current]);
 
     return (
         <div className={clsx(className)}>
-            <div
-                ref={animationContainerRef}
-                className={clsx('w-full h-full', { hidden: display === 'svg' })}
-            />
-            <SvgFallback className={clsx('w-full h-full', { hidden: display === 'anim' })} />
+            {showSvg ? (
+                <SvgFallback className={clsx('w-full h-full', { hidden: display === 'anim' })} />
+            ) : (
+                <div
+                    ref={animationContainerRef}
+                    className={clsx('w-full h-full', { hidden: display === 'svg' })}
+                />
+            )}
         </div>
     );
 };

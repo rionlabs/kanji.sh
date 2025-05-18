@@ -3,15 +3,15 @@ import { appOperations } from '@kanji-sh/printer';
 import { FileCard } from 'apps/kanji.sh/src/components/molecules/FileCard';
 import { CollectionCardData, FileCardData, METADATA } from 'apps/kanji.sh/src/metadata';
 import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import React, { cache } from 'react';
 
 import { notFound } from 'next/navigation';
 
 type PageProps = {
-    params: {
+    params: Promise<{
         collection: string;
-    };
+    }>;
 } & LocaleParams;
 
 export const generateStaticParams = async () => {
@@ -20,7 +20,7 @@ export const generateStaticParams = async () => {
 };
 
 export async function generateMetadata({ params }: PageProps) {
-    const { collection, locale } = params;
+    const { collection, locale } = await params;
     const t = await getTranslations({ locale, namespace: `collections.${collection}` });
     return {
         title: t('heading')
@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: PageProps) {
 const cachedCollection = cache(getCollection);
 
 export default async function CollectionPage(props: PageProps) {
-    const { collection, locale } = props.params;
-    unstable_setRequestLocale(locale);
+    const { collection, locale } = await props.params;
+    setRequestLocale(locale);
     const data = await cachedCollection(collection);
     const t = await getTranslations({
         locale,

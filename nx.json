@@ -10,5 +10,8 @@
       "cache": true,
       "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
     }
+  },
+  "tui": {
+    "enabled": false
   }
 }

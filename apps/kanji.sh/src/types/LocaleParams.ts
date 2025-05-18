@@ -1,5 +1,5 @@
 export type LocaleParams = {
-    params: {
+    params: Promise<{
         locale: string;
-    };
+    }>;
 };
