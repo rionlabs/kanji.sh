@@ -43,9 +43,9 @@ export default async function RootLayout({ children, params }: PageProps) {
                     content="minimum-scale=1,initial-scale=1,width=device-width"
                 />
             </head>
-            <body className="grid grid-rows-sandwich min-h-screen">
+            <body className="grid-rows-sandwich grid min-h-screen">
                 <Header />
-                <main className="py-12 container">{children}</main>
+                <main className="container py-12">{children}</main>
                 <Footer />
                 <Analytics />
                 <GoogleAnalytics gaId={analyticsId} />

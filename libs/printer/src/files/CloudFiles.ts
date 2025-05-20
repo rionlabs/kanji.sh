@@ -19,7 +19,6 @@ const defaultBuckets: Buckets = {
 };
 
 export class CloudFiles implements Files {
-
     constructor(
         private supabaseClient: SupabaseClient,
         private buckets: Buckets = defaultBuckets

@@ -21,7 +21,7 @@ export enum Direction {
 const ServiceCard: React.FC<Props> = (props: Props) => {
     const { title, subtitle, buttonText, buttonLink, imageUrl, imageDirection } = props;
     return (
-        <div className="grow min-h-80">
+        <div className="min-h-80 grow">
             <div
                 className={clsx('container flex flex-col items-stretch gap-8', {
                     'sm:flex-row': imageDirection === 'start',
@@ -44,8 +44,8 @@ const ServiceCard: React.FC<Props> = (props: Props) => {
                         'text-end': imageDirection === 'start'
                     })}
                     style={{ minHeight: 'inherit' }}>
-                    <div className="py-4 space-y-8">
-                        <h3 className="font-semibold text-base-content/80 select-none lowercase">
+                    <div className="space-y-8 py-4">
+                        <h3 className="text-base-content/80 font-semibold lowercase select-none">
                             {title}
                         </h3>
                         <div>{subtitle}</div>

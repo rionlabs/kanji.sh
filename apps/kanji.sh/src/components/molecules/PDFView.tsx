@@ -15,13 +15,13 @@ type PDFViewProps = {
 
 const PagePlaceholder = () => {
     return (
-        <div className="w-full aspect-A4 bg-white rounded-md">
-            <div className="animate-pulse w-full h-full grid place-items-center">
-                <div className="w-5/6 flex flex-col items-stretch gap-4">
-                    <div className="h-12 bg-slate-50 rounded" />
-                    <div className="h-12 bg-slate-50 rounded" />
-                    <div className="h-12 bg-slate-50 rounded" />
-                    <div className="h-12 bg-slate-50 rounded" />
+        <div className="aspect-A4 w-full rounded-md bg-white">
+            <div className="grid h-full w-full animate-pulse place-items-center">
+                <div className="flex w-5/6 flex-col items-stretch gap-4">
+                    <div className="h-12 rounded bg-slate-50" />
+                    <div className="h-12 rounded bg-slate-50" />
+                    <div className="h-12 rounded bg-slate-50" />
+                    <div className="h-12 rounded bg-slate-50" />
                 </div>
             </div>
         </div>
@@ -30,9 +30,9 @@ const PagePlaceholder = () => {
 
 const PageError = () => {
     return (
-        <div className="w-full aspect-A4 bg-white rounded-md">
-            <div className="w-full h-full grid place-items-center">
-                <div className="w-5/6 flex flex-col items-stretch gap-4 text-center">
+        <div className="aspect-A4 w-full rounded-md bg-white">
+            <div className="grid h-full w-full place-items-center">
+                <div className="flex w-5/6 flex-col items-stretch gap-4 text-center">
                     <div className="text-red-700">Failed to load PDF file</div>
                     <div className="text-red-700">o(〒﹏〒)o</div>
                 </div>
@@ -78,16 +78,16 @@ export const PDFView = (props: PDFViewProps) => {
                     loading={<PagePlaceholder />}
                 />
             </Document>
-            <div className="pt-5 pb-4 text-center text-base-content/90">PAGES</div>
+            <div className="text-base-content/90 pt-5 pb-4 text-center">PAGES</div>
 
-            <nav className="w-full grid grid-cols-3 items-stretch rounded-l-full rounded-r-full p-0">
+            <nav className="grid w-full grid-cols-3 items-stretch rounded-l-full rounded-r-full p-0">
                 <button
                     className="btn btn-neutral rounded-r-none px-8 py-4"
                     disabled={pageNumber <= 1 || !pdfLoaded}
                     onClick={() => changePage(-1)}>
-                    <FiChevronLeft className="w-5 h-5" /> Prev
+                    <FiChevronLeft className="h-5 w-5" /> Prev
                 </button>
-                <div className="select-none text-center text-xl leading-[3rem] font-serif font-bold bg-neutral text-neutral-content">
+                <div className="bg-neutral text-neutral-content text-center font-serif text-xl leading-12 font-bold select-none">
                     {pageNumber} <span className="opacity-50">/</span> {pageCount}
                 </div>
                 <button
@@ -95,7 +95,7 @@ export const PDFView = (props: PDFViewProps) => {
                     disabled={pageNumber >= pageCount || !pdfLoaded}
                     onClick={() => changePage(1)}>
                     Next
-                    <FiChevronRight className="w-5 h-5" />
+                    <FiChevronRight className="h-5 w-5" />
                 </button>
             </nav>
         </div>

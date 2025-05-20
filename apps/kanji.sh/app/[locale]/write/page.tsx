@@ -24,26 +24,26 @@ export default async function WritePage({ params }: LocaleParams) {
     const t = await getTranslations('write.content');
     return (
         <div className="flex flex-col items-center">
-            <div className="flex flex-col sm:flex-row justify-center gap-2">
+            <div className="flex flex-col justify-center gap-2 sm:flex-row">
                 {/* Text Content */}
                 <div className="w-full sm:w-1/2">
-                    <div className="space-y-4 justify-center">
+                    <div className="justify-center space-y-4">
                         <h4>{t('title')}</h4>
                         <div>{t('description-1')}</div>
                         <div>{t('description-2')}</div>
                     </div>
                 </div>
                 {/* Jumbo Image */}
-                <div className="w-full sm:w-1/2 py-4">
+                <div className="w-full py-4 sm:w-1/2">
                     <div className="text-center">
                         <ClientOnly>
-                            <WritingAnimation className="w-5/6 h-auto m-auto" />
+                            <WritingAnimation className="m-auto h-auto w-5/6" />
                         </ClientOnly>
                     </div>
                 </div>
             </div>
             {/* Collections */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 py-12">
+            <div className="grid grid-cols-1 gap-6 py-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {Object.values(CollectionType).map((key) => (
                     <CollectionCard key={key} collectionKey={key} />
                 ))}

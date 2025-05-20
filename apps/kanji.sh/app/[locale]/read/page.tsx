@@ -26,16 +26,16 @@ export default async function ReadPage({ params }: LocaleParams) {
     const messages = await getMessages();
 
     return (
-        <div className="flex flex-col items-stretch gap-4 justify-center">
+        <div className="flex flex-col items-stretch justify-center gap-4">
             <h4 className="text-center">{t('title')}</h4>
             <div className="flex flex-col gap-8">
-                <div className="max-w-[240px] sm:max-w-[320px] mx-auto">
+                <div className="mx-auto max-w-[240px] sm:max-w-[320px]">
                     <ClientOnly>
                         <PrintingAnimation className="opacity-95" />
                     </ClientOnly>
                 </div>
                 <div className="space-y-8">
-                    <div className="text-center space-y-2">
+                    <div className="space-y-2 text-center">
                         <div>{t('description-1')}</div>
                         <div>{t('description-2')}</div>
                     </div>

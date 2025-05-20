@@ -54,7 +54,7 @@ export default async function CollectionFilePage(props: PageProps) {
     }
 
     return (
-        <div className="flex flex-col sm:flex-row gap-8">
+        <div className="flex flex-col gap-8 sm:flex-row">
             <div className="w-full sm:w-1/2">
                 <h4>{worksheet.name}</h4>
                 <div className="mb-4">
@@ -73,15 +73,15 @@ export default async function CollectionFilePage(props: PageProps) {
                 <h6 className="mb-4">Included Kanji</h6>
                 <div className="flex flex-row flex-wrap gap-1 text-lg leading-none">
                     {worksheet.kanji.map((kanji) => (
-                        <div key={kanji} className="p-2.5 bg-base-200/10 rounded border">
+                        <div key={kanji} className="bg-base-200/10 rounded-sm border p-2.5">
                             {kanji}
                         </div>
                     ))}
                 </div>
             </div>
             <div className="w-full sm:w-1/2">
-                <h6 className="text-center mb-4">PDF Preview</h6>
-                <div className="max-w-[420px] mx-auto">
+                <h6 className="mb-4 text-center">PDF Preview</h6>
+                <div className="mx-auto max-w-[420px]">
                     <PDFView
                         pageCount={worksheet.pageCount}
                         fileUrl={`/api/files/${worksheet.hash}`}

@@ -10,5 +10,5 @@ const ClientOnly = (props: ClientOnlyProps) => {
 };
 
 export default dynamic(() => Promise.resolve(ClientOnly), {
-    ssr: false,
+    ssr: false
 });

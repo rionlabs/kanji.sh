@@ -15,8 +15,8 @@ export const CollectionCard = (props: CollectionCardProps) => {
     return (
         <Link
             href={`/write/${key}`}
-            className="p-4 sm:p-6 max-w-[320px] border rounded-xl shadow hover:shadow-md active:shadow-none transition-all group">
-            <div className="flex flex-col mx-auto gap-4">
+            className="shadow-smhover:shadow-md group max-w-[320px] rounded-xl border border-gray-200 p-4 transition-all active:shadow-none sm:p-6">
+            <div className="mx-auto flex flex-col gap-4">
                 {/* CardMedia */}
                 <div
                     className={clsx(
@@ -24,15 +24,15 @@ export const CollectionCard = (props: CollectionCardProps) => {
                         `bg-${key}`
                     )}>
                     <Image
-                        className="rounded-lg object-cover h-full w-full"
+                        className="h-full w-full rounded-lg object-cover"
                         fill={true}
                         src={`/assets/png/${key}.png`}
                         alt={t('title')}
                     />
                 </div>
                 {/* Card Content */}
-                <div className="opacity-90 group-hover:opacity-100 transition-all">
-                    <div className="text-center uppercase font-serif text-xl select-none">
+                <div className="opacity-90 transition-all group-hover:opacity-100">
+                    <div className="text-center font-serif text-xl uppercase select-none">
                         {t('title')}
                     </div>
                     <div className="mt-4">{t('description')}</div>

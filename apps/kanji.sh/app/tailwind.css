@@ -1,23 +1,104 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Quicksand:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@tailwind variants;
+@plugin '@tailwindcss/typography';
+@plugin '@tailwindcss/container-queries';
+
+@layer theme, base, components, utilities;
+
+@theme {
+    --font-sans: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-serif: "Quicksand", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+    --aspect-a4: 210 / 297;
+
+    --color-current: currentColor;
+    --color-jlpt: #1A7EC3;
+    --color-grade: rgb(92, 159, 79);
+    --color-wanikani: rgb(0, 170, 255);
+    --color-frequency: rgb(13, 37, 66);
+    --color-kanjigarden: rgb(226, 80, 109);
+}
+
+@plugin "daisyui" {
+    themes: light --default, dark --prefersdark;
+    root: 'html';
+    logs: true;
+
+    --radius-selector: 1rem;
+    --radius-field: 1rem;
+    --radius-box: 0.5rem;
+
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+
+    --border: 1rem;
+
+    --depth: 1;
+    --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+    name: light;
+    default: true;
+    prefersdark: false;
+    color-scheme: light;
+
+    --color-base-100: #ffffff;
+    --color-base-200: #f2f2f2;
+    --color-base-300: #e6e6e6;
+    --color-base-content: #2b333b;
+    --color-primary: #3730A3;
+    --color-primary-content: #ffffff;
+    --color-secondary: #D1F23E;
+    --color-secondary-content: '#ffffff';
+    --color-accent: #A2D3F9;
+    --color-accent-content: #A2D3F9;
+    --color-neutral: #a9a9a9;
+    --color-neutral-content: #d9d9e0;
+    --color-info: #00bfff;
+    --color-info-content: #002633;
+    --color-success: #00ff99;
+    --color-success-content: #003322;
+    --color-warning: #ffaa00;
+    --color-warning-content: oklch(41% 0.112 45.904);
+    --color-error: #ff0000;
+    --color-error-content: #330000
+}
+
+@plugin "daisyui/theme" {
+    name: dark;
+    default: false;
+    prefersdark: true;
+    color-scheme: dark;
+
+    --color-base-100: #24282e;
+    --color-base-200: #212427;
+    --color-base-300: #1e2020;
+    --color-base-content: #b3b8cc;
+    --color-primary: #3730A3;
+    --color-primary-content: #ffffff;
+    --color-secondary: #D1F23E;
+    --color-secondary-content: #ffffff;
+    --color-accent: #A2D3F9;
+    --color-accent-content: #A2D3F9;
+    --color-neutral: #2e3338;
+    --color-neutral-content: #b3b8cc;
+    --color-info: #00bfff;
+    --color-info-content: #002633;
+    --color-success: #00ff99;
+    --color-success-content: #003322;
+    --color-warning: #ffaa00;
+    --color-warning-content: #332200;
+    --color-error: #ff0000;
+    --color-error-content: #330000;
+}
+
+
 
 @layer base {
     * {
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    }
-
-    .paper-light {
-        background-image: url('/assets/bg/light.jpg');
-    }
-    .paper-dark {
-        background-image: url('/assets/jpg/bg-dark.webp');
-    }
-    .paper {
-        @apply paper-light dark:paper-dark;
     }
 
     body {
@@ -72,37 +153,49 @@
     }
 }
 
-@layer components {
-    .btn {
-        @apply rounded-l-full rounded-r-full;
-        @apply select-none font-medium;
-        @apply hover:shadow focus:shadow flex-nowrap;
-        @apply h-auto min-h-fit px-8 py-4 gap-4;
-        & > svg {
-            @apply h-4 w-4 opacity-80;
-        }
-        &[disabled] {
-            @apply cursor-not-allowed;
-        }
-        &.loading {
-            &:before {
-                @apply w-4 h-4 mr-0;
-            }
-            & > svg {
-                display: none;
-            }
-        }
-    }
-
-    .field {
-        @apply rounded-l-full rounded-r-full py-3 px-5 paper bg-opacity-10;
-        @apply border-2 focus:border-primary/75 aria-invalid:border-error/75;
-        @apply focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
-        @apply transition-shadow duration-300;
+@utility paper {
+    /*noinspection CssUnknownTarget*/
+    background-image: url(/assets/bg/light.jpg);
+    @variant dark {
+        /*noinspection CssUnknownTarget*/
+        background-image: url(/assets/bg/bg-dark.jpg);
     }
 }
 
-/** Avoids UserAgent coloring of auto fills */
+@utility btn {
+    @apply rounded-l-full rounded-r-full;
+    @apply select-none font-medium;
+    @apply hover:shadow-sm focus:shadow-sm flex-nowrap;
+    @apply h-auto min-h-fit px-8 py-4 gap-4;
+    & > svg {
+        @apply h-4 w-4 opacity-80;
+    }
+    &[disabled] {
+        @apply cursor-not-allowed;
+    }
+    &.loading {
+        &:before {
+            @apply w-4 h-4 mr-0;
+        }
+        & > svg {
+            display: none;
+        }
+    }
+}
+
+@utility field {
+    @apply paper;
+    @apply rounded-l-full rounded-r-full py-3 px-5;
+    @apply border-2 border-neutral focus:border-primary/75 aria-invalid:border-error/75;
+    @apply focus:outline-hidden focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
+    @apply transition-shadow duration-300;
+}
+
+@utility container {
+    @apply mx-auto;
+    @apply px-4 sm:px-6 md:px-8 lg:px-10;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
     transition:
@@ -149,16 +242,16 @@ input:-webkit-autofill:focus {
 
 .react-pdf {
     &__Document {
-        @apply rounded border-0 drop-shadow overflow-clip;
+        @apply rounded-sm border-0 drop-shadow-sm overflow-clip;
     }
     &__Page {
         min-width: auto !important;
         min-height: auto !important;
-        @apply rounded overflow-clip;
+        @apply rounded-sm overflow-clip;
         &__canvas {
             width: 100% !important;
             height: auto !important;
-            @apply rounded overflow-clip;
+            @apply rounded-sm overflow-clip;
         }
         &__annotations {
             display: none;

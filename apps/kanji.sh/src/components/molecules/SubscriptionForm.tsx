@@ -8,7 +8,10 @@ import { SubscribedAnimation } from 'apps/kanji.sh/src/components/atoms/Animated
 import { ErrorMessage } from 'apps/kanji.sh/src/components/atoms/ErrorMessage';
 import { ActionData, FormState } from 'apps/kanji.sh/src/subscription/Types';
 
-export type FormProps = {};
+export type FormProps = {
+    name: string;
+    email: string;
+};
 
 export const SubscriptionForm = () => {
     const [formState, setFormState] = React.useState<FormState>('idle');
@@ -46,7 +49,7 @@ export const SubscriptionForm = () => {
     }
 
     return (
-        <div className="container max-w-[512px] grid grid-cols-1 grid-rows-1">
+        <div className="container grid max-w-[512px] grid-cols-1 grid-rows-1">
             {formState !== 'submitted' ? (
                 <form
                     onSubmit={onSubmit}
@@ -80,7 +83,7 @@ export const SubscriptionForm = () => {
                         hidden={formState !== 'idle'}
                         message={actionData?.errors?.email}
                     />
-                    <button type="submit" className="btn btn-primary px-6 mt-4">
+                    <button type="submit" className="btn btn-primary mt-4 px-6">
                         {formState === 'submitting' ? t('button-loading') : t('button')}
                     </button>
                     <ErrorMessage hidden={formState !== 'idle'} message={actionData?.formError} />
@@ -88,9 +91,9 @@ export const SubscriptionForm = () => {
             ) : (
                 <div className="relative transition-all">
                     <div className="absolute -bottom-8" data-cy="post-subscribe-animation">
-                        <SubscribedAnimation className={'w-full h-full'} />
+                        <SubscribedAnimation className={'h-full w-full'} />
                     </div>
-                    <div className="h-40 grid align-middle place-items-center text-center">
+                    <div className="grid h-40 place-items-center text-center align-middle">
                         <h4 data-cy="post-subscribe-message">{t('post-subscribe-message')}</h4>
                     </div>
                 </div>
