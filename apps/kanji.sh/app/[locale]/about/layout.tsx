@@ -15,7 +15,7 @@ export default async function AboutLayout({ children, params }: PageProps) {
     const messages = getMessages();
     return (
         <NextIntlClientProvider locale={locale} messages={messages}>
-            <div className="prose sm:prose-md max-w-none prose-headings:font-normal">
+            <div className="prose sm:prose-md prose-headings:font-normal max-w-none">
                 {children}
             </div>
         </NextIntlClientProvider>

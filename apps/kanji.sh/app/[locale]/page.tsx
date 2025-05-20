@@ -44,7 +44,7 @@ export default async function IndexPage({ params }: LocaleParams) {
         <div>
             <div className="flex flex-col sm:flex-row sm:items-center">
                 <div className="w-full">
-                    <div className="w-full flex flex-col gap-4 justify-center">
+                    <div className="flex w-full flex-col justify-center gap-4">
                         <div>
                             <h4>{t('welcome-message')}</h4>
                         </div>
@@ -55,7 +55,7 @@ export default async function IndexPage({ params }: LocaleParams) {
                     </div>
                 </div>
                 <div className="w-full">
-                    <div className="max-w-[420px] w-[420px] h-[420px]">
+                    <div className="h-[420px] w-[420px] max-w-[420px]">
                         <ClientOnly>
                             <ReadingAnimation className="p-4" />
                         </ClientOnly>

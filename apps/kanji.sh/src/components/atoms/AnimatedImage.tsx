@@ -52,11 +52,11 @@ export const AnimatedImage = ({ animationName, className, loop = false }: Animat
     return (
         <div className={clsx(className)}>
             {showSvg ? (
-                <SvgFallback className={clsx('w-full h-full', { hidden: display === 'anim' })} />
+                <SvgFallback className={clsx('h-full w-full', { hidden: display === 'anim' })} />
             ) : (
                 <div
                     ref={animationContainerRef}
-                    className={clsx('w-full h-full', { hidden: display === 'svg' })}
+                    className={clsx('h-full w-full', { hidden: display === 'svg' })}
                 />
             )}
         </div>

@@ -10,7 +10,7 @@ export const ErrorMessage = ({ message, hidden }: ErrorMessageProps) => {
         <label
             hidden={hidden || !message}
             aria-hidden={hidden || !message}
-            className="text-error text-light transition-all px-5"
+            className="text-error text-light px-5 transition-all"
             data-cy="form-error">
             {message}
         </label>

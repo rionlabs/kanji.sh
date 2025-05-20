@@ -14,14 +14,13 @@ export default [
     {
         settings: {
             'import/resolver': {
-                'typescript': {
-                    'project': tsConfigPaths,
+                typescript: {
+                    project: tsConfigPaths
                 },
-                'node': {
-                    'project': tsConfigPaths,
-                },
-            },
-        },
-
-    },
+                node: {
+                    project: tsConfigPaths
+                }
+            }
+        }
+    }
 ];

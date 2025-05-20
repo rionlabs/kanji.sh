@@ -12,10 +12,10 @@ const tsConfig = path.resolve(workspaceRoot, 'apps/kanji.sh/tsconfig.json');
 const tsConfigPaths = [baseTsConfig, tsConfig];
 
 export default defineConfig([
-    ...baseConfig,
     {
-        ignores: ['.next/**'],
+        ignores: ['.next/']
     },
+    ...baseConfig,
     {
         settings: {
             'import/resolver': {

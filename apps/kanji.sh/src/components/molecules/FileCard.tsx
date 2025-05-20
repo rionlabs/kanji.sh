@@ -15,12 +15,12 @@ interface Props {
 export const FileCard = (props: Props) => {
     const { worksheet, cardData } = props;
     return (
-        <div className="max-w-[320px] sm:h-full m-auto flex flex-col p-5 gap-5">
+        <div className="m-auto flex max-w-[320px] flex-col gap-5 p-5 sm:h-full">
             {/* CardMedia */}
             <div
-                className="h-40 rounded-md pressed shadow-inner paper bg-blend-multiply"
+                className="pressed paper h-40 rounded-md bg-blend-multiply shadow-inner"
                 style={{ backgroundColor: cardData.metaColor }}>
-                <div className="text-center text-5xl font-serif font-bold leading-[10rem] text-white select-none">
+                <div className="text-center font-serif text-5xl leading-40 font-bold text-white select-none">
                     {cardData.title}
                 </div>
             </div>
