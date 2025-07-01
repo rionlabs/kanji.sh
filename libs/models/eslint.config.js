@@ -14,12 +14,12 @@ export default [
     ...baseConfig,
     {
         settings: {
-            "import/resolver": {
-                "typescript": {
-                    "project": tsConfigPaths
+            'import/resolver': {
+                typescript: {
+                    project: tsConfigPaths
                 },
-                "node": {
-                    "project": tsConfigPaths
+                node: {
+                    project: tsConfigPaths
                 }
             }
         },

@@ -4,8 +4,6 @@ import process from 'node:process';
 import { SupabaseClient } from '@supabase/supabase-js';
 import PQueue from 'p-queue';
 
-import { Files } from 'libs/printer/src/files/Files';
-
 import type { CollectionType, Worksheet, WorksheetConfig } from '@kanji-sh/models';
 import { DefaultWorksheetConfig } from '@kanji-sh/models';
 
@@ -13,6 +11,7 @@ import { Config } from './config';
 import { downloadKanjiData } from './download';
 import { CloudFiles } from './files/CloudFiles';
 import { CombinedFiles } from './files/CombinedFiles';
+import { Files } from './files/Files';
 import { LocalFiles } from './files/LocalFiles';
 import { createWorksheetHash } from './hash';
 import { buildKanjiDiagrams } from './kanjivg';

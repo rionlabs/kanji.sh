@@ -1,11 +1,8 @@
 {
-  "name": "printer-cli",
+  "name": "@kanji-sh/printer-cli",
   "version": "0.0.1",
-  "type": "module",
-  "dependencies": {
-    "@nx/devkit": "^21.0.3",
-    "globals": "^16.1.0",
-    "yargs": "^17.7.2",
-    "@swc/helpers": "0.5.17"
-  }
+  "private": true,
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts"
 }
