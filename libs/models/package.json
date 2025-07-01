@@ -1,7 +1,4 @@
 {
   "name": "@kanji-sh/models",
-  "version": "0.0.1",
-  "type": "module",
-  "dependencies": {},
-  "devDependencies": {}
+  "version": "0.0.1"
 }

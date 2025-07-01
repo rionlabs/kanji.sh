@@ -2,7 +2,6 @@ import js from '@eslint/js';
 import nxEslintPlugin from '@nx/eslint-plugin';
 import importPlugin from 'eslint-plugin-import';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import jsonParser from 'jsonc-eslint-parser';
 // eslint-disable-next-line import/no-unresolved
 import tsESLint from 'typescript-eslint';
 
@@ -21,7 +20,7 @@ export default tsESLint.config(
     },
     /* TypeScript Settings */
     {
-        files: ['**/*.@{ts,tsx,mts,cts}'],
+        files: ['**/*.@{ts,tsx,mts}'],
         plugins: {
             '@typescript-eslint': tsESLint.plugin
         },
@@ -34,7 +33,7 @@ export default tsESLint.config(
         settings: {
             ...importPlugin.configs.typescript.settings,
             'import/parsers': {
-                '@typescript-eslint/parser': ['.ts', '.tsx', '.mts', '.cts']
+                '@typescript-eslint/parser': ['.ts', '.tsx', '.mts']
             }
         },
         rules: {
@@ -44,7 +43,7 @@ export default tsESLint.config(
     },
     /* Import Rules */
     {
-        files: ['**/*.@(ts|tsx|mts|cts|js|jsx|mjs|cjs)'],
+        files: ['**/*.@(ts|tsx|mts|js|jsx|mjs)'],
         languageOptions: {
             ecmaVersion: 'latest',
             sourceType: 'module',
@@ -90,15 +89,6 @@ export default tsESLint.config(
                     }
                 }
             ]
-        }
-    },
-    {
-        files: ['**/*.json'],
-        languageOptions: {
-            parser: jsonParser
-        },
-        rules: {
-            '@nx/dependency-checks': 'error'
         }
     }
 );

@@ -31,6 +31,7 @@ export class CloudFiles implements Files {
             const metaFile = await this.readMetaData(hash);
             return !!(pdfFile && metaFile);
         } catch (error) {
+            console.error('Error checking existence of file:', hash);
             console.error(error);
             return false;
         }
@@ -50,6 +51,7 @@ export class CloudFiles implements Files {
             .from(this.buckets.jsonBucket)
             .download(`${hash}.json`);
         if (error || !data) {
+            console.error('Error reading metadata for hash:', hash);
             throw error;
         }
         const jsonString = await data.text();
@@ -61,6 +63,7 @@ export class CloudFiles implements Files {
             .from(this.buckets.pdfBucket)
             .download(`${hash}.pdf`);
         if (error || !data) {
+            console.error('Error reading PDF for hash:', hash);
             throw error;
         }
         const arrayBuffer = await data.arrayBuffer();
@@ -77,6 +80,7 @@ export class CloudFiles implements Files {
                 contentType: 'application/json'
             });
         if (metaError) {
+            console.error('Error writing metadata for hash:', metadata.hash);
             throw metaError;
         }
         // Write PDF
@@ -89,6 +93,7 @@ export class CloudFiles implements Files {
             });
 
         if (pdfError) {
+            console.error('Error writing PDF for hash:', metadata.hash);
             throw pdfError;
         }
     }
@@ -98,6 +103,7 @@ export class CloudFiles implements Files {
             .from(this.buckets.collectionBucket)
             .download(`${collection}.json`);
         if (error || !data) {
+            console.error('Error reading collection metadata for collection:', collection);
             throw error;
         }
         const jsonString = await data.text();
@@ -116,6 +122,7 @@ export class CloudFiles implements Files {
                 contentType: 'application/json'
             });
         if (error) {
+            console.error('Error writing collection metadata for collection:', collection);
             throw error;
         }
     }

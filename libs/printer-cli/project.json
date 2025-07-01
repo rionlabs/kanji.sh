@@ -3,17 +3,15 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/printer-cli/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:swc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/printer-cli",
         "main": "libs/printer-cli/src/index.ts",
         "tsConfig": "libs/printer-cli/tsconfig.lib.json",
-        "swcrc": "libs/printer-cli/swcrc.json",
-        "assets": ["libs/printer-cli/*.md"],
-        "generatePackageJson": true,
         "external": "all"
       }
     },
@@ -23,7 +21,13 @@
       "options": {
         "lintFilePatterns": ["libs/printer-cli/**/*.ts", "libs/printer-cli/package.json"]
       }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/printer-cli-2/jest.config.ts"
+      }
     }
-  },
-  "tags": []
+  }
 }
