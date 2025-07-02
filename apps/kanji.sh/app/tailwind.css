@@ -21,7 +21,7 @@
 }
 
 @plugin "daisyui" {
-    themes: light --default, dark --prefersdark;
+    themes: dove --default, bat;
     root: 'html';
     logs: true;
 
@@ -39,7 +39,7 @@
 }
 
 @plugin "daisyui/theme" {
-    name: light;
+    name: dove;
     default: true;
     prefersdark: false;
     color-scheme: light;
@@ -66,35 +66,35 @@
     --color-error-content: #330000
 }
 
-@plugin "daisyui/theme" {
-    name: dark;
-    default: false;
-    prefersdark: true;
-    color-scheme: dark;
+/*@plugin "daisyui/theme" {*/
+/*    name: bat;*/
+/*    default: false;*/
+/*    prefersdark: true;*/
+/*    color-scheme: dark;*/
 
-    --color-base-100: #24282e;
-    --color-base-200: #212427;
-    --color-base-300: #1e2020;
-    --color-base-content: #b3b8cc;
-    --color-primary: #3730A3;
-    --color-primary-content: #ffffff;
-    --color-secondary: #D1F23E;
-    --color-secondary-content: #ffffff;
-    --color-accent: #A2D3F9;
-    --color-accent-content: #A2D3F9;
-    --color-neutral: #2e3338;
-    --color-neutral-content: #b3b8cc;
-    --color-info: #00bfff;
-    --color-info-content: #002633;
-    --color-success: #00ff99;
-    --color-success-content: #003322;
-    --color-warning: #ffaa00;
-    --color-warning-content: #332200;
-    --color-error: #ff0000;
-    --color-error-content: #330000;
-}
+/*    --color-base-100: #24282e;*/
+/*    --color-base-200: #212427;*/
+/*    --color-base-300: #1e2020;*/
+/*    --color-base-content: #b3b8cc;*/
+/*    --color-primary: #3730A3;*/
+/*    --color-primary-content: #ffffff;*/
+/*    --color-secondary: #D1F23E;*/
+/*    --color-secondary-content: #ffffff;*/
+/*    --color-accent: #A2D3F9;*/
+/*    --color-accent-content: #A2D3F9;*/
+/*    --color-neutral: #2e3338;*/
+/*    --color-neutral-content: #b3b8cc;*/
+/*    --color-info: #00bfff;*/
+/*    --color-info-content: #002633;*/
+/*    --color-success: #00ff99;*/
+/*    --color-success-content: #003322;*/
+/*    --color-warning: #ffaa00;*/
+/*    --color-warning-content: #332200;*/
+/*    --color-error: #ff0000;*/
+/*    --color-error-content: #330000;*/
+/*}*/
 
-
+@custom-variant dark (&:where([data-theme=bat], [data-theme=bat] *));
 
 @layer base {
     * {
