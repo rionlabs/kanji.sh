@@ -22,7 +22,10 @@ export async function GET(request: NextRequest, context: Context): Promise<NextR
         headers: {
             'Content-Type': 'application/pdf',
             'Content-Length': pdfBuffer.length.toString(),
-            'Content-Disposition': contentDisposition
+            'Content-Disposition': contentDisposition,
+            'Cache-Control': 'public, s-maxage=3600',
+            'CDN-Cache-Control': 'public, s-maxage=604800',
+            'Vercel-CDN-Cache-Control': 'public, s-maxage=2419200'
         }
     });
 }
