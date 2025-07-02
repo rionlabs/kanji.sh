@@ -15,7 +15,7 @@ export const CollectionCard = (props: CollectionCardProps) => {
     return (
         <Link
             href={`/write/${key}`}
-            className="shadow-smhover:shadow-md group max-w-[320px] rounded-xl border border-gray-200 p-4 transition-all active:shadow-none sm:p-6">
+            className="group max-w-[320px] rounded-xl border border-gray-200 p-4 shadow-sm transition-all hover:shadow-md active:shadow-none sm:p-6">
             <div className="mx-auto flex flex-col gap-4">
                 {/* CardMedia */}
                 <div
