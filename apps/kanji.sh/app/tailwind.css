@@ -240,21 +240,22 @@ input:-webkit-autofill:focus {
     }
 }
 
-.react-pdf {
-    &__Document {
-        @apply rounded-sm border-0 drop-shadow-sm overflow-clip;
-    }
-    &__Page {
-        min-width: auto !important;
-        min-height: auto !important;
-        @apply rounded-sm overflow-clip;
-        &__canvas {
-            width: 100% !important;
-            height: auto !important;
-            @apply rounded-sm overflow-clip;
-        }
-        &__annotations {
-            display: none;
-        }
-    }
+.react-pdf__Document {
+    @apply rounded-sm border-0 drop-shadow-sm overflow-clip;
+}
+
+.react-pdf__Page {
+    min-width: auto !important;
+    min-height: auto !important;
+    @apply rounded-sm overflow-clip;
+}
+
+.react-pdf__Page__canvas {
+    width: 100% !important;
+    height: auto !important;
+    @apply rounded-sm overflow-clip;
+}
+
+react-pdf__Page__textContent {
+    display: none;
 }
