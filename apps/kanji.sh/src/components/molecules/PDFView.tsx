@@ -4,9 +4,10 @@ import React, { useRef } from 'react';
 
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 type PDFViewProps = {
     fileUrl: string;
@@ -15,7 +16,7 @@ type PDFViewProps = {
 
 const PagePlaceholder = () => {
     return (
-        <div className="aspect-A4 w-full rounded-md bg-white">
+        <div className="aspect-a4 w-full rounded-md bg-white">
             <div className="grid h-full w-full animate-pulse place-items-center">
                 <div className="flex w-5/6 flex-col items-stretch gap-4">
                     <div className="h-12 rounded bg-slate-50" />
@@ -30,7 +31,7 @@ const PagePlaceholder = () => {
 
 const PageError = () => {
     return (
-        <div className="aspect-A4 w-full rounded-md bg-white">
+        <div className="aspect-a4 w-full rounded-md bg-white">
             <div className="grid h-full w-full place-items-center">
                 <div className="flex w-5/6 flex-col items-stretch gap-4 text-center">
                     <div className="text-red-700">Failed to load PDF file</div>
