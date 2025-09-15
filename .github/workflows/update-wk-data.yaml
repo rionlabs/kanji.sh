@@ -1,0 +1,55 @@
+name: Update Wanikani Data
+
+on:
+  # Every week on Sunday at 10AM
+  schedule:
+    - cron: '0 10 * * 0'
+  # Allows manual triggering of the workflow
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-wk-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: Install NPM dependencies
+        run: npm install
+
+      - name: Update Wanikani data
+        env:
+          WK_API_KEY: ${{ secrets.WK_API_KEY }}
+        run: |
+          node ./tools/updateWanikaniData.js
+
+      - name: If there are no commits, exit
+        run: |
+            if git diff --quiet; then
+                echo "No changes detected"
+                exit 0
+            else
+                echo "Changes detected"
+            fi
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+            commit-message: ":bento: Updates Wanikani data"
+            branch: automation/update-wanikani-data-${{ github.run_id }}
+            title: "Updates Wanikani data"
+            body: "This PR updates the Wanikani data to the latest version."
+            draft: false
+            base: main
