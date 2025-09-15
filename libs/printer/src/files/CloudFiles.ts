@@ -4,7 +4,7 @@ import { CollectionType, Worksheet } from '@kanji-sh/models';
 
 import type { Files } from './Files';
 
-const DEFAULT_CACHE_CONTROL = 'public,max-age=604800;stale-while-revalidate=86400';
+const PDF_CACHE_CONTROL = 'public,max-age=604800;stale-while-revalidate=86400';
 
 type Buckets = {
     pdfBucket: string;
@@ -75,7 +75,7 @@ export class CloudFiles implements Files {
         const { error: metaError } = await this.supabaseClient.storage
             .from(this.buckets.jsonBucket)
             .upload(`${metadata.hash}.json`, JSON.stringify(metadata), {
-                cacheControl: DEFAULT_CACHE_CONTROL,
+                cacheControl: PDF_CACHE_CONTROL,
                 upsert: true,
                 contentType: 'application/json'
             });
@@ -87,7 +87,7 @@ export class CloudFiles implements Files {
         const { error: pdfError } = await this.supabaseClient.storage
             .from(this.buckets.pdfBucket)
             .upload(`${metadata.hash}.pdf`, pdf, {
-                cacheControl: DEFAULT_CACHE_CONTROL,
+                cacheControl: PDF_CACHE_CONTROL,
                 upsert: true,
                 contentType: 'application/pdf'
             });
@@ -117,7 +117,7 @@ export class CloudFiles implements Files {
         const { error } = await this.supabaseClient.storage
             .from(this.buckets.collectionBucket)
             .upload(`${collection}.json`, JSON.stringify(data), {
-                cacheControl: DEFAULT_CACHE_CONTROL,
+                cacheControl: PDF_CACHE_CONTROL,
                 upsert: true,
                 contentType: 'application/json'
             });

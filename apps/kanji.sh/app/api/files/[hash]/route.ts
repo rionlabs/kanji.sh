@@ -6,6 +6,8 @@ type Context = {
     params: Promise<{ hash: string }>;
 };
 
+const PDF_CACHE_CONTROL = 'public,max-age=604800;stale-while-revalidate=86400';
+
 /**
  * API route that returns PDF file.
  */
@@ -17,15 +19,16 @@ export async function GET(request: NextRequest, context: Context): Promise<NextR
     const worksheet = await appOps.getWorksheetMeta(hash);
     const pdfBuffer = await appOps.getWorksheetContents(hash);
     const contentDisposition = download ? `attachment; filename="${worksheet.name}.pdf"` : 'inline';
+
     return new NextResponse(pdfBuffer, {
         status: 200,
         headers: {
             'Content-Type': 'application/pdf',
             'Content-Length': pdfBuffer.length.toString(),
             'Content-Disposition': contentDisposition,
-            'Cache-Control': 'public, s-maxage=3600',
-            'CDN-Cache-Control': 'public, s-maxage=604800',
-            'Vercel-CDN-Cache-Control': 'public, s-maxage=2419200'
+            'Cache-Control': PDF_CACHE_CONTROL,
+            'CDN-Cache-Control': PDF_CACHE_CONTROL,
+            'Vercel-CDN-Cache-Control': PDF_CACHE_CONTROL
         }
     });
 }
