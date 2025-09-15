@@ -9,7 +9,7 @@ const WK_API_KEY = process.env.WK_API_KEY;
 
 const updateWanikaniData = async () => {
     // Ensure API key is set
-    if (!process.env.WK_API_KEY) {
+    if (!WK_API_KEY) {
         throw new Error('Wanikani API key is not set in environment variables.');
     }
 
@@ -53,8 +53,8 @@ const updateWanikaniData = async () => {
 };
 
 updateWanikaniData()
-    .then((result) => {
-        console.log('Wanikani source update completed:', result);
+    .then(() => {
+        console.log('Wanikani source update completed successfully.');
         process.exit(0);
     })
     .catch((error) => {
