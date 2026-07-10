@@ -39,5 +39,7 @@
         "watchDepsTargetName": "watch-deps"
       }
     }
-  ]
+  ],
+  "analytics": false,
+  "neverConnectToCloud": true
 }

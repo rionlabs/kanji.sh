@@ -11,8 +11,7 @@
       "options": {
         "outputPath": "dist/libs/printer-cli",
         "main": "libs/printer-cli/src/index.ts",
-        "tsConfig": "libs/printer-cli/tsconfig.lib.json",
-        "external": "all"
+        "tsConfig": "libs/printer-cli/tsconfig.lib.json"
       }
     },
     "lint": {
