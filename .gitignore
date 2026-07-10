@@ -41,6 +41,7 @@ supabase/.temp
 
 # Next.js
 .next
+next-env.d.ts
 analyze
 
 .cursor/rules/nx-rules.mdc
