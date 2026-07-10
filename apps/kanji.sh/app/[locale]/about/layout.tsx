@@ -12,7 +12,7 @@ type PageProps = {
 export default async function AboutLayout({ children, params }: PageProps) {
     const locale = (await params).locale;
     setRequestLocale(locale);
-    const messages = getMessages();
+    const messages = await getMessages();
     return (
         <NextIntlClientProvider locale={locale} messages={messages}>
             <div className="prose sm:prose-md prose-headings:font-normal max-w-none">

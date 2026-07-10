@@ -4,43 +4,6 @@
   "sourceRoot": "apps/kanji.sh",
   "projectType": "application",
   "targets": {
-    "build": {
-      "executor": "@nx/next:build",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
-      "options": {
-        "outputPath": "dist/apps/kanji.sh"
-      },
-      "configurations": {
-        "development": {
-          "outputPath": "apps/kanji.sh"
-        },
-        "production": {}
-      }
-    },
-    "serve": {
-      "executor": "@nx/next:server",
-      "defaultConfiguration": "development",
-      "options": {
-        "buildTarget": "kanji.sh:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "kanji.sh:build:development",
-          "dev": true
-        },
-        "production": {
-          "buildTarget": "kanji.sh:build:production",
-          "dev": false
-        }
-      }
-    },
-    "export": {
-      "executor": "@nx/next:export",
-      "options": {
-        "buildTarget": "kanji.sh:build:production"
-      }
-    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],

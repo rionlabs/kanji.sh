@@ -2,7 +2,6 @@ import process from 'node:process';
 
 import createBundleAnalyzer from '@next/bundle-analyzer';
 import createMDXPlugin from '@next/mdx';
-import { composePlugins, withNx } from '@nx/next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin({
@@ -16,11 +15,7 @@ const withAnalyzer = createBundleAnalyzer({ enabled: process.env.ANALYZE === 'tr
  **/
 const nextConfig = {
     reactStrictMode: false,
-    nx: {
-        // Set this to true if you would like to use SVGR
-        // See: https://github.com/gregberge/svgr
-        svgr: false
-    },
+    distDir: '../../dist/apps/kanji.sh',
     pageExtensions: ['ts', 'tsx', 'mdx'],
     devIndicators: {
         position: 'top-right'
@@ -45,10 +40,6 @@ const nextConfig = {
             }
         ];
     },
-    experimental: {
-        mdxRs: true,
-        webpackBuildWorker: true
-    },
     turbopack: {
         rules: {
             '*.svg': {
@@ -67,9 +58,8 @@ const nextConfig = {
         });
 
         return config;
-    }
+    },
+    transpilePackages: ['@kanji-sh/models', '@kanji-sh/printer']
 };
 
-const plugins = [withMDX, withNextIntl, withNx, withAnalyzer];
-
-export default composePlugins(...plugins)(nextConfig);
+export default withMDX(withNextIntl(withAnalyzer(nextConfig)));
