@@ -62,6 +62,5 @@
         "lintFilePatterns": ["apps/kanji.sh/**/*.{ts,tsx,js,jsx}"]
       }
     }
-  },
-  "tags": []
+  }
 }

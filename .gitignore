@@ -42,3 +42,7 @@ supabase/.temp
 # Next.js
 .next
 analyze
+
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
+.claude/worktrees

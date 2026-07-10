@@ -1,17 +1,12 @@
-import path from 'node:path';
 import process from 'node:process';
-import { fileURLToPath } from 'node:url';
 
 import createBundleAnalyzer from '@next/bundle-analyzer';
 import createMDXPlugin from '@next/mdx';
 import { composePlugins, withNx } from '@nx/next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const withNextIntl = createNextIntlPlugin({
-    requestConfig: path.resolve(__dirname, './i18n/request.ts'),
+    requestConfig: './i18n/request.ts'
 });
 const withMDX = createMDXPlugin();
 const withAnalyzer = createBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
@@ -53,6 +48,14 @@ const nextConfig = {
     experimental: {
         mdxRs: true,
         webpackBuildWorker: true
+    },
+    turbopack: {
+        rules: {
+            '*.svg': {
+                loaders: ['@svgr/webpack'],
+                as: '*.js'
+            }
+        }
     },
     webpack: (config) => {
         // https://github.com/wojtekmaj/react-pdf/blob/main/packages/react-pdf/README.md#nextjs
