@@ -31,7 +31,10 @@ const config = {
     cloudHost: 'http://localhost:9007'
 };
 
-describe('CloudFiles', () => {
+const runIntegrationTests = process.env['SUPABASE_INTEGRATION_TESTS'] === 'true';
+const describeCloudFiles = runIntegrationTests ? describe : describe.skip;
+
+describeCloudFiles('CloudFiles', () => {
     let supabaseClient: SupabaseClient;
     let cloudFiles: CloudFiles;
 

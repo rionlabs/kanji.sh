@@ -18,6 +18,17 @@ import { ensureDirectoriesExist, logger } from './utils';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const PDFMerger = require('pdf-merger-js');
 
+const QueueConstructor = (PQueue as unknown as { default?: typeof PQueue }).default ?? PQueue;
+const buildUrlFunction =
+    (
+        buildUrl as unknown as {
+            default?: typeof buildUrl;
+            buildUrl?: typeof buildUrl;
+        }
+    ).default ??
+    (buildUrl as unknown as { buildUrl?: typeof buildUrl }).buildUrl ??
+    buildUrl;
+
 const sortByPageNumber = (array: string[]): string[] => {
     const getNumber = (path: string): number =>
         Number.parseInt(path.split('/').slice(-1)[0].split('.')[0]);
@@ -44,7 +55,7 @@ async function generatePDF(
         });
 
         // To avoid timeout, limit the number of pages to five pages per core
-        const browserPageQueue = new PQueue({
+        const browserPageQueue = new QueueConstructor({
             concurrency: os.cpus().length * 5,
             autoStart: true
         });
@@ -67,7 +78,7 @@ async function generatePDF(
                     }
                 });
 
-                const urlToLoad = buildUrl(`file:///${Config.templatePath}`, {
+                const urlToLoad = buildUrlFunction(`file:///${Config.templatePath}`, {
                     queryParams: {
                         data: kanjiArray.join(''),
                         page: index + 1,

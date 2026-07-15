@@ -10,7 +10,7 @@ export const HeaderNavItem = (props: React.PropsWithChildren<LinkProps<unknown>>
     const { children, ...otherProps } = props;
     const pathname = usePathname();
     const match = useMemo<boolean>(
-        () => pathname.includes(props.href.toString()),
+        () => pathname?.includes(props.href.toString()) === true,
         [props.href, pathname]
     );
     return (

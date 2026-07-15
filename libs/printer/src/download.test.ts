@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { describe, expect } from '@jest/globals';
-import fetch from 'node-fetch';
+import fetch from 'node-fetch-commonjs';
 
 import { downloadKanjiData } from '../src/download';
 import { readLinesInFile } from '../src/utils';
@@ -10,14 +10,14 @@ import { readLinesInFile } from '../src/utils';
 const TEST_DIR = path.resolve(__dirname, '__fixtures__');
 const JSON_MOCK = { key: 'value' };
 
-const { Response } = jest.requireActual('node-fetch');
-jest.mock('node-fetch', () => jest.fn());
+jest.mock('node-fetch-commonjs', () => jest.fn());
 
 describe('Download', () => {
     it('Should download and save data to output file', async () => {
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValueOnce(
-            new Response(JSON.stringify(JSON_MOCK))
-        );
+        const responseMock = {
+            arrayBuffer: async () => new TextEncoder().encode(JSON.stringify(JSON_MOCK)).buffer
+        } as Awaited<ReturnType<typeof fetch>>;
+        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValueOnce(responseMock);
 
         const outputDir = path.resolve(TEST_DIR, 'out');
         const outputFileName = 'data';
@@ -37,9 +37,10 @@ describe('Download', () => {
     });
 
     it('Should skip download if existing output exists', async () => {
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValueOnce(
-            new Response(JSON.stringify(JSON_MOCK))
-        );
+        const responseMock = {
+            arrayBuffer: async () => new TextEncoder().encode(JSON.stringify(JSON_MOCK)).buffer
+        } as Awaited<ReturnType<typeof fetch>>;
+        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValueOnce(responseMock);
 
         const outputDir = path.resolve(TEST_DIR, 'out');
         const outputFileName = 'data';

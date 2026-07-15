@@ -2,19 +2,26 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "module": "commonjs",
-    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
+    "strict": true,
+    "importHelpers": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "noPropertyAccessFromIndexSignature": true,
-    "strict": true
+    "paths": {
+      "@kanji-sh/models": ["dist/libs/models/src/index.d.ts"],
+      "@kanji-sh/printer": ["dist/libs/printer/src/index.d.ts"]
+    }
   },
   "files": [],
-  "include": [],
+  "include": ["src/**/*.ts", "../../libs/models/src/**/*.ts", "../../libs/printer/src/**/*.ts"],
   "references": [
     {
       "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
     }
   ]
 }

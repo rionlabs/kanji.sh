@@ -6,7 +6,7 @@ import globals from 'globals';
 import baseConfig from '../../eslint.config.js';
 
 const baseTsConfig = path.resolve(workspaceRoot, 'tsconfig.base.json');
-const tsConfig = path.resolve(workspaceRoot, 'libs/models/tsconfig.json');
+const tsConfig = path.resolve(workspaceRoot, 'libs/printer/tsconfig.json');
 
 const tsConfigPaths = [baseTsConfig, tsConfig];
 
@@ -24,10 +24,29 @@ export default [
             }
         },
         languageOptions: {
+            parserOptions: {
+                ecmaFeatures: {
+                    jsx: true
+                }
+            },
             globals: {
-                ...globals.node,
-                ...globals.jest
+                ...globals.browser,
+                ...globals.node
             }
+        }
+    },
+    {
+        files: ['**/*.json'],
+        rules: {
+            '@nx/dependency-checks': [
+                'error',
+                {
+                    ignoredFiles: ['{projectRoot}/eslint.config.{js,cjs,mjs,ts,cts,mts}']
+                }
+            ]
+        },
+        languageOptions: {
+            parser: await import('jsonc-eslint-parser')
         }
     }
 ];
