@@ -3,19 +3,17 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/models/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+    "build": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/models/**/*.ts",
-          "libs/models/package.json"
-        ]
+        "outputPath": "dist/libs/models",
+        "main": "libs/models/src/index.ts",
+        "tsConfig": "libs/models/tsconfig.lib.json",
+        "assets": []
       }
     }
-  },
-  "tags": []
+  }
 }

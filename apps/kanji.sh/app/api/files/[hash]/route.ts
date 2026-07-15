@@ -20,7 +20,7 @@ export async function GET(request: NextRequest, context: Context): Promise<NextR
     const pdfBuffer = await appOps.getWorksheetContents(hash);
     const contentDisposition = download ? `attachment; filename="${worksheet.name}.pdf"` : 'inline';
 
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(new Uint8Array(pdfBuffer), {
         status: 200,
         headers: {
             'Content-Type': 'application/pdf',

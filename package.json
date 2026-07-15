@@ -19,7 +19,7 @@
     "lint:all": "nx run-many --targets=lint --all",
     "test:all": "nx run-many --targets=test --all",
     "prebuild-worksheets": "nx run printer-cli:build",
-    "build-worksheets": "node dist/libs/printer-cli/src/index.js"
+    "build-worksheets": "node dist/libs/printer-cli/index.cjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
@@ -33,10 +33,8 @@
     "adm-zip": "^0.5.10",
     "build-url-ts": "^6.1.5",
     "clsx": "^2.1.1",
-    "isbot": "^3.6.8",
     "lodash": "^4.17.21",
     "lottie-web": "^5.12.2",
-    "minio": "^7.1.1",
     "next": "^16.2.10",
     "next-intl": "^4.13.1",
     "node-fetch": "^3.3.2",
@@ -45,8 +43,8 @@
     "pdf-merger-js": "^4.3.0",
     "puppeteer": "^24.9.0",
     "queue": "^7.0.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "react-icons": "^5.0.1",
     "react-pdf": "^9.2.1",
     "tiny-invariant": "^1.3.1",

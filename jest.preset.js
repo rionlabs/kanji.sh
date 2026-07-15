@@ -1,3 +1,3 @@
-import nxPreset from '@nx/jest/preset.js';
+import { nxPreset } from '@nx/jest/preset';
 
-export default { ...nxPreset }
+export default { ...nxPreset };

@@ -3,8 +3,12 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "declaration": true,
-    "types": ["node"]
+    "types": ["node"],
+    "paths": {
+      "@kanji-sh/models": ["dist/libs/models/src/index.d.ts"],
+      "@kanji-sh/printer": ["dist/libs/printer/src/index.d.ts"]
+    }
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  "exclude": ["jest.config.ts", "jest.config.cts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

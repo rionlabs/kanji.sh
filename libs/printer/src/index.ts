@@ -23,6 +23,8 @@ type ResultType = { key: string; collection: CollectionType };
 
 type BatchWorksheetResult = Record<string, Worksheet>;
 
+const QueueConstructor = (PQueue as unknown as { default?: typeof PQueue }).default ?? PQueue;
+
 /**
  * Operations exported for Next.js app.
  * Only use cloud storage in these operations because the local file system is not available in Next.js.
@@ -124,7 +126,7 @@ class CLIOps {
     ): Promise<BatchWorksheetResult> => {
         const timerLabel = `Build ${collection} Collection`;
         console.time(timerLabel);
-        const buildPdfQueue = new PQueue({
+        const buildPdfQueue = new QueueConstructor({
             concurrency: 1,
             autoStart: true
         });
@@ -189,17 +191,24 @@ const createCloudFiles = () =>
         )
     );
 
+const hasSupabaseConfig = () => Boolean(process.env['SUPABASE_URL'] && process.env['SUPABASE_KEY']);
+
 export const appOperations = () => {
     const cloudFiles = createCloudFiles();
     return new AppOps(cloudFiles);
 };
 
 export const cliOperations = () => {
-    const cloudFiles = createCloudFiles();
     const localFiles = new LocalFiles(
         path.join(Config.outDirPath, 'OUT/pdfs'),
         path.join(Config.outDirPath, 'OUT/jsons'),
         path.join(Config.outDirPath, 'OUT/collections')
     );
+
+    if (!hasSupabaseConfig()) {
+        return new CLIOps(localFiles);
+    }
+
+    const cloudFiles = createCloudFiles();
     return new CLIOps(new CombinedFiles(localFiles, cloudFiles));
 };
