@@ -5,6 +5,14 @@
   "projectType": "library",
   "tags": [],
   "targets": {
+    "build-assets": {
+      "executor": "nx:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "command": "nx run printer:build-assets-build && cp dist/libs/printer/src/build-assets.js dist/libs/printer/src/build-assets.cjs && node dist/libs/printer/src/build-assets.cjs",
+        "outputPath": "dist/libs/printer"
+      }
+    },
     "build": {
       "executor": "@nx/js:swc",
       "outputs": ["{options.outputPath}"],
@@ -12,7 +20,7 @@
         "outputPath": "dist/libs/printer",
         "main": "libs/printer/src/index.ts",
         "tsConfig": "libs/printer/tsconfig.lib.json",
-        "assets": []
+        "assets": ["libs/printer/assets"]
       }
     },
     "test": {

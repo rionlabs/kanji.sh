@@ -1,8 +1,17 @@
 import process from 'node:process';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import createBundleAnalyzer from '@next/bundle-analyzer';
 import createMDXPlugin from '@next/mdx';
+import { workspaceRoot } from '@nx/devkit';
 import createNextIntlPlugin from 'next-intl/plugin';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+console.log(`__dirname ${__dirname}`);
+console.log(`workspaceRoot ${workspaceRoot}`);
 
 const withNextIntl = createNextIntlPlugin({
     requestConfig: './i18n/request.ts'
@@ -47,17 +56,6 @@ const nextConfig = {
                 as: '*.js'
             }
         }
-    },
-    webpack: (config) => {
-        // https://github.com/wojtekmaj/react-pdf/blob/main/packages/react-pdf/README.md#nextjs
-        config.resolve.alias.canvas = false;
-        // SVGR
-        config.module.rules.push({
-            test: /\.svg$/,
-            use: ['@svgr/webpack']
-        });
-
-        return config;
     },
     transpilePackages: ['@kanji-sh/models', '@kanji-sh/printer']
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import ClientOnly from 'apps/kanji.sh/src/components/atoms/ClientOnly';
@@ -10,7 +11,7 @@ import { CollectionType } from '@kanji-sh/models';
 import { WritingAnimation } from '../../../src/components/atoms/AnimatedImage';
 import { CollectionCard } from '../../../src/components/molecules/CollectionCard';
 
-export const generateMetadata = async () => {
+export const generateMetadata = async (): Promise<Metadata> => {
     const t = await getTranslations('write');
     return {
         title: t('title'),
@@ -31,6 +32,19 @@ export default async function WritePage({ params }: LocaleParams) {
                         <h4>{t('title')}</h4>
                         <div>{t('description-1')}</div>
                         <div>{t('description-2')}</div>
+                    </div>
+                    <br />
+                    {/* TODO Add Image and copy */}
+                    <div>
+                        For those who haven't started with Kanji yet can start practicing with Kana
+                        first.
+                    </div>
+                    <div className="card card-side my-6 rounded-xl border border-gray-200 p-4 shadow-sm transition-all hover:shadow-md active:shadow-none">
+                        <figure>
+                            <img src="https://placehold.co/120x120" alt="Movie" />
+                        </figure>
+                        <figure className="card-body"></figure>
+                        Download Hiragana & Katakana Worksheets
                     </div>
                 </div>
                 {/* Jumbo Image */}

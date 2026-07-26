@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "esModuleInterop": true,
-    "module": "commonjs",
+    "module": "es6",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "importHelpers": true,
