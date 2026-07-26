@@ -1,10 +1,16 @@
 import path from 'node:path';
 
+const workspaceRoot = process.env['NX_WORKSPACE_ROOT'];
+if (!workspaceRoot) {
+    throw new Error(
+        'NX_WORKSPACE_ROOT environment variable is not set. Please ensure you are running this script in the correct environment.'
+    );
+}
 // Absolute path to assets directory
-const assetsDirPath = path.resolve('.', 'libs/printer/assets');
+const assetsDirPath = path.resolve(workspaceRoot, 'libs/printer/assets');
 
 // Absolute path to build directory
-const outDirPath = path.resolve('.', 'dist/printed');
+const outDirPath = path.resolve(workspaceRoot, 'dist/printed');
 
 /**
  * Defines the directory structure, location of source files.
