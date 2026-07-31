@@ -1,28 +1,21 @@
-import React from 'react';
-
-import { readFileSync } from 'node:fs';
 import path from 'node:path';
 
-import { Document, Font, Link, Page, Path, StyleSheet, Svg, Text, View } from '@react-pdf/renderer';
+import { Document, Page, StyleSheet, View } from '@react-pdf/renderer';
+import { floor, times } from 'lodash';
 
+import { registerNodeFonts } from './fonts';
+import { PageFooter } from './footer';
+import { PageHeader } from './header';
+import { readKanjiVgSvg, SquareGuide } from './svg';
+import { getKanjiImageFileName, mmToPt } from './utils';
 import { Config } from '../../config';
 
-function getKanjiImageFileName(kanji: string): string {
-    return `${kanji.charCodeAt(0).toString(16).padStart(5, '0')}.svg`;
-}
-
 type KanaTemplateConfig = {
-    sectionsPerRowCount: number;
-    pagePaddingMm: number;
-    sectionGapMm: number;
     borderColor: string;
     borderWidthPx: number;
-    cellSizePx: number;
-    writingCellCount: number;
     title: string;
-    titleSizePx: number;
-    characterSizePx: number;
-    gridCharacterSizePx: number;
+    cellSizeMm: number;
+    freeCellSizeMm: number;
     squareGuidePatternType: 'none' | 'plus' | 'asterisk';
     squareGuideColor: string;
     squareGuideStrokeWidthPx: number;
@@ -42,29 +35,14 @@ type SectionData = {
     traceSvgPath: string;
 };
 
-type SvgAttributes = Record<string, string>;
-
-type SvgRenderOptions = {
-    width: number;
-    height: number;
-    strokeColor: string;
-    fillColor: string;
-};
-
 const DEFAULT_CONFIG: KanaTemplateConfig = {
-    sectionsPerRowCount: 1,
-    pagePaddingMm: 24,
-    sectionGapMm: 12,
     borderColor: '#777777',
     borderWidthPx: 0.75,
-    cellSizePx: 30,
-    writingCellCount: 16,
+    cellSizeMm: 15,
+    freeCellSizeMm: 10,
     title: 'Kana Worksheet',
-    titleSizePx: 12,
-    characterSizePx: 34,
-    gridCharacterSizePx: 22,
     squareGuidePatternType: 'plus',
-    squareGuideColor: '#D6D6D6',
+    squareGuideColor: '#EEEEEE',
     squareGuideStrokeWidthPx: 0.8,
     kvgStrokeBasePath: Config.outStrokePath,
     kvgTraceBasePath: Config.outTracerPath
@@ -77,299 +55,123 @@ const joinFilePath = (basePath: string, fileName: string): string => {
     return path.join(basePath, fileName);
 };
 
-const parseAttributes = (tag: string): SvgAttributes => {
-    const attributes: SvgAttributes = {};
-    const matches = tag.matchAll(/([a-zA-Z_:][-a-zA-Z0-9_:.]*)="([^"]*)"/g);
-    for (const match of matches) {
-        const [, key, value] = match;
-        attributes[key] = value;
-    }
-    return attributes;
-};
+// Register font
+registerNodeFonts();
 
-const normalizeColor = (value: string | undefined, fallback: string): string | undefined => {
-    if (!value) {
-        return undefined;
-    }
+/**
+       |     Header     | (20mm)
+ (10mm)|                | (10mm)
+       |     Footer     | (15mm)
+ */
+const pageWidth = 210; // A4 width in mm
+const pageHeight = 297; // A4 height in mm
 
-    const normalized = value.trim().toLowerCase();
-    if (normalized === 'none') {
-        return 'none';
-    }
+const pagePaddingTop = 20;
+const pagePaddingBottom = 15;
+const pagePaddingHorizontal = 10;
+const sectionGap = 8;
+const characterReductionRatio = 0.85;
 
-    if (normalized === '#000' || normalized === '#000000' || normalized === 'black') {
-        return fallback;
-    }
+const kanjiBoxCount = 1;
+const traceBoxPerColumnCount = 2;
 
-    return value;
-};
+const contentAreaWidthMm = pageWidth - 2 * pagePaddingHorizontal; // 10mm padding on each side
+const contentAreaHeightMm = pageHeight - pagePaddingTop - pagePaddingBottom; // 20mm header, 15mm footer
 
-const extractViewBox = (svgMarkup: string): string => {
-    const viewBoxMatch = svgMarkup.match(/viewBox="([^"]+)"/i);
-    if (viewBoxMatch?.[1]) {
-        return viewBoxMatch[1];
-    }
+const traceBoxPerRowCount =
+    floor(contentAreaWidthMm / DEFAULT_CONFIG.cellSizeMm) - kanjiBoxCount * 2;
 
-    const widthMatch = svgMarkup.match(/width="([0-9.]+)"/i);
-    const heightMatch = svgMarkup.match(/height="([0-9.]+)"/i);
-    const width = Number(widthMatch?.[1] ?? 109);
-    const height = Number(heightMatch?.[1] ?? 109);
+const sectionWidthMm = (kanjiBoxCount * 2 + traceBoxPerRowCount) * DEFAULT_CONFIG.cellSizeMm;
 
-    return `0 0 ${Number.isFinite(width) ? width : 109} ${Number.isFinite(height) ? height : 109}`;
-};
+const sectionHeightMm = DEFAULT_CONFIG.cellSizeMm * traceBoxPerColumnCount;
 
-const readKanjiVgSvg = (filePath: string, options: SvgRenderOptions): JSX.Element | null => {
-    if (!filePath) {
-        return null;
-    }
-
-    let svgMarkup: string;
-    try {
-        svgMarkup = readFileSync(filePath, { encoding: 'utf-8' });
-    } catch {
-        return null;
-    }
-
-    const viewBox = extractViewBox(svgMarkup);
-    const pathTags = [...svgMarkup.matchAll(/<path\b([^>]*)\/?>(?:<\/path>)?/gi)];
-
-    if (pathTags.length === 0) {
-        return null;
-    }
-
-    return (
-        <Svg
-            viewBox={viewBox}
-            width={options.width}
-            height={options.height}
-            preserveAspectRatio="xMidYMid meet"
-            style={{ position: 'absolute' }}>
-            {pathTags.map((match, index) => {
-                const attrs = parseAttributes(match[1]);
-                const d = attrs.d;
-                if (!d) {
-                    return null;
-                }
-
-                const stroke =
-                    normalizeColor(attrs.stroke, options.strokeColor) ?? options.strokeColor;
-                const fill = normalizeColor(attrs.fill, options.fillColor) ?? 'none';
-                const strokeWidth = attrs['stroke-width']
-                    ? Number(attrs['stroke-width'])
-                    : undefined;
-                const strokeLinecap = attrs['stroke-linecap'] as
-                    | 'butt'
-                    | 'round'
-                    | 'square'
-                    | undefined;
-                const strokeLinejoin = attrs['stroke-linejoin'] as
-                    | 'miter'
-                    | 'round'
-                    | 'bevel'
-                    | undefined;
-                const opacity = attrs.opacity ? Number(attrs.opacity) : undefined;
-                const transform = attrs.transform;
-
-                return (
-                    <Path
-                        key={`${filePath}-${index}`}
-                        d={d}
-                        fill={fill}
-                        stroke={stroke}
-                        strokeWidth={strokeWidth}
-                        strokeLinecap={strokeLinecap}
-                        strokeLinejoin={strokeLinejoin}
-                        opacity={opacity}
-                        transform={transform}
-                    />
-                );
-            })}
-        </Svg>
-    );
-};
-
-const SquareGuide = ({
-    sizePx,
-    patternType,
-    color,
-    strokeWidthPx
-}: {
-    sizePx: number;
-    patternType: KanaTemplateConfig['squareGuidePatternType'];
-    color: string;
-    strokeWidthPx: number;
-}) => {
-    if (patternType === 'none') {
-        return null;
-    }
-
-    return (
-        <Svg
-            width={sizePx}
-            height={sizePx}
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-            style={{ position: 'absolute', top: 0, left: 0 }}>
-            <Path d="M 50 0 L 50 100" stroke={color} strokeWidth={strokeWidthPx} fill="none" />
-            <Path d="M 0 50 L 100 50" stroke={color} strokeWidth={strokeWidthPx} fill="none" />
-            {patternType === 'asterisk' ? (
-                <>
-                    <Path
-                        d="M 0 0 L 100 100"
-                        stroke={color}
-                        strokeWidth={strokeWidthPx}
-                        fill="none"
-                    />
-                    <Path
-                        d="M 100 0 L 0 100"
-                        stroke={color}
-                        strokeWidth={strokeWidthPx}
-                        fill="none"
-                    />
-                </>
-            ) : null}
-        </Svg>
-    );
-};
-
-// https://github.com/vercel/next.js/pull/86480
-const absolutePathTo = (fontFile: string) => {
-    const fontFilePath = path.resolve(Config.assetsDirPath, 'fonts', fontFile);
-    console.log(`fontFilePath ${fontFilePath}`);
-    // console.log(`__dirname ${__dirname}`);
-    // const projectRootPath = process.cwd();
-    // console.log(`projectRootPath ${projectRootPath}`);
-    // return fontFilePath.replace('/ROOT', projectRootPath);
-    return fontFilePath;
-};
-
-Font.register({
-    family: 'Montserrat',
-    src: absolutePathTo('Montserrat-VariableFont.ttf')
-});
+/**
+| Big  | small | .. as per fit
+| Cell | small | .. as per fit
+ */
 
 const createStyles = (cfg: KanaTemplateConfig) =>
     StyleSheet.create({
         page: {
-            padding: cfg.pagePaddingMm,
+            paddingTop: `${pagePaddingTop}mm`, // Header
+            paddingBottom: `${pagePaddingBottom}mm`, // Footer
+            paddingHorizontal: `${pagePaddingHorizontal}mm`, // Size Padding
             fontFamily: 'Montserrat',
+            fontSize: '16px',
             backgroundColor: '#FFFFFF',
             position: 'relative'
         },
-        header: {
-            position: 'absolute',
-            left: 0,
-            top: '1cm',
-            width: '100%',
-            textAlign: 'center'
-        },
-        headerTitle: {
-            fontSize: cfg.titleSizePx,
-            display: 'flex',
-            gap: '8px',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center'
-        },
-        headerPageNumber: {
-            fontSize: cfg.titleSizePx,
-            color: '#777777'
-        },
-        footer: {
-            position: 'absolute',
-            left: 0,
-            bottom: '1cm',
-            width: '100%',
-            textAlign: 'center',
-            fontSize: cfg.titleSizePx,
-            color: '#999999'
-        },
-        footerLink: {
-            color: '#777777',
-            textDecoration: 'none'
-        },
         contentArea: {
             flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: '1.5cm',
-            marginBottom: '1.5cm'
-        },
-        sectionList: {
             display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            gap: cfg.sectionGapMm
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            gap: '8mm'
         },
         section: {
             borderColor: cfg.borderColor,
-            borderWidth: cfg.borderWidthPx,
-            width: (cfg.writingCellCount + 2) * cfg.cellSizePx,
-            marginBottom: cfg.sectionGapMm
+            borderWidth: cfg.borderWidthPx
         },
-        topBodyRow: {
+        sectionBodyRow: {
             display: 'flex',
             flexDirection: 'row',
-            height: cfg.cellSizePx * 2
+            width: mmToPt(sectionWidthMm)
         },
-        bigCell: {
-            width: cfg.cellSizePx * 2,
-            height: cfg.cellSizePx * 2,
+        kanjiCell: {
+            width: mmToPt(cfg.cellSizeMm * 2),
+            height: mmToPt(cfg.cellSizeMm * 2),
+            minWidth: mmToPt(cfg.cellSizeMm * 2),
             borderRightColor: cfg.borderColor,
             borderRightWidth: cfg.borderWidthPx,
             justifyContent: 'center',
             alignItems: 'center'
         },
-        bigSvgWrap: {
-            width: cfg.cellSizePx * 2,
-            height: cfg.cellSizePx * 2,
+        kanjiSquareGuideWrap: {
+            width: mmToPt(cfg.cellSizeMm * 2),
+            height: mmToPt(cfg.cellSizeMm * 2),
+            minWidth: mmToPt(cfg.cellSizeMm * 2),
+            minHeight: mmToPt(cfg.cellSizeMm * 2),
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'relative'
+        },
+        kanjiSvgWrap: {
+            width: mmToPt(cfg.cellSizeMm * 2),
+            height: mmToPt(cfg.cellSizeMm * 2),
             justifyContent: 'center',
             alignItems: 'center'
         },
-        squareGuideWrap: {
-            width: cfg.cellSizePx,
-            height: cfg.cellSizePx,
+        traceSquareGuideWrap: {
+            width: mmToPt(cfg.cellSizeMm),
+            height: mmToPt(cfg.cellSizeMm),
             justifyContent: 'center',
             alignItems: 'center',
             position: 'relative'
         },
-        bigSquareGuideWrap: {
-            width: cfg.cellSizePx * 2,
-            height: cfg.cellSizePx * 2,
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'relative'
-        },
-        mainCharacter: {
-            fontSize: cfg.characterSizePx,
-            textAlign: 'center'
-        },
-        rightGrid: {
-            width: cfg.writingCellCount * cfg.cellSizePx,
+        traceGrid: {
+            width: mmToPt(traceBoxPerRowCount * cfg.cellSizeMm) * 2,
             display: 'flex',
             flexDirection: 'column'
         },
-        topGridRow: {
+        topTraceGridRow: {
             display: 'flex',
             flexDirection: 'row',
-            height: cfg.cellSizePx,
+            height: mmToPt(cfg.cellSizeMm),
+            minHeight: mmToPt(cfg.cellSizeMm),
             borderBottomColor: cfg.borderColor,
             borderBottomWidth: cfg.borderWidthPx
         },
-        middleGridRow: {
+        bottomTraceGridRow: {
             display: 'flex',
             flexDirection: 'row',
-            height: cfg.cellSizePx
-        },
-        bottomGridRow: {
-            display: 'flex',
-            flexDirection: 'row',
-            height: cfg.cellSizePx,
-            borderTopColor: cfg.borderColor,
-            borderTopWidth: cfg.borderWidthPx
+            height: mmToPt(cfg.cellSizeMm),
+            minHeight: mmToPt(cfg.cellSizeMm)
         },
         gridCell: {
-            width: cfg.cellSizePx,
+            width: mmToPt(cfg.cellSizeMm),
+            height: mmToPt(cfg.cellSizeMm),
+            minHeight: mmToPt(cfg.cellSizeMm),
             justifyContent: 'center',
             alignItems: 'center',
             borderRightColor: cfg.borderColor,
@@ -378,154 +180,234 @@ const createStyles = (cfg: KanaTemplateConfig) =>
         gridCellLast: {
             borderRightWidth: 0
         },
-        gridCharacter: {
-            fontSize: cfg.gridCharacterSizePx,
-            color: '#BBBBBB'
-        },
         kvgHint: {
-            marginTop: 4,
             fontSize: 7,
             color: '#777777'
         },
         overlaySvg: {
             position: 'absolute',
-            top: cfg.cellSizePx * 0.1,
-            left: cfg.cellSizePx * 0.1
+            top: mmToPt((cfg.cellSizeMm * (1 - characterReductionRatio)) / 2),
+            left: mmToPt((cfg.cellSizeMm * (1 - characterReductionRatio)) / 2)
         }
     });
 
 const KanaSection = ({
     section,
-    cfg,
+    config,
     styles
 }: {
     section: SectionData;
-    cfg: KanaTemplateConfig;
+    config: KanaTemplateConfig;
     styles: ReturnType<typeof createStyles>;
 }) => {
-    const writingCells = Array.from({ length: cfg.writingCellCount }, (_, index) => index);
-    const blankCells = Array.from({ length: cfg.writingCellCount + 2 }, (_, index) => index);
-    const smallGuideSvgSize = cfg.cellSizePx * 0.7;
+    const writingCells = Array.from({ length: traceBoxPerRowCount }, (_, index) => index);
 
-    console.log(`Reading stroke SVG from: ${section.strokeSvgPath}`);
-    console.log(`Reading trace SVG from: ${section.traceSvgPath}`);
-
-    const bigStrokeSvg = readKanjiVgSvg(section.strokeSvgPath, {
-        width: cfg.cellSizePx * 1.6,
-        height: cfg.cellSizePx * 1.6,
+    const kanjiStrokeSvg = readKanjiVgSvg(section.strokeSvgPath, {
+        size: mmToPt(config.cellSizeMm * 2 * characterReductionRatio),
         strokeColor: '#000000',
-        fillColor: '#000000'
+        fillColor: '#000000',
+        strokeWidth: 3
     });
 
     const darkTraceSvg = readKanjiVgSvg(section.traceSvgPath, {
-        width: smallGuideSvgSize,
-        height: smallGuideSvgSize,
+        size: mmToPt(config.cellSizeMm * characterReductionRatio),
         strokeColor: '#808080',
-        fillColor: '#808080'
+        fillColor: '#808080',
+        strokeWidth: 1
     });
 
     const lightTraceSvg = readKanjiVgSvg(section.traceSvgPath, {
-        width: smallGuideSvgSize,
-        height: smallGuideSvgSize,
+        size: mmToPt(config.cellSizeMm * characterReductionRatio),
         strokeColor: '#BBBBBB',
-        fillColor: '#BBBBBB'
+        fillColor: '#BBBBBB',
+        strokeWidth: 1
     });
 
     return (
         <View style={styles.section} wrap={false}>
-            <View style={styles.topBodyRow}>
-                <View style={styles.bigCell}>
-                    <View style={styles.bigSquareGuideWrap}>
+            <View style={styles.sectionBodyRow}>
+                <View style={styles.kanjiCell}>
+                    <View style={styles.kanjiSquareGuideWrap}>
                         <SquareGuide
-                            sizePx={cfg.cellSizePx * 2}
-                            patternType={cfg.squareGuidePatternType}
-                            color={cfg.squareGuideColor}
-                            strokeWidthPx={cfg.squareGuideStrokeWidthPx}
+                            sizePx={mmToPt(config.cellSizeMm) * 2}
+                            patternType={config.squareGuidePatternType}
+                            color={config.squareGuideColor}
+                            strokeWidthPx={config.squareGuideStrokeWidthPx}
                         />
-                        {bigStrokeSvg ? (
-                            <View style={styles.bigSvgWrap}>{bigStrokeSvg}</View>
-                        ) : (
-                            <Text style={styles.mainCharacter}>{section.character}</Text>
-                        )}
+                        <View style={styles.kanjiSvgWrap}>{kanjiStrokeSvg}</View>
                     </View>
                 </View>
 
-                <View style={styles.rightGrid}>
-                    <View style={styles.topGridRow}>
+                <View style={styles.traceGrid}>
+                    <View style={styles.topTraceGridRow}>
                         {writingCells.map((cellIndex) => (
                             <View
                                 key={`top-${section.character}-${cellIndex}`}
                                 style={
-                                    cellIndex === cfg.writingCellCount - 1
+                                    cellIndex === traceBoxPerRowCount - 1
                                         ? [styles.gridCell, styles.gridCellLast]
                                         : styles.gridCell
                                 }>
-                                <View style={styles.squareGuideWrap}>
+                                <View style={styles.traceSquareGuideWrap}>
                                     <SquareGuide
-                                        sizePx={cfg.cellSizePx}
-                                        patternType={cfg.squareGuidePatternType}
-                                        color={cfg.squareGuideColor}
-                                        strokeWidthPx={cfg.squareGuideStrokeWidthPx}
+                                        sizePx={mmToPt(config.cellSizeMm)}
+                                        patternType={config.squareGuidePatternType}
+                                        color={config.squareGuideColor}
+                                        strokeWidthPx={config.squareGuideStrokeWidthPx}
                                     />
-                                    {darkTraceSvg ? (
-                                        <View style={styles.overlaySvg}>{darkTraceSvg}</View>
-                                    ) : (
-                                        <Text style={styles.gridCharacter}>
-                                            {section.character}
-                                        </Text>
-                                    )}
+                                    <View style={styles.overlaySvg}>{darkTraceSvg}</View>
                                 </View>
                             </View>
                         ))}
                     </View>
 
-                    <View style={styles.middleGridRow}>
+                    <View style={styles.bottomTraceGridRow}>
                         {writingCells.map((cellIndex) => (
                             <View
                                 key={`middle-${section.character}-${cellIndex}`}
                                 style={
-                                    cellIndex === cfg.writingCellCount - 1
+                                    cellIndex === traceBoxPerRowCount - 1
                                         ? [styles.gridCell, styles.gridCellLast]
                                         : styles.gridCell
                                 }>
-                                <View style={styles.squareGuideWrap}>
+                                <View style={styles.traceSquareGuideWrap}>
                                     <SquareGuide
-                                        sizePx={cfg.cellSizePx}
-                                        patternType={cfg.squareGuidePatternType}
-                                        color={cfg.squareGuideColor}
-                                        strokeWidthPx={cfg.squareGuideStrokeWidthPx}
+                                        sizePx={mmToPt(config.cellSizeMm)}
+                                        patternType={config.squareGuidePatternType}
+                                        color={config.squareGuideColor}
+                                        strokeWidthPx={config.squareGuideStrokeWidthPx}
                                     />
-                                    {lightTraceSvg ? (
-                                        <View style={styles.overlaySvg}>{lightTraceSvg}</View>
-                                    ) : null}
+                                    <View style={styles.overlaySvg}>{lightTraceSvg}</View>
                                 </View>
                             </View>
                         ))}
                     </View>
                 </View>
             </View>
+        </View>
+    );
+};
 
-            <View style={styles.bottomGridRow}>
-                {blankCells.map((cellIndex) => (
-                    <View
-                        key={`bottom-${section.character}-${cellIndex}`}
-                        style={
-                            cellIndex === blankCells.length - 1
-                                ? [styles.gridCell, styles.gridCellLast]
-                                : styles.gridCell
-                        }>
-                        <View style={styles.squareGuideWrap}>
+type FreePracticeSectionProps = {
+    availableHeightMm: number;
+    availableWidthMm: number;
+    cellSizeMm: number;
+    config: KanaTemplateConfig;
+};
+
+const FreePracticeSection = ({
+    availableHeightMm,
+    availableWidthMm,
+    cellSizeMm,
+    config
+}: FreePracticeSectionProps) => {
+    const rows = floor(availableHeightMm / cellSizeMm);
+    const columns = floor(availableWidthMm / cellSizeMm);
+    if (rows < 1 || columns < 1) {
+        console.warn(
+            `Not enough space for free practice section. Available height: ${availableHeightMm}mm, width: ${availableWidthMm}mm, cell size: ${cellSizeMm}mm`
+        );
+        return null;
+    }
+
+    const cellSizePx = mmToPt(cellSizeMm);
+
+    const styles = StyleSheet.create({
+        grid: {
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            width: mmToPt(cellSizeMm * columns),
+            borderTopWidth: config.borderWidthPx,
+            borderLeftWidth: config.borderWidthPx,
+            borderColor: config.borderColor
+        },
+        gridRow: {
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            height: mmToPt(cellSizeMm)
+        },
+        gridCell: {
+            width: cellSizePx,
+            height: cellSizePx,
+            borderRightWidth: config.borderWidthPx,
+            borderBottomWidth: config.borderWidthPx,
+            borderColor: config.borderColor,
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'relative'
+        }
+    });
+
+    return (
+        <View style={styles.grid}>
+            {times(rows, (rowIndex) => (
+                <View key={`practice-row-${rowIndex}`} style={styles.gridRow}>
+                    {times(columns, (colIndex) => (
+                        <View key={`practice-cell-${rowIndex}-${colIndex}`} style={styles.gridCell}>
                             <SquareGuide
-                                sizePx={cfg.cellSizePx}
-                                patternType={cfg.squareGuidePatternType}
-                                color={cfg.squareGuideColor}
-                                strokeWidthPx={cfg.squareGuideStrokeWidthPx}
+                                sizePx={cellSizePx}
+                                patternType={config.squareGuidePatternType}
+                                color={config.squareGuideColor}
+                                strokeWidthPx={config.squareGuideStrokeWidthPx}
                             />
                         </View>
-                    </View>
-                ))}
-            </View>
+                    ))}
+                </View>
+            ))}
         </View>
+    );
+};
+
+export type KanaPageTemplateProps = {
+    pageIndex: number;
+    characters: string[];
+    pageConfig: KanaTemplateConfig;
+    styles: ReturnType<typeof createStyles>;
+};
+
+export const KanaPageTemplate = ({
+    pageIndex,
+    characters,
+    pageConfig,
+    styles
+}: KanaPageTemplateProps) => {
+    const availableHeightForFreePractice =
+        contentAreaHeightMm - (sectionHeightMm + sectionGap) * characters.length - sectionGap;
+    return (
+        <Page key={`page-${pageIndex}`} size="A4" orientation="portrait" style={styles.page}>
+            <PageHeader title={pageConfig.title} pageNumber={pageIndex + 1} />
+
+            <View style={styles.contentArea}>
+                {characters.map((character) => {
+                    const kvgFileName = getKanjiImageFileName(character);
+                    const section: SectionData = {
+                        character,
+                        kvgFileName,
+                        strokeSvgPath: joinFilePath(pageConfig.kvgStrokeBasePath, kvgFileName),
+                        traceSvgPath: joinFilePath(pageConfig.kvgTraceBasePath, kvgFileName)
+                    };
+
+                    return (
+                        <KanaSection
+                            key={`${section.character}-${section.kvgFileName}-${pageIndex}`}
+                            section={section}
+                            config={pageConfig}
+                            styles={styles}
+                        />
+                    );
+                })}
+                <FreePracticeSection
+                    availableWidthMm={sectionWidthMm}
+                    availableHeightMm={availableHeightForFreePractice}
+                    cellSizeMm={pageConfig.freeCellSizeMm}
+                    config={pageConfig}
+                />
+            </View>
+
+            <PageFooter />
+        </Page>
     );
 };
 
@@ -536,46 +418,13 @@ export const KanaTemplate = ({ characters = [], config = {} }: Partial<KanaTempl
     return (
         <Document>
             {characters.map((pageSections, pageIndex) => (
-                <Page key={`page-${pageIndex}`} size="A4" style={styles.page}>
-                    <View style={styles.header} fixed>
-                        <View style={styles.headerTitle}>
-                            <Text>{cfg.title} </Text>
-                            <Text style={styles.headerPageNumber}>Page {pageIndex + 1}</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.contentArea}>
-                        <View style={styles.sectionList}>
-                            {pageSections.map((character) => {
-                                const kvgFileName = getKanjiImageFileName(character);
-                                const section: SectionData = {
-                                    character,
-                                    kvgFileName,
-                                    strokeSvgPath: joinFilePath(cfg.kvgStrokeBasePath, kvgFileName),
-                                    traceSvgPath: joinFilePath(cfg.kvgTraceBasePath, kvgFileName)
-                                };
-
-                                return (
-                                    <KanaSection
-                                        key={`${section.character}-${section.kvgFileName}-${pageIndex}`}
-                                        section={section}
-                                        cfg={cfg}
-                                        styles={styles}
-                                    />
-                                );
-                            })}
-                        </View>
-                    </View>
-
-                    <View style={styles.footer} fixed>
-                        <Text>
-                            Created by{' '}
-                            <Link src="https://kanji.sh" style={styles.footerLink}>
-                                kanji.sh
-                            </Link>
-                        </Text>
-                    </View>
-                </Page>
+                <KanaPageTemplate
+                    key={`page-${pageIndex}`}
+                    pageIndex={pageIndex}
+                    characters={pageSections}
+                    pageConfig={cfg}
+                    styles={styles}
+                />
             ))}
         </Document>
     );

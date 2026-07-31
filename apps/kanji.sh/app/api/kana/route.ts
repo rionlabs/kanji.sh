@@ -1,7 +1,8 @@
 'use server';
 
 import { renderToBuffer } from '@react-pdf/renderer';
-import { NextResponse } from 'next/server';
+import { isNil } from 'lodash';
+import { NextRequest, NextResponse } from 'next/server';
 
 import { Config } from 'libs/printer/src/config';
 import { downloadKanjiData } from 'libs/printer/src/download';
@@ -16,11 +17,11 @@ const HIRAGANA_LIST = [
     ['な', 'に', 'ぬ', 'ね', 'の'],
     ['は', 'ひ', 'ふ', 'へ', 'ほ'],
     ['ま', 'み', 'む', 'め', 'も'],
+    ['や', 'ゆ', 'よ'],
     ['ら', 'り', 'る', 'れ', 'ろ'],
-    ['や', 'ゆ', 'よ', 'わ', 'を', 'ん']
+    ['わ', 'を', 'ん']
 ];
 
-// noinspection JSUnusedLocalSymbols
 const KATAKANA_LIST = [
     ['ア', 'イ', 'ウ', 'エ', 'オ'],
     ['カ', 'キ', 'ク', 'ケ', 'コ'],
@@ -29,26 +30,47 @@ const KATAKANA_LIST = [
     ['ナ', 'ニ', 'ヌ', 'ネ', 'ノ'],
     ['ハ', 'ヒ', 'フ', 'ヘ', 'ホ'],
     ['マ', 'ミ', 'ム', 'メ', 'モ'],
+    ['ヤ', 'ユ', 'ヨ'],
     ['ラ', 'リ', 'ル', 'レ', 'ロ'],
-    ['ヤ', 'ユ', 'ヨ', 'ワ', 'ヲ', 'ン']
+    ['ワ', 'ヲ', 'ン']
 ];
 
-export async function GET(): Promise<NextResponse> {
+// 7 Days of Cache
+const CacheAge = 7 * 24 * 60 * 60; // 7 days in seconds
+const CacheControlHeaders = {
+    'Cache-Control': `max-age=${CacheAge}`,
+    'CDN-Cache-Control': `max-age=${CacheAge}`,
+    'Vercel-CDN-Cache-Control': `max-age=${CacheAge}`
+};
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
+    const searchParams = request.nextUrl.searchParams;
+    const type = searchParams.get('type');
+    console.log(`Generating Kana PDF with type: ${type}`);
+    if (isNil(type) || (type !== 'hiragana' && type !== 'katakana')) {
+        console.error(`Invalid type parameter: ${type}`);
+        return NextResponse.json(
+            { status: 'error', errors: { type: 'Invalid type parameter' } },
+            { status: 400 }
+        );
+    }
+    console.log(`Request URL: ${request.url}`);
     try {
+        const title = type === 'katakana' ? 'Katakana Worksheet' : 'Hiragana Worksheet';
+        const characters = type === 'hiragana' ? HIRAGANA_LIST : KATAKANA_LIST;
         await downloadKanjiData({ outputDir: Config.outDirPath, outputFileName: 'all-data.json' });
         await buildKanjiDiagrams();
         console.log(`Config: ${JSON.stringify(Config, null, 2)}`);
 
-        // Render the PDF in 5 seconds, if not send error response
-        const buffer = await renderToBuffer(
-            KanaTemplate({ characters: HIRAGANA_LIST, config: { title: 'Hiragana Worksheet' } })
-        );
+        // Render the PDF
+        const buffer = await renderToBuffer(KanaTemplate({ characters, config: { title: title } }));
         const responseData = new Uint8Array(buffer);
         return new NextResponse(responseData, {
             headers: {
+                ...CacheControlHeaders,
                 'Content-Type': 'application/pdf',
                 'Content-Length': responseData.byteLength.toString(),
-                'Content-Disposition': `inline; filename="Hiragana Worksheet.pdf"`
+                'Content-Disposition': `inline; filename="${title}.pdf"`
             }
         });
     } catch (error: unknown) {
