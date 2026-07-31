@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import ClientOnly from 'apps/kanji.sh/src/components/atoms/ClientOnly';
@@ -34,18 +36,20 @@ export default async function WritePage({ params }: LocaleParams) {
                         <div>{t('description-2')}</div>
                     </div>
                     <br />
-                    {/* TODO Add Image and copy */}
-                    <div>
-                        For those who haven't started with Kanji yet can start practicing with Kana
-                        first.
-                    </div>
-                    <div className="card card-side my-6 rounded-xl border border-gray-200 p-4 shadow-sm transition-all hover:shadow-md active:shadow-none">
-                        <figure>
-                            <img src="https://placehold.co/120x120" alt="Movie" />
-                        </figure>
-                        <figure className="card-body"></figure>
-                        Download Hiragana & Katakana Worksheets
-                    </div>
+                    <br />
+                    <div>Not ready for Kanji yet? Practice Hiragana and Katakana first.</div>
+                    <Link
+                        href="/write/kana"
+                        className="card my-6 flex-row items-center gap-6 rounded-xl border border-gray-200 p-4 shadow-sm transition-all hover:shadow-md active:shadow-none sm:p-6">
+                        <Image
+                            className="rounded-lg mix-blend-multiply"
+                            src="/assets/png/kana.png"
+                            width="80"
+                            height="80"
+                            alt="Kana Worksheets"
+                        />
+                        <div>Download Hiragana & Katakana Worksheets</div>
+                    </Link>
                 </div>
                 {/* Jumbo Image */}
                 <div className="w-full py-4 sm:w-1/2">
