@@ -40,6 +40,21 @@
       "title": "Writing Matters.",
       "description-1": "Yes, you know hundreds of Kanji, and you can read a newspaper or your favorite manga all the way to the end. But can you write? If you want to learn Kanji by writing or learn writing Kanji, this is your one-stop site for all the worksheets.",
       "description-2": "Download printable handwriting practice worksheets for Japanese Kanji by JLPT level, Grade Level, Wanikani Level, and Frequency. Every sheet is free, now and forever!"
+    },
+    "kana": {
+      "title": "Free Hiragana and Katakana Worksheets",
+      "description": "Start with kana practice before moving to kanji. Pick the worksheet you want and preview it before downloading.",
+      "sheetDescription": "Each page contains a free practice section in the bottom! Feel free to practice the characters difficult for you!",
+      "previewLabel": "PDF Preview",
+      "downloadLabel": "Download",
+      "hiragana": {
+        "title": "Hiragana",
+        "description": "Practice the basic Hiragana rows in printable tracing format."
+      },
+      "katakana": {
+        "title": "Katakana",
+        "description": "Practice the basic Katakana rows in printable tracing format."
+      }
     }
   },
   "about": {
