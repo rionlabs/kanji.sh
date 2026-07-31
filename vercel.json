@@ -2,7 +2,7 @@
   "framework": "nextjs",
   "installCommand": "npm install",
   "buildCommand": "nx run kanji.sh:build --prod",
-  "outputDirectory": "dist/apps/kanji.sh/.next",
+  "outputDirectory": "dist/apps/kanji.sh",
   "ignoreCommand": "node tools/skipDeploy.js",
   "trailingSlash": false,
   "cleanUrls": true
