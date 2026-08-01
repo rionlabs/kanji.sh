@@ -93,14 +93,14 @@ export const readKanjiVgSvg = (filePath: string, options: SvgRenderOptions): JSX
             style={{ position: 'absolute' }}>
             {pathTags.map((match, index) => {
                 const attrs = parseAttributes(match[1]);
-                const d = attrs.d;
+                const d = attrs['d'];
                 if (!d) {
                     return null;
                 }
 
                 const stroke =
-                    normalizeColor(attrs.stroke, options.strokeColor) ?? options.strokeColor;
-                const fill = normalizeColor(attrs.fill, options.fillColor) ?? 'none';
+                    normalizeColor(attrs['stroke'], options.strokeColor) ?? options.strokeColor;
+                const fill = normalizeColor(attrs['fill'], options.fillColor) ?? 'none';
                 const strokeWidth = options.strokeWidth
                     ? options.strokeWidth
                     : attrs['stroke-width']
@@ -116,8 +116,8 @@ export const readKanjiVgSvg = (filePath: string, options: SvgRenderOptions): JSX
                     | 'round'
                     | 'bevel'
                     | undefined;
-                const opacity = attrs.opacity ? Number(attrs.opacity) : undefined;
-                const transform = attrs.transform;
+                const opacity = attrs['opacity'] ? Number(attrs['opacity']) : undefined;
+                const transform = attrs['transform'];
 
                 return (
                     <Path
@@ -135,7 +135,7 @@ export const readKanjiVgSvg = (filePath: string, options: SvgRenderOptions): JSX
             })}
             {textTags.map((match, index) => {
                 const attrs = parseAttributes(match[1]);
-                const transform = attrs.transform ?? '';
+                const transform = attrs['transform'] ?? '';
                 return (
                     <Text
                         key={`${filePath}-text-${index}`}

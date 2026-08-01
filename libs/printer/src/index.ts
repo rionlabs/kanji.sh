@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 
@@ -7,7 +8,7 @@ import PQueue from 'p-queue';
 import type { CollectionType, Worksheet, WorksheetConfig } from '@kanji-sh/models';
 import { DefaultWorksheetConfig } from '@kanji-sh/models';
 
-import { Config } from './config';
+import { Config, configV2 } from './config';
 import { downloadKanjiData } from './download';
 import { CloudFiles } from './files/CloudFiles';
 import { CombinedFiles } from './files/CombinedFiles';
@@ -15,6 +16,7 @@ import { Files } from './files/Files';
 import { LocalFiles } from './files/LocalFiles';
 import { createWorksheetHash } from './hash';
 import { buildKanjiDiagrams } from './kanjivg';
+import { KanaTemplate } from './new/templates/kana';
 import { createWorksheet } from './pdf';
 import { processSourceFiles } from './sources';
 import { logger } from './utils';
@@ -212,3 +214,19 @@ export const cliOperations = () => {
     const cloudFiles = createCloudFiles();
     return new CLIOps(new CombinedFiles(localFiles, cloudFiles));
 };
+
+export async function prepareData() {
+    const pathConfig = configV2({
+        sourceDir: path.resolve(process.cwd(), '../../dist/libs/printer/assets'),
+        outDir: path.resolve(process.cwd(), 'dist')
+    });
+    // Prepare Data
+    await downloadKanjiData({ outputDir: pathConfig.outDir, outputFileName: 'all-data.json' });
+    await buildKanjiDiagrams(pathConfig);
+    // Copy Fonts
+    fs.cpSync(path.join(pathConfig.sourceDir, 'fonts'), path.join(pathConfig.outDir, 'fonts'), {
+        recursive: true
+    });
+}
+
+export { configV2, downloadKanjiData, buildKanjiDiagrams, KanaTemplate };

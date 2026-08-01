@@ -25,6 +25,9 @@ const withAnalyzer = createBundleAnalyzer({ enabled: process.env.ANALYZE === 'tr
 const nextConfig = {
     reactStrictMode: false,
     distDir: '../../dist/apps/kanji.sh',
+    outputFileTracingIncludes: {
+        '/api/**/*': ['./dist/**/*']
+    },
     pageExtensions: ['ts', 'tsx', 'mdx'],
     devIndicators: {
         position: 'top-right'

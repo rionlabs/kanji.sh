@@ -8,7 +8,7 @@ import { PageFooter } from './footer';
 import { PageHeader } from './header';
 import { readKanjiVgSvg, SquareGuide } from './svg';
 import { getKanjiImageFileName, mmToPt } from './utils';
-import { Config } from '../../config';
+import type { ConfigV2 } from '../../config';
 
 type KanaTemplateConfig = {
     borderColor: string;
@@ -19,13 +19,12 @@ type KanaTemplateConfig = {
     squareGuidePatternType: 'none' | 'plus' | 'asterisk';
     squareGuideColor: string;
     squareGuideStrokeWidthPx: number;
-    kvgStrokeBasePath: string;
-    kvgTraceBasePath: string;
 };
 
 type KanaTemplateProps = {
     characters: string[][];
-    config?: Partial<KanaTemplateConfig>;
+    templateConfig?: Partial<KanaTemplateConfig>;
+    config: ConfigV2;
 };
 
 type SectionData = {
@@ -43,9 +42,7 @@ const DEFAULT_CONFIG: KanaTemplateConfig = {
     title: 'Kana Worksheet',
     squareGuidePatternType: 'plus',
     squareGuideColor: '#EEEEEE',
-    squareGuideStrokeWidthPx: 0.8,
-    kvgStrokeBasePath: Config.outStrokePath,
-    kvgTraceBasePath: Config.outTracerPath
+    squareGuideStrokeWidthPx: 0.8
 };
 
 const joinFilePath = (basePath: string, fileName: string): string => {
@@ -54,9 +51,6 @@ const joinFilePath = (basePath: string, fileName: string): string => {
     }
     return path.join(basePath, fileName);
 };
-
-// Register font
-registerNodeFonts();
 
 /**
        |     Header     | (20mm)
@@ -363,21 +357,23 @@ const FreePracticeSection = ({
 export type KanaPageTemplateProps = {
     pageIndex: number;
     characters: string[];
-    pageConfig: KanaTemplateConfig;
+    templateConfig: KanaTemplateConfig;
+    config: ConfigV2;
     styles: ReturnType<typeof createStyles>;
 };
 
 export const KanaPageTemplate = ({
     pageIndex,
     characters,
-    pageConfig,
+    templateConfig,
+    config,
     styles
 }: KanaPageTemplateProps) => {
     const availableHeightForFreePractice =
         contentAreaHeightMm - (sectionHeightMm + sectionGap) * characters.length - sectionGap;
     return (
         <Page key={`page-${pageIndex}`} size="A4" orientation="portrait" style={styles.page}>
-            <PageHeader title={pageConfig.title} pageNumber={pageIndex + 1} />
+            <PageHeader title={templateConfig.title} pageNumber={pageIndex + 1} />
 
             <View style={styles.contentArea}>
                 {characters.map((character) => {
@@ -385,15 +381,15 @@ export const KanaPageTemplate = ({
                     const section: SectionData = {
                         character,
                         kvgFileName,
-                        strokeSvgPath: joinFilePath(pageConfig.kvgStrokeBasePath, kvgFileName),
-                        traceSvgPath: joinFilePath(pageConfig.kvgTraceBasePath, kvgFileName)
+                        strokeSvgPath: joinFilePath(config.outStrokePath, kvgFileName),
+                        traceSvgPath: joinFilePath(config.outTracerPath, kvgFileName)
                     };
 
                     return (
                         <KanaSection
                             key={`${section.character}-${section.kvgFileName}-${pageIndex}`}
                             section={section}
-                            config={pageConfig}
+                            config={templateConfig}
                             styles={styles}
                         />
                     );
@@ -401,8 +397,8 @@ export const KanaPageTemplate = ({
                 <FreePracticeSection
                     availableWidthMm={sectionWidthMm}
                     availableHeightMm={availableHeightForFreePractice}
-                    cellSizeMm={pageConfig.freeCellSizeMm}
-                    config={pageConfig}
+                    cellSizeMm={templateConfig.freeCellSizeMm}
+                    config={templateConfig}
                 />
             </View>
 
@@ -411,9 +407,12 @@ export const KanaPageTemplate = ({
     );
 };
 
-export const KanaTemplate = ({ characters = [], config = {} }: Partial<KanaTemplateProps> = {}) => {
-    const cfg: KanaTemplateConfig = { ...DEFAULT_CONFIG, ...config };
+export const KanaTemplate = ({ characters, config, templateConfig = {} }: KanaTemplateProps) => {
+    const cfg: KanaTemplateConfig = { ...DEFAULT_CONFIG, ...templateConfig };
     const styles = createStyles(cfg);
+
+    // Register font
+    registerNodeFonts(config);
 
     return (
         <Document>
@@ -422,7 +421,8 @@ export const KanaTemplate = ({ characters = [], config = {} }: Partial<KanaTempl
                     key={`page-${pageIndex}`}
                     pageIndex={pageIndex}
                     characters={pageSections}
-                    pageConfig={cfg}
+                    templateConfig={cfg}
+                    config={config}
                     styles={styles}
                 />
             ))}

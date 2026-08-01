@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "jsx": "preserve",
     "esModuleInterop": true,
     "module": "es6",
     "forceConsistentCasingInFileNames": true,
