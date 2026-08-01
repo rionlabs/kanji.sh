@@ -1,13 +1,13 @@
 'use server';
 
+import process from 'node:process';
+import path from 'path';
+
 import { renderToBuffer } from '@react-pdf/renderer';
 import { isNil } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { Config } from 'libs/printer/src/config';
-import { downloadKanjiData } from 'libs/printer/src/download';
-import { buildKanjiDiagrams } from 'libs/printer/src/kanjivg';
-import { KanaTemplate } from 'libs/printer/src/new/templates/kana';
+import { configV2, KanaTemplate } from '@kanji-sh/printer';
 
 const HIRAGANA_LIST = [
     ['あ', 'い', 'う', 'え', 'お'],
@@ -46,7 +46,6 @@ const CacheControlHeaders = {
 export async function GET(request: NextRequest): Promise<NextResponse> {
     const searchParams = request.nextUrl.searchParams;
     const type = searchParams.get('type');
-    console.log(`Generating Kana PDF with type: ${type}`);
     if (isNil(type) || (type !== 'hiragana' && type !== 'katakana')) {
         console.error(`Invalid type parameter: ${type}`);
         return NextResponse.json(
@@ -54,16 +53,18 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             { status: 400 }
         );
     }
-    console.log(`Request URL: ${request.url}`);
     try {
+        // Make Config
+        const pathConfig = configV2({
+            outDir: path.resolve(process.cwd(), 'dist')
+        });
         const title = type === 'katakana' ? 'Katakana Worksheet' : 'Hiragana Worksheet';
         const characters = type === 'hiragana' ? HIRAGANA_LIST : KATAKANA_LIST;
-        await downloadKanjiData({ outputDir: Config.outDirPath, outputFileName: 'all-data.json' });
-        await buildKanjiDiagrams();
-        console.log(`Config: ${JSON.stringify(Config, null, 2)}`);
 
         // Render the PDF
-        const buffer = await renderToBuffer(KanaTemplate({ characters, config: { title: title } }));
+        const buffer = await renderToBuffer(
+            KanaTemplate({ characters, templateConfig: { title: title }, config: pathConfig })
+        );
         const responseData = new Uint8Array(buffer);
         return new NextResponse(responseData, {
             headers: {

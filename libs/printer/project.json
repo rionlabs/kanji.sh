@@ -5,22 +5,31 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build-assets": {
-      "executor": "nx:run-commands",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "command": "nx run printer:build-assets-build && cp dist/libs/printer/src/build-assets.js dist/libs/printer/src/build-assets.cjs && node dist/libs/printer/src/build-assets.cjs",
-        "outputPath": "dist/libs/printer"
-      }
-    },
-    "build": {
+    "build-source": {
       "executor": "@nx/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/printer",
         "main": "libs/printer/src/index.ts",
         "tsConfig": "libs/printer/tsconfig.lib.json",
-        "assets": ["libs/printer/assets"]
+        "assets": ["libs/printer/README.md", "libs/printer/assets/**/*"]
+      }
+    },
+    "build-assets": {
+      "dependsOn": ["build-source"],
+      "executor": "nx:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "command": "echo \"Assets build complete\"",
+        "outputPath": "dist/libs/printer"
+      }
+    },
+    "build": {
+      "dependsOn": ["build-source", "build-assets"],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/libs/printer"],
+      "options": {
+        "command": "echo 'Build complete'"
       }
     },
     "test": {

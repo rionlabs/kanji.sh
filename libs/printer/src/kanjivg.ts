@@ -5,12 +5,12 @@ import path from 'node:path';
 
 import { Open } from 'unzipper';
 
-import { Config } from './config';
+import { Config, ConfigV2 } from './config';
 import { ensureDirectoriesExist, logger, isDirEmpty } from './utils';
 
-const _extractKanjiVG = async (): Promise<void> => {
+const _extractKanjiVG = async (config: ConfigV2): Promise<void> => {
     try {
-        if (!isDirEmpty(Config.outKanjiVGDataPath)) {
+        if (!isDirEmpty(config.outKanjiVGDataPath)) {
             logger.done('KanjiVG already extracted');
         }
     } catch (error) {
@@ -19,20 +19,20 @@ const _extractKanjiVG = async (): Promise<void> => {
 
     logger.start('Extracting KanjiVg file...');
     // TODO: Automate downloading latest version with GH Actions
-    const kanjiVgFilePath = path.join(Config.assetsDirPath, 'kanjivg-20160426-main.zip');
+    const kanjiVgFilePath = path.join(config.sourceDir, 'kanjivg-20160426-main.zip');
     const kanjiVgFile = await Open.file(kanjiVgFilePath);
     await kanjiVgFile.extract({
-        path: Config.outKanjiVGDataPath,
+        path: config.outKanjiVGDataPath,
         forceStream: true,
         concurrency: 10
     });
 
     // The output is "kanji" directory. Move the contents to parent directory, & delete temp
-    const tempDirectory = path.join(Config.outKanjiVGDataPath, 'kanji');
+    const tempDirectory = path.join(config.outKanjiVGDataPath, 'kanji');
     for (const filename of readdirSync(tempDirectory)) {
         fs.copyFileSync(
             path.join(tempDirectory, filename),
-            path.join(Config.outKanjiVGDataPath, filename)
+            path.join(config.outKanjiVGDataPath, filename)
         );
         fs.unlinkSync(path.join(tempDirectory, filename));
     }
@@ -41,25 +41,25 @@ const _extractKanjiVG = async (): Promise<void> => {
     logger.done('KanjiVG extraction');
 };
 
-const _runCommonOptimizations = async (): Promise<void> => {
+const _runCommonOptimizations = async (config: ConfigV2): Promise<void> => {
     logger.start('Common optimizations');
-    const filenames = fs.readdirSync(Config.outKanjiVGDataPath);
+    const filenames = fs.readdirSync(config.outKanjiVGDataPath);
     const promises = [];
     for (const filename of filenames) {
-        const inputFilePath = path.join(Config.outKanjiVGDataPath, filename);
-        const outputFilePath = path.join(Config.outStrokePath, filename);
+        const inputFilePath = path.join(config.outKanjiVGDataPath, filename);
+        const outputFilePath = path.join(config.outStrokePath, filename);
         promises.push(_rewriteWithSvgOptimizations(inputFilePath, outputFilePath));
     }
     await Promise.all(promises);
     logger.done('Common optimizations');
 };
 
-const _convertToTraces = async (): Promise<void> => {
+const _convertToTraces = async (config: ConfigV2): Promise<void> => {
     logger.start('Convert To Traces');
-    const filenames = fs.readdirSync(Config.outStrokePath);
+    const filenames = fs.readdirSync(config.outStrokePath);
     for (const filename of filenames) {
-        const inputFile = path.join(Config.outStrokePath, filename);
-        const outputFile = path.join(Config.outTracerPath, filename);
+        const inputFile = path.join(config.outStrokePath, filename);
+        const outputFile = path.join(config.outTracerPath, filename);
         const content = fs.readFileSync(inputFile, { encoding: 'utf-8', flag: 'r' });
         const lines = content
             .split('\n')
@@ -149,18 +149,29 @@ const _rewriteWithSvgOptimizations = async (
     fs.writeFileSync(outputFilePath, newLines.join('\n'), { flag: 'w+' });
 };
 
-export const buildKanjiDiagrams = async (): Promise<void> => {
+const DefaultConfigV2: ConfigV2 = {
+    sourceDir: Config.assetsDirPath,
+    outDir: Config.outDirPath,
+    collectionSrcRoot: Config.collectionSrcRoot,
+    tempDirPath: path.join(Config.outDirPath, 'temp'),
+    outKanjiVGDataPath: path.join(Config.outDirPath, 'SVG', 'kanjiVG'),
+    outStrokePath: path.join(Config.outDirPath, 'SVG', 'kanjiStrokes'),
+    outTracerPath: path.join(Config.outDirPath, 'SVG', 'kanjiTracer')
+};
+
+export const buildKanjiDiagrams = async (config?: Partial<ConfigV2>): Promise<void> => {
+    const mergedConfig = { ...DefaultConfigV2, ...config };
+
     ensureDirectoriesExist(
-        Config.outDirPath,
-        Config.outKanjiVGDataPath,
-        Config.outStrokePath,
-        Config.outTracerPath
+        mergedConfig.outKanjiVGDataPath,
+        mergedConfig.outStrokePath,
+        mergedConfig.outTracerPath
     );
 
-    if (isDirEmpty(Config.outStrokePath) || isDirEmpty(Config.outTracerPath)) {
-        await _extractKanjiVG();
-        await _runCommonOptimizations();
-        await _convertToTraces();
+    if (isDirEmpty(mergedConfig.outStrokePath) || isDirEmpty(mergedConfig.outTracerPath)) {
+        await _extractKanjiVG(mergedConfig);
+        await _runCommonOptimizations(mergedConfig);
+        await _convertToTraces(mergedConfig);
         return;
     }
 

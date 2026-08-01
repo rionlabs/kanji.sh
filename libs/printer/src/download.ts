@@ -19,7 +19,7 @@ export const downloadKanjiData = async (params: Params): Promise<void> => {
     // Make sure that the output directory exists
     ensureDirectoriesExist(params.outputDir);
 
-    const outputDataLocation = path.join(params.outputDir.toString(), params.outputFileName);
+    const outputDataLocation = path.join(params.outputDir, params.outputFileName);
     if (fs.existsSync(outputDataLocation)) {
         logger.done('Kanji data already downloaded');
         return;
