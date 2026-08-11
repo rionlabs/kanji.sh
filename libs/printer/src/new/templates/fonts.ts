@@ -10,10 +10,10 @@ import { ConfigV2 } from '../../config';
 export const registerNodeFonts = (config: ConfigV2) => {
     Font.register({
         family: 'Montserrat',
-        src: path.resolve(config.outDir, './fonts/Montserrat-Light.ttf')
+        src: path.join(config.outDir, './fonts/Montserrat-Light.ttf')
     });
     Font.register({
         family: 'Quicksand',
-        src: path.resolve(config.outDir, './fonts/Quicksand-Regular.ttf')
+        src: path.join(config.outDir, './fonts/Quicksand-Regular.ttf')
     });
 };

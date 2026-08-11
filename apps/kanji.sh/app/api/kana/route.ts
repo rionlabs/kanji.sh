@@ -75,6 +75,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             }
         });
     } catch (error: unknown) {
+        console.log('[Error] Function Generate Kana PDF');
         console.error(error);
         if (error instanceof Error) {
             console.error(error.stack);
