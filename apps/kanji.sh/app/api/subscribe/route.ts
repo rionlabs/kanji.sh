@@ -56,17 +56,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 }
 
 const addContact = async ({ name, email }: Subscription): Promise<void> => {
-    const apiToken = process.env.MAILERLITE_API_TOKEN as string;
-    const groupId = process.env.MAILERLITE_GROUP_ID as string;
+    const endpoint = process.env.MAIL_ENDPOINT as string;
+    const groupId = process.env.MAIL_GROUP_ID as string;
+    const apiToken = process.env.MAIL_API_TOKEN as string;
     console.log('[Start] Add subscriber to group');
-    const response = await fetch(`https://connect.mailerlite.com/api/subscribers/`, {
+    const response = await fetch(endpoint, {
         method: 'POST',
         headers: new Headers({
             'Content-Type': 'application/json',
             Accept: 'application/json',
             Authorization: `Bearer ${apiToken}`
         }),
-        body: JSON.stringify({ email, fields: { name }, groups: [groupId] })
+        body: JSON.stringify({ email, firstname: name, groups: [groupId] })
     });
     switch (response.status) {
         case 200:
