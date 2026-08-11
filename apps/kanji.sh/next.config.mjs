@@ -1,23 +1,16 @@
-import process from 'node:process';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import createBundleAnalyzer from '@next/bundle-analyzer';
 import createMDXPlugin from '@next/mdx';
-import { workspaceRoot } from '@nx/devkit';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-console.log(`__dirname ${__dirname}`);
-console.log(`workspaceRoot ${workspaceRoot}`);
-
 const withNextIntl = createNextIntlPlugin({
     requestConfig: './i18n/request.ts'
 });
 const withMDX = createMDXPlugin();
-const withAnalyzer = createBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -25,6 +18,7 @@ const withAnalyzer = createBundleAnalyzer({ enabled: process.env.ANALYZE === 'tr
 const nextConfig = {
     reactStrictMode: false,
     distDir: '../../dist/apps/kanji.sh',
+    adapterPath: path.resolve(__dirname, './postbuild.js'),
     outputFileTracingIncludes: {
         '/api/**/*': ['./dist/**/*']
     },
@@ -63,4 +57,4 @@ const nextConfig = {
     transpilePackages: ['@kanji-sh/models', '@kanji-sh/printer']
 };
 
-export default withMDX(withNextIntl(withAnalyzer(nextConfig)));
+export default withMDX(withNextIntl(nextConfig));

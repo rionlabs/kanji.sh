@@ -27,9 +27,9 @@ export const Config = {
     collectionSrcRoot: path.join(assetsDirPath, 'sources'),
     templatePath: path.join(assetsDirPath, 'template/page.html'),
     tempDirPath: path.join(outDirPath, 'temp'),
-    outKanjiVGDataPath: path.join(outDirPath, 'SVG', 'kanjiVG'),
-    outStrokePath: path.join(outDirPath, 'SVG', 'kanjiStrokes'),
-    outTracerPath: path.join(outDirPath, 'SVG', 'kanjiTracer')
+    outKanjiVGDataPath: path.join(outDirPath, 'svg', 'kanjiVG'),
+    outStrokePath: path.join(outDirPath, 'svg', 'kanjiStrokes'),
+    outTracerPath: path.join(outDirPath, 'svg', 'kanjiTracer')
 };
 
 export type ConfigV2Params = {
@@ -46,8 +46,8 @@ export function configV2({
         outDir,
         collectionSrcRoot: path.join(sourceDir, 'sources'),
         tempDirPath: path.join(outDir, 'temp'),
-        outKanjiVGDataPath: path.join(outDir, 'SVG', 'kanjiVG'),
-        outStrokePath: path.join(outDir, 'SVG', 'kanjiStrokes'),
-        outTracerPath: path.join(outDir, 'SVG', 'kanjiTracer')
+        outKanjiVGDataPath: path.join(outDir, 'svg', 'kanjiVG'),
+        outStrokePath: path.join(outDir, 'svg', 'kanjiStrokes'),
+        outTracerPath: path.join(outDir, 'svg', 'kanjiTracer')
     };
 }
