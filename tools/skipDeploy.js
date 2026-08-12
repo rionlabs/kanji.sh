@@ -7,7 +7,10 @@ import process from 'node:process';
         process.exit(0);
     }
     // Check affected projects
-    const affectedOutput = execSync('npx nx show projects --affected --json');
+    execSync('git fetch origin main:refs/remotes/origin/main --depth=1');
+    const affectedOutput = execSync(
+        'npx nx show projects --affected --base=origin/main --head=HEAD --json'
+    );
     const affectedProjects = JSON.parse(affectedOutput.toString());
     if (!affectedProjects.includes('kanji.sh')) {
         process.exit(0);
