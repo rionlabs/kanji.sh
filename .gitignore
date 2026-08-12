@@ -15,6 +15,7 @@ build
 dist
 /public/build
 tmp
+print-assets
 
 # Don't add genrated PDFs to version control
 generator/build

@@ -7,8 +7,6 @@ import ClientOnly from 'apps/kanji.sh/src/components/atoms/ClientOnly';
 import ServiceCard, { Direction } from 'apps/kanji.sh/src/components/molecules/ServiceCard';
 import { LocaleParams } from 'apps/kanji.sh/src/types/LocaleParams';
 
-import { prepareData } from '@kanji-sh/printer';
-
 export const generateMetadata = async ({ params }: LocaleParams) => {
     const t = await getTranslations('home');
     const config = await getTranslations('config');
@@ -39,9 +37,6 @@ export const generateMetadata = async ({ params }: LocaleParams) => {
 };
 
 export default async function IndexPage({ params }: LocaleParams) {
-    // Workaround for preparing data during build phase
-    await prepareData();
-
     const locale = (await params).locale;
     setRequestLocale(locale);
     const t = await getTranslations('home.content');

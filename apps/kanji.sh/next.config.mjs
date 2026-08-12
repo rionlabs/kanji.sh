@@ -20,7 +20,7 @@ const nextConfig = {
     distDir: '../../dist/apps/kanji.sh',
     adapterPath: path.resolve(__dirname, './postbuild.js'),
     outputFileTracingIncludes: {
-        '/api/**/*': ['./dist/**/*']
+        '/api/kana': ['./print-assets/**/*']
     },
     pageExtensions: ['ts', 'tsx', 'mdx'],
     devIndicators: {

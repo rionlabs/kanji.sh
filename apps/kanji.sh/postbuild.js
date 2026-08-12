@@ -6,7 +6,7 @@ const adapter = {
     name: 'kvg-assets-copy',
     async onBuildComplete({ projectDir, distDir }) {
         // Copy the processed data to output
-        fs.cpSync(path.join(projectDir, 'dist'), path.join(distDir, 'dist'), {
+        fs.cpSync(path.join(projectDir, 'print-assets'), path.join(distDir, 'print-assets'), {
             recursive: true
         });
     }

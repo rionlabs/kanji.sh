@@ -8,7 +8,7 @@ import PQueue from 'p-queue';
 import type { CollectionType, Worksheet, WorksheetConfig } from '@kanji-sh/models';
 import { DefaultWorksheetConfig } from '@kanji-sh/models';
 
-import { Config, configV2 } from './config';
+import { Config, ConfigV2, configV2 } from './config';
 import { downloadKanjiData } from './download';
 import { CloudFiles } from './files/CloudFiles';
 import { CombinedFiles } from './files/CombinedFiles';
@@ -215,11 +215,7 @@ export const cliOperations = () => {
     return new CLIOps(new CombinedFiles(localFiles, cloudFiles));
 };
 
-export async function prepareData() {
-    const pathConfig = configV2({
-        sourceDir: path.resolve(process.cwd(), '../../dist/libs/printer/assets'),
-        outDir: path.resolve(process.cwd(), 'dist')
-    });
+export async function prepareData(pathConfig: ConfigV2) {
     // Prepare Data
     await downloadKanjiData({ outputDir: pathConfig.outDir, outputFileName: 'all-data.json' });
     await buildKanjiDiagrams(pathConfig);

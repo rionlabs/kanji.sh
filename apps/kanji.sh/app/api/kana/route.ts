@@ -1,13 +1,12 @@
 'use server';
 
-import process from 'node:process';
-import path from 'path';
-
 import { renderToBuffer } from '@react-pdf/renderer';
 import { isNil } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { configV2, KanaTemplate } from '@kanji-sh/printer';
+import { pathConfig } from 'apps/kanji.sh/src/config';
+
+import { KanaTemplate } from '@kanji-sh/printer';
 
 const HIRAGANA_LIST = [
     ['あ', 'い', 'う', 'え', 'お'],
@@ -54,10 +53,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         );
     }
     try {
-        // Make Config
-        const pathConfig = configV2({
-            outDir: path.resolve(process.cwd(), 'dist')
-        });
         const title = type === 'katakana' ? 'Katakana Worksheet' : 'Hiragana Worksheet';
         const characters = type === 'hiragana' ? HIRAGANA_LIST : KATAKANA_LIST;
 
