@@ -1,9 +1,10 @@
 {
-  "framework": "nextjs",
-  "installCommand": "npm install",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "nx run kanji.sh:build --prod",
-  "outputDirectory": "dist/apps/kanji.sh",
+  "devCommand": "nx run kanji.sh:dev",
+  "framework": "nextjs",
   "ignoreCommand": "node tools/skipDeploy.js",
-  "trailingSlash": false,
-  "cleanUrls": true
+  "installCommand": "npm install",
+  "outputDirectory": "dist/apps/kanji.sh",
+  "trailingSlash": false
 }
