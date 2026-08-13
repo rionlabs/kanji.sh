@@ -18,9 +18,10 @@ const withMDX = createMDXPlugin();
 const nextConfig = {
     reactStrictMode: false,
     distDir: '../../dist/apps/kanji.sh',
-    adapterPath: path.resolve(__dirname, './postbuild.js'),
+    outputFileTracingRoot: path.join(__dirname, '../../'),
     outputFileTracingIncludes: {
-        '/api/kana': ['./print-assets/**/*']
+        '/api/kana': ['./print-assets/**/*'],
+        '/api/generate': ['./print-assets/**/*']
     },
     pageExtensions: ['ts', 'tsx', 'mdx'],
     devIndicators: {

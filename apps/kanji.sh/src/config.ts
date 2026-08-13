@@ -21,7 +21,10 @@ export const Config = {
     }
 };
 
+console.log(`Config: cwd=${process.cwd()}`);
+// CWD gives the path to the root of the app, not workspace root.
+
 export const pathConfig = configV2({
-    sourceDir: path.resolve(process.cwd(), '../../dist/libs/printer/assets'),
-    outDir: path.resolve(process.cwd(), 'print-assets')
+    sourceDir: path.join(process.cwd(), '..', '..', 'dist', 'libs', 'printer', 'assets'),
+    outDir: path.join(process.cwd(), 'print-assets')
 });
