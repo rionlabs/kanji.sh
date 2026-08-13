@@ -18,16 +18,12 @@ const adapter = {
     async onBuildComplete({ projectDir, distDir }) {
         // Keep the dist output self-contained for Vercel deployments.
         copyRequiredDirectory(path.join(projectDir, 'public'), path.join(distDir, 'public'));
+        console.log('Copied public assets to dist directory.');
         copyRequiredDirectory(
             path.join(projectDir, 'print-assets'),
             path.join(distDir, 'print-assets')
         );
-
-        // The API trace resolves files under apps/kanji.sh/print-assets at runtime.
-        copyRequiredDirectory(
-            path.join(projectDir, 'print-assets'),
-            path.join(distDir, 'apps', 'kanji.sh', 'print-assets')
-        );
+        console.log('Copied print assets to dist directory.');
     }
 };
 

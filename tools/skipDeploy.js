@@ -1,4 +1,5 @@
 import { execSync } from 'child_process';
+import console from 'node:console';
 import process from 'node:process';
 
 (async () => {
@@ -7,14 +8,26 @@ import process from 'node:process';
         process.exit(0);
     }
     // Check affected projects
-    execSync('git fetch origin main:refs/remotes/origin/main --depth=1');
-    const affectedOutput = execSync(
-        'npx nx show projects --affected --base=origin/main --head=HEAD --json'
-    );
-    const affectedProjects = JSON.parse(affectedOutput.toString());
-    if (!affectedProjects.includes('kanji.sh')) {
-        process.exit(0);
+    try {
+        execSync('git fetch origin main:refs/remotes/origin/main --depth=1');
+    } catch (error) {
+        console.error('Error fetching origin/main:', error);
+        process.exit(1);
     }
+    try {
+        const affectedOutput = execSync(
+            'npx nx show projects --affected --base=origin/main --head=HEAD --json'
+        );
+        const affectedProjects = JSON.parse(affectedOutput.toString());
+        if (!affectedProjects.includes('kanji.sh')) {
+            console.log('No changes detected in kanji.sh, skipping deployment.');
+            process.exit(0);
+        }
+    } catch (error) {
+        console.error('Error checking affected projects:', error);
+        process.exit(1);
+    }
+
     // Else, exit with error
     process.exit(1);
 })();
