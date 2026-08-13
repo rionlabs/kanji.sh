@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import process from 'node:process';
 
 const copyRequiredDirectory = (sourceDir, targetDir) => {
     if (!fs.existsSync(sourceDir)) {
@@ -17,7 +18,8 @@ const adapter = {
     name: 'kvg-assets-copy',
     async onBuildComplete({ projectDir, distDir }) {
         // Keep the dist output self-contained for Vercel deployments.
-        copyRequiredDirectory(path.join(projectDir, 'public'), path.join(distDir, 'public'));
+        const publicDestination = path.join(process.cwd(), 'public', 'assets');
+        copyRequiredDirectory(path.join(projectDir, 'public'), publicDestination);
         console.log('Copied public assets to dist directory.');
         copyRequiredDirectory(
             path.join(projectDir, 'print-assets'),

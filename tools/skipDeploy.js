@@ -9,6 +9,7 @@ import process from 'node:process';
     }
     // Check affected projects
     try {
+        execSync('git remote add origin https://github.com/rionlabs/kanji.sh.git');
         execSync('git fetch origin main:refs/remotes/origin/main --depth=1');
     } catch (error) {
         console.error('Error fetching origin/main:', error);
