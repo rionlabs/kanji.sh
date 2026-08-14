@@ -16,7 +16,7 @@ export async function getFileTree(dir: string): Promise<FileNode> {
             const fullPath = path.join(dir, entry.name);
 
             if (entry.isDirectory()) {
-                return getFileTree(fullPath);
+                return await getFileTree(fullPath);
             }
 
             return {
