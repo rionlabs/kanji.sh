@@ -1,9 +1,12 @@
 'use server';
 
+import { readdir } from 'node:fs/promises';
+
 import { renderToBuffer } from '@react-pdf/renderer';
 import { isNil } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
+import { getFileTree, renderAsciiFileTree } from 'apps/kanji.sh/app/api/fileTools';
 import { pathConfig } from 'apps/kanji.sh/src/config';
 
 import { KanaTemplate } from '@kanji-sh/printer';
@@ -43,6 +46,15 @@ const CacheControlHeaders = {
 };
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
+    console.log('[Info] currentWorkingDirectory:', process.cwd());
+    console.log('[Info] Working Cdirectory Children:', await readdir(process.cwd()));
+
+    const currentDir = process.cwd();
+    console.log(`Current working directory: ${currentDir}`);
+    const fileTree = await getFileTree(currentDir);
+    const asciiFileTree = renderAsciiFileTree(fileTree);
+    console.log(`File tree:\n${asciiFileTree}`);
+
     const searchParams = request.nextUrl.searchParams;
     const type = searchParams.get('type');
     if (isNil(type) || (type !== 'hiragana' && type !== 'katakana')) {
