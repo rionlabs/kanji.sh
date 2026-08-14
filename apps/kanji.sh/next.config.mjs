@@ -20,8 +20,8 @@ const nextConfig = {
     distDir: '../../dist/apps/kanji.sh',
     outputFileTracingRoot: path.join(__dirname, '../../'),
     outputFileTracingIncludes: {
-        '/api/kana': ['./print-assets/**/*'],
-        '/api/generate': ['./print-assets/**/*']
+        '/api/kana': ['apps/app/kanji.sh/print-assets/**/*'],
+        '/api/generate': ['apps/app/kanji.sh/print-assets/**/*']
     },
     pageExtensions: ['ts', 'tsx', 'mdx'],
     devIndicators: {
