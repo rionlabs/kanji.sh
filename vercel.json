@@ -2,6 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "nx run kanji.sh:build --prod",
   "devCommand": "nx run kanji.sh:dev",
+  "functions": {
+    "api/**/*.ts": {
+      "includeFiles": "./print-assets/**/*"
+    }
+  },
   "framework": "nextjs",
   "ignoreCommand": "node tools/skipDeploy.js",
   "installCommand": "npm install",
